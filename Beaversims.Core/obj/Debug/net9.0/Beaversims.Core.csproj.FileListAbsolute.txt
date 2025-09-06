@@ -1,0 +1,12 @@
+C:\Users\Lyri\Projects\Beaversims_c\Beaversims.Core\bin\Debug\net9.0\Beaversims.Core.deps.json
+C:\Users\Lyri\Projects\Beaversims_c\Beaversims.Core\bin\Debug\net9.0\Beaversims.Core.dll
+C:\Users\Lyri\Projects\Beaversims_c\Beaversims.Core\bin\Debug\net9.0\Beaversims.Core.pdb
+C:\Users\Lyri\Projects\Beaversims_c\Beaversims.Core\obj\Debug\net9.0\Beaversims.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Lyri\Projects\Beaversims_c\Beaversims.Core\obj\Debug\net9.0\Beaversims.Core.AssemblyInfoInputs.cache
+C:\Users\Lyri\Projects\Beaversims_c\Beaversims.Core\obj\Debug\net9.0\Beaversims.Core.AssemblyInfo.cs
+C:\Users\Lyri\Projects\Beaversims_c\Beaversims.Core\obj\Debug\net9.0\Beaversims.Core.csproj.CoreCompileInputs.cache
+C:\Users\Lyri\Projects\Beaversims_c\Beaversims.Core\obj\Debug\net9.0\Beaversims.Core.dll
+C:\Users\Lyri\Projects\Beaversims_c\Beaversims.Core\obj\Debug\net9.0\refint\Beaversims.Core.dll
+C:\Users\Lyri\Projects\Beaversims_c\Beaversims.Core\obj\Debug\net9.0\Beaversims.Core.pdb
+C:\Users\Lyri\Projects\Beaversims_c\Beaversims.Core\obj\Debug\net9.0\ref\Beaversims.Core.dll
+C:\Users\Lyri\Projects\Beaversims_c\Beaversims.Core\bin\Debug\net9.0\fNMDadYmgtWGJ349-90-10.json

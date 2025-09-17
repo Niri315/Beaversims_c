@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Beaversims.Core.Utils
+namespace Beaversims.Core
 {
     public static class JsonExtensions
     {

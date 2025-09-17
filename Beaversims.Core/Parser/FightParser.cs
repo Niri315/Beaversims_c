@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Beaversims.Core.Utils;
 
 namespace Beaversims.Core.Parser
 {
@@ -15,7 +14,7 @@ namespace Beaversims.Core.Parser
 
             var fight = new Fight();
             var totalLogTime = fightData.GetProperty("endTime").GetInt32() - fightData.GetProperty("startTime").GetInt32();
-            fight.TotalTime = TimeUtils.ConvertLogTime(totalLogTime, 0);
+            fight.TotalTime = Utils.ConvertLogTime(totalLogTime, 0);
             return fight;
         }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,64 +7,66 @@ using System.Threading.Tasks;
 
 
 namespace Beaversims.Core.Parser
-
 {
-    public enum EventType { 
-        Damage, 
-        Heal, 
-        Cast, 
-        Buff,
+    public enum EventType { Damage, Heal, Cast, Buff }
+
+    public class AmountContainer
+    {
+        public int Eff = 0;
+        public int Raw = 0;
+        public int Absorb = 0;
+        public int Overheal = 0;
+        public int Naeff = 0;
+        public int Naraw = 0;
     }
 
     internal class Event
     {
-        public double timestamp;
-        public Unit? SourceUnit;
-        public Unit? TargetUnit;
-        public EventType? Type;
+        public double Timestamp { get; set; }
+        public Unit? SourceUnit { get; set; }
+        public Unit? TargetUnit { get; set; }
+        public int? AbilityId { get; set; }
+        public string? AbilityName { get; set; }
+        public Ability? Ability { get; set; }
+        public bool UserSuperSource { get; set; } = false;
+        public Coord? TargetCoords { get; set; }
 
-        public int TargetHp = 0;
-        public int TargetMaxHp = 0;
-        public int SourceHp = 0;
-        public int SourceMaxHp = 0;
-
-        public int EmpCastLevel = 0;
-
-        public int BuffStacks = 0;
-        public bool BuffApplyEvent = false;
-        public bool BuffRemoveEvent = false;
-        public bool DebuffEvent = false;
-        public bool BuffStackEvent = false;
-        public bool BuffIncEvent = false;
-        public bool BuffRefreshEvent = false;
+        public int TargetHp { get; set; }
+        public int TargetMaxHp { get; set; }
+        public int SourceHp { get; set; }
+        public int SourceMaxHp { get; set; }
     }
+
     internal abstract class ThroughputEvent : Event
     {
-        public bool FullyAbsorbed = false;
-        public bool AbsorbAbility = false;
+        public bool Tick { get; set; }
+        public bool Crit { get; set; }
+        public bool Aoe { get; set; }
+        public AmountContainer Amount { get; set; } = new();
 
-        public bool Tick = false;
-        public bool Crit = false;
-        public bool Aoe = false;
+    }
 
-        public int AmountEff = 0;
-        public int AmountRaw = 0;
-        public int AmountAbsorb = 0;
-        public int AmountOverheal = 0;
-        public int AmountNaeff = 0;  // No Absorb Eff
-        public int AmountNaraw = 0;  // No Absorb Raw
-    }
-    internal class DamageEvent : ThroughputEvent
+    internal sealed class DamageEvent : ThroughputEvent { }
+
+    internal sealed class HealEvent : ThroughputEvent
     {
+        public bool FullyAbsorbed { get; set; }
+        public bool AbsorbAbility { get; set; }
     }
-    internal class HealEvent : ThroughputEvent
+
+    internal sealed class CastEvent : Event
     {
+        public int EmpCastLevel { get; set; }
     }
-    internal class CastEvent : Event
+
+    internal sealed class BuffEvent : Event
     {
-    }
-    internal class BuffEvent : Event
-    {
+        public int BuffStacks { get; set; }
+        public bool BuffApplyEvent { get; set; }
+        public bool BuffRemoveEvent { get; set; }
+        public bool DebuffEvent { get; set; }
+        public bool BuffStackEvent { get; set; }
+        public bool BuffIncEvent { get; set; }
+        public bool BuffRefreshEvent { get; set; }
     }
 }
-

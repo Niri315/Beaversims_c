@@ -27,23 +27,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Lyri\\.nuget\\packages\\": {},
+    "C:\\Users\\Ludde\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Lyri\\Projects\\Beaversims_c\\Beaversims.CLI\\Beaversims.CLI.csproj",
+      "projectUniqueName": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.CLI\\Beaversims.CLI.csproj",
       "projectName": "Beaversims.CLI",
-      "projectPath": "C:\\Users\\Lyri\\Projects\\Beaversims_c\\Beaversims.CLI\\Beaversims.CLI.csproj",
-      "packagesPath": "C:\\Users\\Lyri\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Lyri\\Projects\\Beaversims_c\\Beaversims.CLI\\obj\\",
+      "projectPath": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.CLI\\Beaversims.CLI.csproj",
+      "packagesPath": "C:\\Users\\Ludde\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.CLI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Lyri\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Ludde\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -58,8 +58,8 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "C:\\Users\\Lyri\\Projects\\Beaversims_c\\Beaversims.Core\\Beaversims.Core.csproj": {
-              "projectPath": "C:\\Users\\Lyri\\Projects\\Beaversims_c\\Beaversims.Core\\Beaversims.Core.csproj"
+            "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Beaversims.Core.csproj": {
+              "projectPath": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Beaversims.Core.csproj"
             }
           }
         }

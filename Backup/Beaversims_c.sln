@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35913.81 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Beaversims.Core", "Beaversims.Core\Beaversims.Core.csproj", "{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Beaversims.CLI", "Beaversims.CLI\Beaversims.CLI.csproj", "{12CD578D-945F-4253-AF61-C08D960B058E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12CD578D-945F-4253-AF61-C08D960B058E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12CD578D-945F-4253-AF61-C08D960B058E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12CD578D-945F-4253-AF61-C08D960B058E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12CD578D-945F-4253-AF61-C08D960B058E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {652EAB1E-0409-4606-ADBD-874797760A65}
+	EndGlobalSection
+EndGlobal

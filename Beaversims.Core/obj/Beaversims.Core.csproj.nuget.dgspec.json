@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Lyri\\Projects\\Beaversims_c\\Beaversims.Core\\Beaversims.Core.csproj": {}
+    "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Beaversims.Core.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Lyri\\Projects\\Beaversims_c\\Beaversims.Core\\Beaversims.Core.csproj": {
+    "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Beaversims.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Lyri\\Projects\\Beaversims_c\\Beaversims.Core\\Beaversims.Core.csproj",
+        "projectUniqueName": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Beaversims.Core.csproj",
         "projectName": "Beaversims.Core",
-        "projectPath": "C:\\Users\\Lyri\\Projects\\Beaversims_c\\Beaversims.Core\\Beaversims.Core.csproj",
-        "packagesPath": "C:\\Users\\Lyri\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Lyri\\Projects\\Beaversims_c\\Beaversims.Core\\obj\\",
+        "projectPath": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Beaversims.Core.csproj",
+        "packagesPath": "C:\\Users\\Ludde\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Lyri\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Ludde\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],

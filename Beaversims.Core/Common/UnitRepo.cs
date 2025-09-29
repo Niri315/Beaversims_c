@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Beaversims.Core.Parser
+namespace Beaversims.Core
 {
     internal sealed class UnitRepo : IEnumerable<Unit>
     {

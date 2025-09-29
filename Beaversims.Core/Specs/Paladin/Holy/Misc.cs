@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Beaversims.Core.Parser
+namespace Beaversims.Core.Specs.Paladin.Holy
 {
-    internal class Fight
+    internal class Misc
     {
-        public double TotalTime = 0;
-        
+
     }
 }

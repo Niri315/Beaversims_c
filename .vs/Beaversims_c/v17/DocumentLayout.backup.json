@@ -3,84 +3,112 @@
   "WorkspaceRootPath": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\parser\\eventparser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\parser\\eventparser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\data\\statbuffs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\data\\statbuffs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\common\\stats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\common\\stats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\common\\ability.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\common\\ability.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\parser\\event.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\parser\\event.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\parser\\abilityrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\parser\\abilityrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\parser\\abilityfactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\parser\\abilityfactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\common\\enums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\common\\enums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\parser\\unitparser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\parser\\unitparser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\specs\\paladin\\holy\\holyabilities.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\specs\\paladin\\holy\\holyabilities.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\specs\\paladin\\holy\\specs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\specs\\paladin\\holy\\specs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\specs\\paladin\\holy\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\specs\\paladin\\holy\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\specs\\sharedabilities.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\specs\\sharedabilities.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\parser\\fightparser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\parser\\fightparser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{12CD578D-945F-4253-AF61-C08D960B058E}|Beaversims.CLI\\Beaversims.CLI.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.cli\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{12CD578D-945F-4253-AF61-C08D960B058E}|Beaversims.CLI\\Beaversims.CLI.csproj|solutionrelative:beaversims.cli\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\common\\spec.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\common\\spec.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\parser\\unitrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\parser\\unitrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\parser\\unit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\parser\\unit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\common\\coord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\common\\coord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\common\\unit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\common\\unit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\common\\constants.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\common\\constants.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\utils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\utils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\data\\custombuffs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\data\\custombuffs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\common\\stats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\common\\stats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\specs\\paladin\\holy\\buffs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\specs\\paladin\\holy\\buffs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\common\\buff.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\common\\buff.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\specs\\paladin\\holy\\duplieffects.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\specs\\paladin\\holy\\duplieffects.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\shared\\statgains.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\shared\\statgains.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\specs\\paladin\\holy\\mastery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\specs\\paladin\\holy\\mastery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\specs\\paladin\\holy\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\specs\\paladin\\holy\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\parser\\abilityrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\parser\\abilityrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\specs\\paladin\\holy\\specs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\specs\\paladin\\holy\\specs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\parser\\unitparser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\parser\\unitparser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\common\\spec.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\common\\spec.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\common\\event.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\common\\event.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\common\\bufftracker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\common\\bufftracker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\common\\ability.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\common\\ability.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\specs\\paladin\\holy\\talents.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\specs\\paladin\\holy\\talents.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\specs\\paladin\\holy\\holyabilities.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\specs\\paladin\\holy\\holyabilities.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\shared\\hcgm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\shared\\hcgm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\shared\\abilities.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\shared\\abilities.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\specs\\paladin\\holy\\hpalutils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\specs\\paladin\\holy\\hpalutils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\parser\\processevents.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\parser\\processevents.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\common\\fight.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\common\\fight.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\specs\\paladin\\holy\\casts.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\specs\\paladin\\holy\\casts.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\specs\\paladin\\holy\\misc.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\specs\\paladin\\holy\\misc.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\jsonextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -89,6 +117,66 @@
     {
       "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\properties\\asemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\properties\\asemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\common\\calc.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\common\\calc.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\common\\aliases.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\common\\aliases.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\parser\\fightparser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\parser\\fightparser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\parser\\eventparser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\parser\\eventparser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\common\\unitrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\common\\unitrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\common\\enums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\common\\enums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\common\\coord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\common\\coord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\fnmdadymgtwgj349-90-10.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\fnmdadymgtwgj349-90-10.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\common\\testutils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\common\\testutils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{12CD578D-945F-4253-AF61-C08D960B058E}|Beaversims.CLI\\Beaversims.CLI.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.cli\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{12CD578D-945F-4253-AF61-C08D960B058E}|Beaversims.CLI\\Beaversims.CLI.csproj|solutionrelative:beaversims.cli\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\common\\utils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\common\\utils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\parser\\abilityfactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\parser\\abilityfactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\common\\item.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\common\\item.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\common\\talent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\common\\talent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\common\\stattracker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|solutionrelative:beaversims.core\\common\\stattracker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5AD40BF6-1843-4774-BAB9-4DBF7E4B804D}|Beaversims.Core\\Beaversims.Core.csproj|c:\\users\\ludde\\projects\\beaversims_c\\beaversims.core\\beaversims.core.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
@@ -102,17 +190,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 38,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.CLI\\Program.cs",
               "RelativeDocumentMoniker": "Beaversims.CLI\\Program.cs",
               "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.CLI\\Program.cs",
               "RelativeToolTip": "Beaversims.CLI\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAsAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-06T20:43:12.355Z",
               "IsPinned": true,
@@ -120,132 +208,145 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "AbilityRepo.cs",
-              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Parser\\AbilityRepo.cs",
-              "RelativeDocumentMoniker": "Beaversims.Core\\Parser\\AbilityRepo.cs",
-              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Parser\\AbilityRepo.cs",
-              "RelativeToolTip": "Beaversims.Core\\Parser\\AbilityRepo.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-14T20:05:35.427Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Event.cs",
-              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Parser\\Event.cs",
-              "RelativeDocumentMoniker": "Beaversims.Core\\Parser\\Event.cs",
-              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Parser\\Event.cs",
-              "RelativeToolTip": "Beaversims.Core\\Parser\\Event.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAbAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-07T06:30:36.706Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "EventParser.cs",
-              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Parser\\EventParser.cs",
-              "RelativeDocumentMoniker": "Beaversims.Core\\Parser\\EventParser.cs",
-              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Parser\\EventParser.cs*",
-              "RelativeToolTip": "Beaversims.Core\\Parser\\EventParser.cs*",
-              "ViewState": "AgIAANQAAAAAAAAAAAAAAOgAAAAfAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-07T06:31:35.578Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Ability.cs",
-              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Common\\Ability.cs",
-              "RelativeDocumentMoniker": "Beaversims.Core\\Common\\Ability.cs",
-              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Common\\Ability.cs",
-              "RelativeToolTip": "Beaversims.Core\\Common\\Ability.cs",
-              "ViewState": "AgIAABsAAAAAAAAAAAAxwCcAAAArAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-08T10:52:36.971Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Stats.cs",
-              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Common\\Stats.cs",
-              "RelativeDocumentMoniker": "Beaversims.Core\\Common\\Stats.cs",
-              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Common\\Stats.cs",
-              "RelativeToolTip": "Beaversims.Core\\Common\\Stats.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAowBcAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-11T10:12:30.23Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "AbilityFactory.cs",
-              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Parser\\AbilityFactory.cs",
-              "RelativeDocumentMoniker": "Beaversims.Core\\Parser\\AbilityFactory.cs",
-              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Parser\\AbilityFactory.cs",
-              "RelativeToolTip": "Beaversims.Core\\Parser\\AbilityFactory.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA8AAAApAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-16T16:22:12.159Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Enums.cs",
-              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Common\\Enums.cs",
-              "RelativeDocumentMoniker": "Beaversims.Core\\Common\\Enums.cs",
-              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Common\\Enums.cs",
-              "RelativeToolTip": "Beaversims.Core\\Common\\Enums.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-11T10:10:14.013Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 13,
               "Title": "UnitParser.cs",
               "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Parser\\UnitParser.cs",
               "RelativeDocumentMoniker": "Beaversims.Core\\Parser\\UnitParser.cs",
               "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Parser\\UnitParser.cs",
               "RelativeToolTip": "Beaversims.Core\\Parser\\UnitParser.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFEAAAAZAAAAAAAAAA==",
+              "ViewState": "AgIAAIQAAAAAAAAAAAAcwKYAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-06T20:43:04.628Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "HolyAbilities.cs",
-              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Specs\\Paladin\\Holy\\HolyAbilities.cs",
-              "RelativeDocumentMoniker": "Beaversims.Core\\Specs\\Paladin\\Holy\\HolyAbilities.cs",
-              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Specs\\Paladin\\Holy\\HolyAbilities.cs",
-              "RelativeToolTip": "Beaversims.Core\\Specs\\Paladin\\Holy\\HolyAbilities.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAB8AAAAmAAAAAAAAAA==",
+              "DocumentIndex": 6,
+              "Title": "Buff.cs",
+              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Common\\Buff.cs",
+              "RelativeDocumentMoniker": "Beaversims.Core\\Common\\Buff.cs",
+              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Common\\Buff.cs",
+              "RelativeToolTip": "Beaversims.Core\\Common\\Buff.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-08T10:53:51.32Z",
+              "WhenOpened": "2025-09-19T15:30:43.365Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 5,
+              "Title": "Buffs.cs",
+              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Specs\\Paladin\\Holy\\Buffs.cs",
+              "RelativeDocumentMoniker": "Beaversims.Core\\Specs\\Paladin\\Holy\\Buffs.cs",
+              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Specs\\Paladin\\Holy\\Buffs.cs",
+              "RelativeToolTip": "Beaversims.Core\\Specs\\Paladin\\Holy\\Buffs.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-27T01:41:01.172Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "StatBuffs.cs",
+              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Data\\StatBuffs.cs",
+              "RelativeDocumentMoniker": "Beaversims.Core\\Data\\StatBuffs.cs",
+              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Data\\StatBuffs.cs*",
+              "RelativeToolTip": "Beaversims.Core\\Data\\StatBuffs.cs*",
+              "ViewState": "AgIAAMUAAAAAAAAAAAAIwMwAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-19T15:35:22.144Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Stats.cs",
+              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Common\\Stats.cs",
+              "RelativeDocumentMoniker": "Beaversims.Core\\Common\\Stats.cs",
+              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Common\\Stats.cs",
+              "RelativeToolTip": "Beaversims.Core\\Common\\Stats.cs",
+              "ViewState": "AgIAAJsBAAAAAAAAAAAqwKYBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-11T10:12:30.23Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Unit.cs",
+              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Common\\Unit.cs",
+              "RelativeDocumentMoniker": "Beaversims.Core\\Common\\Unit.cs",
+              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Common\\Unit.cs",
+              "RelativeToolTip": "Beaversims.Core\\Common\\Unit.cs",
+              "ViewState": "AgIAAFoAAAAAAAAAAAAkwGAAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-06T20:54:37.186Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Constants.cs",
+              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Common\\Constants.cs",
+              "RelativeDocumentMoniker": "Beaversims.Core\\Common\\Constants.cs",
+              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Common\\Constants.cs",
+              "RelativeToolTip": "Beaversims.Core\\Common\\Constants.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-11T01:11:54.343Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "DupliEffects.cs",
+              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Specs\\Paladin\\Holy\\DupliEffects.cs",
+              "RelativeDocumentMoniker": "Beaversims.Core\\Specs\\Paladin\\Holy\\DupliEffects.cs",
+              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Specs\\Paladin\\Holy\\DupliEffects.cs",
+              "RelativeToolTip": "Beaversims.Core\\Specs\\Paladin\\Holy\\DupliEffects.cs",
+              "ViewState": "AgIAAB4AAAAAAAAAAAA5wC4AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-28T10:45:43.305Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "CustomBuffs.cs",
+              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Data\\CustomBuffs.cs",
+              "RelativeDocumentMoniker": "Beaversims.Core\\Data\\CustomBuffs.cs",
+              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Data\\CustomBuffs.cs",
+              "RelativeToolTip": "Beaversims.Core\\Data\\CustomBuffs.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAgwB0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-21T08:01:54.012Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
               "Title": "Specs.cs",
               "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Specs\\Paladin\\Holy\\Specs.cs",
               "RelativeDocumentMoniker": "Beaversims.Core\\Specs\\Paladin\\Holy\\Specs.cs",
               "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Specs\\Paladin\\Holy\\Specs.cs",
               "RelativeToolTip": "Beaversims.Core\\Specs\\Paladin\\Holy\\Specs.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAgwAgAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAABoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-14T11:01:26.55Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "StatGains.cs",
+              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Shared\\StatGains.cs",
+              "RelativeDocumentMoniker": "Beaversims.Core\\Shared\\StatGains.cs",
+              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Shared\\StatGains.cs",
+              "RelativeToolTip": "Beaversims.Core\\Shared\\StatGains.cs",
+              "ViewState": "AgIAAHsAAAAAAAAAAAAkwHMAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-17T13:39:49.587Z",
               "EditorCaption": ""
             },
             {
@@ -256,35 +357,48 @@
               "RelativeDocumentMoniker": "Beaversims.Core\\Specs\\Paladin\\Holy\\Main.cs",
               "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Specs\\Paladin\\Holy\\Main.cs",
               "RelativeToolTip": "Beaversims.Core\\Specs\\Paladin\\Holy\\Main.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABUAAAANAAAAAAAAAA==",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAC8AAAAzAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-17T00:49:59.778Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "SharedAbilities.cs",
-              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Specs\\SharedAbilities.cs",
-              "RelativeDocumentMoniker": "Beaversims.Core\\Specs\\SharedAbilities.cs",
-              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Specs\\SharedAbilities.cs",
-              "RelativeToolTip": "Beaversims.Core\\Specs\\SharedAbilities.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 9,
+              "Title": "Mastery.cs",
+              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Specs\\Paladin\\Holy\\Mastery.cs",
+              "RelativeDocumentMoniker": "Beaversims.Core\\Specs\\Paladin\\Holy\\Mastery.cs",
+              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Specs\\Paladin\\Holy\\Mastery.cs",
+              "RelativeToolTip": "Beaversims.Core\\Specs\\Paladin\\Holy\\Mastery.cs",
+              "ViewState": "AgIAADMAAAAAAAAAAAAmwEsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-14T16:51:31.953Z",
+              "WhenOpened": "2025-09-27T00:39:36.195Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "FightParser.cs",
-              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Parser\\FightParser.cs",
-              "RelativeDocumentMoniker": "Beaversims.Core\\Parser\\FightParser.cs",
-              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Parser\\FightParser.cs",
-              "RelativeToolTip": "Beaversims.Core\\Parser\\FightParser.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAFAAAAAAAAAA==",
+              "DocumentIndex": 11,
+              "Title": "AbilityRepo.cs",
+              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Parser\\AbilityRepo.cs",
+              "RelativeDocumentMoniker": "Beaversims.Core\\Parser\\AbilityRepo.cs",
+              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Parser\\AbilityRepo.cs",
+              "RelativeToolTip": "Beaversims.Core\\Parser\\AbilityRepo.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-14T10:56:57.275Z",
+              "WhenOpened": "2025-09-14T20:05:35.427Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "Event.cs",
+              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Common\\Event.cs",
+              "RelativeDocumentMoniker": "Beaversims.Core\\Common\\Event.cs",
+              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Common\\Event.cs",
+              "RelativeToolTip": "Beaversims.Core\\Common\\Event.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAsAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-07T06:30:36.706Z",
               "EditorCaption": ""
             },
             {
@@ -295,91 +409,118 @@
               "RelativeDocumentMoniker": "Beaversims.Core\\Common\\Spec.cs",
               "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Common\\Spec.cs",
               "RelativeToolTip": "Beaversims.Core\\Common\\Spec.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAADAAAAAAAAAAAAAqwEMAAABqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-14T11:00:56.804Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "UnitRepo.cs",
-              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Parser\\UnitRepo.cs",
-              "RelativeDocumentMoniker": "Beaversims.Core\\Parser\\UnitRepo.cs",
-              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Parser\\UnitRepo.cs",
-              "RelativeToolTip": "Beaversims.Core\\Parser\\UnitRepo.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 18,
+              "Title": "Talents.cs",
+              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Specs\\Paladin\\Holy\\Talents.cs",
+              "RelativeDocumentMoniker": "Beaversims.Core\\Specs\\Paladin\\Holy\\Talents.cs",
+              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Specs\\Paladin\\Holy\\Talents.cs",
+              "RelativeToolTip": "Beaversims.Core\\Specs\\Paladin\\Holy\\Talents.cs",
+              "ViewState": "AgIAACIAAAAAAAAAAAAcwCwAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-11T10:17:57.013Z",
+              "WhenOpened": "2025-09-20T09:13:12.764Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 16,
-              "Title": "Unit.cs",
-              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Parser\\Unit.cs",
-              "RelativeDocumentMoniker": "Beaversims.Core\\Parser\\Unit.cs",
-              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Parser\\Unit.cs",
-              "RelativeToolTip": "Beaversims.Core\\Parser\\Unit.cs",
-              "ViewState": "AgIAABEAAAAAAAAAAAAIwBwAAAAcAAAAAAAAAA==",
+              "Title": "BuffTracker.cs",
+              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Common\\BuffTracker.cs",
+              "RelativeDocumentMoniker": "Beaversims.Core\\Common\\BuffTracker.cs",
+              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Common\\BuffTracker.cs",
+              "RelativeToolTip": "Beaversims.Core\\Common\\BuffTracker.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAswA8AAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-06T20:54:37.186Z",
+              "WhenOpened": "2025-09-19T20:19:41.68Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 17,
-              "Title": "Coord.cs",
-              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Common\\Coord.cs",
-              "RelativeDocumentMoniker": "Beaversims.Core\\Common\\Coord.cs",
-              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Common\\Coord.cs",
-              "RelativeToolTip": "Beaversims.Core\\Common\\Coord.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAABAAAAAAAAAA==",
+              "Title": "Ability.cs",
+              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Common\\Ability.cs",
+              "RelativeDocumentMoniker": "Beaversims.Core\\Common\\Ability.cs",
+              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Common\\Ability.cs",
+              "RelativeToolTip": "Beaversims.Core\\Common\\Ability.cs",
+              "ViewState": "AgIAAD0AAAAAAAAAAAAYwEwAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-16T18:57:06.124Z",
+              "WhenOpened": "2025-09-08T10:52:36.971Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "Constants.cs",
-              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Common\\Constants.cs",
-              "RelativeDocumentMoniker": "Beaversims.Core\\Common\\Constants.cs",
-              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Common\\Constants.cs",
-              "RelativeToolTip": "Beaversims.Core\\Common\\Constants.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-11T01:11:54.343Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "AsemblyInfo.cs",
-              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Properties\\AsemblyInfo.cs",
-              "RelativeDocumentMoniker": "Beaversims.Core\\Properties\\AsemblyInfo.cs",
-              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Properties\\AsemblyInfo.cs",
-              "RelativeToolTip": "Beaversims.Core\\Properties\\AsemblyInfo.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-06T20:54:50.572Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 19,
-              "Title": "Utils.cs",
-              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Utils.cs",
-              "RelativeDocumentMoniker": "Beaversims.Core\\Utils.cs",
-              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Utils.cs",
-              "RelativeToolTip": "Beaversims.Core\\Utils.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAABAAAAAAAAAA==",
+              "Title": "HolyAbilities.cs",
+              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Specs\\Paladin\\Holy\\HolyAbilities.cs",
+              "RelativeDocumentMoniker": "Beaversims.Core\\Specs\\Paladin\\Holy\\HolyAbilities.cs",
+              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Specs\\Paladin\\Holy\\HolyAbilities.cs",
+              "RelativeToolTip": "Beaversims.Core\\Specs\\Paladin\\Holy\\HolyAbilities.cs",
+              "ViewState": "AgIAAEAAAAAAAAAAAADwv1EAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-14T14:12:20.471Z",
+              "WhenOpened": "2025-09-08T10:53:51.32Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 20,
+              "Title": "HCGM.cs",
+              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Shared\\HCGM.cs",
+              "RelativeDocumentMoniker": "Beaversims.Core\\Shared\\HCGM.cs",
+              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Shared\\HCGM.cs",
+              "RelativeToolTip": "Beaversims.Core\\Shared\\HCGM.cs",
+              "ViewState": "AgIAABYAAAAAAAAAAAAiwCMAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-28T02:33:53.387Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "Abilities.cs",
+              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Shared\\Abilities.cs",
+              "RelativeDocumentMoniker": "Beaversims.Core\\Shared\\Abilities.cs",
+              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Shared\\Abilities.cs",
+              "RelativeToolTip": "Beaversims.Core\\Shared\\Abilities.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-14T16:51:31.953Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "HpalUtils.cs",
+              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Specs\\Paladin\\Holy\\HpalUtils.cs",
+              "RelativeDocumentMoniker": "Beaversims.Core\\Specs\\Paladin\\Holy\\HpalUtils.cs",
+              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Specs\\Paladin\\Holy\\HpalUtils.cs",
+              "RelativeToolTip": "Beaversims.Core\\Specs\\Paladin\\Holy\\HpalUtils.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-27T02:02:13.992Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "ProcessEvents.cs",
+              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Parser\\ProcessEvents.cs",
+              "RelativeDocumentMoniker": "Beaversims.Core\\Parser\\ProcessEvents.cs",
+              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Parser\\ProcessEvents.cs",
+              "RelativeToolTip": "Beaversims.Core\\Parser\\ProcessEvents.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAA7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-22T06:35:10.71Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
               "Title": "JsonExtensions.cs",
               "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\JsonExtensions.cs",
               "RelativeDocumentMoniker": "Beaversims.Core\\JsonExtensions.cs",
@@ -392,7 +533,238 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 28,
+              "Title": "AsemblyInfo.cs",
+              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Properties\\AsemblyInfo.cs",
+              "RelativeDocumentMoniker": "Beaversims.Core\\Properties\\AsemblyInfo.cs",
+              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Properties\\AsemblyInfo.cs",
+              "RelativeToolTip": "Beaversims.Core\\Properties\\AsemblyInfo.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-06T20:54:50.572Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "Casts.cs",
+              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Specs\\Paladin\\Holy\\Casts.cs",
+              "RelativeDocumentMoniker": "Beaversims.Core\\Specs\\Paladin\\Holy\\Casts.cs",
+              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Specs\\Paladin\\Holy\\Casts.cs",
+              "RelativeToolTip": "Beaversims.Core\\Specs\\Paladin\\Holy\\Casts.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-28T02:44:37.277Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "Misc.cs",
+              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Specs\\Paladin\\Holy\\Misc.cs",
+              "RelativeDocumentMoniker": "Beaversims.Core\\Specs\\Paladin\\Holy\\Misc.cs",
+              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Specs\\Paladin\\Holy\\Misc.cs",
+              "RelativeToolTip": "Beaversims.Core\\Specs\\Paladin\\Holy\\Misc.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-28T04:23:24.512Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "Calc.cs",
+              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Common\\Calc.cs",
+              "RelativeDocumentMoniker": "Beaversims.Core\\Common\\Calc.cs",
+              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Common\\Calc.cs",
+              "RelativeToolTip": "Beaversims.Core\\Common\\Calc.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwA8AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-17T13:40:04.239Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "Fight.cs",
+              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Common\\Fight.cs",
+              "RelativeDocumentMoniker": "Beaversims.Core\\Common\\Fight.cs",
+              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Common\\Fight.cs",
+              "RelativeToolTip": "Beaversims.Core\\Common\\Fight.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-17T12:24:18.408Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "Aliases.cs",
+              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Common\\Aliases.cs",
+              "RelativeDocumentMoniker": "Beaversims.Core\\Common\\Aliases.cs",
+              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Common\\Aliases.cs",
+              "RelativeToolTip": "Beaversims.Core\\Common\\Aliases.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-20T20:23:46.476Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "EventParser.cs",
+              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Parser\\EventParser.cs",
+              "RelativeDocumentMoniker": "Beaversims.Core\\Parser\\EventParser.cs",
+              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Parser\\EventParser.cs",
+              "RelativeToolTip": "Beaversims.Core\\Parser\\EventParser.cs",
+              "ViewState": "AgIAANYBAAAAAAAAAAAiwPgBAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-07T06:31:35.578Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "UnitRepo.cs",
+              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Common\\UnitRepo.cs",
+              "RelativeDocumentMoniker": "Beaversims.Core\\Common\\UnitRepo.cs",
+              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Common\\UnitRepo.cs",
+              "RelativeToolTip": "Beaversims.Core\\Common\\UnitRepo.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-11T10:17:57.013Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "FightParser.cs",
+              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Parser\\FightParser.cs",
+              "RelativeDocumentMoniker": "Beaversims.Core\\Parser\\FightParser.cs",
+              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Parser\\FightParser.cs",
+              "RelativeToolTip": "Beaversims.Core\\Parser\\FightParser.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-14T10:56:57.275Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 37,
+              "Title": "TestUtils.cs",
+              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Common\\TestUtils.cs",
+              "RelativeDocumentMoniker": "Beaversims.Core\\Common\\TestUtils.cs",
+              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Common\\TestUtils.cs",
+              "RelativeToolTip": "Beaversims.Core\\Common\\TestUtils.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-22T06:45:45.609Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "Coord.cs",
+              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Common\\Coord.cs",
+              "RelativeDocumentMoniker": "Beaversims.Core\\Common\\Coord.cs",
+              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Common\\Coord.cs",
+              "RelativeToolTip": "Beaversims.Core\\Common\\Coord.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-16T18:57:06.124Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "Enums.cs",
+              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Common\\Enums.cs",
+              "RelativeDocumentMoniker": "Beaversims.Core\\Common\\Enums.cs",
+              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Common\\Enums.cs",
+              "RelativeToolTip": "Beaversims.Core\\Common\\Enums.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-11T10:10:14.013Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 36,
+              "Title": "fNMDadYmgtWGJ349-90-10.json",
+              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\fNMDadYmgtWGJ349-90-10.json",
+              "RelativeDocumentMoniker": "Beaversims.Core\\fNMDadYmgtWGJ349-90-10.json",
+              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\fNMDadYmgtWGJ349-90-10.json",
+              "RelativeToolTip": "Beaversims.Core\\fNMDadYmgtWGJ349-90-10.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAADupHoAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-09-27T06:36:25.07Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 39,
+              "Title": "Utils.cs",
+              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Common\\Utils.cs",
+              "RelativeDocumentMoniker": "Beaversims.Core\\Common\\Utils.cs",
+              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Common\\Utils.cs",
+              "RelativeToolTip": "Beaversims.Core\\Common\\Utils.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAA5wBcAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-14T14:12:20.471Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 40,
+              "Title": "AbilityFactory.cs",
+              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Parser\\AbilityFactory.cs",
+              "RelativeDocumentMoniker": "Beaversims.Core\\Parser\\AbilityFactory.cs",
+              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Parser\\AbilityFactory.cs",
+              "RelativeToolTip": "Beaversims.Core\\Parser\\AbilityFactory.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAsAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-16T16:22:12.159Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 41,
+              "Title": "Item.cs",
+              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Common\\Item.cs",
+              "RelativeDocumentMoniker": "Beaversims.Core\\Common\\Item.cs",
+              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Common\\Item.cs",
+              "RelativeToolTip": "Beaversims.Core\\Common\\Item.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABQAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-20T07:42:06.652Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 42,
+              "Title": "Talent.cs",
+              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Common\\Talent.cs",
+              "RelativeDocumentMoniker": "Beaversims.Core\\Common\\Talent.cs",
+              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Common\\Talent.cs",
+              "RelativeToolTip": "Beaversims.Core\\Common\\Talent.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-20T07:28:55.832Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 43,
+              "Title": "StatTracker.cs",
+              "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Common\\StatTracker.cs",
+              "RelativeDocumentMoniker": "Beaversims.Core\\Common\\StatTracker.cs",
+              "ToolTip": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Common\\StatTracker.cs",
+              "RelativeToolTip": "Beaversims.Core\\Common\\StatTracker.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAAwAAABDAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-19T20:54:05.427Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 44,
               "Title": "Beaversims.Core.csproj",
               "DocumentMoniker": "C:\\Users\\Ludde\\Projects\\Beaversims_c\\Beaversims.Core\\Beaversims.Core.csproj",
               "RelativeDocumentMoniker": "Beaversims.Core\\Beaversims.Core.csproj",

@@ -1,10 +1,12 @@
 ﻿using Beaversims.Core;
+using Beaversims.Core.Common;
 using Beaversims.Core.Parser;
 using Beaversims.Core.Specs;
 using Beaversims.Core.Specs.Paladin.Holy.Abilities;
+using System.Diagnostics;
 using System.Text.Json;
 
-
+var totalTime = Stopwatch.StartNew();
 
 var json = File.ReadAllText("fNMDadYmgtWGJ349-90-10.json");
 var userId = 10;
@@ -21,3 +23,8 @@ var events = EventParser.ParseUserEvents(userEvents, allUnits);
 
 var user = allUnits.GetUser();
 user.Spec.SpecIteration(events, allUnits);
+var swGains = ProcessEvents.GetStatWeights(events, fight);
+TestUtils.PrintStatWeights(swGains);
+
+totalTime.Stop();
+Console.WriteLine($"Total Time: {totalTime}");

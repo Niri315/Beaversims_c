@@ -1,4 +1,6 @@
-﻿using System.Text.Json;
+﻿
+using Beaversims.Core.Common;
+using System.Text.Json;
 
 namespace Beaversims.Core.Parser
 {
@@ -290,58 +292,58 @@ namespace Beaversims.Core.Parser
             }
         }
 
-        public static void ParseCoords(JsonElement logEvent, Event evt)
-        {
-            if (logEvent.TryGetProperty("x", out _))
-            {
-                var x = logEvent.GetProperty("x").GetInt32() / 100.0;
-                var y = logEvent.GetProperty("y").GetInt32() / 100.0;
-                evt.TargetCoords = new Coord(x, y);
-            }
-        }
+
 
         public static void SetAbilityData(Event evt, User user)
         {
+            var ability = evt.Ability;
             if (evt is CastEvent)
             {
-                var ability = evt.Ability;
+
                 if (evt.SourceUnit == user)
                 {
                     ability.Casts += 1;
                 }
-                if (evt is ThroughputEvent tpEvent && evt.UserSuperSource)
+            }
+            if (evt is ThroughputEvent tpEvent && evt.UserSuperSource)
+            {
+                if (tpEvent is HealEvent)
                 {
-                    if (tpEvent is HealEvent)
+                    ability.Heal.Eff += tpEvent.Amount.Eff;
+                    ability.Heal.Raw += tpEvent.Amount.Raw;
+                    ability.Heal.Count += 1;
+
+
+                    if (tpEvent.SourceUnit == user)
                     {
-                        ability.Heal.Eff += tpEvent.Amount.Eff;
-                        ability.Heal.Raw += tpEvent.Amount.Raw;
-                        ability.Heal.Overheal += tpEvent.Amount.Overheal;
-                        ability.Heal.Count += 1;
 
-                        if (tpEvent.SourceUnit == user)
-                        {
-
-                        }
-                        if (tpEvent.Crit)
-                        {
-                            ability.Heal.Crit.Eff += tpEvent.Amount.Eff;
-                            ability.Heal.Crit.Raw += tpEvent.Amount.Raw;
-                            ability.Heal.Crit.Count += 1;
-                        }
-                        else
-                        {
-
-                        }
                     }
-                    else if (evt.TargetUnit != user && evt is DamageEvent)  // Filtering out self damage.
+                    if (tpEvent.Crit)
                     {
-                        ability.Damage.Dmg += tpEvent.Amount.Eff;
-                        ability.Damage.Count += 1;
-                        if (tpEvent.Crit)
-                        {
-                            ability.Damage.Crit.Dmg += tpEvent.Amount.Eff;
-                            ability.Damage.Crit.Count += 1;
-                        }
+                        ability.Heal.Crit.Eff += tpEvent.Amount.Eff;
+                        ability.Heal.Crit.Raw += tpEvent.Amount.Raw;
+                        ability.Heal.Crit.Count += 1;
+                    }
+                    else
+                    {
+                        ability.Heal.Hit.Eff += tpEvent.Amount.Eff;
+                        ability.Heal.Hit.Raw += tpEvent.Amount.Raw;
+                        ability.Heal.Hit.Count += 1;
+                    }
+                }
+                else if (evt.TargetUnit != user && evt is DamageEvent)  // Filtering out self damage.
+                {
+                    ability.Damage.Dmg += tpEvent.Amount.Eff;
+                    ability.Damage.Count += 1;
+                    if (tpEvent.Crit)
+                    {
+                        ability.Damage.Crit.Dmg += tpEvent.Amount.Eff;
+                        ability.Damage.Crit.Count += 1;
+                    }
+                    else
+                    {
+                        ability.Damage.Hit.Dmg += tpEvent.Amount.Eff;
+                        ability.Damage.Hit.Count += 1;
                     }
                 }
             }
@@ -355,6 +357,118 @@ namespace Beaversims.Core.Parser
             }
 
         }
+
+        public static void TrackHp(JsonElement logEvent, Event evt)
+        {
+            if (evt is ThroughputEvent)
+            {
+                if (logEvent.TryGetProperty("hitPoints", out _))
+            {
+                var sourceUnit = evt.SourceUnit;
+                var targetUnit = evt.TargetUnit;
+                var hp = logEvent.GetProperty("hitPoints").GetInt64();
+                var maxHp = logEvent.GetProperty("maxHitPoints").GetInt64();
+              
+                    evt.TargetHp = hp;
+                    evt.TargetMaxHp = maxHp;
+                    targetUnit.Hp = hp;
+                    targetUnit.MaxHp = maxHp;
+                    if (sourceUnit == targetUnit)
+                    {
+                        evt.SourceHp = hp;
+                        evt.SourceMaxHp = maxHp;
+                        sourceUnit.Hp = hp;
+                        sourceUnit.MaxHp = maxHp;
+                    }
+
+                }
+            }
+               
+        }
+
+        public static void SetHp(Event evt, User user)
+        {
+            var sourceUnit = evt.SourceUnit;
+            var targetUnit = evt.TargetUnit;
+            if (evt is ThroughputEvent)
+            {
+                if (evt.TargetHp != null)
+                {
+                    targetUnit.Hp = evt.TargetHp;
+                    targetUnit.MaxHp = evt.TargetMaxHp;
+                }
+               
+                if (sourceUnit == targetUnit && evt.SourceHp != null)
+                {
+                    sourceUnit.Hp = evt.SourceHp;
+                    sourceUnit.MaxHp = evt.SourceMaxHp;
+                }
+            }
+            evt.SourceHp = sourceUnit.Hp;
+            evt.SourceMaxHp = sourceUnit.MaxHp;
+            evt.TargetHp = targetUnit.Hp;
+            evt.TargetMaxHp = targetUnit.MaxHp;
+            evt.UserHp = user.Hp;
+            evt.UserHp = user.MaxHp;
+        }
+
+        public static void ParseCoords(JsonElement logEvent, Event evt)
+        // If throughput event coords are for target
+        // If cast event coords are for source. Assume same for resourcechange but sourceid == target id always.
+        {
+            if (logEvent.TryGetProperty("x", out _))
+            {
+                var x = logEvent.GetProperty("x").GetInt32() / 100.0;
+                var y = logEvent.GetProperty("y").GetInt32() / 100.0;
+                if (evt is ThroughputEvent)
+                {
+                    evt.TargetCoords = new Coord(x, y);
+                }
+                else if (evt is CastEvent)
+                {
+                    evt.SourceCoords = new Coord(x, y);
+                }
+                //if (evt is ThroughputEvent)
+                //{
+                //    evt.TargetUnit.Coords = new Coord(x, y);
+                //}
+                //else if (evt is CastEvent)
+                //{
+                //    evt.SourceUnit.Coords = new Coord(x, y);
+                //}
+                //evt.TargetCoords = evt.TargetUnit.Coords;
+                //evt.SourceCoords = evt.SourceUnit.Coords;
+
+            }
+        }
+        public static void SetCoords(Event evt, User user)
+        {
+            var sourceUnit = evt.SourceUnit;
+            var targetUnit = evt.TargetUnit;
+            if (evt.TargetCoords != null)
+            {
+                targetUnit.Coords = evt.TargetCoords;
+            }
+            if (evt.SourceCoords != null)
+            {
+                sourceUnit.Coords = evt.SourceCoords;
+            }
+            evt.SourceCoords = sourceUnit.Coords;
+            evt.TargetCoords = targetUnit.Coords;
+            evt.UserCoords = user.Coords;
+        }
+
+        public static void EraseData(UnitRepo allUnits)
+            // To avoid accidental usage.
+        {
+            foreach (var unit in allUnits)
+            {
+                //unit.Coords = null;
+                unit.Hp = null;
+                unit.MaxHp = null;
+            }
+        }
+
         public static List<Event> ParseUserEvents(JsonElement userEvents, UnitRepo allUnits)
         {
             var events = new List<Event>();
@@ -377,9 +491,19 @@ namespace Beaversims.Core.Parser
                     AdjustEvent(evt);
                     ParseCoords(logEvent, evt);
                     SetAbilityData(evt, user);
+                    TrackHp(logEvent, evt);
                     events.Add(evt);
                 }
             }
+            //Reverse loop
+            for (int i = events.Count - 1; i >= 0; i--)
+            {
+                var evt = events[i];
+                SetHp(evt, user);
+                //SetCoords(evt, user);
+
+            }
+            EraseData(allUnits);
             return events;
         }
     }

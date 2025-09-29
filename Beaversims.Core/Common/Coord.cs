@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Beaversims.Core
 {
-    internal class Coord
+    internal record Coord
     {
         public double x;
         public double y;

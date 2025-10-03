@@ -100,6 +100,11 @@ namespace Beaversims.Core
         public int Bracket { get; set; } = 0;
         public abstract double PercentRate { get; set; }
         public abstract double DrRate { get; }
+
+        public double ApplyDryMult(double amount)
+        {
+            return amount * (1 - (0.1 * Bracket)) * Multi;
+        }
         public override void SetEff()
         {
             Eff = PostDr + Base;
@@ -300,8 +305,10 @@ namespace Beaversims.Core
             CopyTo(clone);
             return clone;
         }
+
         protected void CopyTo(Crit other)
         {
+            base.CopyTo(other);
             other.IncDmg = IncDmg;
             other.IncHeal = IncHeal;
         }
@@ -365,7 +372,7 @@ namespace Beaversims.Core
     {
         public override StatName Name { get; }
         public override int Level { get; }
-        public const double percentRate = 700;
+        public const double percentRate = 780;
         public override double PercentRate { get; set; }
         public override double DrRate { get; }
         public double DefPercentRate { get; }

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Beaversims.Core", "Beaversi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Beaversims.CLI", "Beaversims.CLI\Beaversims.CLI.csproj", "{12CD578D-945F-4253-AF61-C08D960B058E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Beaversims.Tools", "Beaversims.Tools\Beaversims.Tools.csproj", "{D7B4AC7E-D6DC-4FDB-9D80-4D143F600A91}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{12CD578D-945F-4253-AF61-C08D960B058E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12CD578D-945F-4253-AF61-C08D960B058E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12CD578D-945F-4253-AF61-C08D960B058E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7B4AC7E-D6DC-4FDB-9D80-4D143F600A91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7B4AC7E-D6DC-4FDB-9D80-4D143F600A91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7B4AC7E-D6DC-4FDB-9D80-4D143F600A91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7B4AC7E-D6DC-4FDB-9D80-4D143F600A91}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

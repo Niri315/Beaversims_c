@@ -77,12 +77,23 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
         //todo PoL effect
     {
         public const string name = "Beacon of Light";
-        public const int polId = 1232617;
-        public const int dupliId = 53652;
+        public const int polId = 53653; // Heal from pillar of light passive light/faith effect.
+        public const int dupliId = 53652; // Heal 
         public const int buffId = 53563;
         public double Coef { get; set; } = 0.2;
 
         public HealData PolHeal { get; } = new();
+
+        public override double HypoTrueUr()
+        {
+            if (Heal.Hypo == 0) { return 0;}
+            return (Heal.Eff - PolHeal.Eff) / Heal.Hypo;
+        }
+        public override double HypoTrueRawR()
+        {
+            if (Heal.Hypo == 0) { return 0; }
+            return (Heal.Raw - PolHeal.Raw) / Heal.Hypo;
+        }
 
         public BeaconOfLight()
         {
@@ -184,6 +195,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
     internal class CrusaderStrike : HpalAbility
     {
         public const string name = "Crusader Strike";
+        public double HaaFactor { get; set; } = 0.75;
         public CrusaderStrike()
         {
             Name = name;
@@ -201,7 +213,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
         {
             Name = name;
             Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Haste, SN.Mastery, SN.Vers]);
-            HasteScalers.UnionWith([HST.Tick]);
+            HasteScalers.UnionWith([HST.Auto]);
         }
     }
 
@@ -309,6 +321,23 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
     // TODO "Crit" effect.
     {
         public const string name = "Greater Judgment";
+
+        public void CritGains(ThroughputEvent evt, User user)
+        {
+
+            if (evt.AbilityName == Name) 
+            {
+                var judg = (Judgment)user.Abilities.Get(Judgment.name);
+                var statName = StatName.Crit;
+                var crit = (Crit)evt.UserStats.Get(statName);
+                // TODO Fix this im sure its wrong
+                var estNonCritAmount = evt.Amount.Eff * (judg.GJCritEffRepo / judg.GJCount / crit.PercentRate / 100);
+                //estNonCritAmount = crit.ApplyDryMult(estNonCritAmount); 
+                // TODO This is done in crit calc as well... should it be run twice?
+                var gainEff = Calc.CritGainCalc(crit, estNonCritAmount, false, 2);
+                evt.Gains[statName][GainType.Eff] += gainEff;
+            }
+        }
         public GreaterJudgment()
         {
             Name = name;
@@ -425,6 +454,21 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
     internal class Judgment : HpalAbility
     {
         public const string name = "Judgment";
+        public const int awakening15Id = 414193;
+        public double GJCritEffRepo = 0.0;
+        public int GJCount = 0;  // Dont really need this but adds safety.
+
+        public void TrackGJCritChance(Event evt, User user)
+        {
+            if (evt.IsDmgDoneEvent() && evt.AbilityName == Name)
+            {
+                GJCritEffRepo += evt.UserStats.Get(StatName.Crit).Eff;
+                GJCount += 1;
+            }
+        }
+
+
+
         public Judgment()
         {
             Name = name;

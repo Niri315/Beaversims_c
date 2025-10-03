@@ -8,7 +8,11 @@ namespace Beaversims.Core.Common
 {
     internal class Fight
     {
-        public double TotalTime = 0;
-        
+        public double TotalTime { get; set; } = 0;
+        public int Id {  get; set; }
+        public int EncounterId { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string ReportCode { get; set; } = String.Empty;
+
     }
 }

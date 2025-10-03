@@ -11,7 +11,8 @@ namespace Beaversims.Core
     {
         public string Name { get; } = name;
         public UnitId Id { get; } = id;
-        public List<Buff> Buffs { get; } = [];
+
+        public List<Buff>? Buffs { get; set; } = [];
         public long? Hp { get; set; }
         public long? MaxHp { get; set; }
         public Coord? Coords { get; set; }
@@ -24,12 +25,17 @@ namespace Beaversims.Core
         protected Buff? FindBuff(int buffId, UnitId sourceId) =>
             Buffs.Find(b => b.Id == buffId && b.SourceId == sourceId);
 
-        public virtual void AddBuff(string buffName, int buffId, Unit sourceUnit, int stacks)
+        public virtual void AddBuff(string buffName, int buffId, Unit sourceUnit, int stacks, Logger statLogger = null, double timeStamp = 0)
         {
-            Buffs.Add(new Buff(buffId, sourceUnit.Id, buffName, stacks));
+            var buff = new Buff(buffId, sourceUnit.Id, buffName, stacks);
+            if (!buff.AllowMultiple)
+            {
+                RemoveBuff(buffId, sourceUnit, statLogger);
+            }
+            Buffs.Add(buff);
         }
 
-        public virtual bool RemoveBuff(int buffId, Unit sourceUnit)
+        public virtual bool RemoveBuff(int buffId, Unit sourceUnit, Logger statLogger = null, double timeStamp = 0)
         {
             var idx = Buffs.FindIndex(b => b.Id == buffId && b.SourceId == sourceUnit.Id);
             if (idx < 0) return false;
@@ -37,12 +43,12 @@ namespace Beaversims.Core
             return true;
         }
 
-        public virtual void ChangeBuffStack(string buffName, int buffId, Unit sourceUnit, int newStacks)
+        public virtual void ChangeBuffStack(string buffName, int buffId, Unit sourceUnit, int newStacks, Logger statLogger = null, double timeStamp = 0)
         {
             var buff = FindBuff(buffId, sourceUnit.Id);
             if (buff is null)
             {
-                AddBuff(buffName, buffId, sourceUnit, newStacks);
+                AddBuff(buffName, buffId, sourceUnit, newStacks, statLogger);
                 return;
             }
 
@@ -59,6 +65,8 @@ namespace Beaversims.Core
         public Dictionary<int, Talent> Talents { get; } = [];
         public List<Item> Items { get; } = [];
         public double HCGM { get; set; } = 1.0;  //Haste Cast Gain Mod
+
+        public bool HasVantus { get; set; } = false;
        
         public int TalentRank(int id) => Talents.TryGetValue(id, out var talent) ? talent.Rank : 0;
         public bool HasTalent(int id) => Talents.ContainsKey(id);
@@ -75,6 +83,11 @@ namespace Beaversims.Core
         public AbilityRepo Abilities { get; } = new();
         public HashSet<int> SummonIds { get; set; } = []; // Type Ids only
         public StatTracker? Stats { get; set; } = new();
+        // If user doesnt have permanent leech for fight, revert to calculate leech value by leech data from other sims.
+        public bool HasPermaLeech {  get; set; } = false;
+
+        // Paladin
+        public bool AwakeningActive { get; set; } = false;
 
 
         public virtual void InitCustomBuffs()
@@ -136,7 +149,7 @@ namespace Beaversims.Core
             }
         }
 
-        public override void AddBuff(string buffName, int buffId, Unit sourceUnit, int stacks)
+        public override void AddBuff(string buffName, int buffId, Unit sourceUnit, int stacks, Logger statLogger = null, double timeStamp = 0)
         {
             var sourceId = sourceUnit.Id;
             Buff buff = TryCreateStatBuff(buffId, sourceUnit, stacks, out var created)
@@ -146,12 +159,16 @@ namespace Beaversims.Core
             if (buff is StatBuff statBuff)
             {
                 ProcessStatBuff(statBuff);
+                if (statLogger != null) { Stats.LogStats(statLogger, timeStamp); }
             }
-
+            if (!buff.AllowMultiple)
+            {
+                RemoveBuff(buffId, sourceUnit, statLogger);
+            }
             Buffs.Add(buff);
         }
 
-        public override bool RemoveBuff(int buffId, Unit sourceUnit)
+        public override bool RemoveBuff(int buffId, Unit sourceUnit, Logger statLogger = null, double timeStamp = 0)
         {
             var sourceId = sourceUnit.Id;
             var idx = Buffs.FindIndex(b => b.Id == buffId && b.SourceId == sourceId);
@@ -163,6 +180,7 @@ namespace Beaversims.Core
                 foreach (var mod in statBuff.StatMods)
                 {
                     Stats.Get(mod.StatName).ChangeAmount(mod.Amount * buff.Stacks, mod.AmountType, removal: true);
+                    if (statLogger != null) { Stats.LogStats(statLogger, timeStamp); }
                 }
             }
 
@@ -170,13 +188,13 @@ namespace Beaversims.Core
             return true;
         }
 
-        public override void ChangeBuffStack(string buffName, int buffId, Unit sourceUnit, int newStacks)
+        public override void ChangeBuffStack(string buffName, int buffId, Unit sourceUnit, int newStacks, Logger statLogger = null, double timeStamp = 0)
         {
             var sourceId = sourceUnit.Id;
             var buff = Buffs.Find(b => b.Id == buffId && b.SourceId == sourceId);
             if (buff is null)
             {
-                AddBuff(buffName, buffId, sourceUnit, newStacks);
+                AddBuff(buffName, buffId, sourceUnit, newStacks, statLogger);
                 return;
             }
 
@@ -192,6 +210,7 @@ namespace Beaversims.Core
                     foreach (var mod in statBuff.StatMods)
                     {
                         Stats.Get(mod.StatName).ChangeAmount(mod.Amount * magnitude, mod.AmountType, removal);
+                        if (statLogger != null) { Stats.LogStats(statLogger, timeStamp); }
                     }
                 }
             }

@@ -42,9 +42,12 @@ namespace Beaversims.Core
         public long? UserMaxHp { get; set; }
         public GainMatrix Gains { get; set; } = new();
         public StatTracker UserStats { get; set; }
+        public bool SummerActive { get; set; } = false;
 
         //Paladin
         public int BeaconCount { get; set; }
+        public bool AwakenedJudgment { get; set; } = false;
+        public bool AwakenedCast {  get; set; } = false;
 
         // TODO implement preEvent option.
         public double? SourceHp_p()//(bool preEvent=false) 
@@ -70,12 +73,29 @@ namespace Beaversims.Core
 
     internal abstract class ThroughputEvent : Event
     {
-        public bool Tick { get; set; }
-        public bool Crit { get; set; }
-        public bool Aoe { get; set; }
+        public bool Tick { get; set; } = false;
+        public bool Crit { get; set; } = false;
+        public bool Aoe { get; set; } = false;
         public AmountContainer Amount { get; set; } = new();
-        public bool IsDrEvent() => IsDamageTakenEvent();
+        public bool FullyAbsorbed { get; set; } = false;
+        public bool AbsorbAbility { get; set; } = false;
+
+
+        // Non DR abilities
+        // Spirit Link, 
+        public bool IsDrEvent() => IsDamageTakenEvent() && !Ability.IgnoreDr;
         public bool IsAvoidanceEvent() => IsDrEvent() && Aoe;
+
+        public double RawToNarawConvert(double value)
+        {
+            if (Amount.Raw == 0) return 0;
+            return value * (Amount.Naraw / Amount.Raw);
+        }
+        public double EffToNaeffConvert(double value)
+        {
+            if (Amount.Eff == 0) return 0;
+            return value * (Amount.Naeff / Amount.Eff);
+        }
 
     }
 
@@ -86,11 +106,12 @@ namespace Beaversims.Core
 
     internal sealed class HealEvent : ThroughputEvent
     {
-        public bool FullyAbsorbed { get; set; }
-        public bool AbsorbAbility { get; set; }
+
+
         public double masteryEffectiveness { get; set; }
         public double RawToEffConvert(double value)
         {
+            if (Amount.Raw == 0) return 0;
             return value * (Amount.Eff / Amount.Raw);
         }
     }

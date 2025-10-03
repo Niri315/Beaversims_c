@@ -119,7 +119,7 @@ namespace Beaversims.Core.Parser
             evt.TargetUnit = allUnits.Get(targetUnitId);
         }
 
-        public static void SetAbility(JsonElement logEvent, Event evt, User user)
+        public static void SetAbility(JsonElement logEvent, Event evt, User user, Logger logger)
             //todo
         {
             var eventType = logEvent.GetProperty("type").GetString();
@@ -140,15 +140,18 @@ namespace Beaversims.Core.Parser
                 if (!user.Abilities.Contains(abilityName))
                 {
                     ability = AbilityFactory.Create(abilityName);
+
                     if (ability != null)
                     {
                         user.Abilities.Add(ability);
                     }
-                    else if (evt.UserSuperSource) 
+
+                    else if (evt.UserSuperSource)
                     {
                         ability = new Ability();
                         ability.Name = abilityName;
                         user.Abilities.Add(ability);
+                        logger.Log(abilityName);
                     }
                     else
                     {
@@ -316,7 +319,16 @@ namespace Beaversims.Core.Parser
 
                     if (tpEvent.SourceUnit == user)
                     {
+                        ability.Heal.NonSummon.Eff += tpEvent.Amount.Eff;
+                        ability.Heal.NonSummon.Raw += tpEvent.Amount.Raw;
+                        ability.Heal.NonSummon.Count += 1;
 
+                        if (tpEvent.TargetUnit is not User)
+                        {
+                            ability.Heal.Nsnsna.Eff += tpEvent.Amount.Naeff;
+                            ability.Heal.Nsnsna.Raw += tpEvent.Amount.Naraw;
+                            ability.Heal.Nsnsna.Count += 1;
+                        }
                     }
                     if (tpEvent.Crit)
                     {
@@ -344,6 +356,14 @@ namespace Beaversims.Core.Parser
                     {
                         ability.Damage.Hit.Dmg += tpEvent.Amount.Eff;
                         ability.Damage.Hit.Count += 1;
+                    }
+                    if (tpEvent.SourceUnit is User)
+                    {
+                        ability.Damage.NonSummon.Dmg += tpEvent.Amount.Naeff;
+                        ability.Damage.NonSummon.Count += 1;
+
+                        ability.Damage.Nsnsna.Dmg += tpEvent.Amount.Naeff;
+                        ability.Damage.Nsnsna.Count += 1;
                     }
                 }
             }
@@ -469,12 +489,12 @@ namespace Beaversims.Core.Parser
             }
         }
 
-        public static List<Event> ParseUserEvents(JsonElement userEvents, UnitRepo allUnits)
+        public static List<Event> ParseUserEvents(JsonElement userEvents, UnitRepo allUnits, Fight fight)
         {
             var events = new List<Event>();
             var startLogTime = userEvents[0].GetProperty("timestamp").GetInt32();
             var user = allUnits.GetUser();
-
+            var miaAbilityLogger = new Logger("Uncategorized Abilities", fight, user.Id.TypeId);
             foreach (var logEvent in userEvents.EnumerateArray())
             {
                 if (SkipEvent(logEvent))
@@ -485,9 +505,10 @@ namespace Beaversims.Core.Parser
                 {
                     var evt = CreateEvent(logEvent);
                     var timestamp = Utils.ConvertLogTime(logEvent.GetProperty("timestamp").GetInt32(), startLogTime);
+                    evt.Timestamp = timestamp;
                     ParseEventTypes(logEvent, evt, user);
                     AdjustUnitIds(logEvent, evt, allUnits);
-                    SetAbility(logEvent, evt, user);
+                    SetAbility(logEvent, evt, user, miaAbilityLogger);
                     AdjustEvent(evt);
                     ParseCoords(logEvent, evt);
                     SetAbilityData(evt, user);

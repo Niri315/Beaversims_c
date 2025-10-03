@@ -1,0 +1,487 @@
+Pillar of Lights
+	Intellect
+		Heal: 2,5958207089181724
+		Damage: 0,02147855154486192
+	Vers
+		Heal: 3,3328277662489567
+		Damage: 0,027576755482992703
+	Crit
+		Heal: 2,613756690226832
+		Damage: 0,02789882175902622
+	Mastery
+		Heal: 5,2981936273685175
+		Damage: 0,043838746077158604
+-------------------
+Holy Ritual
+	Crit
+		Heal: 0,3213773974961997
+		Damage: 0,0026368044977188266
+	Intellect
+		Heal: 0,3041506041378546
+		Damage: 0,002538512824626103
+	Vers
+		Heal: 0,3905052360162794
+		Damage: 0,003259248991205901
+	Mastery
+		Heal: 0,620785860543908
+		Damage: 0,005181225507686337
+-------------------
+Melee
+	Vers
+		Heal: 0,028245010251694628
+		Damage: 0,4384855691514713
+	Crit
+		Heal: 0,020731930337067342
+		Damage: 0,3379685726689199
+	Haste
+		Heal: 0,031776581858118255
+		Damage: 0,4784439705776158
+-------------------
+Seal of the Crusader
+	Intellect
+		Heal: 0,2443944700050272
+		Damage: 0,005815336764916006
+	Vers
+		Heal: 0,3137831024893518
+		Damage: 0,007466430856959237
+	Crit
+		Heal: 0,2504485649924892
+		Damage: 0,005722046529354099
+	Haste
+		Heal: 0,3409454544707592
+		Damage: 0,008539927686105385
+-------------------
+Golden Path
+	Intellect
+		Heal: 0,7576526455194376
+		Damage: 0,015349285106623383
+	Vers
+		Heal: 0,9727658637916977
+		Damage: 0,01970726384132511
+	Crit
+		Heal: 0,7490052373366968
+		Damage: 0,016120228596431144
+	Mastery
+		Heal: 1,511562080164329
+		Damage: 0,030757584971014332
+	Haste
+		Heal: 2,3041704726946466
+		Damage: 0,050769596788614584
+-------------------
+Truth Prevails
+	Intellect
+		Heal: 1,3152108684342874
+		Damage: 0,022424955519591196
+	Vers
+		Heal: 1,6886263699687485
+		Damage: 0,028791863072754033
+	Crit
+		Heal: 1,2937268281127687
+		Damage: 0,025920117034805054
+	Mastery
+		Heal: 2,599539950590507
+		Damage: 0,04557479805561578
+	Haste
+		Heal: 2,2240682242187604
+		Damage: 0,041458911294171064
+-------------------
+Consecration
+	Intellect
+		Heal: 0,04006865055579646
+		Damage: 1,1679847642102734
+	Vers
+		Heal: 0,05144496716190381
+		Damage: 1,4995997371243852
+	Crit
+		Heal: 0,04123838433630834
+		Damage: 1,1845768519954099
+	Haste
+		Heal: 0,11901998077454123
+		Damage: 3,318013771209646
+-------------------
+Judgment
+	Intellect
+		Heal: 0,08258407048027933
+		Damage: 1,3131119383985204
+	Vers
+		Heal: 0,10603139199904275
+		Damage: 1,6859315103898156
+	Crit
+		Heal: 14,030968745413931
+		Damage: 2,654290714488433
+	Haste
+		Heal: 0,1481654953370622
+		Damage: 2,246015939293747
+-------------------
+Hammer and Anvil
+	Intellect
+		Heal: 9,724024417948499
+		Damage: 0,27893487959556146
+	Vers
+		Heal: 12,484875580381713
+		Damage: 0,3581302470149534
+	Crit
+		Heal: 9,405333938474055
+		Damage: 0,2814180706341299
+	Haste
+		Heal: 16,304451772768605
+		Damage: 0,5132434030477067
+-------------------
+Greater Judgment
+	Intellect
+		Heal: 0,6005203528015357
+	Vers
+		Heal: 0,7710204711513718
+	Crit
+		Heal: 0,43647853670887715
+	Haste
+		Heal: 1,0531732346991551
+-------------------
+Holy Bulwark
+	Stamina
+		Heal: 0,21931514479824635
+-------------------
+Decree: Oath-Bound
+	Vers
+		Damage Reduction: 0,6237701220757772
+-------------------
+Judgment of Light
+	Intellect
+		Heal: 0,3790255693283945
+		Damage: 0,007727199384372122
+	Vers
+		Heal: 0,4866387486763101
+		Damage: 0,009921110720435763
+	Crit
+		Heal: 0,3907131357471985
+		Damage: 0,007820128347072075
+	Mastery
+		Heal: 0,7322070973595521
+		Damage: 0,01433313099007981
+	Haste
+		Heal: 0,6469130687833982
+		Damage: 0,014254288929634488
+-------------------
+Leech
+	Leech
+		Heal: 45,16145062990644
+-------------------
+Crusader Strike
+	Intellect
+		Heal: 0,03991853417557407
+		Damage: 0,7175300435586397
+	Vers
+		Heal: 0,05125222964407168
+		Damage: 0,9212516273077631
+	Crit
+		Heal: 11,87933880146441
+		Damage: 2,469766741810094
+	Haste
+		Heal: 0,0713403568192363
+		Damage: 1,2332598819562828
+-------------------
+Avenging Crusader
+	Intellect
+		Heal: 4,29109206580513
+		Damage: 0,17310640102764888
+	Vers
+		Heal: 5,509421638910564
+		Damage: 0,22225487988375608
+	Crit
+		Heal: 3,6437288109463166
+		Damage: 0,17214509172103754
+	Mastery
+		Heal: 8,266421240521673
+		Damage: 0,3201263821054735
+	Haste
+		Heal: 7,172532725282348
+		Damage: 0,3204050907985313
+-------------------
+Word of Glory
+	Intellect
+		Heal: 6,404942261961719
+		Damage: 0,23601101817661485
+	Vers
+		Heal: 8,223437519605795
+		Damage: 0,3030194157159351
+	Crit
+		Heal: 5,975628501434558
+		Damage: 0,18304212469980755
+	Mastery
+		Heal: 11,949013901470597
+		Damage: 0,44786995834317606
+	Haste
+		Heal: 10,831606784903597
+		Damage: 0,4292138339974279
+-------------------
+Sacred Weapon
+	Intellect
+		Heal: 3,4348937227190595
+		Damage: 0,6551266261763898
+	Vers
+		Heal: 4,410130920776626
+		Damage: 0,841130592197036
+	Crit
+		Heal: 3,434999711753575
+		Damage: 0,6884316863278291
+	Mastery
+		Heal: 6,736761441878901
+		Damage: 0,20074357878997764
+	Haste
+		Heal: 4,824762199766359
+		Damage: 0,8201116299485299
+-------------------
+Light of Dawn
+	Intellect
+		Heal: 6,72009846749999
+		Damage: 0,1974979959970565
+	Vers
+		Heal: 8,628073074332285
+		Damage: 0,2535717519226649
+	Crit
+		Heal: 6,203598482610951
+		Damage: 0,20676347186672928
+	Mastery
+		Heal: 12,883014035783455
+		Damage: 0,40310172826151996
+	Haste
+		Heal: 11,502565711700079
+		Damage: 0,3585207053931289
+-------------------
+Radiant Aura
+	Intellect
+		Heal: 0,1356930228564892
+		Damage: 0,012022116558743504
+	Vers
+		Heal: 0,17421907172118847
+		Damage: 0,01543544349515579
+	Crit
+		Heal: 0,14802794291082302
+		Damage: 0,011631851908363652
+	Mastery
+		Heal: 0,12150391140812938
+		Damage: 0,024537712146368504
+	Haste
+		Heal: 0,24216002606636
+		Damage: 0,022359349115636806
+-------------------
+Sacred Word
+	Intellect
+		Heal: 0,3487328117557232
+		Damage: 0,008476015645584468
+	Vers
+		Heal: 0,44774525221579253
+		Damage: 0,010882531368099576
+	Crit
+		Heal: 0,41594932864148626
+		Damage: 0,01314741934290184
+	Mastery
+		Heal: 0,47364294280908
+		Damage: 0,017299951389026028
+	Haste
+		Heal: 0,569460562712776
+		Damage: 0,01553988864877671
+-------------------
+Saved by the Light
+	Intellect
+		Heal: 1,820019184199223
+	Vers
+		Heal: 2,336760181997668
+-------------------
+Tyranny
+	Vers
+		Damage Reduction: 4,573937795114329
+	Avoidance
+		Damage Reduction: 12,488932999550428
+-------------------
+Holy Prism
+	Intellect
+		Heal: 2,701346978629645
+		Damage: 0,6170236104090955
+	Vers
+		Heal: 3,4683151211940695
+		Damage: 0,792209344095897
+	Crit
+		Heal: 2,353759874551198
+		Damage: 0,6241972475415092
+	Mastery
+		Heal: 4,642707663238776
+		Damage: 0,17720785702994918
+-------------------
+Shield of the Righteous
+	Intellect
+		Heal: 0,009618049666780235
+		Damage: 0,15006070236404814
+	Vers
+		Heal: 0,012348812410840954
+		Damage: 0,19266603188097356
+	Crit
+		Heal: 0,007820388450959477
+		Damage: 0,13062081304846662
+	Haste
+		Heal: 0,016937114061405745
+		Damage: 0,24672498220195352
+-------------------
+Shining Righteousness
+	Intellect
+		Heal: 0,004596748342058371
+		Damage: 0,06222184993867714
+	Vers
+		Heal: 0,005901860038421445
+		Damage: 0,07988791692374778
+	Crit
+		Heal: 0,00643332702847632
+		Damage: 0,06902580545133183
+	Haste
+		Heal: 0,008260778323100692
+		Damage: 0,1069906753831337
+-------------------
+Forge's Reckoning
+	Intellect
+		Damage: 0,18012192479239364
+	Vers
+		Damage: 0,23126225559256045
+	Crit
+		Damage: 0,17213051877577595
+	Haste
+		Damage: 0,22959418187154365
+-------------------
+Holy Shock
+	Intellect
+		Heal: 2,831602054180085
+		Damage: 0,7467375644122811
+	Vers
+		Heal: 3,635552300170996
+		Damage: 0,9587517659536554
+	Crit
+		Heal: 2,9944749994721382
+		Damage: 0,7219592775353442
+	Haste
+		Heal: 2,6393623104704713
+		Damage: 0,6908550336928332
+	Mastery
+		Heal: 5,220655121704662
+		Damage: 0,18177220891511467
+-------------------
+Conquer
+	Vers
+		Damage Reduction: 0,22621455212929026
+	Avoidance
+		Damage Reduction: 0,715095062162308
+-------------------
+Oath-Breaker
+	Vers
+		Damage Reduction: 0,5215283540207319
+	Avoidance
+		Damage Reduction: 1,5825385426760956
+-------------------
+Lesser Weapon
+	Intellect
+		Heal: 0,6868720226743114
+		Damage: 1,0773831430290948
+	Vers
+		Heal: 0,881889161745142
+		Damage: 1,3832744463589708
+	Crit
+		Heal: 0,5536343981887468
+		Damage: 1,1068764215724471
+	Haste
+		Heal: 0,9792271141739342
+		Damage: 1,483546884252728
+	Mastery
+		Heal: 1,2371985432831247
+		Damage: 0,004518610086722615
+-------------------
+Ethereal Reconstitution
+	Vers
+		Heal: 1,6570989677170742
+		Damage: 0,014083770954647653
+	Crit
+		Heal: 0,9837528943188912
+		Damage: 0,01701490548540172
+	Haste
+		Heal: 1,8129439017426399
+		Damage: 0,01576467655103837
+-------------------
+Ethereal Guard
+	Vers
+		Heal: 4,238300700590839
+	Crit
+		Heal: 3,6513121865801463
+	Haste
+		Heal: 4,65439544442302
+-------------------
+Behead
+	Vers
+		Damage Reduction: 0,4226960459865613
+-------------------
+Tempered in Battle
+	Vers
+		Damage Reduction: 0,9976126320019174
+-------------------
+Blessing of Sacrifice
+	Vers
+		Damage Reduction: 0,16648205258753043
+-------------------
+Lay on Hands
+	Stamina
+		Heal: 0,05362746184140301
+-------------------
+Lightforged Blessing
+	Stamina
+		Heal: 0,003962059904935514
+-------------------
+Shattering Bone
+	Vers
+		Damage Reduction: 0,00015555838058752585
+-------------------
+Invoke the Oath
+	Vers
+		Damage Reduction: 0,17503715764494432
+	Avoidance
+		Damage Reduction: 0,5533163359680184
+-------------------
+Holy Light
+	Intellect
+		Heal: 0,31664808212176565
+	Vers
+		Heal: 0,40655100585306553
+	Crit
+		Heal: 0,2679070810791036
+	Mastery
+		Heal: 0,646293807986138
+	Haste
+		Heal: 0,5703975787587429
+-------------------
+King's Thrall
+	Vers
+		Damage Reduction: 0,143352525830293
+	Avoidance
+		Damage Reduction: 0,453156892007321
+-------------------
+Dimension Glare
+	Vers
+		Damage Reduction: 0,18359645333708352
+	Avoidance
+		Damage Reduction: 0,5803734374118621
+-------------------
+Seal the Forge
+	Vers
+		Damage Reduction: 0,03161356773783308
+	Avoidance
+		Damage Reduction: 0,09993480071846789
+-------------------
+Twilight Massacre
+	Vers
+		Damage Reduction: 0,16907840324775203
+-------------------
+Reap
+	Vers
+		Damage Reduction: 0,8136217541049021
+-------------------
+Self-Destruct
+	Vers
+		Damage Reduction: 0,26256189237517674
+	Avoidance
+		Damage Reduction: 0,8186998870608454
+-------------------

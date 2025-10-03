@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Beaversims.Core
 {
+
     public enum ItemSlot
     {
         None = 0,
@@ -29,12 +30,21 @@ namespace Beaversims.Core
         Tabard = 19
     }
 
-    internal class Item(int id, string name, int ilvl, ItemSlot itemSlot)
+    internal class Item
     {
-        public int Id { get; } = id;
-        public string Name { get; } = name;
-        public int Ilvl { get; } = ilvl;
-        public ItemSlot ItemSlot { get; } = itemSlot;
+        public int Id { get; }
+        public string Name { get; }
+        public int Ilvl { get; }
+        public ItemSlot ItemSlot { get; }
 
+        public Item(int id, string name, int ilvl, ItemSlot itemSlot)
+        {
+            Id = id;
+            Name = name;
+            Ilvl = ilvl;
+            ItemSlot = itemSlot;
+        }
     }
+
+  
 }

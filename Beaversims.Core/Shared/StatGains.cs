@@ -136,11 +136,12 @@ namespace Beaversims.Core.Shared
             var stat = (SecondaryStat)evt.UserStats.Get(statName);
             var baseGainRaw = Calc.SecondaryGainCalc(stat, evt.Amount.Raw, stat.PercentRate);
             double gainRaw = 0.0;
-
             var gainType = GainType.Eff;
+
             if (IsCastScaler(evt))
             {
                 gainRaw += baseGainRaw * user.HCGM * ability.HGCM;
+
             }
             if (IsTickScaler(evt))
             {
@@ -150,6 +151,8 @@ namespace Beaversims.Core.Shared
             {
                 gainRaw += baseGainRaw;
             }
+            gainRaw *= ability.HasteGainMod * user.Spec.HasteGainMod;
+            
             var gain = evt.RawToEffConvert(gainRaw);
             evt.Gains[statName][gainType] += gain;
             user.Spec.DupliGainsHeal(evt, user, statName, gainRaw);
@@ -200,6 +203,7 @@ namespace Beaversims.Core.Shared
         public static void AutoStatGainsHeal(HealEvent evt, User user)
         {
             var ability = evt.Ability;
+
             if (ability.ScalesWith(StatName.Intellect))
             {
                 PrimaryGainsHeal(evt, user, StatName.Intellect);
@@ -246,11 +250,94 @@ namespace Beaversims.Core.Shared
             }
         }
 
-        public static void AutoStatGainsMisc(ThroughputEvent evt)
+        public static void LeechGains_simple(ThroughputEvent evt)
+        {
+            if (evt.IsHealDoneEvent() && evt.AbilityName == Abilities.Leech.name)
+            {
+                var gain = evt.Amount.Eff / evt.UserStats.Get(StatName.Leech).Eff;
+                evt.Gains[StatName.Leech][GainType.Eff] += gain;
+            }
+        }
+
+        public static void LeechGains_adv(ThroughputEvent evt, User user)
+        {
+            if (Shared.DupliEffects.IsLeechSourceEvent(evt))
+            {
+                var leechStat = (Leech)evt.UserStats.Get(StatName.Leech);
+                var leechAbility = user.Abilities.Get(Abilities.Leech.name);
+                var gain = (evt.Amount.Naraw / (leechStat.PercentRate * 100)) * leechStat.Multi * leechAbility.HypoTrueUr();
+                evt.Gains[StatName.Leech][GainType.Eff] *= gain;
+            }
+        }
+
+        public static void CritGainsDmgDerived(DamageEvent evt, User user)
+        {
+
+            var ability = evt.Ability;
+
+          
+            var sourceAbility = user.Abilities.Get(ability.SourceAbility);
+            var statName = StatName.Crit;
+            var crit = (Crit)evt.UserStats.Get(statName);
+            double critInc;
+            var gainType = GainType.Dmg;
+
+            if (ability.ReverseEffect) { critInc = crit.IncHeal + sourceAbility.BonusCritIncHeal; }
+            else { critInc = crit.IncDmg + sourceAbility.BonusCritIncDmg; }
+
+            var estNonCritAmount = evt.Amount.Eff * ((sourceAbility.Damage.Hit.Dmg + (sourceAbility.Damage.Crit.Dmg / critInc)) / sourceAbility.Damage.Dmg);
+            var gain = Calc.CritGainCalc(crit, estNonCritAmount, false, critInc);
+
+            evt.Gains[statName][gainType] += gain;
+            user.Spec.DupliGainsHeal(evt, user, statName, gain);
+            
+        }
+        public static void CritGainsHealDerived(HealEvent evt, User user)
+        {
+           
+            var ability = evt.Ability;
+
+
+            var sourceAbility = user.Abilities.Get(ability.SourceAbility);
+            var statName = StatName.Crit;
+            var crit = (Crit)evt.UserStats.Get(statName);
+            double critInc;
+            var gainType = GainType.Eff;
+
+            if (ability.ReverseEffect) { critInc = crit.IncDmg + sourceAbility.BonusCritIncDmg; }
+            else { critInc = crit.IncHeal + sourceAbility.BonusCritIncHeal; }
+
+            var estNonCritAmount = evt.Amount.Raw * ((sourceAbility.Heal.Hit.Raw + (sourceAbility.Heal.Crit.Raw / critInc))/ sourceAbility.Heal.Raw);;
+
+            var gainRaw = Calc.CritGainCalc(crit, estNonCritAmount, false, critInc);
+            var gain = gainRaw * ability.CritUr();
+
+            evt.Gains[statName][gainType] += gain;
+            user.Spec.DupliGainsHeal(evt, user, statName, gainRaw);
+
+        }
+
+        public static void AutoStatGainsMisc(ThroughputEvent evt, User user)
         {
             VersDefGains(evt);
             AvoidanceGains(evt);
             SuppStamGains(evt);
+            if (evt.Ability.DerivedCritScaler && evt.IsDmgDoneEvent())
+            {
+                CritGainsDmgDerived((DamageEvent)evt, user);
+            }
+            if (evt.Ability.DerivedCritScaler && evt.IsHealDoneEvent())
+            {
+                CritGainsHealDerived((HealEvent)evt, user);
+            }
+            if (user.HasPermaLeech)
+            {
+                LeechGains_simple(evt);
+            }
+            else
+            {
+
+            }
         }
     }
 }

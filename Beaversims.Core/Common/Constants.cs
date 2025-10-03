@@ -11,5 +11,8 @@ namespace Beaversims.Core
         public const double GCD = 1.5;
         public const double castTimeCap = 0.75;
         public const double BlEffectRating = 30 * Haste.percentRate;
+        public const int curVantusId = 1236891; //Manaforge omega
+
+
     }
 }

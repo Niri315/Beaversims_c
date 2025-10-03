@@ -16,6 +16,7 @@ namespace Beaversims.Core
         protected abstract string SpecAbilityNamespace { get; }
         protected abstract string SpecTalentNamespace { get; }
         protected abstract SpecName SpecName { get; }
+        public virtual double HasteGainMod { get; } = 1.0;
         public virtual void InitAbilities(AbilityRepo abilities)
         {
             var abilityTypes = GetType().Assembly
@@ -63,13 +64,14 @@ namespace Beaversims.Core
             return TryCreateSpecTalent(id, rank, out var t) ? t : new Talent(id, rank);
         }
 
-        public abstract void SpecIteration(List<Event> events, UnitRepo allUnits);
+        public abstract void SpecIteration(List<Event> events, UnitRepo allUnits, Fight fight);
         public abstract void DupliGainsHeal(ThroughputEvent tEvt, User user, StatName statName, double gainRaw, GainType gainType = GainType.Eff);
         public abstract void DupliGainsDmg(ThroughputEvent tEvt, User user, StatName statName, double gain, GainType gainType = GainType.Dmg);
 
         public void InitSharedAbilities(AbilityRepo abilities)
         {
-            abilities.Add(new Abilities.Leech());
+            abilities.Add(new Shared.Abilities.Leech());
+            abilities.Add(new Shared.Abilities.BlessingOfSummer());
         }
     }
 }

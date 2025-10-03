@@ -13,6 +13,12 @@ namespace Beaversims.Core
     internal static class Utils
     {
         public static UnitId GetPlayerId(int ownerId) => new UnitId(ownerId, 0);
+        public static string ReadableTime(double timestamp)
+        {
+            int minutes = (int)(timestamp / 60);
+            double remainingSeconds = timestamp % 60;
+            return string.Format("{0:00}:{1:00.000}", minutes, remainingSeconds);
+        }
         public static double ConvertLogTime(int curLogTime, int startLogTime) => (curLogTime - startLogTime) / 1000.0;
         public static GainMatrix InitGainMatrix()
         {
@@ -47,5 +53,42 @@ namespace Beaversims.Core
 
             return sb.ToString();
         }
-    }
+        public static void CleanUp(UnitRepo allUnits)
+        {
+            var user = allUnits.GetUser();
+            user.Stats = null;
+            foreach (var unit in allUnits)
+            {
+                unit.Buffs = null;
+                unit.Hp = null;
+                unit.MaxHp = null;
+                unit.Coords = null;
+            }
+        }
+        public static GainType ReverseGainType(GainType gainType) =>
+            gainType switch
+            {
+                GainType.Eff => GainType.Dmg,
+                GainType.BalEff => GainType.BalDmg,
+                GainType.MsEff => GainType.MsDmg,
+                GainType.Dmg => GainType.Eff,
+                GainType.BalDmg => GainType.BalEff,
+                GainType.MsDmg => GainType.MsEff,
+                GainType.SupDmg => GainType.SupEff,
+                _ => gainType
+            };
+
+        public static GainType GainTypeToHeal(GainType gainType) =>
+            gainType switch
+            {
+                GainType.Dmg => GainType.Eff,
+                GainType.BalDmg => GainType.BalEff,
+                GainType.MsDmg => GainType.MsEff,
+                GainType.SupDmg => GainType.SupEff,
+                _ => gainType
+            };
+
+        public static string ProjectRoot() => Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\Beaversims.Core"));
+
+}
 }

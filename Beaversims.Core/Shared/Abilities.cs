@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace Beaversims.Core.Abilities
+namespace Beaversims.Core.Shared.Abilities
 {
     /* -------*
      * Common *
@@ -17,6 +17,8 @@ namespace Beaversims.Core.Abilities
         public Leech() 
         { 
             Name = name;
+            LeechSource = false;
+            CanDupli = false;
         }
     }
 
@@ -34,6 +36,18 @@ namespace Beaversims.Core.Abilities
     /* ------- *
      * Paladin *
      * ------- */
+
+    internal class BlessingOfSummer : SharedAbility
+    {
+        public const string name = "Blessing of Summer";
+        public const int buffId = 388007;
+        public double Coef { get; set; } = 0.12;
+        public BlessingOfSummer()
+        {
+            Name = name;
+        }
+    }
+
     internal class HolyBulwark : SharedAbility
     {
         public const string name = "Holy Bulwark";
@@ -51,7 +65,6 @@ namespace Beaversims.Core.Abilities
         public LesserBulwark()
         {
             Name = name;
-            CastTime = Constants.GCD;
             SuppStamScaler = true;
         }
     }
@@ -77,6 +90,45 @@ namespace Beaversims.Core.Abilities
             Name = name;
             CastTime = Constants.GCD;
             SuppStamScaler = true;
+        }
+    }
+    /* ------ *
+     * Shaman *
+     * ------ */
+    internal class SpiritLink : SharedAbility
+    {
+        public const string name = "Spirit Link";
+        public SpiritLink()
+        {
+            Name = name;
+            IgnoreDr = true;
+            LeechSource = false;
+            CanDupli = false;
+        }
+    }
+    /* --- *
+     * WW3 *
+     * --- */
+    internal class EtherealReconstitution : SharedAbility
+    {
+        public const string name = "Ethereal Reconstitution";
+        public EtherealReconstitution()
+        {
+            Name = name;
+            Scalers.UnionWith([SN.Crit, SN.Haste, SN.Vers]);
+            HasteScalers.UnionWith([HST.Auto]);
+        }
+    }
+    internal class EtherealGuard : SharedAbility
+    {
+        public const string name = "Ethereal Guard";
+        public EtherealGuard()
+        {
+            Name = name;
+            Scalers.UnionWith([SN.Haste, SN.Vers]);
+            HasteScalers.UnionWith([HST.Auto]);
+            DerivedCritScaler = true;
+            SourceAbility = EtherealReconstitution.name;
         }
     }
 }

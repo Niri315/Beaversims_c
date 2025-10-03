@@ -8,6 +8,7 @@ using System.Numerics;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 
 
@@ -85,18 +86,25 @@ namespace Beaversims.Core.Parser
 
         public static void GetStarterRatings(User user, JsonElement userInfo)
         {
-            //todo non perma leech solution
+            
             var stats = user.Stats;
+            var leechRating = userInfo.GetProperty("leech").GetInt32();
+
+            if (leechRating > stats.Get(StatName.Leech).Rating)
+            {
+                user.HasPermaLeech = true;
+            }
             stats.Get(StatName.Intellect).Rating = userInfo.GetProperty("intellect").GetInt32();
             stats.Get(StatName.Stamina).Rating = userInfo.GetProperty("stamina").GetInt32();
             stats.Get(StatName.Crit).Rating = userInfo.GetProperty("critSpell").GetInt32();
             stats.Get(StatName.Haste).Rating = userInfo.GetProperty("hasteSpell").GetInt32();
             stats.Get(StatName.Mastery).Rating = userInfo.GetProperty("mastery").GetInt32();
             stats.Get(StatName.Vers).Rating = userInfo.GetProperty("versatilityHealingDone").GetInt32();
-            stats.Get(StatName.Leech).Rating = userInfo.GetProperty("leech").GetInt32();
+            stats.Get(StatName.Leech).Rating = leechRating;
             stats.Get(StatName.Avoidance).Rating = userInfo.GetProperty("avoidance").GetInt32();
             stats.UpdateAllStats();
         }
+
         
         public static void SetItemsTalents(JsonElement playerData, UnitRepo allUnits)
         {
@@ -117,7 +125,16 @@ namespace Beaversims.Core.Parser
                         var itemName = item.GetProperty("name").GetString();
                         var ilvl = item.GetProperty("itemLevel").GetInt32();
 
-                        player.Items.Add(new Item(itemId, itemName, ilvl, itemSlot));
+                        if (player is User)
+                        {
+                            var gainItem = Sim.ItemGenerator.CreateItem(itemId, itemName, ilvl, itemSlot);
+                            user.Items.Add(gainItem);
+                        }
+                        else
+                        {
+                            player.Items.Add(new Item(itemId, itemName, ilvl, itemSlot));
+                        }
+
                     }
                     foreach (var talentElement in playerElement.GetProperty("combatantInfo").GetProperty("talentTree").EnumerateArray())
                     {
@@ -137,7 +154,12 @@ namespace Beaversims.Core.Parser
                 }
             }
         }
-        public static void AddStarterBuffs(JsonElement combatantEvents, UnitRepo allUnits)
+
+
+        public static bool VantusCheck(string name, Fight fight) => name.EndsWith(fight.Name);
+
+
+        public static void AddStarterBuffs(JsonElement combatantEvents, UnitRepo allUnits, Fight fight)
         {
             foreach (var playerElement in combatantEvents.EnumerateArray())
             {
@@ -153,6 +175,17 @@ namespace Beaversims.Core.Parser
                         ? stacksElement.GetInt32()
                         : 1;
                     var buffName = buffElement.GetProperty("name").GetString();
+
+                    if (buffName.StartsWith("Vantus Rune"))
+                    {
+                        if (VantusCheck(buffName, fight))
+                        {
+                            var user = allUnits.GetUser();
+                            user.HasVantus = true;
+                        }
+                        continue;
+                    }
+
                     Unit sourceUnit;
 
                     if (allUnits.Contains(sourceUnitId)) 
@@ -175,7 +208,7 @@ namespace Beaversims.Core.Parser
 
 
 
-        public static UnitRepo ParseUnits(JsonElement playerData, JsonElement combatantEvents, JsonElement userInfo, int userId)
+        public static UnitRepo ParseUnits(JsonElement playerData, JsonElement combatantEvents, JsonElement userInfo, int userId, Fight fight)
         {
             var allUnits = InitPlayers(playerData, userId);
             var user = allUnits.GetUser();
@@ -186,9 +219,14 @@ namespace Beaversims.Core.Parser
             SetThroughputValues(allUnits, playerData);
             SetItemsTalents(playerData, allUnits);
             user.InitCustomBuffs();
-            AddStarterBuffs(combatantEvents, allUnits);
+            AddStarterBuffs(combatantEvents, allUnits, fight);
             GetStarterRatings(user, userInfo); // Resetting ratings here.
             // Vantus goes here, after ratings reset.
+            if (user.HasVantus) 
+            {
+                user.AddBuff("Vantus Rune" + fight.Name, Constants.curVantusId, user, 1);
+            }
+
             return allUnits;
         }
     }

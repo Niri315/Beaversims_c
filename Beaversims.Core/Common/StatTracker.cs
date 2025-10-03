@@ -36,6 +36,39 @@ namespace Beaversims.Core
             _stats[StatName.Leech] = new Leech();
             _stats[StatName.Avoidance] = new Avoidance();
         }
+
+        public void LogStats(Logger statLogger, double timestamp)
+        {
+            statLogger.Log("----------------------");
+            statLogger.Log(Utils.ReadableTime(timestamp) + "\n");
+            foreach (var stat in _stats.Values)
+            {
+                statLogger.Log(stat.Name.ToString());
+                statLogger.Log($"\t Rating: {Math.Round(stat.Rating)}");
+                var multiFactor = Math.Round((stat.Multi - 1) * 100, 2);
+                statLogger.Log($"\t Multiplicative Factor: {multiFactor}%");
+
+
+                if (stat is NonPrimaryStat npStat) 
+                {
+                    var basePercent = Math.Round(npStat.Base / npStat.PercentRate, 2);
+                    var effPercent = Math.Round(npStat.Eff / npStat.PercentRate, 2);
+                    statLogger.Log($"\t DR Bracket: {npStat.Bracket}");
+                    statLogger.Log($"\t Base: {basePercent}%");
+                    statLogger.Log($"\t Effective Percent: {effPercent}%");
+                    if (stat is Crit crit)
+                    {
+                        statLogger.Log($"\t Crit Inc Heal: {Math.Round(crit.IncHeal, 2)}");
+                        statLogger.Log($"\t Crit Inc Damage: {Math.Round(crit.IncDmg, 2)}");
+
+                    }
+
+                }
+
+            }
+
+        }
+
         public StatTracker Clone()
         {
             var clone = new StatTracker();

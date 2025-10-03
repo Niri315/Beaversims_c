@@ -5,7 +5,27 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Beaversims.Core.Data.StatBuffs
-{   
+{  
+    /* ------ *
+     * Vantus *
+     * ------ */
+    internal class Vantus : StatBuff
+    {
+        // Keeping it here since if its used during the fight it will be applied correctly.
+        // Adding extra logic on init for it.
+        public const string name = "Vantus (custom)";
+        public const int id = Constants.curVantusId;
+        public Vantus(UnitId sourceId, int stacks)
+            : base(id, sourceId, name, stacks)
+        {
+            StatMods.Add(
+                new StatMod(
+                    StatName.Vers,
+                    1900,
+                    StatAmountType.Rating)
+            );
+        }
+    }
     /* ---------- *
      * Raid Buffs *
      * ---------- */
@@ -17,6 +37,7 @@ namespace Beaversims.Core.Data.StatBuffs
         public ArcaneIntellect(UnitId sourceId, int stacks)
             : base(id, sourceId, name, stacks)
         {
+            AllowMultiple = false;
             StatMods.Add(
                 new StatMod(
                     StatName.Intellect,
@@ -33,6 +54,7 @@ namespace Beaversims.Core.Data.StatBuffs
         public MarkOfTheWild(UnitId sourceId, int stacks)
             : base(id, sourceId, name, stacks)
         {
+            AllowMultiple = false;
             StatMods.Add(
                 new StatMod(
                     StatName.Vers,
@@ -49,6 +71,7 @@ namespace Beaversims.Core.Data.StatBuffs
         public Skyfury(UnitId sourceId, int stacks)
             : base(id, sourceId, name, stacks)
         {
+            AllowMultiple = false;
             StatMods.Add(
                 new StatMod(
                     StatName.Mastery,
@@ -65,6 +88,7 @@ namespace Beaversims.Core.Data.StatBuffs
         public PowerWordFortitude(UnitId sourceId, int stacks)
             : base(id, sourceId, name, stacks)
         {
+            AllowMultiple = false;
             StatMods.Add(
                 new StatMod(
                     StatName.Stamina,
@@ -168,6 +192,7 @@ namespace Beaversims.Core.Data.StatBuffs
         public PowerInfusion(UnitId sourceId, int stacks)
             : base(id, sourceId, name, stacks)
         {
+            AllowMultiple = false;
             StatMods.Add(
                 new StatMod(
                     StatName.Haste,

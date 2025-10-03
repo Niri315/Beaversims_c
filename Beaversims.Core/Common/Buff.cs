@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Beaversims.Core
 {
-    public enum BuffSourceType {Item, Talent, Race, Spec}
+    public enum BuffSourceType {Item, Talent, Race, Spec, Vantus}
 
     internal class StatMod
     {
@@ -28,6 +28,9 @@ namespace Beaversims.Core
         public UnitId SourceId { get; set; }
         public string Name { get; set; }
         public int Stacks { get; set; }
+        // There are bug in logs where buff refreshes are seen are buff applications
+        // Can assume true, but add false on important stat buffs.
+        public bool AllowMultiple { get; set; } = true;
         public Buff(int id, UnitId sourceId, string name, int stacks)
         {
             Id = id;

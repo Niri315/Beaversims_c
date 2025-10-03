@@ -20,6 +20,8 @@ namespace Beaversims.Core
     {
         public HealData Crit { get; set; } = new();
         public HealData Hit { get; set; } = new();
+        public HealData Nsnsna { get; set; } = new();
+        public HealData NonSummon { get; set; } = new();
     }
     internal class DmgData
     {
@@ -31,6 +33,10 @@ namespace Beaversims.Core
     {
         public DmgData Crit { get; set; }  = new();
         public DmgData Hit { get; set; }  = new();
+        public DmgData Nsnsna { get; set; } = new();
+        public DmgData NonSummon { get; set; } = new();
+
+
     }
 
     internal class Ability
@@ -39,11 +45,13 @@ namespace Beaversims.Core
         public double Cooldown { get; set; } = 0.0;
         public double ManaCost_p { get; set; } = 0.0;
         public double CastTime { get; set; } = 0.0;
-        public double BonusCritIncHeal {  get; set; } = 0.0;
+        public double BonusCritIncHeal { get; set; } = 0.0;
         public double BonusCritIncDmg { get; set; } = 0.0;
-        public HashSet<StatName> Scalers { get; } = new();
+        public HashSet<StatName> Scalers { get; } = [];
         public bool SuppStamScaler { get; set; } = false;
-        public HashSet<HasteScalerType> HasteScalers { get; } = new();
+        public bool DerivedCritScaler { get; set; } = false;
+        public string SourceAbility {  get; set; } = string.Empty;
+        public HashSet<HasteScalerType> HasteScalers { get; } = [];
         public bool Direct {  get; set; } = false;
         public bool Spell {  get; set; } = false;
         public bool Gcd { get; set; } = false;  // unused currently. Could implement so gcd = true -> cast time = 1.5.
@@ -52,6 +60,10 @@ namespace Beaversims.Core
         public int Casts { get; set; } = 0;
         public double CastTimeGain { get; set; } = 0.0;
         public double HGCM { get; set; } = 1.0;
+        public double HasteGainMod { get; set; } = 1.0;
+        public bool IgnoreDr {  get; set; } = false;
+        public bool LeechSource { get; set; } = true;
+        public bool CanDupli {  get; set; } = true;
 
         public HealDataContainer Heal { get; } = new();
         public DmgDataContainer Damage { get; } = new();
@@ -74,20 +86,36 @@ namespace Beaversims.Core
                 return 0;
             }
         }
-        public double HypoTrueUr()
+        public double Ur()
+        {
+            if (Heal.Raw == 0) { return 0; }
+            return Heal.Eff / Heal.Raw;
+        }
+        public virtual double HypoTrueUr()
         {
             if (Heal.Hypo == 0) { return 0; }
             return Heal.Eff / Heal.Hypo;
         }
-        public double HypoTrueRawR()
+        public virtual double HypoTrueRawR()
         {
             if (Heal.Hypo == 0) { return 0; }
             return Heal.Raw / Heal.Hypo;
         }
-        public double HypoTrueDmgR()
+        public virtual double HypoTrueDmgR()
         {
             if (Damage.Hypo == 0) { return 0; }
             return Damage.Dmg / Damage.Hypo;
+        }
+
+        public double RawToNsnsnarawConvert(double amount)
+        {
+            if (Heal.Raw == 0) { return 0; }
+            return amount * (Heal.Nsnsna.Raw / Heal.Raw);
+        }
+        public double RawToEffConvert(double amount)
+        {
+            if (Heal.Raw == 0) { return 0; }
+            return amount * (Heal.Eff / Heal.Raw);
         }
     }
     internal abstract class SharedAbility : Ability

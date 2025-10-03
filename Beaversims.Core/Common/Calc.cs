@@ -18,6 +18,11 @@ namespace Beaversims.Core
         }
         public static double CritGainCalc(SecondaryStat stat, double amount, bool isCrit, double critInc)
         {
+            if (isCrit)
+            {
+                amount /= critInc;
+            }
+
             return (amount / (stat.PercentRate * 100)) * (critInc - 1) * (1 - (stat.Bracket * 0.1)) * stat.Multi;
         }
         public static double TrueCastTimeCalc(Haste haste, double castTime)

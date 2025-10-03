@@ -21,4 +21,9 @@ namespace Beaversims.Core
         RestorationDruid,
         RestorationShaman, 
     }
+
+    public enum ScalingClass
+    {
+        
+    }
 }

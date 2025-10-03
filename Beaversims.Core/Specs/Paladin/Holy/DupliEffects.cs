@@ -4,11 +4,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Beaversims.Core.Specs.Paladin.Holy
 {
     internal class DupliEffects
     {
+        
+        public static void AddBeaconPolHeal(Event evt)
+        {
+            if (evt.AbilityId == Abilities.BeaconOfLight.polId && evt.IsHealDoneEvent())
+            {
+                var hEvt = (HealEvent)evt;
+                var bol = (Abilities.BeaconOfLight)evt.Ability;
+                bol.PolHeal.Eff += hEvt.Amount.Eff;
+                bol.PolHeal.Raw += hEvt.Amount.Raw;
+            }
+        }
         public static void SetBeaconCoef(User user)
         {
             var beaconOfLight = (Abilities.BeaconOfLight)user.Abilities.Get(Abilities.BeaconOfLight.name);
@@ -23,8 +35,8 @@ namespace Beaversims.Core.Specs.Paladin.Holy
                 var beaconOfFaith = (Talents.BeaconOfFaith)user.Talents[Talents.BeaconOfFaith.id];
                 beaconOfLight.Coef *= 1 - beaconOfFaith.Coef;
             }
-            Console.WriteLine(beaconOfLight.Coef);
         }
+
         public static bool IsBeaconEvent(HealEvent evt, User user)
             => evt.IsHealDoneEvent() && evt.Ability.Direct && evt.SourceUnit is User && !evt.Tick;
         
@@ -52,6 +64,11 @@ namespace Beaversims.Core.Specs.Paladin.Holy
                 var dupliGainRaw = hypoGain * beaconOfLight.HypoTrueRawR();
                 var dupliGainEff = hypoGain * beaconOfLight.HypoTrueUr();
                 evt.Gains[statName][gainType] += dupliGainEff;
+
+                var dupliGainNsnsnaraw = beaconOfLight.RawToNsnsnarawConvert(dupliGainRaw);
+                Shared.DupliEffects.SummerGains(evt, user, statName, gainRaw, beaconOfLight, evt.SummerActive, false, evt.SourceUnit, gainType);
+
+                Shared.DupliEffects.LeechSourceGains(evt, user, statName, dupliGainNsnsnaraw, gainType);
             }
         }
     }

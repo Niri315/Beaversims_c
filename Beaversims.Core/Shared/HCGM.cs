@@ -42,7 +42,7 @@ namespace Beaversims.Core.Shared
             {
                 user.HCGM *= totalGain / scaleGain;
             }
-            Console.WriteLine($"User HCGM: {user.HCGM}");
+
         }
     }
 }

@@ -16,8 +16,8 @@ namespace Beaversims.Core.Data.CustomBuffs
             StatMods.Add(
                 new StatMod(
                     StatName.Intellect,
-                    0.05,
-                    StatAmountType.Multi)
+                    StatAmountType.Multi,
+                    0.05)
             );
         }
     }
@@ -31,8 +31,8 @@ namespace Beaversims.Core.Data.CustomBuffs
             StatMods.Add(
                 new StatMod(
                     StatName.Crit,
-                    5 * Crit.percentRate,
-                    StatAmountType.Base)
+                    StatAmountType.Base,
+                    5 * Crit.percentRate)
             );
         }
     }
@@ -52,8 +52,8 @@ namespace Beaversims.Core.Data.CustomBuffs
             StatMods.Add(
                 new StatMod(
                     StatName.Mastery,
-                    12 * Specs.Paladin.Holy.HolyPaladin.masteryPr_s,
-                    StatAmountType.Base)
+                    StatAmountType.Base,
+                    12 * Specs.Paladin.Holy.HolyPaladin.masteryPr_s)
             );
         }
     }
@@ -68,8 +68,8 @@ namespace Beaversims.Core.Data.CustomBuffs
             StatMods.Add(
                 new StatMod(
                     StatName.Stamina,
-                    0.03,
-                    StatAmountType.Multi)
+                    StatAmountType.Multi,
+                    0.03)
             );
         }
     }
@@ -84,8 +84,8 @@ namespace Beaversims.Core.Data.CustomBuffs
             StatMods.Add(
                 new StatMod(
                     StatName.Crit,
-                    4 * Crit.percentRate,
-                    StatAmountType.Base)
+                    StatAmountType.Base,
+                    4 * Crit.percentRate)
             );
         }
     }
@@ -100,14 +100,14 @@ namespace Beaversims.Core.Data.CustomBuffs
             StatMods.Add(
                 new StatMod(
                     StatName.Mastery,
-                    2 * Mastery.tooltipPercentRate,
-                    StatAmountType.Base)
+                    StatAmountType.Base,
+                    2 * Mastery.tooltipPercentRate)
             );
             StatMods.Add(
                 new StatMod(
-                    StatName.Intellect,
-                    0.02,
-                    StatAmountType.Multi)
+                    StatName.Intellect, 
+                    StatAmountType.Multi,
+                    0.02)
             );
         }
     }
@@ -124,8 +124,8 @@ namespace Beaversims.Core.Data.CustomBuffs
             StatMods.Add(
                 new StatMod(
                     StatName.Intellect,
-                    0.02,
-                    StatAmountType.Multi)
+                    StatAmountType.Multi,
+                    0.02)
             );
         }
     }

@@ -6,19 +6,22 @@ using System.Threading.Tasks;
 
 namespace Beaversims.Core
 {
-    public enum BuffSourceType {Item, Talent, Race, Spec, Vantus}
+    public enum BuffSourceType {None, Item, Talent, Race, Spec, Vantus}
 
     internal class StatMod
     {
-        public StatName StatName { get; }
-        public double Amount { get; }
+        public StatName StatName { get; set; }
+        public double Amount { get; set; }
         public StatAmountType AmountType { get; }
+        public ScalingData? ScalingData { get; }
 
-        public StatMod(StatName name, double amount, StatAmountType type)
+
+        public StatMod(StatName name, StatAmountType type, double amount=0, ScalingData? scData=null)
         {
             StatName = name;
-            Amount = amount;
             AmountType = type;
+            Amount = amount;
+            ScalingData = scData;
         }
     }
 
@@ -45,8 +48,8 @@ namespace Beaversims.Core
     internal class StatBuff : Buff 
     {
         public List<StatMod> StatMods { get; } = new();
-        public BuffSourceType SourceType { get; protected set; }
-        public int SourceObjId { get; protected set; }
+        public BuffSourceType SourceType { get; protected set; } = BuffSourceType.None;
+        public int SourceObjId { get; protected set; } = 0;
         public StatBuff(int id, UnitId sourceId, string name, int stacks) 
             : base(id, sourceId, name, stacks)
         {

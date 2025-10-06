@@ -31,42 +31,17 @@ namespace Beaversims.Core
             U0 = u0; U1 = u1; U2 = u2; U3 = u3; U4 = u4;
         }
     }
-    internal readonly struct ItemData
-    {
-        public readonly int Id;
-        public readonly string Name;
-        public readonly int Quality;
-        public readonly int ItemClass;
-        public readonly int ItemSubClass;
-        public readonly int InventoryType;
-        public readonly int ItemLevel;
-        public readonly int Expansion;
 
-        public readonly string Icon;
-        public readonly bool HasSockets;
-        public readonly string[] SocketTypes;
-        public readonly (int StatId, int Alloc)[] Stats;
+    //internal readonly struct ItemData
+    //{
+    //    public readonly int Id;
 
-        public ItemData(
-            int id, string name, string icon,
-            int quality, int itemClass, int itemSubClass, int inventoryType, int itemLevel, int expansion,
-            bool hasSockets, string[]? socketTypes, (int, int)[]? stats)
-        {
-            Id = id;
-            Name = name;
-            Icon = icon;
-            Quality = quality;
-            ItemClass = itemClass;
-            ItemSubClass = itemSubClass;
-            InventoryType = inventoryType;
-            ItemLevel = itemLevel;
-            Expansion = expansion;
-
-            HasSockets = hasSockets;
-            SocketTypes = socketTypes ?? Array.Empty<string>();
-            Stats = stats ?? Array.Empty<(int, int)>();
-        }
-    }
+    //    public ItemData(
+    //        int id)
+    //    {
+    //        Id = id;
+    //    }
+    //}
 
 }
 

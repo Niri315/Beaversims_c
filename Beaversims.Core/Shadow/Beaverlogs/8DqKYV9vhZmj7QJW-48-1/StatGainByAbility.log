@@ -1,0 +1,110 @@
+Decree: Oath-Bound
+	Vers
+		Damage Reduction: 0,21270620708723376
+-------------------
+Tyranny
+	Vers
+		Damage Reduction: 2,469289855726759
+	Avoidance
+		Damage Reduction: 6,246784534321062
+-------------------
+Conquer
+	Vers
+		Damage Reduction: 0,029563313928760545
+	Avoidance
+		Damage Reduction: 0,08959353035591125
+-------------------
+Oath-Breaker
+	Vers
+		Damage Reduction: 0,19529696367014157
+	Avoidance
+		Damage Reduction: 0,5918600494234815
+-------------------
+Behead
+	Vers
+		Damage Reduction: 0,28867720060610835
+-------------------
+Cosmic Rip
+	Vers
+		Damage Reduction: 0,06615917918530692
+-------------------
+Besiege
+	Vers
+		Damage Reduction: 0,23159638269915875
+-------------------
+Living Flame
+	Vers
+		Damage Reduction: 0,04074110401822361
+-------------------
+Black Arrow (Withering Fire)
+	Vers
+		Damage Reduction: 0,12757157169840427
+-------------------
+Black Arrow (DoT)
+	Vers
+		Damage Reduction: 0,018950588942557314
+-------------------
+Halo
+	Vers
+		Damage Reduction: 0,005210346888545896
+	Avoidance
+		Damage Reduction: 0,01579029242961923
+-------------------
+Ebon Might
+	Vers
+		Damage Reduction: 0,0007105591881339238
+-------------------
+Healthstone
+	Stamina
+		Heal: 0,011675488146599652
+-------------------
+Shifting Sands
+	Vers
+		Damage Reduction: 0,0006999802981100284
+-------------------
+Lesser Bulwark
+	Stamina
+		Supportive Heal: 0,003134413275804003
+-------------------
+Invoke the Oath
+	Vers
+		Damage Reduction: 0,06520117139132481
+-------------------
+King's Thrall
+	Vers
+		Damage Reduction: 0,07289794462036302
+	Avoidance
+		Damage Reduction: 0,22092192471948133
+-------------------
+Seal the Forge
+	Vers
+		Damage Reduction: 0,008354687763747448
+	Avoidance
+		Damage Reduction: 0,025319420332213398
+-------------------
+King's Hunger
+	Vers
+		Damage Reduction: 0,7289121384842219
+	Avoidance
+		Damage Reduction: 1,7705520260650496
+-------------------
+Dark Star
+	Vers
+		Damage Reduction: 0,1326634525044512
+	Avoidance
+		Damage Reduction: 0,26011348753377883
+-------------------
+Lightforged Blessing
+	Stamina
+		Supportive Heal: 0,0017988091962230176
+-------------------
+Galactic Smash
+	Vers
+		Damage Reduction: 0,08705968112730998
+	Avoidance
+		Damage Reduction: 0,263839980952454
+-------------------
+Twilight Scar
+	Vers
+		Damage Reduction: 0,02410670496866666
+-------------------

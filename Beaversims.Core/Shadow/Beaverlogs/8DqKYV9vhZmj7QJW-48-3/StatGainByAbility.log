@@ -1,0 +1,125 @@
+Melee
+	Vers
+		Damage: 0,9055624202275272
+		Damage Reduction: 5,953540334053707
+	Crit
+		Damage: 0,9178625675907509
+	Haste
+		Damage: 1,4018757821051573
+-------------------
+Holy Bulwark
+	Stamina
+		Supportive Heal: 0,14160007748192982
+-------------------
+Decree: Oath-Bound
+	Vers
+		Damage Reduction: 0,24405060164569015
+-------------------
+Stagger
+	Vers
+		Damage Reduction: 4,520202104783163
+-------------------
+Tyranny
+	Vers
+		Damage Reduction: 2,9473019057139327
+	Avoidance
+		Damage Reduction: 8,038238131070543
+-------------------
+Leech
+	Leech
+		Heal: 28,445294319870385
+-------------------
+Oath-Breaker
+	Vers
+		Damage Reduction: 0,25050431327109124
+	Avoidance
+		Damage Reduction: 0,6962307811967053
+-------------------
+Conquer
+	Vers
+		Damage Reduction: 2,1853676488077944
+	Avoidance
+		Damage Reduction: 3,4899885566980484
+-------------------
+Fractal Claw
+	Vers
+		Damage Reduction: 0,15775246361412681
+-------------------
+Vanquish
+	Vers
+		Damage Reduction: 1,004391207994782
+-------------------
+Besiege
+	Vers
+		Damage Reduction: 0,17978395312632747
+-------------------
+King's Thrall
+	Vers
+		Damage Reduction: 0,08365114281142483
+	Avoidance
+		Damage Reduction: 0,308261000926194
+-------------------
+Lesser Bulwark
+	Stamina
+		Supportive Heal: 0,017704719110838176
+-------------------
+Invoke the Oath
+	Vers
+		Damage Reduction: 0,07271164179928098
+	Avoidance
+		Damage Reduction: 0,26794808446982726
+-------------------
+Cosmic Rip
+	Vers
+		Damage Reduction: 0,25700900964383894
+-------------------
+Cosmic Maw
+	Vers
+		Damage Reduction: 2,7476213747441665
+-------------------
+Tempered in Battle
+	Vers
+		Damage Reduction: 0,012757085002824048
+-------------------
+Twilight Massacre
+	Vers
+		Damage Reduction: 0,1589815466335165
+-------------------
+King's Hunger
+	Vers
+		Damage Reduction: 0,650947723758094
+	Avoidance
+		Damage Reduction: 1,9741475288235224
+-------------------
+Behead
+	Vers
+		Damage Reduction: 0,30961742092350447
+-------------------
+Galactic Smash
+	Vers
+		Damage Reduction: 0,13187219555147126
+	Avoidance
+		Damage Reduction: 0,4257806197069869
+-------------------
+Dark Star
+	Vers
+		Damage Reduction: 0,33573479744961093
+	Avoidance
+		Damage Reduction: 0,8765940897916161
+-------------------
+Lightforged Blessing
+	Stamina
+		Supportive Heal: 0,0009340390517279723
+-------------------
+Starshattered
+	Vers
+		Damage Reduction: 1,7831248685958228
+-------------------
+Starkiller Swing
+	Vers
+		Damage Reduction: 0,31377935892913367
+-------------------
+Twilight Scar
+	Vers
+		Damage Reduction: 0,585786340140946
+-------------------

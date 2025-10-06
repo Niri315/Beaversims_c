@@ -123,19 +123,19 @@ namespace Beaversims.Core
             {
                 Bracket = 0;
             }
-            else if (x <= 39)
+            else if (x <= 40)
             {
                 Bracket = 1;
             }
-            else if (x <= 47)
+            else if (x <= 50)
             {
                 Bracket = 2;
             }
-            else if (x <= 54)
+            else if (x <= 60)
             {
                 Bracket = 3;
             }
-            else if (x <= 66)
+            else if (x <= 70)
             {
                 Bracket = 4;
             }
@@ -160,36 +160,37 @@ namespace Beaversims.Core
             else if (Bracket == 2)
             {
                 postDiminishAmount += DrRate * 30;
-                postDiminishAmount += DrRate * 9 * 0.9;
-                postDiminishAmount += (Rating - (DrRate * 30) - (DrRate * 9)) * 0.8;  // 39–47% amount
+                postDiminishAmount += DrRate * 10 * 0.9;
+                postDiminishAmount += (Rating - (DrRate * 30) - (DrRate * 10)) * 0.8;  // 39–47% amount
             }
             else if (Bracket == 3)
             {
                 postDiminishAmount += DrRate * 30;
-                postDiminishAmount += DrRate * 9 * 0.9;
-                postDiminishAmount += DrRate * 8 * 0.8;
-                postDiminishAmount += (Rating - (DrRate * 30) - (DrRate * 9) - (DrRate * 8)) * 0.7;
+                postDiminishAmount += DrRate * 10 * 0.9;
+                postDiminishAmount += DrRate * 10 * 0.8;
+                postDiminishAmount += (Rating - (DrRate * 30) - (DrRate * 10) - (DrRate * 10)) * 0.7;
             }
             else if (Bracket == 4)
             {
                 postDiminishAmount += DrRate * 30;
-                postDiminishAmount += DrRate * 9 * 0.9;
-                postDiminishAmount += DrRate * 8 * 0.8;
-                postDiminishAmount += DrRate * 7 * 0.7;
-                postDiminishAmount += (Rating - (DrRate * 30) - (DrRate * 9) - (DrRate * 8) - (DrRate * 7)) * 0.6;
+                postDiminishAmount += DrRate * 10 * 0.9;
+                postDiminishAmount += DrRate * 10 * 0.8;
+                postDiminishAmount += DrRate * 10 * 0.7;
+                postDiminishAmount += (Rating - (DrRate * 30) - (DrRate * 10) - (DrRate * 10) - (DrRate * 10)) * 0.6;
             }
             else
             {
                 postDiminishAmount += DrRate * 30;
-                postDiminishAmount += DrRate * 9 * 0.9;
-                postDiminishAmount += DrRate * 8 * 0.8;
-                postDiminishAmount += DrRate * 7 * 0.7;
-                postDiminishAmount += DrRate * 6 * 0.6;
-                postDiminishAmount += (Rating - (DrRate * 30) - (DrRate * 9) - (DrRate * 8) - (DrRate * 7) - (DrRate * 6)) * 0.5;
+                postDiminishAmount += DrRate * 10 * 0.9;
+                postDiminishAmount += DrRate * 10 * 0.8;
+                postDiminishAmount += DrRate * 10 * 0.7;
+                postDiminishAmount += DrRate * 10 * 0.6;
+                postDiminishAmount += (Rating - (DrRate * 30) - (DrRate * 10) - (DrRate * 10) - (DrRate * 10) - (DrRate * 10)) * 0.5;
             }
 
             PostDr = postDiminishAmount;
         }
+
         protected void CopyTo(NonPrimaryStat other)
         {
             base.CopyTo(other);

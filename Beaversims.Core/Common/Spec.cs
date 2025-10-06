@@ -74,4 +74,27 @@ namespace Beaversims.Core
             abilities.Add(new Shared.Abilities.BlessingOfSummer());
         }
     }
+
+    internal class DummySpec : Spec
+    {
+        public const double masteryPr_s = 0;
+        public override double MasteryPr { get; } = masteryPr_s;
+        protected override string SpecAbilityNamespace => "Beaversims.Core.Specs.DummySpec";
+        protected override string SpecTalentNamespace => "";
+        protected override SpecName SpecName => SpecName.HolyPaladin;
+
+        public override void DupliGainsHeal(ThroughputEvent evt, User user, StatName statName, double gainRaw, GainType gainType = GainType.Eff)
+        {
+        }
+        public override void DupliGainsDmg(ThroughputEvent evt, User user, StatName statName, double gain, GainType gainType = GainType.Dmg)
+        {
+
+        }
+        public override void SpecIteration(List<Event> events, UnitRepo allUnits, Fight fight)
+        {
+            Specs.DummySpec.Main.SpecMain(events, allUnits, fight);
+        }
+
+    }
+
 }

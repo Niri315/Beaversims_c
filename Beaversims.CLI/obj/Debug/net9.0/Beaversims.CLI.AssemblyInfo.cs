@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Beaversims.CLI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a48da560bfb80d2881580525e175359c4dc18259")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f1fdb6c27d6b41617f2cf6271e27f64a96e43638")]
 [assembly: System.Reflection.AssemblyProductAttribute("Beaversims.CLI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Beaversims.CLI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

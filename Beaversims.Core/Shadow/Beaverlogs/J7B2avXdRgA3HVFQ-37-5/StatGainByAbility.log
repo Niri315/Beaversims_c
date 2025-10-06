@@ -1,0 +1,72 @@
+Prismatic Barrier
+	Intellect
+		Heal: 1,523227057915563
+	Vers
+		Heal: 2,2409057006863127
+-------------------
+Decree: Oath-Bound
+	Vers
+		Damage Reduction: 0,7344276546897118
+-------------------
+Tyranny
+	Vers
+		Damage Reduction: 3,617912106184634
+	Avoidance
+		Damage Reduction: 8,490939133674688
+-------------------
+Tempest Barrier
+	Stamina
+		Heal: 0,1000396449164053
+-------------------
+Conquer
+	Vers
+		Damage Reduction: 0,5279091656707842
+	Avoidance
+		Damage Reduction: 1,5998627885108732
+-------------------
+Oath-Breaker
+	Vers
+		Damage Reduction: 0,7693763381433866
+	Avoidance
+		Damage Reduction: 2,1949183631530853
+-------------------
+Banishment
+	Vers
+		Damage Reduction: 1,4266846960365362
+-------------------
+Diverted Energy
+	Intellect
+		Heal: 0,2800797911614102
+	Vers
+		Heal: 0,40838330740309065
+-------------------
+Fractal Claw
+	Vers
+		Damage Reduction: 0,3139678060747728
+-------------------
+King's Thrall
+	Vers
+		Damage Reduction: 0,532342993602276
+	Avoidance
+		Damage Reduction: 1,6132997901383037
+-------------------
+Behead
+	Vers
+		Damage Reduction: 0,3386757907271658
+-------------------
+Cosmic Rip
+	Vers
+		Damage Reduction: 0,4503753427433367
+-------------------
+Healthstone
+	Stamina
+		Heal: 0,04147476359384752
+-------------------
+Invigorating Healing Potion
+	Vers
+		Heal: 0,6313498388465204
+-------------------
+Melee
+	Vers
+		Damage Reduction: 0,5688446835116515
+-------------------

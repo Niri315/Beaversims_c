@@ -58,7 +58,8 @@ namespace Beaversims.Core.Parser
                         return new HolyHeraldOfTheSun();
                 }
             }
-            throw new InvalidOperationException("No matching spec could be found for the given talent tree.");
+            return new DummySpec();
+            //throw new InvalidOperationException("No matching spec could be found for the given talent tree.");
         }
 
 
@@ -127,7 +128,18 @@ namespace Beaversims.Core.Parser
 
                         if (player is User)
                         {
-                            var gainItem = Sim.ItemGenerator.CreateItem(itemId, itemName, ilvl, itemSlot);
+                            List<int> bonusIds;
+                            if (item.TryGetProperty("bonusIDs", out var bonus))
+                            {
+                                bonusIds = bonus.EnumerateArray()
+                                                    .Select(e => e.GetInt32())
+                                                    .ToList();
+                            }
+                            else
+                            {
+                                bonusIds = new List<int>();
+                            }
+                                var gainItem = Sim.ItemGenerator.CreateItem(itemName, ilvl, itemSlot, bonusIds);
                             user.Items.Add(gainItem);
                         }
                         else

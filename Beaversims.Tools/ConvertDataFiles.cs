@@ -3,6 +3,8 @@ using System.Globalization;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Beaversims.Tools.Generators
 {
@@ -70,122 +72,147 @@ namespace Beaversims.Tools.Generators
             File.WriteAllText(outputPath, sb.ToString());
         }
 
-        public static void ConvertItemDataJson_ToCs(string inputPath, string outputPath, string csNamespace)
+
+
+        public static void ConvertJsonItems(string inputFlatJson, string outputJson)
         {
-            // --- read json once ---
-            using var doc = JsonDocument.Parse(File.ReadAllText(inputPath));
+            var json = File.ReadAllText(inputFlatJson);
+            using var doc = JsonDocument.Parse(json);
             var root = doc.RootElement;
             if (root.ValueKind != JsonValueKind.Array)
-                throw new InvalidDataException("Top-level JSON must be an array of items.");
+                throw new InvalidDataException("Expected top-level array.");
 
-            // ---------- helpers (define ONCE) ----------
-            static string Q(string s)
-                => "\"" + s.Replace("\\", "\\\\").Replace("\"", "\\\"") + "\"";
+            // map name -> best (highest-id) element
+            var bestMap = new Dictionary<string, JsonElement>(StringComparer.OrdinalIgnoreCase);
 
-            static string GetStringSafe(JsonElement obj, string name, string @default = "")
-                => obj.TryGetProperty(name, out var p) && p.ValueKind == JsonValueKind.String
-                    ? (p.GetString() ?? @default) : @default;
-
-            static int GetIntSafe(JsonElement obj, string name, int @default = 0)
-                => obj.TryGetProperty(name, out var p) && p.TryGetInt32(out var v) ? v : @default;
-
-            static bool GetBoolSafe(JsonElement obj, string name, bool @default = false)
-                => obj.TryGetProperty(name, out var p)
-                    ? p.ValueKind == JsonValueKind.True ? true :
-                      p.ValueKind == JsonValueKind.False ? false : @default
-                    : @default;
-
-            static string SocketTypesLiteral(JsonElement item)
+            foreach (var it in root.EnumerateArray())
             {
-                if (item.TryGetProperty("socketInfo", out var si) &&
-                    si.TryGetProperty("sockets", out var sockets) &&
-                    sockets.ValueKind == JsonValueKind.Array)
-                {
-                    var types = sockets.EnumerateArray()
-                        .Select(x => x.TryGetProperty("type", out var t) ? (t.GetString() ?? "") : "")
-                        .Where(t => !string.IsNullOrEmpty(t))
-                        .ToArray();
+                if (!it.TryGetProperty("name", out var np) || np.GetString() is not { Length: > 0 } name)
+                    continue;
 
-                    if (types.Length > 0)
-                        return "new string[] { " + string.Join(", ", types.Select(Q)) + " }";
+                int id = it.TryGetProperty("id", out var idProp) && idProp.TryGetInt32(out var val) ? val : 0;
+
+                if (!bestMap.TryGetValue(name, out var existing))
+                {
+                    bestMap[name] = it.Clone();
                 }
-                return "Array.Empty<string>()";
+                else
+                {
+                    int existingId = existing.TryGetProperty("id", out var eidProp) && eidProp.TryGetInt32(out var eid) ? eid : 0;
+                    if (id > existingId)
+                        bestMap[name] = it.Clone(); // keep higher id
+                }
             }
 
-            static string StatsLiteral(JsonElement item)
-            {
-                if (item.TryGetProperty("stats", out var arr) && arr.ValueKind == JsonValueKind.Array)
-                {
-                    var pairs = arr.EnumerateArray()
-                        .Select(s => (HasId: s.TryGetProperty("id", out var idp) && idp.TryGetInt32(out var _),
-                                      HasAlloc: s.TryGetProperty("alloc", out var alp) && alp.TryGetInt32(out var _),
-                                      Id: s.TryGetProperty("id", out var idp2) && idp2.TryGetInt32(out var idv) ? idv : 0,
-                                      Alloc: s.TryGetProperty("alloc", out var alp2) && alp2.TryGetInt32(out var alv) ? alv : 0))
-                        .Where(t => t.HasId || t.HasAlloc)
-                        .Select(t => $"({t.Id}, {t.Alloc})")
-                        .ToArray();
+            // sort by name and serialize back
+            var sorted = bestMap
+                .OrderBy(k => k.Key, StringComparer.OrdinalIgnoreCase)
+                .ToDictionary(k => k.Key, k => k.Value, StringComparer.OrdinalIgnoreCase);
 
-                    if (pairs.Length > 0)
-                        return "new (int,int)[] { " + string.Join(", ", pairs) + " }";
-                }
-                return "Array.Empty<(int,int)>()";
+            var options = new JsonSerializerOptions { WriteIndented = true };
+            File.WriteAllText(outputJson, JsonSerializer.Serialize(sorted, options));
+        }
+
+        public static void ConvertScScaleDataToCs(
+       string inputPath, string outputPath, string csNamespace /* = "Beaversims.Core.Data.Dbc" */)
+        {
+            var text = File.ReadAllText(inputPath);
+
+            // --- Regexes (non-overlapping) ---
+            // 2D:  static constexpr double __foo[][N] = { { ... }, { ... } };
+            var rx2D = new Regex(
+                @"static\s+constexpr\s+(float|double)\s+([A-Za-z0-9_]+)\s*\[\s*\]\s*\[\s*\d+\s*\]\s*=\s*\{(?<body>.*?)\};",
+                RegexOptions.Singleline | RegexOptions.Compiled);
+
+            // 1D:  static constexpr double __bar[N] = { ... };
+            var rx1D = new Regex(
+                @"static\s+constexpr\s+(float|double)\s+([A-Za-z0-9_]+)\s*\[\s*\d+\s*\]\s*=\s*\{(?<body>.*?)\};",
+                RegexOptions.Singleline | RegexOptions.Compiled);
+
+            static string CleanName(string name)
+            {
+                name = name.TrimStart('_');
+                // PascalCase by underscores
+                var parts = name.Split(new[] { '_' }, StringSplitOptions.RemoveEmptyEntries);
+                return string.Concat(parts.Select(p => char.ToUpperInvariant(p[0]) + p.Substring(1)));
             }
 
-            // track duplicate names to avoid duplicate keys in the generated initializer
-            var seenNames = new HashSet<string>(StringComparer.Ordinal);
+            static string StripComments(string s)
+            {
+                // remove // comments and compress whitespace/newlines
+                s = Regex.Replace(s, @"//.*?$", "", RegexOptions.Multiline);
+                s = s.Replace("\r", "").Trim();
+                return s;
+            }
 
-            // ---------- build the .cs file ----------
+            var emitted = new HashSet<string>(StringComparer.Ordinal);
             var sb = new StringBuilder(1024 * 1024);
+
             sb.AppendLine("// <auto-generated>");
-            sb.AppendLine("// Generated by Beaversims.Tools — DO NOT EDIT MANUALLY.");
+            sb.AppendLine("// Generated by Beaversims.Tools.Generators.ConvertDataFiles");
+            sb.AppendLine("// DO NOT EDIT MANUALLY.");
             sb.AppendLine("// </auto-generated>");
             sb.AppendLine();
             sb.AppendLine($"namespace {csNamespace};");
             sb.AppendLine();
-            sb.AppendLine("using System.Collections.Generic;");
-            sb.AppendLine();
-            sb.AppendLine("internal static partial class ItemDatabase");
+            sb.AppendLine("internal static partial class ScScaleData");
             sb.AppendLine("{");
-            sb.AppendLine("    internal static readonly Dictionary<string, ItemData> ByName = new()");
-            sb.AppendLine("    {");
 
-            foreach (var item in root.EnumerateArray())
+            // ------ 2D arrays first ------
+            foreach (Match m in rx2D.Matches(text))
             {
-                // required-ish
-                var name = GetStringSafe(item, "name", "");
-                if (string.IsNullOrWhiteSpace(name))
-                    continue; // skip nameless entries
+                var elemType = m.Groups[1].Value; // "float" or "double"
+                var rawName = m.Groups[2].Value;
+                var name = CleanName(rawName);
+                if (!emitted.Add(name)) continue;
 
-                // ensure unique key (append ID if duplicate name)
-                var key = name;
-                var id = GetIntSafe(item, "id");
-                if (!seenNames.Add(key))
+                var body = StripComments(m.Groups["body"].Value);
+
+                // Split { ... } rows
+                var rows = Regex.Matches(body, @"\{([^}]*)\}")
+                                .Cast<Match>()
+                                .Select(mm => mm.Groups[1].Value.Trim())
+                                .Where(x => x.Length > 0)
+                                .ToArray();
+
+                var csElemType = elemType == "float" ? "float" : "double";
+
+                sb.AppendLine($"    public static readonly {csElemType}[][] {name} = new {csElemType}[][]");
+                sb.AppendLine("    {");
+                foreach (var row in rows)
                 {
-                    key = $"{name} ({id})";
-                    seenNames.Add(key);
+                    var cleanedRow = StripComments(row);
+                    sb.AppendLine($"        new {csElemType}[] {{ {cleanedRow} }},");
                 }
-
-                var icon = GetStringSafe(item, "icon", "");
-                var quality = GetIntSafe(item, "quality");
-                var itemClass = GetIntSafe(item, "itemClass");
-                var itemSubClass = GetIntSafe(item, "itemSubClass");
-                var inventoryType = GetIntSafe(item, "inventoryType");
-                var itemLevel = GetIntSafe(item, "itemLevel");
-                var expansion = GetIntSafe(item, "expansion");
-                var hasSockets = GetBoolSafe(item, "hasSockets");
-
-                var socketLiteral = SocketTypesLiteral(item);
-                var statsLiteral = StatsLiteral(item);
-
-                sb.AppendLine(
-                    $"        [{Q(key)}] = new ItemData({id}, {Q(name)}, {Q(icon)}, {quality}, {itemClass}, {itemSubClass}, {inventoryType}, {itemLevel}, {expansion}, {hasSockets.ToString().ToLower()}, {socketLiteral}, {statsLiteral}),");
+                sb.AppendLine("    };");
+                sb.AppendLine();
             }
 
-            sb.AppendLine("    };");
+            // ------ 1D arrays (skip any already emitted by 2D pass) ------
+            foreach (Match m in rx1D.Matches(text))
+            {
+                var elemType = m.Groups[1].Value; // "float" or "double"
+                var rawName = m.Groups[2].Value;
+                var name = CleanName(rawName);
+                if (!emitted.Add(name)) continue; // avoid duplicates
+
+                var content = StripComments(m.Groups["body"].Value)
+                    .Replace("\n", "")
+                    .Trim();
+
+                var csElemType = elemType == "float" ? "float" : "double";
+
+                sb.AppendLine($"    public static readonly {csElemType}[] {name} = new {csElemType}[] {{ {content} }};");
+                sb.AppendLine();
+            }
+
             sb.AppendLine("}");
 
             Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
             File.WriteAllText(outputPath, sb.ToString());
+            Console.WriteLine($"Generated {outputPath}");
         }
+
     }
+
 }

@@ -47,6 +47,10 @@ namespace Beaversims.Core.Parser
         {
             if (logEvent.GetProperty("type").GetString() == "combatantinfo")
                 return true;
+            if (logEvent.GetProperty("type").GetString() == "staggerclear")  // TEMP REMOVE LATER
+                return true;
+            if (logEvent.GetProperty("type").GetString() == "staggerprevented")  // TEMP REMOVE LATER
+                return true;
             if (logEvent.TryGetProperty("fake", out var fake) && fake.GetBoolean())
                 return true;
             // Empowered casts have both a cast and empowerend event. Skip cast and use empowerend only.
@@ -56,7 +60,7 @@ namespace Beaversims.Core.Parser
                 return true;
             return false;
         }
-
+        
         public static void AddNpcUnit(UnitId unitId, UnitRepo allUnits)
         {
             if (!allUnits.Contains(unitId))
@@ -252,7 +256,6 @@ namespace Beaversims.Core.Parser
         {
             var abilityData = logEvent.GetProperty("ability");
             var eventType = logEvent.GetProperty("type").GetString();
-
 
             if (evt is ThroughputEvent tpEvent)
             {

@@ -90,5 +90,27 @@ namespace Beaversims.Core
 
         public static string ProjectRoot() => Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\Beaversims.Core"));
 
-}
+        public static StatName? IdToStatName(int id) =>
+            id switch
+            {
+                5 => StatName.Intellect,
+                7 => StatName.Stamina,
+                32 => StatName.Crit,
+                36 => StatName.Haste,
+                40 => StatName.Vers,
+                49 => StatName.Mastery,
+                //61 => StatName.Speed,
+                62 => StatName.Leech,
+                63 => StatName.Avoidance,
+                //Prim2+
+                71 => StatName.Intellect,
+                73 => StatName.Intellect,
+                74 => StatName.Intellect,
+                _ => null
+            };
+
+        public static bool IsSecondaryStat(StatName statName) => statName == StatName.Crit || statName == StatName.Haste || statName == StatName.Vers || statName == StatName.Mastery;
+        public static bool IsTertiaryStat(StatName statName) => statName == StatName.Avoidance || statName == StatName.Leech;  // + speed
+
+    }
 }

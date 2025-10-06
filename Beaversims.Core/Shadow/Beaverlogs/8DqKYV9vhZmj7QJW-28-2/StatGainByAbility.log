@@ -1,0 +1,64 @@
+Ethereal Reconstitution
+	Crit
+		Heal: 0,23856810615043367
+	Vers
+		Heal: 0,8174657631640325
+	Haste
+		Heal: 0,8284898811845245
+-------------------
+Crystalline Shockwave
+	Vers
+		Damage Reduction: 3,0244296220102997
+	Avoidance
+		Damage Reduction: 4,319800888517491
+-------------------
+Ethereal Guard
+	Vers
+		Heal: 4,72276125557468
+	Crit
+		Heal: 5,602432549107809
+	Haste
+		Heal: 4,548280656958598
+-------------------
+Leech
+	Leech
+		Heal: 18,723876510749154
+-------------------
+Melee
+	Vers
+		Damage: 0,4780529198893005
+	Crit
+		Damage: 0,6037994452306212
+	Haste
+		Damage: 0,45844799160891503
+-------------------
+Shattering Backhand
+	Vers
+		Damage Reduction: 0,37347432341430387
+	Avoidance
+		Damage Reduction: 1,0194555240329775
+-------------------
+Null Consumption
+	Vers
+		Damage Reduction: 0,7093372288293981
+-------------------
+Null Explosion
+	Vers
+		Damage Reduction: 0,4254057927425658
+	Avoidance
+		Damage Reduction: 1,4050970250957857
+-------------------
+Crystal Lacerations
+	Vers
+		Damage Reduction: 0,694642792971021
+	Avoidance
+		Damage Reduction: 1,9402003021542575
+-------------------
+Lightforged Blessing
+	Stamina
+		Supportive Heal: 0,0016104965364219536
+-------------------
+Shattershell
+	Vers
+		Damage Reduction: 0,195198034477455
+-------------------

@@ -21,8 +21,8 @@ namespace Beaversims.Core.Data.StatBuffs
             StatMods.Add(
                 new StatMod(
                     StatName.Vers,
-                    1900,
-                    StatAmountType.Rating)
+                    StatAmountType.Rating,
+                    1900)
             );
         }
     }
@@ -41,8 +41,8 @@ namespace Beaversims.Core.Data.StatBuffs
             StatMods.Add(
                 new StatMod(
                     StatName.Intellect,
-                    0.03,
-                    StatAmountType.Multi)
+                    StatAmountType.Multi,
+                    0.03)
             );
         }
     }
@@ -58,8 +58,8 @@ namespace Beaversims.Core.Data.StatBuffs
             StatMods.Add(
                 new StatMod(
                     StatName.Vers,
-                    3 * Vers.percentRate,
-                    StatAmountType.Base)
+                    StatAmountType.Base,
+                    3 * Vers.percentRate)
             );
         }
     }
@@ -75,8 +75,8 @@ namespace Beaversims.Core.Data.StatBuffs
             StatMods.Add(
                 new StatMod(
                     StatName.Mastery,
-                    2 * Mastery.tooltipPercentRate,
-                    StatAmountType.Base)
+                    StatAmountType.Base,
+                    2 * Mastery.tooltipPercentRate)
             );
         }
     }
@@ -92,8 +92,8 @@ namespace Beaversims.Core.Data.StatBuffs
             StatMods.Add(
                 new StatMod(
                     StatName.Stamina,
-                    0.05,
-                    StatAmountType.Multi)
+                    StatAmountType.Multi,
+                    0.05)
             );
         }
     }
@@ -111,8 +111,8 @@ namespace Beaversims.Core.Data.StatBuffs
             StatMods.Add(
                 new StatMod(
                     StatName.Haste,
-                    Constants.BlEffectRating,
-                    StatAmountType.Base)
+                    StatAmountType.Base,
+                    Constants.BlEffectRating)
             );
         }
     }
@@ -127,8 +127,8 @@ namespace Beaversims.Core.Data.StatBuffs
             StatMods.Add(
                 new StatMod(
                     StatName.Haste,
-                    Constants.BlEffectRating,
-                    StatAmountType.Base)
+                    StatAmountType.Base,
+                    Constants.BlEffectRating)
             );
         }
     }
@@ -143,8 +143,8 @@ namespace Beaversims.Core.Data.StatBuffs
             StatMods.Add(
                 new StatMod(
                     StatName.Haste,
-                    Constants.BlEffectRating,
-                    StatAmountType.Base)
+                    StatAmountType.Base,
+                    Constants.BlEffectRating)
             );
         }
     }
@@ -159,8 +159,8 @@ namespace Beaversims.Core.Data.StatBuffs
             StatMods.Add(
                 new StatMod(
                     StatName.Haste,
-                    Constants.BlEffectRating,
-                    StatAmountType.Base)
+                    StatAmountType.Base,
+                    Constants.BlEffectRating)
             );
         }
     }
@@ -175,8 +175,8 @@ namespace Beaversims.Core.Data.StatBuffs
             StatMods.Add(
                 new StatMod(
                     StatName.Haste,
-                    Constants.BlEffectRating,
-                    StatAmountType.Base)
+                    StatAmountType.Base,
+                    Constants.BlEffectRating)
             );
         }
     }
@@ -196,8 +196,8 @@ namespace Beaversims.Core.Data.StatBuffs
             StatMods.Add(
                 new StatMod(
                     StatName.Haste,
-                    20 * Haste.percentRate,
-                    StatAmountType.Base)
+                    StatAmountType.Base,
+                    20 * Haste.percentRate)
             );
         }
     }
@@ -212,8 +212,8 @@ namespace Beaversims.Core.Data.StatBuffs
             StatMods.Add(
                 new StatMod(
                     StatName.Leech,
-                    4 * Leech.percentRate,
-                    StatAmountType.Base)
+                    StatAmountType.Base,
+                    4 * Leech.percentRate)
             );
         }
     }
@@ -234,8 +234,8 @@ namespace Beaversims.Core.Data.StatBuffs
             StatMods.Add(
                 new StatMod(
                     StatName.Haste,
-                    1 * Haste.percentRate,
-                    StatAmountType.Base)
+                    StatAmountType.Base,
+                    1 * Haste.percentRate)
             );
         }
     }
@@ -252,8 +252,29 @@ namespace Beaversims.Core.Data.StatBuffs
             StatMods.Add(
                 new StatMod(
                     StatName.Haste,
-                    2 * Haste.percentRate,
-                    StatAmountType.Base)
+                    StatAmountType.Base,
+                    2 * Haste.percentRate)
+            );
+        }
+    }
+    /*--- *
+    * WW3 *
+    * --- */
+    internal class AstralAntenna : StatBuff
+    {
+        public const int id = 1239641;
+        public const string name = "Astral Antenna";
+
+        public AstralAntenna(UnitId sourceId, int stacks)
+            : base(id, sourceId, name, stacks)
+        {
+            SourceType = BuffSourceType.Item;
+            SourceObjId = 242395; 
+            StatMods.Add(
+                new StatMod(
+                    StatName.Crit,
+                    StatAmountType.Rating,
+                    scData: new ScalingData(-7, 1.466488))
             );
         }
     }

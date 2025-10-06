@@ -131,4 +131,22 @@ namespace Beaversims.Core.Shared.Abilities
             SourceAbility = EtherealReconstitution.name;
         }
     }
+    internal class VoidglassBarrier : SharedAbility
+    {
+        public const string name = "Voidglass Barrier";
+        public VoidglassBarrier()
+        {
+            Name = name;
+            Scalers.UnionWith([SN.Vers]);
+        }
+    }
+    internal class InvigoratingHealingPotion : SharedAbility
+    {
+        public const string name = "Invigorating Healing Potion";
+        public InvigoratingHealingPotion()
+        {
+            Name = name;
+            Scalers.UnionWith([SN.Vers]);
+        }
+    }
 }

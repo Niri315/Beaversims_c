@@ -1,0 +1,46 @@
+Prismatic Barrier
+	Intellect
+		Heal: 0,34709645735693884
+	Vers
+		Heal: 0,5061000604703851
+-------------------
+Decree: Oath-Bound
+	Vers
+		Damage Reduction: 1,2458361146323162
+-------------------
+Tyranny
+	Vers
+		Damage Reduction: 3,8620344960736994
+	Avoidance
+		Damage Reduction: 9,601175277967037
+-------------------
+Tempest Barrier
+	Stamina
+		Heal: 0,06759316730570004
+-------------------
+Conquer
+	Vers
+		Damage Reduction: 0,49332516271222393
+	Avoidance
+		Damage Reduction: 1,4950537361034457
+-------------------
+Oath-Breaker
+	Vers
+		Damage Reduction: 0,9593893163009837
+	Avoidance
+		Damage Reduction: 2,379701950288049
+-------------------
+Healthstone
+	Stamina
+		Heal: 0,0657540423080295
+-------------------
+King's Thrall
+	Vers
+		Damage Reduction: 0,35428957771079883
+	Avoidance
+		Damage Reduction: 1,0736974248524724
+-------------------
+Banishment
+	Vers
+		Damage Reduction: 0,34855825158140985
+-------------------

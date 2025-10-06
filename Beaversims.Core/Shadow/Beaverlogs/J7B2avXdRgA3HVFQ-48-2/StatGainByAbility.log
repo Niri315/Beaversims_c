@@ -1,0 +1,105 @@
+Melee
+	Vers
+		Damage: 1,8772727790226773
+		Damage Reduction: 10,76361807763482
+	Crit
+		Damage: 1,9153324207043716
+	Haste
+		Damage: 1,8343654617494574
+-------------------
+Holy Bulwark
+	Stamina
+		Supportive Heal: 0,13004984431460406
+-------------------
+Decree: Oath-Bound
+	Vers
+		Damage Reduction: 0,2882022981500512
+-------------------
+Leech
+	Leech
+		Heal: 60,754931183441165
+-------------------
+Tyranny
+	Vers
+		Damage Reduction: 3,53684977552634
+	Avoidance
+		Damage Reduction: 8,092166691857626
+-------------------
+Conquer
+	Vers
+		Damage Reduction: 1,1433606898430624
+	Avoidance
+		Damage Reduction: 0,07657136431671278
+-------------------
+Oath-Breaker
+	Vers
+		Damage Reduction: 0,24960505087925247
+	Avoidance
+		Damage Reduction: 0,2858336935793853
+-------------------
+Vanquish
+	Vers
+		Damage Reduction: 0,9288192127076546
+-------------------
+Lightforged Blessing
+	Stamina
+		Supportive Heal: 0,00203616377998522
+-------------------
+Lesser Bulwark
+	Stamina
+		Supportive Heal: 0,010081054530611394
+-------------------
+King's Thrall
+	Vers
+		Damage Reduction: 0,12277355783641525
+	Avoidance
+		Damage Reduction: 0,38561797677915854
+-------------------
+Invoke the Oath
+	Vers
+		Damage Reduction: 0,08511281132267932
+	Avoidance
+		Damage Reduction: 0,2673297954268698
+-------------------
+Cosmic Rip
+	Vers
+		Damage Reduction: 0,22473521380462913
+-------------------
+Seal the Forge
+	Vers
+		Damage Reduction: 0,008630170544219586
+-------------------
+King's Hunger
+	Vers
+		Damage Reduction: 0,7281074500990834
+	Avoidance
+		Damage Reduction: 2,2158651290865397
+-------------------
+Behead
+	Vers
+		Damage Reduction: 0,06919428307980094
+-------------------
+Galactic Smash
+	Vers
+		Damage Reduction: 0,18617208931746157
+	Avoidance
+		Damage Reduction: 0,005421448478075575
+-------------------
+Starshattered
+	Vers
+		Damage Reduction: 1,214483057444562
+-------------------
+Twilight Scar
+	Vers
+		Damage Reduction: 0,2936420076308195
+-------------------
+Dark Star
+	Vers
+		Damage Reduction: 0,2613331092315186
+	Avoidance
+		Damage Reduction: 0,48167712549413
+-------------------
+Starkiller Swing
+	Vers
+		Damage Reduction: 0,13526287995201636
+-------------------

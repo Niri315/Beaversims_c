@@ -1,6 +1,7 @@
 ﻿using Beaversims.Core.Common;
 using Beaversims.Core.Parser;
 using Beaversims.Core.Shared;
+using Beaversims.Core.Sim;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,6 +57,7 @@ namespace Beaversims.Core
             user.Spec.SpecIteration(events, allUnits, fight);
             var results = new Results();
             ProcessEvents.SharedIteration(events, fight, user, results);
+            ItemSim.TopItems(events, user, fight);
             Console.WriteLine($"Fight Id : {fight.Id}");
             Console.WriteLine($"User HCGM: {user.HCGM}");
             results.TotalTime = fight.TotalTime;

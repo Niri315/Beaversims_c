@@ -1,4 +1,5 @@
 ﻿using Beaversims.Core.Parser;
+using Beaversims.Core.Sim;
 using System.Reflection;
 using System.Xml.Linq;
 
@@ -100,7 +101,7 @@ namespace Beaversims.Core
             foreach (var type in buffTypes)
             {
                 var buff = (StatBuff)Activator.CreateInstance(type, Id)!;
-                ProcessStatBuff(buff);
+                ProcessStatBuff(buff, this);
                 Buffs.Add(buff);
             }
         }
@@ -134,7 +135,7 @@ namespace Beaversims.Core
             return false;
         }
 
-        public void ProcessStatBuff(StatBuff buff)
+        public void ProcessStatBuff(StatBuff buff, Unit sourceUnit)
         {
             foreach (var mod in buff.StatMods)
             {
@@ -144,6 +145,23 @@ namespace Beaversims.Core
                 {
                     amount *= TalentRank(buff.SourceObjId);
                 }
+                else if (buff.SourceType == BuffSourceType.Item && sourceUnit is Player sourcePlayer)
+                {
+                    Console.WriteLine(buff.Name);
+                    Console.WriteLine(buff.SourceType);
+                    var sourceItem = sourcePlayer.Items.FirstOrDefault(i => i.Id == buff.SourceObjId);
+                    if (sourceItem != null && mod.ScalingData != null)
+                    {
+                        amount = ScUtils.ScaledEffectValue(sourceItem.Ilvl, sourceItem.ItemSlot, mod.StatName, mod.ScalingData);
+                        Console.WriteLine(amount.ToString());
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                   
+                }
+                mod.Amount = amount;
                 var stat = Stats.Get(mod.StatName);
                 stat.ChangeAmount(amount * buff.Stacks, mod.AmountType, removal: false);
             }
@@ -158,7 +176,7 @@ namespace Beaversims.Core
 
             if (buff is StatBuff statBuff)
             {
-                ProcessStatBuff(statBuff);
+                ProcessStatBuff(statBuff, sourceUnit);
                 if (statLogger != null) { Stats.LogStats(statLogger, timeStamp); }
             }
             if (!buff.AllowMultiple)

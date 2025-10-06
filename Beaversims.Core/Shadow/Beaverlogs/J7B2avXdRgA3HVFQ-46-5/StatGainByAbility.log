@@ -1,0 +1,82 @@
+Prismatic Barrier
+	Intellect
+		Heal: 1,3716228111999267
+	Vers
+		Heal: 1,6435942229250922
+-------------------
+Decree: Oath-Bound
+	Vers
+		Damage Reduction: 0,35310808428279605
+-------------------
+Tyranny
+	Vers
+		Damage Reduction: 3,529921724148054
+	Avoidance
+		Damage Reduction: 8,715644382299354
+-------------------
+Oath-Breaker
+	Vers
+		Damage Reduction: 0,4416822817698049
+	Avoidance
+		Damage Reduction: 1,224658344806356
+-------------------
+Tempest Barrier
+	Stamina
+		Heal: 0,09586567303510798
+-------------------
+Conquer
+	Vers
+		Damage Reduction: 0,14622912070365812
+	Avoidance
+		Damage Reduction: 0,418482616174267
+-------------------
+Banishment
+	Vers
+		Damage Reduction: 0,6542827539611208
+-------------------
+Diverted Energy
+	Intellect
+		Heal: 0,09761328723921903
+	Vers
+		Heal: 0,11696847972858837
+-------------------
+Invoke the Oath
+	Vers
+		Damage Reduction: 0,13919802001969184
+	Avoidance
+		Damage Reduction: 0,47859827176138836
+-------------------
+King's Thrall
+	Vers
+		Damage Reduction: 0,11495083492417342
+	Avoidance
+		Damage Reduction: 0,3952302692556635
+-------------------
+Dimension Glare
+	Vers
+		Damage Reduction: 0,45951738905618156
+	Avoidance
+		Damage Reduction: 1,5799379058371816
+-------------------
+Healthstone
+	Stamina
+		Heal: 0,023754527073325597
+-------------------
+Invigorating Healing Potion
+	Vers
+		Heal: 0,2729520565894744
+-------------------
+Seal the Forge
+	Vers
+		Damage Reduction: 0,015592618581875356
+-------------------
+Reap
+	Vers
+		Damage Reduction: 0,34703178782630634
+-------------------
+Self-Destruct
+	Vers
+		Damage Reduction: 0,3507501513050079
+	Avoidance
+		Damage Reduction: 1,1904468479529768
+-------------------

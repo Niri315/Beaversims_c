@@ -7,11 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Data\Dbc\Items.json" />
     <None Remove="fNMDadYmgtWGJ349-90-10.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\Dbc\" />
+    <EmbeddedResource Include="Data\Dbc\Items.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Shadow\ImportLogs\Cache\" />
     <Folder Include="Shadow\Beaverlogs\" />
   </ItemGroup>

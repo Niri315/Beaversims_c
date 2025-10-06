@@ -1,0 +1,134 @@
+Prismatic Barrier
+	Intellect
+		Heal: 1,111963799998006
+	Vers
+		Heal: 1,621350303328355
+-------------------
+Decree: Oath-Bound
+	Vers
+		Damage Reduction: 0,21270194983164403
+-------------------
+Tyranny
+	Vers
+		Damage Reduction: 3,30787207427461
+	Avoidance
+		Damage Reduction: 7,784245186940727
+-------------------
+Tempest Barrier
+	Stamina
+		Heal: 0,05573474973842916
+-------------------
+Conquer
+	Vers
+		Damage Reduction: 0,029562722227252643
+	Avoidance
+		Damage Reduction: 0,08959173716631356
+-------------------
+Oath-Breaker
+	Vers
+		Damage Reduction: 0,19529305485571805
+	Avoidance
+		Damage Reduction: 0,5918482035091652
+-------------------
+Behead
+	Vers
+		Damage Reduction: 0,2886714228122079
+-------------------
+Cosmic Rip
+	Vers
+		Damage Reduction: 0,06615785502773176
+-------------------
+Besiege
+	Vers
+		Damage Reduction: 0,23159174736195676
+-------------------
+Living Flame
+	Vers
+		Damage Reduction: 0,04074028859635516
+-------------------
+Black Arrow (Withering Fire)
+	Vers
+		Damage Reduction: 0,1275690183888693
+-------------------
+Black Arrow (DoT)
+	Vers
+		Damage Reduction: 0,018950209651789028
+-------------------
+Halo
+	Vers
+		Damage Reduction: 0,0052102426049017115
+	Avoidance
+		Damage Reduction: 0,015789976391306904
+-------------------
+Ebon Might
+	Vers
+		Damage Reduction: 0,0007105449664893515
+-------------------
+Healthstone
+	Stamina
+		Heal: 0,011675254464950886
+-------------------
+Invigorating Healing Potion
+	Vers
+		Heal: 0,162383484903372
+-------------------
+Shifting Sands
+	Vers
+		Damage Reduction: 0,0006999662881989984
+-------------------
+Diverted Energy
+	Intellect
+		Heal: 0,10965072332318372
+	Vers
+		Heal: 0,15988131405045397
+-------------------
+Lesser Bulwark
+	Stamina
+		Supportive Heal: 0,003134350541393843
+-------------------
+Invoke the Oath
+	Vers
+		Damage Reduction: 0,06519986640800926
+-------------------
+King's Thrall
+	Vers
+		Damage Reduction: 0,07289648558827146
+	Avoidance
+		Damage Reduction: 0,22091750302858768
+-------------------
+Seal the Forge
+	Vers
+		Damage Reduction: 0,008354520546994964
+	Avoidance
+		Damage Reduction: 0,025318913571055774
+-------------------
+King's Hunger
+	Vers
+		Damage Reduction: 0,7288975495104517
+	Avoidance
+		Damage Reduction: 1,7705165889585674
+-------------------
+Voidglass Barrier
+	Vers
+		Heal: 0,12762511588925413
+-------------------
+Dark Star
+	Vers
+		Damage Reduction: 0,13266079728233773
+	Avoidance
+		Damage Reduction: 0,26010828143465303
+-------------------
+Lightforged Blessing
+	Stamina
+		Supportive Heal: 0,0017987731935571322
+-------------------
+Galactic Smash
+	Vers
+		Damage Reduction: 0,08705793865200005
+	Avoidance
+		Damage Reduction: 0,2638347002685986
+-------------------
+Twilight Scar
+	Vers
+		Damage Reduction: 0,024106222479669828
+-------------------

@@ -330,10 +330,16 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
                 var judg = (Judgment)user.Abilities.Get(Judgment.name);
                 var statName = StatName.Crit;
                 var crit = (Crit)evt.UserStats.Get(statName);
-                // TODO Fix this im sure its wrong
-                var estNonCritAmount = evt.Amount.Eff * (judg.GJCritEffRepo / judg.GJCount / crit.PercentRate / 100);
-                //estNonCritAmount = crit.ApplyDryMult(estNonCritAmount); 
-                // TODO This is done in crit calc as well... should it be run twice?
+                var avgCritChance = judg.GJCritEffRepo / judg.GJCount / crit.PercentRate / 100;
+                var hitCount = Heal.Count * (1 -  avgCritChance);
+                var critCount = Heal.Count * avgCritChance;
+                var amountPerHit = Heal.Eff / ((2 * critCount) + hitCount);
+                var amountPerCrit = amountPerHit * 2;
+                var hitAmount = amountPerHit * hitCount;
+                var critAmount = amountPerCrit * critCount;
+
+                var estNonCritAmount = evt.Amount.Eff * ((hitAmount + (critAmount / 2)) / Heal.Eff);
+
                 var gainEff = Calc.CritGainCalc(crit, estNonCritAmount, false, 2);
                 evt.Gains[statName][GainType.Eff] += gainEff;
             }

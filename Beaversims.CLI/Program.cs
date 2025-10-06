@@ -7,12 +7,12 @@ using static System.Net.WebRequestMethods;
 
 
 var logLink = "https://www.warcraftlogs.com/reports/8DqKYV9vhZmj7QJW?type=healing&fight=48&phase=4&source=14";
+//var logLink = "https://www.warcraftlogs.com/reports/J7B2avXdRgA3HVFQ?fight=48&source=5";  //etrii
 var simAll = true;
 var ignoreTrash = true;
 var ignoreWipes = false;
 var bossSpecific = true;
 var bossName = "Nexus-King Salhadaar";
-
 
 var totalTime = Stopwatch.StartNew();
 
@@ -45,7 +45,6 @@ if (simAll)
     {
         var logs = await WclClient.GetLogs(reportCode, fightId, userId);
         var results = Main.Run(logs, userId, reportCode);
-
         lock (lockObj)
         {
             // Merge into the shared finalResults

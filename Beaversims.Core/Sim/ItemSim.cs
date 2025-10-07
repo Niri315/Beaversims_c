@@ -8,7 +8,9 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Beaversims.Core.Sim
 {
-    internal class ItemSim
+ 
+
+    internal static class ItemSim
     {
         //public static bool IsCompeteingItem(GainItem item, User user) => !user.Items.Contains(item) && ;
 

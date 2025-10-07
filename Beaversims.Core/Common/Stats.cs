@@ -22,6 +22,14 @@ namespace Beaversims.Core
 
         public abstract void SetEff();
         public abstract void FullUpdate();
+        public double ApplyMult(double amount)
+        {
+            return amount * Multi;
+        }
+        public double RemoveMult(double amount)
+        {
+            return amount / Multi;
+        }
 
         public void ChangeRating(double amount, bool removal)
         {
@@ -105,6 +113,11 @@ namespace Beaversims.Core
         {
             return amount * (1 - (0.1 * Bracket)) * Multi;
         }
+        public double RemoveDryMult(double amount)
+        {
+            return amount / (1 - (0.1 * Bracket)) / Multi;
+        }
+
         public override void SetEff()
         {
             Eff = PostDr + Base;

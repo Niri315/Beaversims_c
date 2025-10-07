@@ -64,7 +64,7 @@ namespace Beaversims.Core
         public long HealingDone { get; set; }
 
         public Dictionary<int, Talent> Talents { get; } = [];
-        public List<Item> Items { get; } = [];
+        public Dictionary<ItemSlot, Item> Items { get; } = [];
         public double HCGM { get; set; } = 1.0;  //Haste Cast Gain Mod
 
         public bool HasVantus { get; set; } = false;
@@ -149,7 +149,7 @@ namespace Beaversims.Core
                 {
                     Console.WriteLine(buff.Name);
                     Console.WriteLine(buff.SourceType);
-                    var sourceItem = sourcePlayer.Items.FirstOrDefault(i => i.Id == buff.SourceObjId);
+                    var sourceItem = sourcePlayer.Items.Values.FirstOrDefault(i => i.Id == buff.SourceObjId);
                     if (sourceItem != null && mod.ScalingData != null)
                     {
                         amount = ScUtils.ScaledEffectValue(sourceItem.Ilvl, sourceItem.ItemSlot, mod.StatName, mod.ScalingData);

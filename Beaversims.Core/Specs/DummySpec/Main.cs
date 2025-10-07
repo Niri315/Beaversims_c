@@ -41,12 +41,6 @@ namespace Beaversims.Core.Specs.DummySpec
             foreach (Event evt in events)
             {
                 // Loop for setting gains.
-
-                //foreach (var stat in evt.UserStats)
-                //{
-                //    Console.WriteLine($"{stat.Name} Rating: {stat.Rating}, Base: {stat.Base}, Multi: {stat.Multi}");
-                //}
-
              
                 if (evt is ThroughputEvent tpEvent)
                 {

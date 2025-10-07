@@ -25,11 +25,37 @@ namespace Beaversims.Core.Shared
                     if (!abilityGains[abilityName].ContainsKey(stat)) { abilityGains[abilityName][stat] = []; }
                     if (!abilityGains[abilityName][stat].ContainsKey(gainType)) { abilityGains[abilityName][stat][gainType] = 0.0; }
                     abilityGains[abilityName][stat][gainType] += gainEntry.Value / fight.TotalTime;
-
                 }
             }
-
         }
+
+        public static void altAmounts(ThroughputEvent evt, List<Dictionary<GainType, double>> test, Fight fight)
+        {
+    
+            foreach (var altEvent in evt.AltEvents)
+            {
+                var gainType = GainType.Eff;
+                if (evt.IsDmgDoneEvent())
+                {
+                    gainType = GainType.Dmg;
+                }
+                else if (evt.IsDamageTakenEvent())
+                {
+                    gainType = GainType.Def;
+                }
+                else if (evt.IsHealDoneEvent())
+                {
+                    gainType = GainType.Eff;
+                }
+                else
+                {
+                    continue;
+                }
+                test[1][gainType] += altEvent.Amount.Eff / fight.TotalTime;
+                test[0][gainType] += evt.Amount.Eff / fight.TotalTime;
+            }
+        }
+
 
         public static string TranslateGainType(GainType gainType) =>
             gainType switch
@@ -75,11 +101,25 @@ namespace Beaversims.Core.Shared
             var abilityGainLogger = new Logger("StatGainByAbility", fight, user.Id.TypeId);
             var abilityGains = new Dictionary<string, GainMatrix>();
 
+            List<Dictionary<GainType, double>> test = [];
+            test.Add(Utils.InitGainDict());
+            test.Add(Utils.InitGainDict());
+
             foreach (Event evt in events)
             {
                 StatGains(evt, statGains, abilityGains, fight);
+                if (evt is ThroughputEvent tEvt) 
+                {
+                    altAmounts(tEvt, test, fight);
+
+                }
             }
             LogAbilityGains(user, abilityGainLogger, abilityGains);
+
+            Console.WriteLine($"AMOUNT COMP EFF: {test[0][GainType.Eff]} vs {test[1][GainType.Eff]}");
+            Console.WriteLine($"AMOUNT COMP DMG: {test[0][GainType.Dmg]} vs {test[1][GainType.Dmg]}");
+            Console.WriteLine($"AMOUNT COMP DEF: {test[0][GainType.Def]} vs {test[1][GainType.Def]}");
+
             return statGains;
         }
     }

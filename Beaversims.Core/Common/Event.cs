@@ -9,16 +9,43 @@ namespace Beaversims.Core
 {
     public enum EventType { Damage, Heal, Cast, Buff }
 
-    public class AmountContainer
+    internal class AmountContainer
     {
         public double Eff { get; set; } = 0;
         public double Raw { get; set; } = 0;
-        public double Absorb { get; set; } = 0;
-        public double Overheal { get; set; } = 0;
         public double Naeff { get; set; } = 0;
         public double Naraw { get; set; } = 0;
+        public AmountContainer Clone()
+        {
+            return new AmountContainer
+            {
+                Eff = this.Eff,
+                Raw = this.Raw,
+                Naeff = this.Naeff,
+                Naraw = this.Naraw
+            };
+        }
+        public void UpdateAltGainsFromEvtData(ThroughputEvent evt, double gainRaw)
+        {
+            var gainEff = evt.RawToEffConvert(gainRaw);
+            Raw += gainRaw;
+            Eff += gainEff;
+            Naeff += evt.EffToNaeffConvert(gainEff);
+            Naraw += evt.RawToNarawConvert(gainRaw);
+        }
     }
+  
 
+    internal class AltEvent
+    {
+        public AmountContainer Amount { get; set; }
+        public StatTracker UserStats { get; set; }
+        //public StatTracker StatDiffs { get; set; } = new();
+        public AltEvent(StatTracker userStats) 
+        { 
+            UserStats = userStats;
+        }
+    }
 
     internal class Event
     {
@@ -42,6 +69,7 @@ namespace Beaversims.Core
         public long? UserMaxHp { get; set; }
         public GainMatrix Gains { get; set; } = new();
         public StatTracker UserStats { get; set; }
+        public List<AltEvent> AltEvents { get; set; } = [];
         public bool SummerActive { get; set; } = false;
 
         //Paladin
@@ -76,7 +104,7 @@ namespace Beaversims.Core
         public bool Tick { get; set; } = false;
         public bool Crit { get; set; } = false;
         public bool Aoe { get; set; } = false;
-        public AmountContainer Amount { get; set; } = new();
+        public AmountContainer Amount { get; } = new();
         public bool FullyAbsorbed { get; set; } = false;
         public bool AbsorbAbility { get; set; } = false;
 
@@ -96,6 +124,11 @@ namespace Beaversims.Core
             if (Amount.Eff == 0) return 0;
             return value * (Amount.Naeff / Amount.Eff);
         }
+        public double RawToEffConvert(double value)
+        {
+            if (Amount.Raw == 0) return 0;
+            return value * (Amount.Eff / Amount.Raw);
+        }
 
     }
 
@@ -109,11 +142,7 @@ namespace Beaversims.Core
 
 
         public double masteryEffectiveness { get; set; }
-        public double RawToEffConvert(double value)
-        {
-            if (Amount.Raw == 0) return 0;
-            return value * (Amount.Eff / Amount.Raw);
-        }
+
     }
 
     internal sealed class CastEvent : Event

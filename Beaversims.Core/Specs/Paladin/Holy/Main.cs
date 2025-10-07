@@ -34,6 +34,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
 
             MasteryTracker.FindCoords(events);
             var statLogger = new Logger("StatTracker", fight, user.Id.TypeId);
+
             foreach (Event evt in events)
             {
                 // Loop for tracking buffs and collecting data.
@@ -66,18 +67,25 @@ namespace Beaversims.Core.Specs.Paladin.Holy
 
             MasteryTracker.CleanUpCoords(allUnits);
             HCGM.SetHCGM(user);
+
             foreach (Event evt in events)
             {
                 // Loop for setting gains.
 
-                //foreach (var stat in evt.UserStats)
-                //{
-                //    Console.WriteLine($"{stat.Name} Rating: {stat.Rating}, Base: {stat.Base}, Multi: {stat.Multi}");
-                //}
+
+                var testStatTracker = evt.UserStats.Clone();
+                testStatTracker.Get(StatName.Intellect).Rating += 1;
+                //testStatTracker.Get(StatName.Crit).Rating += 700;
+                //testStatTracker.Get(StatName.Vers).Rating += 780;
+                //testStatTracker.Get(StatName.Haste).Rating += 660;
+                testStatTracker.UpdateAllStats();
+                evt.AltEvents.Add(new AltEvent(testStatTracker));
 
                 Awakening.AwakeningScalers(evt, user);
                 if (evt is ThroughputEvent tpEvent)
                 {
+                    evt.AltEvents[0].Amount = tpEvent.Amount.Clone();
+                    //Console.WriteLine(evt.altEvents[0].Amount.Eff);
                     if (tpEvent.IsHealDoneEvent())
                     {
                         StatGains.AutoStatGainsHeal((HealEvent)tpEvent, user);
@@ -92,6 +100,11 @@ namespace Beaversims.Core.Specs.Paladin.Holy
                 }
             }
             FullAllocs.FullAllocGains(events, user);
+
+            DupliEffects.altBeacon(events, user);
+            Shared.DupliEffects.AltSummerSource(events, user);
+            Shared.DupliEffects.AltLeechSource(events, user);
+
         }
     }
 }

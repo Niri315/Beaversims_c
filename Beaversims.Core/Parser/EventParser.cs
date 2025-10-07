@@ -241,8 +241,8 @@ namespace Beaversims.Core.Parser
 
             tpEvent.Amount.Eff = naeff + absorbed;
             tpEvent.Amount.Raw = naraw + absorbed;
-            tpEvent.Amount.Absorb = absorbed;
-            tpEvent.Amount.Overheal = overheal;
+            //tpEvent.Amount.Absorb = absorbed;
+            //tpEvent.Amount.Overheal = overheal;
             tpEvent.Amount.Naeff = naeff;
             tpEvent.Amount.Naraw = naraw;
 

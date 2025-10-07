@@ -95,6 +95,16 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
             return (Heal.Raw - PolHeal.Raw) / Heal.Hypo;
         }
 
+        public override double AltHypoTrueUr(int i)
+        {
+            if (Heal.Eff == 0) { return 0; }
+            return HypoTrueUr() * AltHypoAmountsHeal[i] / (Heal.Eff - PolHeal.Eff);
+        }
+        public override double AltHypoTrueRawR(int i)
+        {
+            if (Heal.Raw == 0) { return 0; }
+            return HypoTrueRawR() * AltHypoAmountsHeal[i] / (Heal.Raw - PolHeal.Raw);
+        }
         public BeaconOfLight()
         {
             Name = name;
@@ -318,7 +328,6 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
     }
 
     internal class GreaterJudgment : HpalAbility
-    // TODO "Crit" effect.
     {
         public const string name = "Greater Judgment";
 
@@ -341,6 +350,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
                 var estNonCritAmount = evt.Amount.Eff * ((hitAmount + (critAmount / 2)) / Heal.Eff);
 
                 var gainEff = Calc.CritGainCalc(crit, estNonCritAmount, false, 2);
+                StatGains.CritAltAmount(evt, crit, false, 2);
                 evt.Gains[statName][GainType.Eff] += gainEff;
             }
         }
@@ -434,6 +444,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
         public const string name = "Holy Shock";
         public void SetHCGM()
         {
+            // TODO sth casts holy shocks twice for herald. Second sunrise. only 15%, doesnt give extra Holy power.
             HGCM = Casts / (Heal.Count + Damage.Count);
         }
         public HolyShock()

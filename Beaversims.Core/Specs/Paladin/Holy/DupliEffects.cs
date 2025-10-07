@@ -1,4 +1,5 @@
-﻿using Beaversims.Core.Specs.Paladin.Holy.Abilities;
+﻿using Beaversims.Core;
+using Beaversims.Core.Specs.Paladin.Holy.Abilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
 {
     internal class DupliEffects
     {
-        
+
         public static void AddBeaconPolHeal(Event evt)
         {
             if (evt.AbilityId == Abilities.BeaconOfLight.polId && evt.IsHealDoneEvent())
@@ -40,7 +41,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
         public static bool IsBeaconEvent(HealEvent evt, User user)
             => evt.IsHealDoneEvent() && evt.Ability.Direct && evt.SourceUnit is User && !evt.Tick;
         
-        public static double BeaconFormula(ThroughputEvent evt, User user)
+        public static double BeaconFormula(Event evt, User user)
         {
             var beaconOfLight = (Abilities.BeaconOfLight)user.Abilities.Get(Abilities.BeaconOfLight.name);
             return beaconOfLight.Coef * evt.BeaconCount;
@@ -69,6 +70,39 @@ namespace Beaversims.Core.Specs.Paladin.Holy
                 Shared.DupliEffects.SummerGains(evt, user, statName, gainRaw, beaconOfLight, evt.SummerActive, false, evt.SourceUnit, gainType);
 
                 Shared.DupliEffects.LeechSourceGains(evt, user, statName, dupliGainNsnsnaraw, gainType);
+            }
+        }
+        public static void altBeacon(List<Event> events, User user)
+        {
+            var beaconOfLight = (Abilities.BeaconOfLight)user.Abilities.Get(Abilities.BeaconOfLight.name);
+
+            foreach (var evt in events)
+            {
+                if (evt is HealEvent hEvt)
+                {
+                    if (IsBeaconEvent((HealEvent)evt, user))
+                    {
+                        for (int i = 0; i < evt.AltEvents.Count; i++)
+                        {
+                            var altEvent = evt.AltEvents[i];
+                            beaconOfLight.AltHypoAmountsHeal[i] += altEvent.Amount.Raw * BeaconFormula(hEvt, user);
+                        }
+                    }
+                }
+            }
+            foreach (var evt in events)
+            {
+                if (evt.AbilityName == Abilities.BeaconOfLight.name && evt.AbilityId != Abilities.BeaconOfLight.polId && evt is ThroughputEvent tEvt)
+                {
+                    for (int i = 0; i < evt.AltEvents.Count; i++)
+                    {
+                        var altEvent = evt.AltEvents[i];
+                        altEvent.Amount.Raw *= beaconOfLight.AltHypoTrueRawR(i);
+                        altEvent.Amount.Eff = tEvt.RawToEffConvert(altEvent.Amount.Raw);
+                        altEvent.Amount.Naraw = tEvt.RawToNarawConvert(altEvent.Amount.Raw);
+                        altEvent.Amount.Naeff = tEvt.EffToNaeffConvert(altEvent.Amount.Eff);
+                    }
+                }
             }
         }
     }

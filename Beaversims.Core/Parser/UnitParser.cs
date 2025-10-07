@@ -140,11 +140,11 @@ namespace Beaversims.Core.Parser
                                 bonusIds = new List<int>();
                             }
                                 var gainItem = Sim.ItemGenerator.CreateItem(itemName, ilvl, itemSlot, bonusIds);
-                            user.Items.Add(gainItem);
+                            user.Items[itemSlot] = gainItem;
                         }
                         else
                         {
-                            player.Items.Add(new Item(itemId, itemName, ilvl, itemSlot));
+                            player.Items[itemSlot] = new Item(itemId, itemName, ilvl, itemSlot);
                         }
 
                     }

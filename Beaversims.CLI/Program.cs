@@ -6,9 +6,9 @@ using System.Text.Json;
 using static System.Net.WebRequestMethods;
 
 
-var logLink = "https://www.warcraftlogs.com/reports/8DqKYV9vhZmj7QJW?type=healing&fight=48&phase=4&source=14";
-//var logLink = "https://www.warcraftlogs.com/reports/J7B2avXdRgA3HVFQ?fight=48&source=5";  //etrii
-var simAll = true;
+var logLink = "https://www.warcraftlogs.com/reports/LZWxmFpnKg81v4D2?type=damage-done&source=2&fight=6";
+//var logLink = "https://www.warcraftlogs.com/reports/LZWxmFpnKg81v4D2?fight=6&source=51";  //etrii
+var simAll = false;
 var ignoreTrash = true;
 var ignoreWipes = false;
 var bossSpecific = true;

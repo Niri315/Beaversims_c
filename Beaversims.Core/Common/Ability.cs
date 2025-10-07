@@ -1,4 +1,5 @@
 ﻿using Beaversims.Core.Parser;
+using Beaversims.Core.Specs.Paladin.Holy.Abilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -67,6 +68,8 @@ namespace Beaversims.Core
 
         public HealDataContainer Heal { get; } = new();
         public DmgDataContainer Damage { get; } = new();
+        public List<double> AltHypoAmountsHeal { get; } = [0];
+        public List<double> AltHypoAmountsDmg { get; } = [0];
 
         public bool ScalesWith(StatName statName) => Scalers.Contains(statName);
         public double CritUr()
@@ -101,12 +104,27 @@ namespace Beaversims.Core
             if (Heal.Hypo == 0) { return 0; }
             return Heal.Raw / Heal.Hypo;
         }
+     
         public virtual double HypoTrueDmgR()
         {
             if (Damage.Hypo == 0) { return 0; }
             return Damage.Dmg / Damage.Hypo;
         }
-
+        public virtual double AltHypoTrueDmgR(int i)
+        {
+            if (Damage.Dmg == 0) { return 0; }
+            return HypoTrueDmgR() * AltHypoAmountsDmg[i] / Damage.Dmg;
+        }
+        public virtual double AltHypoTrueUr(int i)
+        {
+            if (Heal.Eff == 0) { return 0; }
+            return HypoTrueUr() * AltHypoAmountsHeal[i] / Heal.Eff;
+        }
+        public virtual double AltHypoTrueRawR(int i)
+        {
+            if (Heal.Raw == 0) { return 0; }
+            return HypoTrueRawR() * AltHypoAmountsHeal[i] / Heal.Raw;
+        }
         public double RawToNsnsnarawConvert(double amount)
         {
             if (Heal.Raw == 0) { return 0; }

@@ -9,15 +9,78 @@ namespace Beaversims.Core.Shared
 {
     internal static class StatGains
     {
+
+        public static void PrimaryAltAmount(ThroughputEvent evt, Stat stat)
+        {
+            foreach (var altEvent in evt.AltEvents)
+            {
+                var altStat = altEvent.UserStats.Get(stat.Name);
+                var gainPerPrimRaw = altEvent.Amount.Raw / stat.Eff;
+                var gainRaw = gainPerPrimRaw * (altStat.Eff - stat.Eff);
+                altEvent.Amount.UpdateAltGainsFromEvtData(evt, gainRaw);
+            }
+        }
+
+        public static void SecondaryAltAmount(ThroughputEvent evt, SecondaryStat stat, double mod = 1)
+        {
+            foreach (var altEvent in evt.AltEvents)
+            {
+                var gainPerRatingRaw = Calc.SecondaryGainCalc(stat, altEvent.Amount.Raw, stat.PercentRate);
+                var gainPerEffstatRaw = stat.RemoveDryMult(gainPerRatingRaw);
+                var altStat = altEvent.UserStats.Get(stat.Name);
+                var gainRaw = gainPerEffstatRaw * (altStat.Eff - stat.Eff) * mod;
+                altEvent.Amount.UpdateAltGainsFromEvtData(evt, gainRaw);
+            }
+        }
+
+        public static void CritAltAmount(ThroughputEvent evt, Crit crit, bool isCrit, double critInc)
+        {
+            var ability = evt.Ability;
+            foreach (var altEvent in evt.AltEvents)
+            {
+                var gainPerRatingRaw = Calc.CritGainCalc(crit, altEvent.Amount.Raw, isCrit, critInc);
+                var gainPerEffstatRaw = crit.RemoveDryMult(gainPerRatingRaw);
+                var altCrit = altEvent.UserStats.Get(crit.Name);
+                var gainRaw = gainPerEffstatRaw * (altCrit.Eff - crit.Eff);
+                var gainEff = gainRaw * ability.CritUr();
+                altEvent.Amount.Raw += gainRaw;
+                altEvent.Amount.Eff += gainEff;  // Get UHR from ability - naraw and naeff should be fine to get from evt data.
+                altEvent.Amount.Naraw += evt.RawToNarawConvert(gainRaw);
+                altEvent.Amount.Naeff += evt.EffToNaeffConvert(gainEff);
+            }
+        }
+
+
+        public static void DefAltAmount(ThroughputEvent evt, NonPrimaryStat stat, double percentRate)
+        {
+            //todo eff/naraw etc.
+            foreach (var altEvent in evt.AltEvents)
+            {
+
+                var gainPerRatingRaw = Calc.DefGainCalc(stat, altEvent.Amount.Raw, percentRate);
+                var gainPerEffstatRaw = stat.RemoveDryMult(gainPerRatingRaw);
+                var altStat = altEvent.UserStats.Get(stat.Name);
+                var gainRaw = -1 * gainPerEffstatRaw * (altStat.Eff - stat.Eff);
+                altEvent.Amount.UpdateAltGainsFromEvtData(evt, gainRaw);
+            }
+        }
+
+
+
+
         public static void PrimaryGainsDmg(ThroughputEvent evt, User user, StatName statName)
         {
             var stat = evt.UserStats.Get(statName);
             var gainType = GainType.Dmg;
             var gain = Calc.PrimaryGainCalc(stat, evt.Amount.Eff);
             evt.Gains[statName][gainType] += gain;
+
+            PrimaryAltAmount(evt, stat);
+
             user.Spec.DupliGainsDmg(evt, user, statName, gain);
-            
+
         }
+
         public static void PrimaryGainsHeal(HealEvent evt, User user, StatName statName)
         {
 
@@ -26,6 +89,9 @@ namespace Beaversims.Core.Shared
             var gainRaw = Calc.PrimaryGainCalc(stat, evt.Amount.Raw);
             var gain = evt.RawToEffConvert(gainRaw);
             evt.Gains[statName][gainType] += gain;
+
+            PrimaryAltAmount(evt, stat);
+
             user.Spec.DupliGainsHeal(evt, user, statName, gainRaw);
 
         }
@@ -37,7 +103,13 @@ namespace Beaversims.Core.Shared
             var gainType = GainType.Dmg;
             var gain = Calc.SecondaryGainCalc(stat, evt.Amount.Eff, stat.PercentRate);
             evt.Gains[statName][gainType] += gain;
+
+            SecondaryAltAmount(evt, stat);
+            
+
             user.Spec.DupliGainsDmg(evt, user, statName, gain);
+
+
 
         }
         public static void VersGainsHeal(HealEvent evt, User user)
@@ -49,6 +121,9 @@ namespace Beaversims.Core.Shared
             var gainRaw = Calc.SecondaryGainCalc(stat, evt.Amount.Raw, stat.PercentRate);
             var gain = evt.RawToEffConvert(gainRaw);
             evt.Gains[statName][gainType] += gain;
+
+            SecondaryAltAmount(evt, stat);
+
             user.Spec.DupliGainsHeal(evt, user, statName, gainRaw);
 
         }
@@ -67,6 +142,9 @@ namespace Beaversims.Core.Shared
             var gain = Calc.CritGainCalc(crit, evt.Amount.Eff, isCrit, critInc);
 
             evt.Gains[statName][gainType] += gain;
+
+            CritAltAmount(evt, crit, isCrit, critInc);
+
             user.Spec.DupliGainsDmg(evt, user, statName, gain);
 
 
@@ -86,6 +164,9 @@ namespace Beaversims.Core.Shared
             var gain = gainRaw * ability.CritUr();
 
             evt.Gains[statName][gainType] += gain;
+
+            CritAltAmount(evt, crit, isCrit, critInc);
+
             user.Spec.DupliGainsHeal(evt, user, statName, gainRaw);
 
 
@@ -115,16 +196,24 @@ namespace Beaversims.Core.Shared
             if (IsCastScaler(evt))
             {
                 gain += baseGain * user.HCGM * ability.HGCM;
+                SecondaryAltAmount(evt, stat, mod: user.HCGM * ability.HGCM * ability.HasteGainMod * user.Spec.HasteGainMod);
             }
             if (IsTickScaler(evt))
             {
                 gain += baseGain;
+                SecondaryAltAmount(evt, stat, mod: ability.HasteGainMod * user.Spec.HasteGainMod);
             }
             if (IsAutoScaler(evt))
             {
                 gain += baseGain;
+                SecondaryAltAmount(evt, stat, mod: ability.HasteGainMod * user.Spec.HasteGainMod);
             }
+
+            gain *= ability.HasteGainMod * user.Spec.HasteGainMod;
+
+
             evt.Gains[statName][gainType] += gain;
+
             user.Spec.DupliGainsDmg(evt, user, statName, gain);
 
 
@@ -141,15 +230,20 @@ namespace Beaversims.Core.Shared
             if (IsCastScaler(evt))
             {
                 gainRaw += baseGainRaw * user.HCGM * ability.HGCM;
+                SecondaryAltAmount(evt, stat, mod: user.HCGM * ability.HGCM * ability.HasteGainMod * user.Spec.HasteGainMod);
 
             }
             if (IsTickScaler(evt))
             {
                 gainRaw += baseGainRaw;
+                SecondaryAltAmount(evt, stat, mod: ability.HasteGainMod * user.Spec.HasteGainMod);
+
             }
             if (IsAutoScaler(evt))
             {
                 gainRaw += baseGainRaw;
+                SecondaryAltAmount(evt, stat, mod: ability.HasteGainMod * user.Spec.HasteGainMod);
+
             }
             gainRaw *= ability.HasteGainMod * user.Spec.HasteGainMod;
             
@@ -165,8 +259,11 @@ namespace Beaversims.Core.Shared
             {
                 var statName = StatName.Vers;
                 var vers = (Vers)tpEvent.UserStats.Get(statName);
-                var gain = Calc.SecondaryGainCalc(vers, tpEvent.Amount.Eff, vers.DefPercentRate);
+                var gain = Calc.DefGainCalc(vers, tpEvent.Amount.Eff, vers.DefPercentRate);
                 tpEvent.Gains[statName][GainType.Def] += gain;
+
+                DefAltAmount(tpEvent, vers, vers.DefPercentRate);
+
             }
         }
         public static void AvoidanceGains(ThroughputEvent tpEvent)
@@ -175,8 +272,10 @@ namespace Beaversims.Core.Shared
             {
                 var statName = StatName.Avoidance;
                 var stat = (Avoidance)tpEvent.UserStats.Get(statName);
-                var gain = Calc.SecondaryGainCalc(stat, tpEvent.Amount.Eff, stat.PercentRate);
+                var gain = Calc.DefGainCalc(stat, tpEvent.Amount.Eff, stat.PercentRate);
                 tpEvent.Gains[statName][GainType.Def] += gain;
+
+                DefAltAmount(tpEvent, stat, stat.PercentRate);
             }
         }
 
@@ -198,6 +297,9 @@ namespace Beaversims.Core.Shared
                 var stat = (Stamina)tpEvent.UserStats.Get(statName);
                 var gain = Calc.PrimaryGainCalc(stat, tpEvent.Amount.Eff);
                 tpEvent.Gains[statName][gainType] += gain;
+
+                PrimaryAltAmount(tpEvent, stat);
+
             }
         }
         public static void AutoStatGainsHeal(HealEvent evt, User user)
@@ -250,24 +352,27 @@ namespace Beaversims.Core.Shared
             }
         }
 
+
         public static void LeechGains_simple(ThroughputEvent evt)
         {
             if (evt.IsHealDoneEvent() && evt.AbilityName == Abilities.Leech.name)
             {
-                var gain = evt.Amount.Eff / evt.UserStats.Get(StatName.Leech).Eff;
+                var leechStat = evt.UserStats.Get(StatName.Leech);
+                var gain = evt.Amount.Eff / leechStat.Eff;
                 evt.Gains[StatName.Leech][GainType.Eff] += gain;
+                PrimaryAltAmount(evt, leechStat);  // Might as well just do the same as with primary stats.
             }
         }
 
         public static void LeechGains_adv(ThroughputEvent evt, User user)
         {
-            if (Shared.DupliEffects.IsLeechSourceEvent(evt))
-            {
-                var leechStat = (Leech)evt.UserStats.Get(StatName.Leech);
-                var leechAbility = user.Abilities.Get(Abilities.Leech.name);
-                var gain = (evt.Amount.Naraw / (leechStat.PercentRate * 100)) * leechStat.Multi * leechAbility.HypoTrueUr();
-                evt.Gains[StatName.Leech][GainType.Eff] *= gain;
-            }
+            //if (Shared.DupliEffects.IsLeechSourceEvent(evt))
+            //{
+            //    var leechStat = (Leech)evt.UserStats.Get(StatName.Leech);
+            //    var leechAbility = user.Abilities.Get(Abilities.Leech.name);
+            //    var gain = (evt.Amount.Naraw / (leechStat.PercentRate * 100)) * leechStat.Multi * leechAbility.HypoTrueUr();
+            //    evt.Gains[StatName.Leech][GainType.Eff] *= gain;
+            //}
         }
 
         public static void CritGainsDmgDerived(DamageEvent evt, User user)
@@ -290,7 +395,9 @@ namespace Beaversims.Core.Shared
 
             evt.Gains[statName][gainType] += gain;
             user.Spec.DupliGainsHeal(evt, user, statName, gain);
-            
+
+            CritAltAmount(evt, crit, false, critInc);
+
         }
         public static void CritGainsHealDerived(HealEvent evt, User user)
         {
@@ -314,6 +421,8 @@ namespace Beaversims.Core.Shared
 
             evt.Gains[statName][gainType] += gain;
             user.Spec.DupliGainsHeal(evt, user, statName, gainRaw);
+
+            CritAltAmount(evt, crit, false, critInc);
 
         }
 

@@ -86,6 +86,7 @@ namespace Beaversims.Core
         public StatTracker? Stats { get; set; } = new();
         // If user doesnt have permanent leech for fight, revert to calculate leech value by leech data from other sims.
         public bool HasPermaLeech {  get; set; } = false;
+        public List<Dictionary<ItemSlot, Item>> altGearSets { get; set; } = [new()];
 
         // Paladin
         public bool AwakeningActive { get; set; } = false;

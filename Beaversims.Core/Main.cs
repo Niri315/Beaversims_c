@@ -54,6 +54,7 @@ namespace Beaversims.Core
             var events = EventParser.ParseUserEvents(userEvents, allUnits, fight);
 
             var user = allUnits.GetUser();
+
             user.Spec.SpecIteration(events, allUnits, fight);
             var results = new Results();
             ProcessEvents.SharedIteration(events, fight, user, results);

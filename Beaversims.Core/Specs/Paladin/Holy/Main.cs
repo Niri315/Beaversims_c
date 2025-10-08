@@ -74,10 +74,17 @@ namespace Beaversims.Core.Specs.Paladin.Holy
 
 
                 var testStatTracker = evt.UserStats.Clone();
-                testStatTracker.Get(StatName.Intellect).Rating += 1;
-                //testStatTracker.Get(StatName.Crit).Rating += 700;
-                //testStatTracker.Get(StatName.Vers).Rating += 780;
-                //testStatTracker.Get(StatName.Haste).Rating += 660;
+                //testStatTracker.Get(StatName.Mastery).ChangeAmount(1, StatAmountType.Rating, removal: false);
+                //testStatTracker.Get(StatName.Intellect).ChangeAmount(1, StatAmountType.Rating, removal: false);
+                //testStatTracker.Get(StatName.Vers).ChangeAmount(1, StatAmountType.Rating, removal: false);
+                //testStatTracker.Get(StatName.Haste).ChangeAmount(1, StatAmountType.Rating, removal: false);
+                testStatTracker.Get(StatName.Crit).ChangeAmount(1, StatAmountType.Rating, removal: false);
+                //testStatTracker.Get(StatName.Leech).ChangeAmount(1, StatAmountType.Rating, removal: false);
+                //testStatTracker.Get(StatName.Avoidance).ChangeAmount(1, StatAmountType.Rating, removal: false);
+                //testStatTracker.Get(StatName.Stamina).ChangeAmount(1, StatAmountType.Rating, removal: false);
+
+
+
                 testStatTracker.UpdateAllStats();
                 evt.AltEvents.Add(new AltEvent(testStatTracker));
 

@@ -98,12 +98,12 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
         public override double AltHypoTrueUr(int i)
         {
             if (Heal.Eff == 0) { return 0; }
-            return HypoTrueUr() * AltHypoAmountsHeal[i] / (Heal.Eff - PolHeal.Eff);
+            return HypoTrueUr() * AltHeal[i].Hypo / (Heal.Eff - PolHeal.Eff);
         }
         public override double AltHypoTrueRawR(int i)
         {
             if (Heal.Raw == 0) { return 0; }
-            return HypoTrueRawR() * AltHypoAmountsHeal[i] / (Heal.Raw - PolHeal.Raw);
+            return HypoTrueRawR() * AltHeal[i].Hypo / (Heal.Raw - PolHeal.Raw);
         }
         public BeaconOfLight()
         {
@@ -333,6 +333,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
 
         public void CritGains(ThroughputEvent evt, User user)
         {
+            // todo awakening no crit scaler
 
             if (evt.AbilityName == Name) 
             {
@@ -350,7 +351,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
                 var estNonCritAmount = evt.Amount.Eff * ((hitAmount + (critAmount / 2)) / Heal.Eff);
 
                 var gainEff = Calc.CritGainCalc(crit, estNonCritAmount, false, 2);
-                StatGains.CritAltAmount(evt, crit, false, 2);
+                StatGains.CritAltAmount(evt, crit, false, 2, userAbilityUhr:false);
                 evt.Gains[statName][GainType.Eff] += gainEff;
             }
         }

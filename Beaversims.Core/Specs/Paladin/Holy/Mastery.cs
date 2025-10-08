@@ -135,6 +135,20 @@ namespace Beaversims.Core.Specs.Paladin.Holy
         public static double MasteryGainCalc(Mastery mastery, double amount, double masteryEffectiveness)
     => (((amount / ((mastery.Eff * masteryEffectiveness) / (mastery.PercentRate * 100) + 1)) * masteryEffectiveness) / (mastery.PercentRate * 100)) * (1 - (mastery.Bracket * 0.1)) * mastery.Multi;
 
+
+        public static void MasteryAltAmount(HealEvent evt, Mastery stat, double masteryEffectiveness)
+        {
+            for (int i = 0; i < evt.AltEvents.Count; i++)
+            {
+                var altEvent = evt.AltEvents[i];
+                var gainPerRatingRaw = MasteryGainCalc(stat, altEvent.Amount.Raw, masteryEffectiveness);
+                var gainPerEffstatRaw = stat.RemoveDryMult(gainPerRatingRaw);
+                var altStat = altEvent.UserStats.Get(stat.Name);
+                var gainRaw = gainPerEffstatRaw * (altStat.Eff - stat.Eff);
+                altEvent.Amount.UpdateAltGainsFromEvtData(evt, gainRaw, i);
+            }
+        }
+
         public static void MasteryGains(HealEvent evt, User user)
         {
             var statName = StatName.Mastery;
@@ -147,6 +161,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
                 evt.Gains[statName][gainType] += gain;
                 user.Spec.DupliGainsHeal(evt, user, statName, gainRaw);
 
+                MasteryAltAmount(evt, stat, evt.masteryEffectiveness);
             }
         }
     }

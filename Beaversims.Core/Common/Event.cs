@@ -25,16 +25,26 @@ namespace Beaversims.Core
                 Naraw = this.Naraw
             };
         }
-        public void UpdateAltGainsFromEvtData(ThroughputEvent evt, double gainRaw)
+        //public void UpdateAltGainsFromEvtData(ThroughputEvent evt, double gainRaw, int i)
+        //{
+        //    var gainEff = evt.RawToEffConvert(gainRaw);
+        //    Raw += gainRaw;
+        //    Eff += gainEff;
+        //    Naeff += evt.EffToNaeffConvert(gainEff);
+        //    Naraw += evt.RawToNarawConvert(gainRaw);
+        //}
+        public void UpdateAltGainsFromEvtData(ThroughputEvent evt, double gainRaw, int i, double gainEff = -1)
         {
-            var gainEff = evt.RawToEffConvert(gainRaw);
+            if (gainEff == -1) { gainEff = evt.AltRawToEffConvert(gainRaw, i); }
+            var gainNaraw = evt.AltRawToNarawConvert(gainRaw, i);
+            var gainNaeff = evt.AltEffToNaeffConvert(gainEff, i);
             Raw += gainRaw;
             Eff += gainEff;
-            Naeff += evt.EffToNaeffConvert(gainEff);
-            Naraw += evt.RawToNarawConvert(gainRaw);
+            Naeff += gainNaeff;
+            Naraw += gainNaraw;
         }
     }
-  
+
 
     internal class AltEvent
     {
@@ -128,6 +138,21 @@ namespace Beaversims.Core
         {
             if (Amount.Raw == 0) return 0;
             return value * (Amount.Eff / Amount.Raw);
+        }
+        public double AltRawToNarawConvert(double value, int i)
+        {
+            if (AltEvents[i].Amount.Raw == 0) return 0;
+            return value * (AltEvents[i].Amount.Naraw / AltEvents[i].Amount.Raw);
+        }
+        public double AltEffToNaeffConvert(double value, int i)
+        {
+            if (AltEvents[i].Amount.Eff == 0) return 0;
+            return value * (AltEvents[i].Amount.Naeff / AltEvents[i].Amount.Eff);
+        }
+        public double AltRawToEffConvert(double value, int i)
+        {
+            if (AltEvents[i].Amount.Raw == 0) return 0;
+            return value * (AltEvents[i].Amount.Eff / AltEvents[i].Amount.Raw);
         }
 
     }

@@ -12,41 +12,61 @@ namespace Beaversims.Core.Shared
 
         public static void PrimaryAltAmount(ThroughputEvent evt, Stat stat)
         {
-            foreach (var altEvent in evt.AltEvents)
+            for (int i = 0; i < evt.AltEvents.Count; i++)
             {
+                var altEvent = evt.AltEvents[i];
                 var altStat = altEvent.UserStats.Get(stat.Name);
                 var gainPerPrimRaw = altEvent.Amount.Raw / stat.Eff;
                 var gainRaw = gainPerPrimRaw * (altStat.Eff - stat.Eff);
-                altEvent.Amount.UpdateAltGainsFromEvtData(evt, gainRaw);
+
+                altEvent.Amount.UpdateAltGainsFromEvtData(evt, gainRaw, i);
             }
         }
 
         public static void SecondaryAltAmount(ThroughputEvent evt, SecondaryStat stat, double mod = 1)
         {
-            foreach (var altEvent in evt.AltEvents)
+            for (int i = 0; i < evt.AltEvents.Count; i++)
             {
+                var altEvent = evt.AltEvents[i];
                 var gainPerRatingRaw = Calc.SecondaryGainCalc(stat, altEvent.Amount.Raw, stat.PercentRate);
                 var gainPerEffstatRaw = stat.RemoveDryMult(gainPerRatingRaw);
                 var altStat = altEvent.UserStats.Get(stat.Name);
                 var gainRaw = gainPerEffstatRaw * (altStat.Eff - stat.Eff) * mod;
-                altEvent.Amount.UpdateAltGainsFromEvtData(evt, gainRaw);
+                altEvent.Amount.UpdateAltGainsFromEvtData(evt, gainRaw, i);
             }
         }
 
-        public static void CritAltAmount(ThroughputEvent evt, Crit crit, bool isCrit, double critInc)
+        public static void CritAltAmount(ThroughputEvent evt, Crit crit, bool isCrit, double critInc, bool userAbilityUhr = true)
         {
             var ability = evt.Ability;
-            foreach (var altEvent in evt.AltEvents)
+            for (int i = 0; i < evt.AltEvents.Count; i++)
             {
+                var altEvent = evt.AltEvents[i];
                 var gainPerRatingRaw = Calc.CritGainCalc(crit, altEvent.Amount.Raw, isCrit, critInc);
                 var gainPerEffstatRaw = crit.RemoveDryMult(gainPerRatingRaw);
                 var altCrit = altEvent.UserStats.Get(crit.Name);
                 var gainRaw = gainPerEffstatRaw * (altCrit.Eff - crit.Eff);
-                var gainEff = gainRaw * ability.CritUr();
-                altEvent.Amount.Raw += gainRaw;
-                altEvent.Amount.Eff += gainEff;  // Get UHR from ability - naraw and naeff should be fine to get from evt data.
-                altEvent.Amount.Naraw += evt.RawToNarawConvert(gainRaw);
-                altEvent.Amount.Naeff += evt.EffToNaeffConvert(gainEff);
+                var gainEff = 0.0;
+                if (userAbilityUhr)
+                {
+                    if (evt.IsHealDoneEvent())
+                    {
+                        gainEff = gainRaw * ability.CritUr();
+                    }
+                    else
+                    {
+                        gainEff = gainRaw;
+                    }
+                    altEvent.Amount.UpdateAltGainsFromEvtData(evt, gainRaw, i, gainEff: gainEff);
+                }
+                else
+                {
+                    altEvent.Amount.UpdateAltGainsFromEvtData(evt, gainRaw, i);
+
+                }
+
+
+
             }
         }
 
@@ -54,14 +74,15 @@ namespace Beaversims.Core.Shared
         public static void DefAltAmount(ThroughputEvent evt, NonPrimaryStat stat, double percentRate)
         {
             //todo eff/naraw etc.
-            foreach (var altEvent in evt.AltEvents)
+            for (int i = 0; i < evt.AltEvents.Count; i++)
             {
+                var altEvent = evt.AltEvents[i];
 
                 var gainPerRatingRaw = Calc.DefGainCalc(stat, altEvent.Amount.Raw, percentRate);
                 var gainPerEffstatRaw = stat.RemoveDryMult(gainPerRatingRaw);
                 var altStat = altEvent.UserStats.Get(stat.Name);
                 var gainRaw = -1 * gainPerEffstatRaw * (altStat.Eff - stat.Eff);
-                altEvent.Amount.UpdateAltGainsFromEvtData(evt, gainRaw);
+                altEvent.Amount.UpdateAltGainsFromEvtData(evt, gainRaw, i);
             }
         }
 

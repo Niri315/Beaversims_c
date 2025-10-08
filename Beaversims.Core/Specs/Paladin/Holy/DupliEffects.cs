@@ -85,7 +85,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
                         for (int i = 0; i < evt.AltEvents.Count; i++)
                         {
                             var altEvent = evt.AltEvents[i];
-                            beaconOfLight.AltHypoAmountsHeal[i] += altEvent.Amount.Raw * BeaconFormula(hEvt, user);
+                            beaconOfLight.AltHeal[i].Hypo += altEvent.Amount.Raw * BeaconFormula(hEvt, user);
                         }
                     }
                 }
@@ -97,10 +97,8 @@ namespace Beaversims.Core.Specs.Paladin.Holy
                     for (int i = 0; i < evt.AltEvents.Count; i++)
                     {
                         var altEvent = evt.AltEvents[i];
-                        altEvent.Amount.Raw *= beaconOfLight.AltHypoTrueRawR(i);
-                        altEvent.Amount.Eff = tEvt.RawToEffConvert(altEvent.Amount.Raw);
-                        altEvent.Amount.Naraw = tEvt.RawToNarawConvert(altEvent.Amount.Raw);
-                        altEvent.Amount.Naeff = tEvt.EffToNaeffConvert(altEvent.Amount.Eff);
+                        var gainRaw = altEvent.Amount.Raw * beaconOfLight.AltHypoTrueRawR(i) - altEvent.Amount.Raw;
+                        altEvent.Amount.UpdateAltGainsFromEvtData(tEvt, gainRaw, i);
                     }
                 }
             }

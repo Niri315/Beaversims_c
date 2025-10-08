@@ -29,37 +29,42 @@ namespace Beaversims.Core.Sim
 
         public static void TopItems(List<Event> events, User user, Fight fight)
         {
-            var simItems = new List<GainItem>
-            {
-                //new Sim.ItemGenerator("Soaring Behemoth's Greathelm", 720, ItemSlot.Head)
-                Sim.ItemGenerator.CreateItem("Soaring Behemoth's Greathelm", 720, ItemSlot.Head, []),
-                Sim.ItemGenerator.CreateItem("Soaring Behemoth's Greathelm", 710, ItemSlot.Head, [(int)BonusIds.Leech]),
-                Sim.ItemGenerator.CreateItem("Charged Hexsword", 720, ItemSlot.MainHand, [(int)BonusIds.Harmonious])
-            };
+            //var simItems = new List<GainItem>
+            //{
+            //    //new Sim.ItemGenerator("Soaring Behemoth's Greathelm", 720, ItemSlot.Head)
+            //    Sim.ItemGenerator.CreateItem("Soaring Behemoth's Greathelm", 720, ItemSlot.Head, []),
+            //    Sim.ItemGenerator.CreateItem("Soaring Behemoth's Greathelm", 710, ItemSlot.Head, [(int)BonusIds.Leech]),
+            //    Sim.ItemGenerator.CreateItem("Charged Hexsword", 720, ItemSlot.MainHand, [(int)BonusIds.Harmonious])
+            //};
 
-            var allItems = user.Items
-                           .OfType<GainItem>()
-                           .Concat(simItems)
-                           .ToList();
+            //var allItems = user.Items
+            //               .OfType<GainItem>()
+            //               .Concat(simItems)
+            //               .ToList();
 
 
-            foreach (var evt in events)
-            {
-                foreach (var item in allItems)
-                { 
-                    GainItem gainItem = (GainItem)item;
-                    foreach (var stat in gainItem.Stats)
-                    {
-                        var statName = stat.Key;
-                        foreach (var gainType in evt.Gains[statName])
-                        {
-                            gainItem.Gains[gainType.Key] += evt.Gains[statName][gainType.Key] * gainItem.Stats[statName] / fight.TotalTime;
+            //foreach (var evt in events)
+            //{
+            //    foreach (var item in allItems)
+            //    { 
+            //        GainItem gainItem = (GainItem)item;
+            //        foreach (var stat in gainItem.Stats)
+            //        {
+            //            var statName = stat.Key;
+            //            foreach (var gainType in evt.Gains[statName])
+            //            {
+            //                gainItem.Gains[gainType.Key] += evt.Gains[statName][gainType.Key] * gainItem.Stats[statName] / fight.TotalTime;
 
-                        }
-                    }
-                }
-            }
-            CheckResults(allItems, user);
+            //            }
+            //        }
+            //    }
+            //}
+            //CheckResults(allItems, user);
         } 
+
+        public static void CreateGearSets(User user)
+        {
+
+        }
     }
 }

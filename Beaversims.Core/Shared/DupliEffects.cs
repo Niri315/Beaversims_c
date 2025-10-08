@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Beaversims.Core.Specs.Paladin.Holy.Abilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Beaversims.Core.Shared
 {
@@ -113,6 +115,11 @@ namespace Beaversims.Core.Shared
         public static void AltSummerSource(List<Event> events, User user)
         {
             var summer = (Abilities.BlessingOfSummer)user.Abilities.Get(Abilities.BlessingOfSummer.name);
+            var testHypoHeal = 0.0;
+            var testHypoDmg = 0.0;
+
+            var totalAmountRaw = 0.0;
+            var totalAltAmountRaw = 0.0;
 
             foreach (var evt in events)
             {
@@ -120,24 +127,30 @@ namespace Beaversims.Core.Shared
                 {
                     if (IsSummerEvent(user, evt.Ability, evt.SummerActive, evt.SourceUnit, tEvt.AbsorbAbility))
                     {
+                        totalAmountRaw += tEvt.Amount.Raw;
                         for (int i = 0; i < evt.AltEvents.Count; i++)
                         {
                             var altEvent = evt.AltEvents[i];
+                            totalAltAmountRaw += altEvent.Amount.Raw;
 
                             var hypoAmount = altEvent.Amount.Raw * summer.Coef;
+                            var testAmount = tEvt.Amount.Raw * summer.Coef;
                             if (evt.IsHealDoneEvent())
                             {
-                                summer.AltHypoAmountsDmg[i] += hypoAmount;
+                                summer.AltDamage[i].Hypo += hypoAmount;
+                                testHypoDmg += testAmount;
                             }
                             else if (evt.IsDmgDoneEvent())
                             {
-                                summer.AltHypoAmountsHeal[i] += hypoAmount;
+                                summer.AltHeal[i].Hypo += hypoAmount;
+                                testHypoHeal += testAmount;
                             }
 
                         }
                     }
                 }
             }
+
             foreach (var evt in events)
             {
                 if (evt.AbilityName == Abilities.BlessingOfSummer.name && evt is ThroughputEvent tEvt)
@@ -145,10 +158,16 @@ namespace Beaversims.Core.Shared
                     for (int i = 0; i < evt.AltEvents.Count; i++)
                     {
                         var altEvent = evt.AltEvents[i];
-                        altEvent.Amount.Raw *= summer.AltHypoTrueRawR(i);
-                        altEvent.Amount.Eff = tEvt.RawToEffConvert(altEvent.Amount.Raw);
-                        altEvent.Amount.Naraw = tEvt.RawToNarawConvert(altEvent.Amount.Raw);
-                        altEvent.Amount.Naeff = tEvt.EffToNaeffConvert(altEvent.Amount.Eff);
+                        if (evt.IsHealDoneEvent())
+                        {
+                            var gainRaw = altEvent.Amount.Raw * summer.AltHypoTrueRawR(i) - altEvent.Amount.Raw;
+                            altEvent.Amount.UpdateAltGainsFromEvtData(tEvt, gainRaw, i);
+                        }
+                        else if (evt.IsDmgDoneEvent())
+                        {
+                            var gainRaw = altEvent.Amount.Raw * summer.AltHypoTrueDmgR(i) - altEvent.Amount.Raw;
+                            altEvent.Amount.UpdateAltGainsFromEvtData(tEvt, gainRaw, i);
+                        }
                     }
                 }
             }
@@ -168,11 +187,12 @@ namespace Beaversims.Core.Shared
                         {
                             var altEvent = evt.AltEvents[i];
                             var leechStat = (Leech)altEvent.UserStats.Get(StatName.Leech);
-                            leechAbility.AltHypoAmountsHeal[i] += altEvent.Amount.Naraw / (leechStat.PercentRate * 100) * leechStat.Eff;
+                            leechAbility.AltHeal[i].Hypo += altEvent.Amount.Naraw / (leechStat.PercentRate * 100) * leechStat.Eff;
                         }
                     }
                 }
             }
+
             foreach (var evt in events)
             {
                 if (evt.AbilityName == Abilities.Leech.name && evt is ThroughputEvent tEvt)
@@ -180,10 +200,13 @@ namespace Beaversims.Core.Shared
                     for (int i = 0; i < evt.AltEvents.Count; i++)
                     {
                         var altEvent = evt.AltEvents[i];
-                        altEvent.Amount.Raw *= leechAbility.AltHypoTrueRawR(i);
-                        altEvent.Amount.Eff = tEvt.RawToEffConvert(altEvent.Amount.Raw);
-                        altEvent.Amount.Naraw = tEvt.RawToNarawConvert(altEvent.Amount.Raw);
-                        altEvent.Amount.Naeff = tEvt.EffToNaeffConvert(altEvent.Amount.Eff);
+                        var gainRaw = altEvent.Amount.Raw * leechAbility.AltHypoTrueRawR(i) - altEvent.Amount.Raw;
+                        altEvent.Amount.UpdateAltGainsFromEvtData(tEvt, gainRaw, i);
+
+                        //altEvent.Amount.Raw *= leechAbility.AltHypoTrueRawR(i);
+                        //altEvent.Amount.Eff = tEvt.RawToEffConvert(altEvent.Amount.Raw);
+                        //altEvent.Amount.Naraw = tEvt.RawToNarawConvert(altEvent.Amount.Raw);
+                        //altEvent.Amount.Naeff = tEvt.EffToNaeffConvert(altEvent.Amount.Eff);
                     }
                 }
             }

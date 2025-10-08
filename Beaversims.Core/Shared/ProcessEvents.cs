@@ -119,6 +119,10 @@ namespace Beaversims.Core.Shared
             Console.WriteLine($"AMOUNT COMP EFF: {test[0][GainType.Eff]} vs {test[1][GainType.Eff]}");
             Console.WriteLine($"AMOUNT COMP DMG: {test[0][GainType.Dmg]} vs {test[1][GainType.Dmg]}");
             Console.WriteLine($"AMOUNT COMP DEF: {test[0][GainType.Def]} vs {test[1][GainType.Def]}");
+            Console.WriteLine($"EFF: {test[1][GainType.Eff] - test[0][GainType.Eff]}");
+            Console.WriteLine($"DMG: {test[1][GainType.Dmg] - test[0][GainType.Dmg]}");
+            Console.WriteLine($"DEF: {test[1][GainType.Def] - test[0][GainType.Def]}");
+
 
             return statGains;
         }

@@ -16,6 +16,7 @@ namespace Beaversims.Core.Shared
             var trueCastTime = Calc.TrueCastTimeCalc(haste, castTime);
             if (trueCastTime > Constants.castTimeCap)
             {
+                
                 cEvt.Ability.CastTimeGain += gain;
             }
         }

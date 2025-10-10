@@ -149,4 +149,13 @@ namespace Beaversims.Core.Shared.Abilities
             Scalers.UnionWith([SN.Vers]);
         }
     }
+    internal class LoomitharsLivingSilk : SharedAbility
+    {
+        public const string name = "Loom'ithar's Living Silk";
+        public LoomitharsLivingSilk()
+        {
+            Name = name;
+            Scalers.UnionWith([SN.Vers]);
+        }
+    }
 }

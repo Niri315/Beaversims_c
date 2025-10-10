@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Beaversims.Core.Specs.Paladin.Holy.Abilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -78,4 +79,40 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Talents
             Coef = 0.2 * rank;
         }
     }
+
+    internal class SecondSunrise : Talent
+    {
+        public const int id = 117683;
+        public double Coef { get; }
+        public SecondSunrise(int rank) : base(id, rank)
+        {
+            Coef = 0.15 * rank;
+        }
+    }
+    internal class HammerAndAnvil : Talent
+    {
+        public const int id = 117887;
+        public HammerAndAnvil(int rank) : base(id, rank)
+        {
+        }
+    }
+    internal class SelflessHealer : Talent
+    {
+        public const int id = 128309;
+        public double Coef { get; }
+        public HashSet<string> SourceAbilities { get; set; } = [HolyLight.name, FlashOfLight.name];
+        public SelflessHealer(int rank) : base(id, rank)
+        {
+            Coef = 0.1 * rank;
+        }
+    }
+    //internal class OverflowingLight : Talent
+    //{
+    //    public const int id = 102535;
+    //    public double Coef { get; }
+    //    public OverflowingLight(int rank) : base(id, rank)
+    //    {
+    //        Coef = 0.3 * rank;
+    //    }
+    //}
 }

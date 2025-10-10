@@ -12,6 +12,7 @@ namespace Beaversims.Core
         public static void TrackBuffs(Event evt, UnitRepo allUnits, Logger statLogger = null)
         {
             var user = allUnits.GetUser();
+
             if (evt is BuffEvent buffEvent)
             {
                 var buffId = evt.AbilityId;

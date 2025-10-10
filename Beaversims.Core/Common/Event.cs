@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Beaversims.Core.Specs.Paladin.Holy;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,17 +26,13 @@ namespace Beaversims.Core
                 Naraw = this.Naraw
             };
         }
-        //public void UpdateAltGainsFromEvtData(ThroughputEvent evt, double gainRaw, int i)
-        //{
-        //    var gainEff = evt.RawToEffConvert(gainRaw);
-        //    Raw += gainRaw;
-        //    Eff += gainEff;
-        //    Naeff += evt.EffToNaeffConvert(gainEff);
-        //    Naraw += evt.RawToNarawConvert(gainRaw);
-        //}
-        public void UpdateAltGainsFromEvtData(ThroughputEvent evt, double gainRaw, int i, double gainEff = -1)
+
+        public void UpdateAltGainsFromEvtData(ThroughputEvent evt, double gainRaw, int i)
         {
-            if (gainEff == -1) { gainEff = evt.AltRawToEffConvert(gainRaw, i); }
+            // Note: Tested throughly. 100% correct to use alt converts for alt gains.
+            // Currently doesnt seem to be any issue with negative eff amounts from crit, but this could change.
+
+            var gainEff = evt.AltRawToEffConvert(gainRaw, i);
             var gainNaraw = evt.AltRawToNarawConvert(gainRaw, i);
             var gainNaeff = evt.AltEffToNaeffConvert(gainEff, i);
             Raw += gainRaw;
@@ -50,11 +47,14 @@ namespace Beaversims.Core
     {
         public AmountContainer Amount { get; set; }
         public StatTracker UserStats { get; set; }
+
+        public double leechNukeRaw { get; set; } = 0.0;
         //public StatTracker StatDiffs { get; set; } = new();
         public AltEvent(StatTracker userStats) 
         { 
             UserStats = userStats;
         }
+
     }
 
     internal class Event
@@ -91,7 +91,7 @@ namespace Beaversims.Core
         public double? SourceHp_p()//(bool preEvent=false) 
         {
             if (SourceHp == null) return 1.0;  // Default to assuming percent is 100 if it cant be found.
-            return (double?) SourceHp / SourceMaxHp; 
+            return (double?) SourceHp / SourceMaxHp;    
         }
         public double? TargetHp_p()//(bool preEvent = false)
         {
@@ -102,7 +102,64 @@ namespace Beaversims.Core
         public bool IsDamageTakenEvent() => TargetUnit is User && this is DamageEvent;
         public bool IsHealDoneEvent() => this is HealEvent && UserSuperSource;
         public bool IsDmgDoneEvent() => this is DamageEvent && UserSuperSource && TargetUnit is not User;
-  
+
+        public void CreateAltEvents(User user)
+        {
+            foreach (var altGearSet in user.altGearSets)
+            {
+                var statDiffs = Enum.GetValues<StatName>()
+                    .ToDictionary(stat => stat, stat => 0.0);
+
+                var altStats = user.PuredStats.Clone();
+
+                foreach (var altGear in altGearSet)
+                {
+                    foreach (var stat in altGear.Value.Stats)
+                    {
+                        statDiffs[stat.Key] += stat.Value;
+                    }
+                }
+                foreach (var gear in user.Gear)
+                {
+                    foreach (var stat in gear.Value.Stats)
+                    {
+                        statDiffs[stat.Key] -= stat.Value;
+                    }
+                }
+                //foreach (var stat in statDiffs)
+                //{
+                //    Console.WriteLine($"{stat.Key}: {stat.Value}");
+                //}
+                foreach (var stat in statDiffs)
+                {
+                    bool removal;
+                    var diff = stat.Value;
+                    if (stat.Value < 0.0)
+                    {
+                        removal = true;
+                        diff *= -1;
+                    }
+                    else
+                    {
+                        removal = false;
+                    }
+                    altStats.Get(stat.Key).ChangeAmount(diff, StatAmountType.Rating, removal);
+                }
+                altStats.UpdateAllStats();
+
+                var altEvent = new AltEvent(altStats);
+                AltEvents.Add(altEvent);
+            }
+
+            if (this is ThroughputEvent tpEvent)
+            {
+                foreach (var _altEvent in AltEvents)
+                {
+                    _altEvent.Amount = tpEvent.Amount.Clone();
+                }
+            }
+        }
+
         public Event()
         {
             Gains = Utils.InitGainMatrix();

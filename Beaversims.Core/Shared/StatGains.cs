@@ -14,12 +14,15 @@ namespace Beaversims.Core.Shared
         {
             for (int i = 0; i < evt.AltEvents.Count; i++)
             {
+
                 var altEvent = evt.AltEvents[i];
+
                 var altStat = altEvent.UserStats.Get(stat.Name);
                 var gainPerPrimRaw = altEvent.Amount.Raw / stat.Eff;
                 var gainRaw = gainPerPrimRaw * (altStat.Eff - stat.Eff);
-
                 altEvent.Amount.UpdateAltGainsFromEvtData(evt, gainRaw, i);
+
+
             }
         }
 
@@ -33,20 +36,32 @@ namespace Beaversims.Core.Shared
                 var altStat = altEvent.UserStats.Get(stat.Name);
                 var gainRaw = gainPerEffstatRaw * (altStat.Eff - stat.Eff) * mod;
                 altEvent.Amount.UpdateAltGainsFromEvtData(evt, gainRaw, i);
+
             }
         }
 
-        public static void CritAltAmount(ThroughputEvent evt, Crit crit, bool isCrit, double critInc, bool userAbilityUhr = true)
+        public static void CritAltAmount(ThroughputEvent evt, Crit crit, bool isCrit, double critInc, bool userAbilityUhr = true, double? estNonCritValue = null)
         {
             var ability = evt.Ability;
             for (int i = 0; i < evt.AltEvents.Count; i++)
             {
+
+                double amount;
                 var altEvent = evt.AltEvents[i];
-                var gainPerRatingRaw = Calc.CritGainCalc(crit, altEvent.Amount.Raw, isCrit, critInc);
+                if (estNonCritValue != null)
+                {
+                    amount = estNonCritValue.Value;
+                }
+                else
+                {
+                    amount = altEvent.Amount.Raw;
+                }
+                var gainPerRatingRaw = Calc.CritGainCalc(crit, amount, isCrit, critInc);
                 var gainPerEffstatRaw = crit.RemoveDryMult(gainPerRatingRaw);
                 var altCrit = altEvent.UserStats.Get(crit.Name);
                 var gainRaw = gainPerEffstatRaw * (altCrit.Eff - crit.Eff);
                 var gainEff = 0.0;
+
                 if (userAbilityUhr)
                 {
                     if (evt.IsHealDoneEvent())
@@ -57,23 +72,34 @@ namespace Beaversims.Core.Shared
                     {
                         gainEff = gainRaw;
                     }
-                    altEvent.Amount.UpdateAltGainsFromEvtData(evt, gainRaw, i, gainEff: gainEff);
+
+                    var gainNaraw = evt.AltRawToNarawConvert(gainRaw, i);
+                    var gainNaeff = evt.AltEffToNaeffConvert(gainEff, i);
+                    altEvent.Amount.Raw += gainRaw;
+                    altEvent.Amount.Eff += gainEff;
+                    altEvent.Amount.Naeff += gainNaeff;
+                    altEvent.Amount.Naraw += gainNaraw;
+
                 }
                 else
                 {
                     altEvent.Amount.UpdateAltGainsFromEvtData(evt, gainRaw, i);
 
                 }
-
-
-
+                //if (i == 8 && altEvent.Amount.Eff < 0 && evt is HealEvent)
+                //{
+                //    Console.WriteLine(evt.AbilityName);
+                //    Console.WriteLine(altEvent.Amount.Raw);
+                //    Console.WriteLine(gainEff);
+                //    Console.WriteLine(gainEff);
+                //    Console.WriteLine(altEvent.Amount.Eff);
+                //}
             }
         }
 
 
         public static void DefAltAmount(ThroughputEvent evt, NonPrimaryStat stat, double percentRate)
         {
-            //todo eff/naraw etc.
             for (int i = 0; i < evt.AltEvents.Count; i++)
             {
                 var altEvent = evt.AltEvents[i];
@@ -86,7 +112,18 @@ namespace Beaversims.Core.Shared
             }
         }
 
-
+        public static void LeechAltAmount(ThroughputEvent evt, Stat stat)
+        {
+            for (int i = 0; i < evt.AltEvents.Count; i++)
+            {
+                var altEvent = evt.AltEvents[i];
+                var altStat = altEvent.UserStats.Get(stat.Name);
+                var gainPerPrimRaw = altEvent.Amount.Raw / stat.Eff;
+                var gainRaw = gainPerPrimRaw * (altStat.Eff - stat.Eff);
+                altEvent.leechNukeRaw += gainRaw;
+                altEvent.Amount.UpdateAltGainsFromEvtData(evt, gainRaw, i);
+            }
+        }
 
 
         public static void PrimaryGainsDmg(ThroughputEvent evt, User user, StatName statName)
@@ -331,6 +368,7 @@ namespace Beaversims.Core.Shared
             {
                 PrimaryGainsHeal(evt, user, StatName.Intellect);
             }
+
             if (ability.ScalesWith(StatName.Stamina))
             {
                 PrimaryGainsHeal(evt, user, StatName.Stamina);
@@ -347,6 +385,8 @@ namespace Beaversims.Core.Shared
             {
                 HasteGainsHeal(evt, user);
             }
+
+
         }
         public static void AutoStatGainsDmg(DamageEvent evt, User user)
         {
@@ -381,7 +421,8 @@ namespace Beaversims.Core.Shared
                 var leechStat = evt.UserStats.Get(StatName.Leech);
                 var gain = evt.Amount.Eff / leechStat.Eff;
                 evt.Gains[StatName.Leech][GainType.Eff] += gain;
-                PrimaryAltAmount(evt, leechStat);  // Might as well just do the same as with primary stats.
+
+                LeechAltAmount(evt, leechStat);  // Might as well just do the same as with primary stats.
             }
         }
 
@@ -417,7 +458,7 @@ namespace Beaversims.Core.Shared
             evt.Gains[statName][gainType] += gain;
             user.Spec.DupliGainsHeal(evt, user, statName, gain);
 
-            CritAltAmount(evt, crit, false, critInc);
+            CritAltAmount(evt, crit, false, critInc, userAbilityUhr:false, estNonCritValue:estNonCritAmount);
 
         }
         public static void CritGainsHealDerived(HealEvent evt, User user)
@@ -443,7 +484,7 @@ namespace Beaversims.Core.Shared
             evt.Gains[statName][gainType] += gain;
             user.Spec.DupliGainsHeal(evt, user, statName, gainRaw);
 
-            CritAltAmount(evt, crit, false, critInc);
+            CritAltAmount(evt, crit, false, critInc, userAbilityUhr: false, estNonCritValue: estNonCritAmount);
 
         }
 

@@ -2,6 +2,7 @@
 using Beaversims.Core.Specs.Paladin.Holy;
 using Beaversims.Core.Specs.Paladin.Holy.Abilities;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -139,13 +140,12 @@ namespace Beaversims.Core.Parser
                             {
                                 bonusIds = new List<int>();
                             }
-                                var gainItem = Sim.ItemGenerator.CreateItem(itemName, ilvl, itemSlot, bonusIds);
-                            user.Items[itemSlot] = gainItem;
+                            var gainItem = Sim.ItemGenerator.CreateItem(itemName, ilvl, itemSlot, bonusIds);
+                            user.Gear[itemSlot] = gainItem;
                         }
-                        else
-                        {
-                            player.Items[itemSlot] = new Item(itemId, itemName, ilvl, itemSlot);
-                        }
+
+                        player.Items[itemSlot] = new Item(itemId, itemName, ilvl, itemSlot);
+ 
 
                     }
                     foreach (var talentElement in playerElement.GetProperty("combatantInfo").GetProperty("talentTree").EnumerateArray())
@@ -218,7 +218,20 @@ namespace Beaversims.Core.Parser
             }
         }
 
-
+        public static void PurifyRefStats(User user)
+        {
+            user.PuredStats = user.Stats.Clone();
+            foreach (var buff in user.Buffs)
+            {
+                if (buff is StatBuff sBuff && sBuff.RefImpurity)
+                {
+                    foreach (var mod in sBuff.StatMods)
+                    {
+                        user.PuredStats.Get(mod.StatName).ChangeAmount(mod.Amount * buff.Stacks, mod.AmountType, removal: true);
+                    }
+                }
+            }
+        }
 
         public static UnitRepo ParseUnits(JsonElement playerData, JsonElement combatantEvents, JsonElement userInfo, int userId, Fight fight)
         {
@@ -238,7 +251,7 @@ namespace Beaversims.Core.Parser
             {
                 user.AddBuff("Vantus Rune" + fight.Name, Constants.curVantusId, user, 1);
             }
-
+            PurifyRefStats(user);
             return allUnits;
         }
     }

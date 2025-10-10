@@ -40,7 +40,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
 
         public static bool IsBeaconEvent(HealEvent evt, User user)
             => evt.IsHealDoneEvent() && evt.Ability.Direct && evt.SourceUnit is User && !evt.Tick;
-        
+
         public static double BeaconFormula(Event evt, User user)
         {
             var beaconOfLight = (Abilities.BeaconOfLight)user.Abilities.Get(Abilities.BeaconOfLight.name);
@@ -54,7 +54,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
                 var beaconOfLight = (Abilities.BeaconOfLight)user.Abilities.Get(Abilities.BeaconOfLight.name);
                 beaconOfLight.Heal.Hypo += evt.Amount.Raw * BeaconFormula(evt, user);
             }
-           
+
         }
         public static void BeaconGains(ThroughputEvent evt, User user, StatName statName, double gainRaw, GainType gainType)
         {
@@ -103,5 +103,70 @@ namespace Beaversims.Core.Specs.Paladin.Holy
                 }
             }
         }
+
+
+        public static bool IsSelflessEvt(HealEvent evt, User user)
+        {
+            if (user.HasTalent(Talents.SelflessHealer.id))
+            {
+                var selfless_t = (Talents.SelflessHealer)user.Talents[Talents.SelflessHealer.id];
+                if (selfless_t.SourceAbilities.Contains(evt.AbilityName) && evt.SourceUnit is User)
+                {
+                    return true;
+                }
+            }
+            return false;
+
+        }
+
+
+        public static void SelflessHypo(HealEvent evt, User user)
+        {
+            if (IsSelflessEvt(evt, user))
+            {
+                if (user.HasTalent(Talents.SelflessHealer.id))
+                {
+                    var selfless_t = (Talents.SelflessHealer)user.Talents[Talents.SelflessHealer.id];
+                    var selfless_a = (Abilities.SelflessHealer)user.Abilities.Get(Abilities.SelflessHealer.name);
+                    selfless_a.Heal.Hypo += evt.Amount.Raw * selfless_t.Coef;
+                }
+            }
+
+        }
+
+        public static void altSelfless(List<Event> events, User user)
+        {
+            if (user.HasTalent(Talents.SelflessHealer.id))
+            {
+                var selfless_t = (Talents.SelflessHealer)user.Talents[Talents.SelflessHealer.id];
+                var selfless_a = (Abilities.SelflessHealer)user.Abilities.Get(Abilities.SelflessHealer.name);
+
+                foreach (var evt in events)
+                {
+
+                    if (evt is HealEvent hEvt && IsSelflessEvt(hEvt, user))
+                    {
+                        for (int i = 0; i < evt.AltEvents.Count; i++)
+                        {
+                            var altEvent = evt.AltEvents[i];
+                            selfless_a.AltHeal[i].Hypo += altEvent.Amount.Raw * selfless_t.Coef;
+                        }                    }
+
+                }
+                foreach (var evt in events)
+                {
+                    if (evt.AbilityName == selfless_a.Name && evt is ThroughputEvent tEvt)
+                    {
+                        for (int i = 0; i < evt.AltEvents.Count; i++)
+                        {
+                            var altEvent = evt.AltEvents[i];
+                            var gainRaw = altEvent.Amount.Raw * selfless_a.AltHypoTrueRawR(i) - altEvent.Amount.Raw;
+                            altEvent.Amount.UpdateAltGainsFromEvtData(tEvt, gainRaw, i);
+                        }
+                    }
+                }
+            }
+        }
+     
     }
 }

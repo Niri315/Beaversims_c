@@ -1,12 +1,48 @@
-﻿using Beaversims.Core.Common;
+﻿using Beaversims.Core;
+using Beaversims.Core.Common;
+using Beaversims.Core.Sim;
 using System;
 using System.Collections.Generic;
+using System.Formats.Tar;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+internal class Results
+{
+    public double TotalTime { get; set; } = 0;
+    public GainMatrix StatGains { get; set; } = Utils.InitGainMatrix();
+    public GainMatrix swGains { get; set; } = Utils.InitGainMatrix();
+    public List<GearSet> altGearSets { get; set; } = [];
+    public void ToPerSec()
+    {
+        foreach (var statEntry in StatGains)
+        {
+            var stat = statEntry.Key;
+            foreach (var gainEntry in statEntry.Value)
+            {
+                var gainType = gainEntry.Key;
+                swGains[stat][gainType] = gainEntry.Value / TotalTime;
+            }
+        }
+        
+        foreach (var altGearSet in altGearSets)
+        {
+            foreach (var gainEntry in altGearSet.Gains)
+            {
+                var gainType = gainEntry.Key;
+                altGearSet.Gains[gainType] /= TotalTime;
+            }
+        }
+    }
+
+    public Results() { }
+}
+
 namespace Beaversims.Core.Shared
 {
+
     internal class ProcessEvents
     {
         public static void StatGains(Event evt, GainMatrix statGains, AbilityGainMatrix abilityGains, Fight fight)
@@ -29,30 +65,54 @@ namespace Beaversims.Core.Shared
             }
         }
 
-        public static void altAmounts(ThroughputEvent evt, List<Dictionary<GainType, double>> test, Fight fight)
+        public static void altAmounts(ThroughputEvent evt, Fight fight, User user)
         {
-    
-            foreach (var altEvent in evt.AltEvents)
+
+            for (int i = 0; i < evt.AltEvents.Count; i++)
             {
+                var altEvent = evt.AltEvents[i];
                 var gainType = GainType.Eff;
-                if (evt.IsDmgDoneEvent())
+                if (evt.IsDamageTakenEvent())
+                {
+                    gainType = GainType.Def;
+                    if (i == 0)
+                    {
+                        user.altGearSets[i].Gains[gainType] -= (altEvent.Amount.Eff - evt.Amount.Eff);
+                    }
+                    else
+                    {
+                        user.altGearSets[i].Gains[gainType] -= (altEvent.Amount.Eff - evt.AltEvents[0].Amount.Eff);
+                    }
+                }
+                else if (evt.IsDmgDoneEvent())
                 {
                     gainType = GainType.Dmg;
                 }
-                else if (evt.IsDamageTakenEvent())
-                {
-                    gainType = GainType.Def;
-                }
+
                 else if (evt.IsHealDoneEvent())
                 {
                     gainType = GainType.Eff;
+                }
+                else if (evt.Ability.SuppStamScaler && evt.TargetUnit is User && evt is HealEvent)
+                {
+                    gainType = GainType.SupEff;
+                }
+                else if (evt.Ability.SuppStamScaler && evt.TargetUnit is not User && evt is DamageEvent)
+                {
+                    gainType = GainType.SupDmg;
                 }
                 else
                 {
                     continue;
                 }
-                test[1][gainType] += altEvent.Amount.Eff / fight.TotalTime;
-                test[0][gainType] += evt.Amount.Eff / fight.TotalTime;
+                if (i == 0)
+                {
+                    user.altGearSets[i].Gains[gainType] += (altEvent.Amount.Eff - evt.Amount.Eff);
+                }
+                else
+                {
+                    user.altGearSets[i].Gains[gainType] += (altEvent.Amount.Eff - evt.AltEvents[0].Amount.Eff);
+                }
             }
         }
 
@@ -95,36 +155,41 @@ namespace Beaversims.Core.Shared
             }
         }
 
-        public static GainMatrix SharedIteration(List<Event> events, Fight fight, User user, Results results)
+   
+
+        public static void SharedIteration(List<Event> events, Fight fight, User user, Results results)
         {
             var statGains = results.StatGains;
             var abilityGainLogger = new Logger("StatGainByAbility", fight, user.Id.TypeId);
             var abilityGains = new Dictionary<string, GainMatrix>();
 
-            List<Dictionary<GainType, double>> test = [];
-            test.Add(Utils.InitGainDict());
-            test.Add(Utils.InitGainDict());
+
+            //for (int i = 0; i < user.altGearSets.Count; i++)
+            //{
+            //    results.altGearGains.Add(Utils.InitGainDict());
+            //}
+
 
             foreach (Event evt in events)
             {
                 StatGains(evt, statGains, abilityGains, fight);
                 if (evt is ThroughputEvent tEvt) 
                 {
-                    altAmounts(tEvt, test, fight);
-
+                    altAmounts(tEvt, fight, user);
                 }
             }
+
+            results.altGearSets = user.altGearSets;
             LogAbilityGains(user, abilityGainLogger, abilityGains);
 
-            Console.WriteLine($"AMOUNT COMP EFF: {test[0][GainType.Eff]} vs {test[1][GainType.Eff]}");
-            Console.WriteLine($"AMOUNT COMP DMG: {test[0][GainType.Dmg]} vs {test[1][GainType.Dmg]}");
-            Console.WriteLine($"AMOUNT COMP DEF: {test[0][GainType.Def]} vs {test[1][GainType.Def]}");
-            Console.WriteLine($"EFF: {test[1][GainType.Eff] - test[0][GainType.Eff]}");
-            Console.WriteLine($"DMG: {test[1][GainType.Dmg] - test[0][GainType.Dmg]}");
-            Console.WriteLine($"DEF: {test[1][GainType.Def] - test[0][GainType.Def]}");
+            //Console.WriteLine($"AMOUNT COMP EFF: {test[0][GainType.Eff]} vs {test[1][GainType.Eff]}");
+            //Console.WriteLine($"AMOUNT COMP DMG: {test[0][GainType.Dmg]} vs {test[1][GainType.Dmg]}");
+            //Console.WriteLine($"AMOUNT COMP DEF: {test[0][GainType.Def]} vs {test[1][GainType.Def]}");
+            //Console.WriteLine($"EFF: {test[1][GainType.Eff] - test[0][GainType.Eff]}");
+            //Console.WriteLine($"DMG: {test[1][GainType.Dmg] - test[0][GainType.Dmg]}");
+            //Console.WriteLine($"DEF: {test[0][GainType.Def] - test[1][GainType.Def]}");
 
 
-            return statGains;
         }
     }
 }

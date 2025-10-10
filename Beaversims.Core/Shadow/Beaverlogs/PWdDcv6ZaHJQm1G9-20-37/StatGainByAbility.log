@@ -1,0 +1,96 @@
+Melee
+	Vers
+		Damage: 0,29345025819659337
+	Crit
+		Damage: 0,3022476454404418
+	Haste
+		Damage: 0,2205888520232825
+-------------------
+Decree: Oath-Bound
+	Vers
+		Damage Reduction: 0,33765034128148613
+-------------------
+Leech
+	Leech
+		Heal: 21,54980401067366
+-------------------
+Tyranny
+	Vers
+		Damage Reduction: 3,194366614534821
+	Avoidance
+		Damage Reduction: 7,99415179380987
+-------------------
+Lightforged Blessing
+	Stamina
+		Supportive Heal: 0,0033745730158021847
+-------------------
+Conquer
+	Vers
+		Damage Reduction: 0,07308907102310602
+	Avoidance
+		Damage Reduction: 0,20958583763426927
+-------------------
+Oath-Breaker
+	Vers
+		Damage Reduction: 0,18460800721954485
+	Avoidance
+		Damage Reduction: 0,5293708523791456
+-------------------
+Banishment
+	Vers
+		Damage Reduction: 0,23992278455374558
+-------------------
+King's Thrall
+	Vers
+		Damage Reduction: 0,0723549485199267
+	Avoidance
+		Damage Reduction: 0,207480711962247
+-------------------
+Besiege
+	Vers
+		Damage Reduction: 0,21206147018040564
+-------------------
+King's Hunger
+	Vers
+		Damage Reduction: 0,5773531773188195
+	Avoidance
+		Damage Reduction: 1,6631826118523112
+-------------------
+Araz's Ritual Forge
+	Vers
+		Damage Reduction: 0,07830989558146134
+-------------------
+Behead
+	Vers
+		Damage Reduction: 0,09889335066765834
+-------------------
+Galactic Smash
+	Vers
+		Damage Reduction: 0,1252861822779836
+	Avoidance
+		Damage Reduction: 0,2816945967338306
+-------------------
+Twilight Scar
+	Vers
+		Damage Reduction: 0,5519301588311283
+-------------------
+Dark Star
+	Vers
+		Damage Reduction: 1,2826671504662976
+	Avoidance
+		Damage Reduction: 3,0721099127094176
+-------------------
+Starkiller Swing
+	Vers
+		Damage Reduction: 0,17013605542308186
+-------------------
+Shadow Word: Death
+	Vers
+		Damage Reduction: 0,009301299279822275
+-------------------
+Twilight Spikes
+	Vers
+		Damage Reduction: 0,19652375975854738
+	Avoidance
+		Damage Reduction: 0,5717943133051219
+-------------------

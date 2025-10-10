@@ -51,6 +51,8 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
         //TODO
     {
         public const string name = "Barrier of Faith";
+        public const int initAbsorbId = 395180;
+
         public BarrierOfFaith()
         {
             Name = name;
@@ -351,7 +353,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
                 var estNonCritAmount = evt.Amount.Eff * ((hitAmount + (critAmount / 2)) / Heal.Eff);
 
                 var gainEff = Calc.CritGainCalc(crit, estNonCritAmount, false, 2);
-                StatGains.CritAltAmount(evt, crit, false, 2, userAbilityUhr:false);
+                StatGains.CritAltAmount(evt, crit, false, 2, userAbilityUhr:false, estNonCritValue:estNonCritAmount);
                 evt.Gains[statName][GainType.Eff] += gainEff;
             }
         }
@@ -443,10 +445,23 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
     internal class HolyShock : HpalAbility
     {
         public const string name = "Holy Shock";
-        public void SetHCGM()
+        public void SetHCGM(User user)
         {
-            // TODO sth casts holy shocks twice for herald. Second sunrise. only 15%, doesnt give extra Holy power.
-            HGCM = Casts / (Heal.Count + Damage.Count);
+            // Note Second sunrise: Procs from all Holy Shocks EXCEPT for the 4/5 from divine toll, and the 2 extra from rising sunlight.
+
+            if (user.HasTalent(Talents.SecondSunrise.id))
+            {
+                var ssTal = (Talents.SecondSunrise)user.Talents[Talents.SecondSunrise.id];
+                var ssCoef = ssTal.Coef;
+                // Quickfix, todo work out math.
+                double test = Casts * 2;  
+                HGCM = test / (Heal.Count + Damage.Count);
+            }
+            else
+            {
+                HGCM = Casts / (Heal.Count + Damage.Count);
+
+            }
         }
         public HolyShock()
         {
@@ -560,7 +575,26 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
         }
     }
 
-    internal class PillarOfLights : HpalAbility
+    internal class OverflowingLight : HpalAbility
+    {
+        // Just using derived crit for this.
+        public const string name = "Overflowing Light";
+
+        public OverflowingLight()
+        {
+            Name = name;
+            ManaCost_p = 0.028;
+            CastTime = Constants.GCD;
+            Direct = true;
+            Spell = true;
+            Scalers.UnionWith([SN.Intellect, SN.Haste, SN.Mastery, SN.Vers]);
+            DerivedCritScaler = true;
+            SourceAbility = HolyShock.name;
+            HasteScalers.UnionWith([HST.Cast]);
+        }
+    }
+
+        internal class PillarOfLights : HpalAbility
     // Ability name is different from talent name. They will probably fix it someday, keep an eye out.
     {
         public const string name = "Pillar of Lights";
@@ -597,6 +631,10 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
         public ResplendentLight()
         {
             Name = name;
+            Scalers.UnionWith([SN.Intellect, SN.Haste, SN.Mastery, SN.Vers]);
+            HasteScalers.UnionWith([HST.Cast]);
+            DerivedCritScaler = true;
+            SourceAbility = HolyLight.name;
         }
     }
 
@@ -662,6 +700,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
     internal class SelflessHealer : HpalAbility
     {
         public const string name = "Selfless Healer";
+
         public SelflessHealer()
         {
             Name = name;
@@ -771,4 +810,5 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
         }
     }
 }
+
 

@@ -23,7 +23,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
 
         public static void HaaGains(List<Event> events, User user)
         {
-            // TODO - Make function properly with intervals.
+            if (!user.HasTalent(Talents.HammerAndAnvil.id)) { return; }
 
             var abilities = user.Abilities;
             var haa = (Abilities.HammerAndAnvil)user.Abilities.Get(Abilities.HammerAndAnvil.name);
@@ -53,11 +53,6 @@ namespace Beaversims.Core.Specs.Paladin.Holy
             var gainPerWepRaw = ((wepRaw / ((cs.Damage.Crit.Count) + judg.Damage.Crit.Count)) / 100) / Crit.percentRate;
             var gainPerBulwarkRaw = ((bulwarkRaw / ((cs.Damage.Crit.Count) + judg.Damage.Crit.Count)) / 100) / Crit.percentRate;
             var gainPerWepDmg = ((wepDmg / ((cs.Damage.Crit.Count) + judg.Damage.Crit.Count)) / 100) / Crit.percentRate;
-            Console.WriteLine("HAA");
-
-            Console.WriteLine(haaRaw / 100 / Crit.percentRate);
-            Console.WriteLine(gainPerTriggerHaaRaw);
-            Console.WriteLine(cs.Damage.Crit.Count + judg.Damage.Crit.Count);
 
 
             var posHaaEvtCount = 0;
@@ -134,37 +129,103 @@ namespace Beaversims.Core.Specs.Paladin.Holy
             var judgProcCount = judg.Damage.Crit.Count;
             var haaCount = haa.Heal.Count; // aoe
             var correctingCoef = posHaaEvtCount / haaCount;
-            Console.WriteLine("HAA STUFF");
-            Console.WriteLine(correctingCoef);
+
             foreach (var evt in events)
             {
                 if (evt is ThroughputEvent tEvt)
                 {
                     for (int i = 0; i < evt.AltEvents.Count; i++)
                     {
+                        var crit = evt.UserStats.Get(StatName.Crit);
+                        var altCrit = evt.AltEvents[i].UserStats.Get(StatName.Crit);
                         var altEvent = evt.AltEvents[i];
-                        var healPerHaaRaw = haa.AltHeal[i].Raw / (csProcCount + judgProcCount);
-                        var AltGainPerHaaTriggerRaw = haa.AltHeal[i].Raw / ((cs.Damage.Crit.Count * cs.HaaFactor) + judg.Damage.Crit.Count) / 100 / Crit.percentRate;
-                        if (evt.AbilityName == haa.Name || evt.AbilityName == cs.Name)
+                        var gainRaw = 0.0;
+                        if (evt.AbilityName == haa.Name)
                         {
-                            var crit = evt.UserStats.Get(StatName.Crit);
-                            var altCrit = evt.AltEvents[i].UserStats.Get(StatName.Crit);
-                            var gainRaw = AltGainPerHaaTriggerRaw * correctingCoef * (altCrit.Eff - crit.Eff);
-                            if (evt.AbilityName == cs.Name)
-                            { 
-                                gainRaw *= cs.HaaFactor;
-                            }
-                            Console.WriteLine(haa.AltHeal[i].Raw);
-                            altEvent.Amount.UpdateAltGainsFromEvtData(tEvt, gainRaw, i);
+                            gainRaw = (altCrit.Eff - crit.Eff) * correctingCoef * haa.AltHeal[i].Raw / ((cs.Damage.Crit.Count) + judg.Damage.Crit.Count) / 100 / Crit.percentRate;
                         }
+                        if (evt.AbilityName == lesserBulwark.Name)
+                        {
+                            gainRaw = (altCrit.Eff - crit.Eff) * correctingCoef * lesserBulwark.AltHeal[i].Raw / ((cs.Damage.Crit.Count) + judg.Damage.Crit.Count) / 100 / Crit.percentRate;
+                        }
+                        if (evt.AbilityName == lesserWep.Name)
+                        {
+                            if (evt.IsHealDoneEvent())
+                            {
+                                gainRaw = (altCrit.Eff - crit.Eff) * correctingCoef * lesserWep.AltHeal[i].Raw / ((cs.Damage.Crit.Count) + judg.Damage.Crit.Count) / 100 / Crit.percentRate;
+                            }
+                            else if (evt.IsDmgDoneEvent())
+                            {
+                                gainRaw = (altCrit.Eff - crit.Eff) * correctingCoef * lesserWep.AltDamage[i].Dmg / ((cs.Damage.Crit.Count) + judg.Damage.Crit.Count) / 100 / Crit.percentRate;
+                            }
+
+                        }
+                        altEvent.Amount.UpdateAltGainsFromEvtData(tEvt, gainRaw, i);
+
                     }
                 }
                
             }
         }
+
+        public static void SunSearGains(List<Event> events, User user)
+        {
+
+            var abilities = user.Abilities;
+            var sunsear = (Abilities.SunSear)user.Abilities.Get(Abilities.SunSear.name);
+            if (sunsear.Heal.Raw == 0) { return; }
+
+            var holyshock = (Abilities.HolyShock)user.Abilities.Get(Abilities.HolyShock.name);
+            var lod = (Abilities.LightOfDawn)user.Abilities.Get(Abilities.LightOfDawn.name);
+            var gainPerTriggerRaw = sunsear.Heal.Raw / (holyshock.Heal.Crit.Count + lod.Heal.Crit.Count) / 100 / Crit.percentRate;
+            foreach (var evt in events)
+            {
+                if (evt is ThroughputEvent)
+                {
+                    for (int i = 0; i < evt.AltEvents.Count; i++)
+                    {
+                        var altEvent = evt.AltEvents[i];
+                        if (evt.AbilityName == Abilities.SunSear.name)
+                        {
+                            sunsear.AltHeal[i].Raw += altEvent.Amount.Raw;
+                            sunsear.AltHeal[i].Eff += altEvent.Amount.Eff;
+                        }
+                    }
+                }
+
+            }
+
+            var posTriggerCount = holyshock.Heal.Count + lod.Heal.Count;
+            var sunsearCount = sunsear.Heal.Count;
+            var correctingCoef = posTriggerCount / sunsearCount;
+
+            foreach (var evt in events)
+            {
+                if (evt is ThroughputEvent tEvt)
+                {
+                    for (int i = 0; i < evt.AltEvents.Count; i++)
+                    {
+                        var crit = evt.UserStats.Get(StatName.Crit);
+                        var altCrit = evt.AltEvents[i].UserStats.Get(StatName.Crit);
+                        var altEvent = evt.AltEvents[i];
+                        var gainRaw = 0.0;
+                        if (evt.AbilityName == sunsear.Name)
+                        {
+                            gainRaw = (altCrit.Eff - crit.Eff) * correctingCoef * sunsear.AltHeal[i].Raw / (holyshock.Heal.Crit.Count + lod.Heal.Crit.Count) / 100 / Crit.percentRate;
+                        }
+                       
+                        altEvent.Amount.UpdateAltGainsFromEvtData(tEvt, gainRaw, i);
+
+                    }
+                }
+
+            }
+        }
+
         public static void FullAllocGains(List<Event> events, User user)
         {
             HaaGains(events, user);
+            SunSearGains(events, user);
         }
     }
 }

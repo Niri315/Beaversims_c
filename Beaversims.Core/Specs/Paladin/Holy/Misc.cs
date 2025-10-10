@@ -8,6 +8,9 @@ namespace Beaversims.Core.Specs.Paladin.Holy
 {
     internal class Misc
     {
+        public void BarrierOfFaith()
+        {
 
+        }
     }
 }

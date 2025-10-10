@@ -30,13 +30,15 @@ namespace Beaversims.Core
         Tabard = 19
     }
 
-    internal class Item
+    internal class Item : ICloneable
     {
         public int Id { get; }
         public string Name { get; }
         public int Ilvl { get; }
         public ItemSlot ItemSlot { get; }
 
+        public virtual object Clone() => MemberwiseClone();
+        
         public Item(int id, string name, int ilvl, ItemSlot itemSlot)
         {
             Id = id;

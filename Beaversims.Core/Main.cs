@@ -11,25 +11,7 @@ using System.Threading.Tasks;
 
 namespace Beaversims.Core
 {
-    internal class Results
-    {
-        public double TotalTime { get; set; } = 0;
-        public GainMatrix StatGains { get; set; } = Utils.InitGainMatrix();
-        public GainMatrix swGains {  get; set; } = Utils.InitGainMatrix();
-        public void SetSwGains()
-        {
-            foreach (var statEntry in StatGains)
-            {
-                var stat = statEntry.Key;
-                foreach (var gainEntry in statEntry.Value)
-                {
-                    var gainType = gainEntry.Key;
-                    swGains[stat][gainType] = gainEntry.Value / TotalTime;
-                }
-            }
-        }
-        public Results() { }
-    }
+   
     internal class Main
     {
         public static Results Run(JsonDocument logs, int userId, string reportCode)
@@ -54,11 +36,11 @@ namespace Beaversims.Core
             var events = EventParser.ParseUserEvents(userEvents, allUnits, fight);
 
             var user = allUnits.GetUser();
-
+            ItemSim.CreateGearSets(user);
             user.Spec.SpecIteration(events, allUnits, fight);
             var results = new Results();
             ProcessEvents.SharedIteration(events, fight, user, results);
-            ItemSim.TopItems(events, user, fight);
+            //ItemSim.TopItems(events, user, fight);
             Console.WriteLine($"Fight Id : {fight.Id}");
             Console.WriteLine($"User HCGM: {user.HCGM}");
             results.TotalTime = fight.TotalTime;

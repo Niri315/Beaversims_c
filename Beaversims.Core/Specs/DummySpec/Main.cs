@@ -13,11 +13,8 @@ namespace Beaversims.Core.Specs.DummySpec
     internal class Main
 
     {
- 
-
         public static void SpecMain(List<Event> events, UnitRepo allUnits, Fight fight)
         {
-
             var user = allUnits.GetUser();
             var statLogger = new Logger("StatTracker", fight, user.Id.TypeId);
             foreach (Event evt in events)
@@ -34,13 +31,12 @@ namespace Beaversims.Core.Specs.DummySpec
                 {
                     Shared.DupliEffects.SharedHypo(tEvt, user);
                 }
-
             }
 
-     
             foreach (Event evt in events)
             {
                 // Loop for setting gains.
+                evt.CreateAltEvents(user);
              
                 if (evt is ThroughputEvent tpEvent)
                 {

@@ -69,8 +69,8 @@ namespace Beaversims.Core
         public HealDataContainer Heal { get; } = new();
         public DmgDataContainer Damage { get; } = new();
 
-        public List<HealDataContainer> AltHeal { get; } = [new()];
-        public List<DmgDataContainer> AltDamage { get; } = [new()];
+        public List<HealDataContainer> AltHeal { get; } = [];
+        public List<DmgDataContainer> AltDamage { get; } = [];
 
         public bool ScalesWith(StatName statName) => Scalers.Contains(statName);
         public double CritUr()
@@ -113,17 +113,24 @@ namespace Beaversims.Core
         }
         public virtual double AltHypoTrueDmgR(int i)
         {
+            //             if (AltDamage[i].Hypo == 0) { return 1; }
+            // Should do this for normal hypo trues as well (?)
+
+            if (AltDamage[i].Hypo == 0) { return 1; }
             if (Damage.Dmg == 0) { return 0; }
             return HypoTrueDmgR() * AltDamage[i].Hypo / Damage.Dmg;
         }
         public virtual double AltHypoTrueUr(int i)
         {
+            if (AltHeal[i].Hypo == 0) { return 1; }
             if (Heal.Eff == 0) { return 0; }
             return HypoTrueUr() * AltHeal[i].Hypo / Heal.Eff;
         }
         public virtual double AltHypoTrueRawR(int i)
         {
+            if (AltHeal[i].Hypo == 0) { return 1; }
             if (Heal.Raw == 0) { return 0; }
+            //Console.WriteLine($"{HypoTrueRawR()} vs {AltHeal[i].Hypo} vs {Heal.Raw}");
             return HypoTrueRawR() * AltHeal[i].Hypo / Heal.Raw;
         }
         public double RawToNsnsnarawConvert(double amount)

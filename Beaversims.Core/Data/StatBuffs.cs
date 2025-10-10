@@ -229,6 +229,7 @@ namespace Beaversims.Core.Data.StatBuffs
         public RelentlessInquisitor(UnitId sourceId, int stacks)
             : base(id, sourceId, name, stacks)
         {
+            RefImpurity = true;
             SourceType = BuffSourceType.Talent;
             SourceObjId = 102575;
             StatMods.Add(

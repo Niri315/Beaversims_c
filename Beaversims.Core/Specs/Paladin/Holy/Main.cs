@@ -1,11 +1,12 @@
 ﻿
+using Beaversims.Core.Common;
+using Beaversims.Core.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Beaversims.Core.Common;
-using Beaversims.Core.Shared;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 
 namespace Beaversims.Core.Specs.Paladin.Holy
@@ -39,6 +40,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
             {
                 // Loop for tracking buffs and collecting data.
                 BuffTracker.TrackBuffs(evt, allUnits, statLogger);
+                evt.CreateAltEvents(user);
                 MasteryTracker.TrackBeacons(evt, beacons, user);
                 MasteryTracker.SetMasteryEff(evt, beacons, user);
                 CastProcessor.ProcessCast(evt, user);
@@ -56,6 +58,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
                     Shared.DupliEffects.SharedHypo(tEvt, user);
                     if (tEvt is HealEvent hEvt)
                     {
+                        DupliEffects.SelflessHypo(hEvt, user);
                         DupliEffects.BeaconHypo(hEvt, user);
                     }
                 }
@@ -63,7 +66,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
             }
 
             Abilities.HolyShock holyShock = (Abilities.HolyShock)user.Abilities.Get(Abilities.HolyShock.name);
-            holyShock.SetHCGM();
+            holyShock.SetHCGM(user);
 
             MasteryTracker.CleanUpCoords(allUnits);
             HCGM.SetHCGM(user);
@@ -72,27 +75,9 @@ namespace Beaversims.Core.Specs.Paladin.Holy
             {
                 // Loop for setting gains.
 
-
-                var testStatTracker = evt.UserStats.Clone();
-                //testStatTracker.Get(StatName.Mastery).ChangeAmount(1, StatAmountType.Rating, removal: false);
-                //testStatTracker.Get(StatName.Intellect).ChangeAmount(1, StatAmountType.Rating, removal: false);
-                //testStatTracker.Get(StatName.Vers).ChangeAmount(1, StatAmountType.Rating, removal: false);
-                //testStatTracker.Get(StatName.Haste).ChangeAmount(1, StatAmountType.Rating, removal: false);
-                testStatTracker.Get(StatName.Crit).ChangeAmount(1, StatAmountType.Rating, removal: false);
-                //testStatTracker.Get(StatName.Leech).ChangeAmount(1, StatAmountType.Rating, removal: false);
-                //testStatTracker.Get(StatName.Avoidance).ChangeAmount(1, StatAmountType.Rating, removal: false);
-                //testStatTracker.Get(StatName.Stamina).ChangeAmount(1, StatAmountType.Rating, removal: false);
-
-
-
-                testStatTracker.UpdateAllStats();
-                evt.AltEvents.Add(new AltEvent(testStatTracker));
-
                 Awakening.AwakeningScalers(evt, user);
                 if (evt is ThroughputEvent tpEvent)
                 {
-                    evt.AltEvents[0].Amount = tpEvent.Amount.Clone();
-                    //Console.WriteLine(evt.altEvents[0].Amount.Eff);
                     if (tpEvent.IsHealDoneEvent())
                     {
                         StatGains.AutoStatGainsHeal((HealEvent)tpEvent, user);
@@ -108,6 +93,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
             }
             FullAllocs.FullAllocGains(events, user);
 
+            DupliEffects.altSelfless(events, user);
             DupliEffects.altBeacon(events, user);
             Shared.DupliEffects.AltSummerSource(events, user);
             Shared.DupliEffects.AltLeechSource(events, user);

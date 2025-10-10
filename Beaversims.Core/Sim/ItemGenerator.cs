@@ -8,15 +8,32 @@ using System.Threading.Tasks;
 
 namespace Beaversims.Core
 {
+
     internal class GainItem : Item
     {
-        public GainDict Gains { get; set; }
+        //public GainDict Gains { get; set; }
         public Dictionary<StatName, double> Stats = [];
-
+        public override object Clone()
+        {
+            var clone = (GainItem)base.Clone();
+            clone.Stats = new Dictionary<StatName, double>(Stats);
+            return clone;
+        }
+        public void addStatRating(StatName statName, double rating)
+        {
+            if (!Stats.ContainsKey(statName))
+            {
+                Stats[statName] = rating;
+            }
+            else
+            {
+                Stats[statName] += rating;
+            }
+        }
         public GainItem(string name, int ilvl, ItemSlot itemSlot)
             : base(ItemDatabase.Items[name].Id, name, ilvl, itemSlot)
         {
-            Gains = Utils.InitGainDict();
+        //    Gains = Utils.InitGainDict();
         }
     }
 }
@@ -84,7 +101,7 @@ namespace Beaversims.Core.Sim
 
             var itemData = ItemDatabase.Items[itemName];
             var itemRpp = ScUtils.GetItemRPP(ilvl, itemSlot, itemData);
-            Console.WriteLine($"{itemData.Name} - Ilvl: {ilvl}, Itemclass: {itemData.ItemClass}");
+            //Console.WriteLine($"{itemData.Name} - Ilvl: {ilvl}, Itemclass: {itemData.ItemClass}");
 
             var craftedSecAlloc = 0.0;
             if (itemData.Stats != null)
@@ -105,11 +122,11 @@ namespace Beaversims.Core.Sim
                 }
             }
             ParseBonusIds(gainItem, bonusIds, itemRpp, craftedSecAlloc);
-            foreach (var stat in gainItem.Stats)
-            {
-                Console.WriteLine($"{stat}");
+            //foreach (var stat in gainItem.Stats)
+            //{
+            //    Console.WriteLine($"{stat}");
 
-            }
+            //}
 
             return gainItem;
         }

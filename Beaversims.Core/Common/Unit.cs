@@ -65,6 +65,7 @@ namespace Beaversims.Core
 
         public Dictionary<int, Talent> Talents { get; } = [];
         public Dictionary<ItemSlot, Item> Items { get; } = [];
+        public GearSet Gear { get; } = [];
         public double HCGM { get; set; } = 1.0;  //Haste Cast Gain Mod
 
         public bool HasVantus { get; set; } = false;
@@ -83,10 +84,12 @@ namespace Beaversims.Core
         public Spec Spec { get; set; }
         public AbilityRepo Abilities { get; } = new();
         public HashSet<int> SummonIds { get; set; } = []; // Type Ids only
-        public StatTracker? Stats { get; set; } = new();
+
+        public StatTracker Stats { get; set; } = new();
+        public StatTracker? PuredStats { get; set; }
         // If user doesnt have permanent leech for fight, revert to calculate leech value by leech data from other sims.
         public bool HasPermaLeech {  get; set; } = false;
-        public List<Dictionary<ItemSlot, Item>> altGearSets { get; set; } = [new()];
+        public List<GearSet> altGearSets { get; set; } = [];
 
         // Paladin
         public bool AwakeningActive { get; set; } = false;
@@ -148,13 +151,10 @@ namespace Beaversims.Core
                 }
                 else if (buff.SourceType == BuffSourceType.Item && sourceUnit is Player sourcePlayer)
                 {
-                    Console.WriteLine(buff.Name);
-                    Console.WriteLine(buff.SourceType);
                     var sourceItem = sourcePlayer.Items.Values.FirstOrDefault(i => i.Id == buff.SourceObjId);
                     if (sourceItem != null && mod.ScalingData != null)
                     {
                         amount = ScUtils.ScaledEffectValue(sourceItem.Ilvl, sourceItem.ItemSlot, mod.StatName, mod.ScalingData);
-                        Console.WriteLine(amount.ToString());
                     }
                     else
                     {
@@ -165,6 +165,12 @@ namespace Beaversims.Core
                 mod.Amount = amount;
                 var stat = Stats.Get(mod.StatName);
                 stat.ChangeAmount(amount * buff.Stacks, mod.AmountType, removal: false);
+                // if PuredStats is null its before event parsing. Stats are copied after init and before vantus. Only need to track PuredStats during events.
+                if (PuredStats != null && !buff.RefImpurity)
+                {
+                    var refStat = PuredStats.Get(mod.StatName);
+                    refStat.ChangeAmount(amount * buff.Stacks, mod.AmountType, removal: false);
+                }
             }
         }
 
@@ -200,6 +206,10 @@ namespace Beaversims.Core
                 {
                     Stats.Get(mod.StatName).ChangeAmount(mod.Amount * buff.Stacks, mod.AmountType, removal: true);
                     if (statLogger != null) { Stats.LogStats(statLogger, timeStamp); }
+                    if (!buff.RefImpurity)
+                    {
+                        PuredStats.Get(mod.StatName).ChangeAmount(mod.Amount * buff.Stacks, mod.AmountType, removal: true);
+                    }
                 }
             }
 
@@ -230,6 +240,10 @@ namespace Beaversims.Core
                     {
                         Stats.Get(mod.StatName).ChangeAmount(mod.Amount * magnitude, mod.AmountType, removal);
                         if (statLogger != null) { Stats.LogStats(statLogger, timeStamp); }
+                        if (!buff.RefImpurity)
+                        {
+                            PuredStats.Get(mod.StatName).ChangeAmount(mod.Amount * magnitude, mod.AmountType, removal);
+                        }
                     }
                 }
             }

@@ -36,7 +36,6 @@ namespace Beaversims.Core.Specs.Paladin.Holy
 
             var beacons = MasteryTracker.FindStarterBeacons(allUnits);
             var judg = (Abilities.Judgment)user.Abilities.Get(Abilities.Judgment.name);
-            Console.WriteLine($"Judgment Casts: {judg.Casts}");
             MasteryTracker.FindCoords(events);
             var statLogger = new Logger("StatTracker", fight, user.Id.TypeId);
 
@@ -66,23 +65,14 @@ namespace Beaversims.Core.Specs.Paladin.Holy
             Utils.CleanUp(allUnits); // To avoid accidental usage.
             MasteryTracker.CleanUpCoords(allUnits);
 
-            HCGM.ModifyHCGMSources(user, fight);
+            HCGM.ModifyHCCGMSources(user, fight);
             Shared.HCCGM.SetHCCGM(user);
             HCGM.ModifyHCGM(user, fight);
             holyShock.AlterHCGM(user);
             foreach (var ability in user.Abilities)
             {
-                Console.WriteLine($"HCGM: {ability.Name}: {ability.HCCGM}");
+                Console.WriteLine($"{ability.Name} HCCGM: {ability.HCCGM}, HCGM: {ability.HasteCastGainMod}");
             }
-
-            Console.WriteLine($"Judgment HCGM data:");
-            Console.WriteLine($"CdTimeTotal:{judg.CdTimeHypo}, True Cast Time:{judg.TrueCastTimeTotal}");
-
-            Console.WriteLine($"Crusader Strike HCGM data:");
-            Console.WriteLine($"CdTimeTotal:{cs.CdTimeHypo}, True Cast Time:{cs.TrueCastTimeTotal}");
-
-            Console.WriteLine($"Holy Shock HCGM data:");
-            Console.WriteLine($"CdTimeTotal:{holyShock.CdTimeHypo}, True Cast Time:{holyShock.TrueCastTimeTotal}");
 
             var degree = Environment.ProcessorCount;
             Parallel.For(0, user.altGearSets.Count, new ParallelOptions { MaxDegreeOfParallelism = degree }, i =>
@@ -90,26 +80,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
 
                 foreach (Event evt in events)
                 {  
-                    //if (i == 12 && evt.Timestamp <= 0)
-                    //{
-                    //    Console.WriteLine($"{user.altGearSets[i].Name}:");
-                    //    Console.WriteLine("Rating:");
-                    //    Console.WriteLine($" Mastery: {evt.AltEvents[i].UserStats.Get(StatName.Mastery).Rating}:");
-                    //    Console.WriteLine($" Vers: {evt.AltEvents[i].UserStats.Get(StatName.Vers).Rating}:");
-                    //    Console.WriteLine($" Crit: {evt.AltEvents[i].UserStats.Get(StatName.Crit).Rating}:");
-                    //    Console.WriteLine($" Haste: {evt.AltEvents[i].UserStats.Get(StatName.Haste).Rating}:");
-                    //    Console.WriteLine($" Intellect: {evt.AltEvents[i].UserStats.Get(StatName.Intellect).Rating}:");
-                    //    Console.WriteLine("Eff:");
-                    //    Console.WriteLine($" Mastery: {evt.AltEvents[i].UserStats.Get(StatName.Mastery).Eff}:");
-                    //    Console.WriteLine($" Vers: {evt.AltEvents[i].UserStats.Get(StatName.Vers).Eff}:");
-                    //    Console.WriteLine($" Crit: {evt.AltEvents[i].UserStats.Get(StatName.Crit).Eff}:");
-                    //    Console.WriteLine($" Haste: {evt.AltEvents[i].UserStats.Get(StatName.Haste).Eff}:");
-                    //    Console.WriteLine($" Intellect: {evt.AltEvents[i].UserStats.Get(StatName.Intellect).Eff}:");
-                    //    var mast = (SecondaryStat)evt.AltEvents[i].UserStats.Get(StatName.Mastery);
-                    //    Console.WriteLine($" Mastery Bracket: {mast.Bracket}");
-                        
-
-                    //}
+                 
                     
                     // Loop for setting gains.
                     var altEvent = evt.AltEvents[i];
@@ -144,38 +115,6 @@ namespace Beaversims.Core.Specs.Paladin.Holy
                 Shared.DupliEffects.AltLeechSource(events, user, i);
 
             });
-
-            //for (int i = 0; i < user.altGearSets.Count; i++)
-            //{
-
-            //    foreach (Event evt in events)
-            //    {
-            //        // Loop for setting gains.
-            //        var altEvent = evt.AltEvents[i];
-            //        Awakening.AwakeningScalers(evt, user);
-            //        if (evt is ThroughputEvent tEvt)
-            //        {
-            //            if (tEvt.IsHealDoneEvent() && evt is HealEvent hEvt)
-            //            {
-            //                StatGains.AutoStatGainsHeal((HealEvent)tEvt, user, i);
-            //                MasteryTracker.MasteryGains((HealEvent)tEvt, user, i);
-
-            //                gj.CritGains(tEvt, user, i);
-            //            }
-            //            if (tEvt.IsDmgDoneEvent())
-            //            {
-            //                StatGains.AutoStatGainsDmg((DamageEvent)tEvt, user, i);
-            //            }
-            //            StatGains.AutoStatGainsMisc(tEvt, user, i);
-            //        }
-            //    }
-            //    Awakening.ResetAwakeningScalers(user);
-            //    FullAllocs.FullAllocGains(events, user, i);
-            //    DupliEffects.altSelfless(events, user, i);
-            //    DupliEffects.altBeacon(events, user, i);
-            //    Shared.DupliEffects.AltSummerSource(events, user, i);
-            //    Shared.DupliEffects.AltLeechSource(events, user, i);
-            //}
         }
     }
 }

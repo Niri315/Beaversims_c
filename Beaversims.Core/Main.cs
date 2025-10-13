@@ -43,7 +43,7 @@ namespace Beaversims.Core
             //ItemSim.TopItems(events, user, fight);
             Console.WriteLine($"Fight Id : {fight.Id}");
             Console.WriteLine($"Fight Time: {fight.TotalTime}");
-            Console.WriteLine($"User HCGM: {user.HCGM}");
+            //Console.WriteLine($"User HCGM: {user.HCGM}");
             Console.WriteLine($"User Uptime: {user.TrueCastTimeTotal / fight.TotalTime}");
             Console.WriteLine($"Cast Time Total: {user.TrueCastTimeTotal}");
 

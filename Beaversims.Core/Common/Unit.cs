@@ -96,7 +96,7 @@ namespace Beaversims.Core
         public bool HasPermaLeech {  get; set; } = false;
         public List<GearSet> altGearSets { get; set; } = [];
         // Don't need alt versions of this, math works out with calculating it based on original log data.
-        public double HCGM { get; set; } = 1;
+        //public double HCGM { get; set; } = 1;
         public double TrueCastTimeTotal { get; set; } = 0;
 
         // Paladin

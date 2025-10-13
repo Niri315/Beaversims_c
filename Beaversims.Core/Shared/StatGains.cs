@@ -249,7 +249,7 @@ namespace Beaversims.Core.Shared
 
             if (IsCastScaler(evt, ability))
             {
-                SecondaryAltAmount(evt, stat, i, mod: user.HCGM * ability.HCCGM * ability.HasteCastGainMod * ability.HasteGainMod * user.Spec.HasteGainMod, antiGain: antiGain);
+                SecondaryAltAmount(evt, stat, i, mod: ability.TrueHCCGM(user) * ability.HasteCastGainMod * ability.HasteGainMod * user.Spec.HasteGainMod, antiGain: antiGain);
             }
             if (IsTickScaler(evt))
             {
@@ -272,7 +272,7 @@ namespace Beaversims.Core.Shared
 
             if (IsCastScaler(evt, ability))
             {
-                SecondaryAltAmount(evt, stat, i, mod: user.HCGM * ability.HCCGM * ability.HasteCastGainMod * ability.HasteGainMod * user.Spec.HasteGainMod, antiGain: antiGain);
+                SecondaryAltAmount(evt, stat, i, mod: ability.TrueHCCGM(user) * ability.HasteCastGainMod * ability.HasteGainMod * user.Spec.HasteGainMod, antiGain: antiGain);
 
             }
             if (IsTickScaler(evt))

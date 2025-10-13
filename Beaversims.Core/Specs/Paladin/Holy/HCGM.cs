@@ -37,14 +37,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
         }
 
 
-        private static void EmpyreanLod(LightOfDawn lod)
-        {
-            var empValue = 0;
-            var empCoef = Talents.EmpyreanLegacy.coef;
-            var lodCasts = lod.Casts;
-            var pureLodhpc = lod.Heal.Raw / (lodCasts + (lod.EmpCasts * empCoef));
-            lod.HasteCastGainMod *= pureLodhpc * lod.Casts / lod.Heal.Raw;
-        }
+
 
         private static void AcHCCGMSource(AvengingCrusader ac, Ability judg, Ability cs)
         {
@@ -56,24 +49,14 @@ namespace Beaversims.Core.Specs.Paladin.Holy
 
         private static void RemoveJudgCastScaling(User user, Fight fight, Ability judg)
         {
+ 
             // If user is casting judg this seldom, they are only interested in empyrean in which case it should not be a haste scaler.
+            // If this is not true to any degree no matter how small, it should be a full cast scaler with max rest HCCGM.
             if (user.HasTalent(Talents.EmpyreanLegacy.id))
             {
                 if (judg.Casts <= 1 + (fight.TotalTime / Talents.EmpyreanLegacy.cd))
                 {
-                    judg.HasteScalers.Remove(HasteScalerType.Cast);
-                    foreach (var ability in user.Abilities)
-                    {
-                        // Collect the sources to remove first to avoid modifying the collection while iterating
-                        var sourcesToRemove = ability.HCCGMSources
-                            .Where(s => s.Name == judg.Name)
-                            .ToList();
-
-                        foreach (var source in sourcesToRemove)
-                        {
-                            ability.HCCGMSources.Remove(source);
-                        }
-                    }
+                    judg.RemoveHST(user, HST.Cast);
                 }
 
             }
@@ -91,14 +74,15 @@ namespace Beaversims.Core.Specs.Paladin.Holy
         {
             if (user.HasTalent(Talents.RighteousJudgment.id))
             {
-                var consecJudgRatio = judg.Casts / (judg.Casts + consec.Casts);
-                var consecRatio = consec.Casts / (judg.Casts + consec.Casts);
+                double consecJudgRatio = (double)judg.Casts / (judg.Casts + consec.Casts);
+                double consecRatio = (double)consec.Casts / (judg.Casts + consec.Casts);
+
                 consec.HCCGMSources.Add(new HCCGMSource(judg.Name, consecJudgRatio));
                 consec.HCCGMSources.Add(new HCCGMSource(consec.Name, consecRatio));
             }
         }
 
-        public static void ModifyHCGMSources(User user, Fight fight)
+        public static void ModifyHCCGMSources(User user, Fight fight)
         {
      
             var judg = user.Abilities.Get(Abilities.Judgment.name);
@@ -108,13 +92,18 @@ namespace Beaversims.Core.Specs.Paladin.Holy
             var consec = user.Abilities.Get(Abilities.Consecration.name);
             var lod = (Abilities.LightOfDawn)user.Abilities.Get(Abilities.LightOfDawn.name);
 
-            EmpyreanLod(lod);
+
             AcHCCGMSource(ac, judg, cs);
             RemoveJudgCastScaling(user, fight, judg);
             HolyShockCdTime(holyShock);
             ConsecHCCGMSource(user, judg, consec);
 
+        }
 
+        private static void EmpyreanLod(LightOfDawn lod)
+        {
+            var pureLodhpc = lod.Heal.Raw / (lod.Casts + (lod.EmpCasts * Talents.EmpyreanLegacy.coef));
+            lod.HasteCastGainMod *= pureLodhpc * lod.Casts / lod.Heal.Raw;
         }
 
         public static void ModifyHCGM(User user, Fight fight)
@@ -123,13 +112,9 @@ namespace Beaversims.Core.Specs.Paladin.Holy
             var holyShock = user.Abilities.Get(Abilities.HolyShock.name);
             var cs = user.Abilities.Get(Abilities.CrusaderStrike.name);
             var ac = (Abilities.AvengingCrusader)user.Abilities.Get(Abilities.AvengingCrusader.name);
+            var lod = (Abilities.LightOfDawn)user.Abilities.Get(Abilities.LightOfDawn.name);
 
-
-          
-            foreach (var ability in user.Abilities)
-            { 
-
-            }
+            EmpyreanLod(lod);
         }
     }
 }

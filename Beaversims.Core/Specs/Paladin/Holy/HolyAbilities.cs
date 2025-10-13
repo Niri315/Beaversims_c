@@ -623,7 +623,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
                 Shared.StatGains.VersGainsHeal(evt, user, i, antiGain: true);
                 //Shared.StatGains.HasteGainsHeal(evt, user, i, ability: holyshock, antiGain: true);
                 // Getting Past the checks to send directly as cast scaler.
-                Shared.StatGains.SecondaryAltAmount(evt, (Haste)evt.UserStats.Get(StatName.Haste), i, mod: user.HCGM * holyshock.HCCGM * holyshock.HasteCastGainMod * holyshock.HasteGainMod * user.Spec.HasteGainMod, antiGain: true);
+                Shared.StatGains.SecondaryAltAmount(evt, (Haste)evt.UserStats.Get(StatName.Haste), i, mod: holyshock.TrueHCCGM(user) * holyshock.HasteCastGainMod * holyshock.HasteGainMod * user.Spec.HasteGainMod, antiGain: true);
                 MasteryTracker.MasteryGains(evt, user, i, antiGain: true);
                 Shared.StatGains.CritGainsHealDerived(evt, user, i, sourceAbility:holyshock, antiGain: true);
             }

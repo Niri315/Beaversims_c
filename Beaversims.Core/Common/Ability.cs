@@ -74,11 +74,11 @@ namespace Beaversims.Core
         public double CdEnd {  get; set; } = 0.0;
         public double TrueCastTimeTotal { get; set; } = 0.0;
         public double CastTimeGain { get; set; } = 0.0;
-        public double HasteCastGainMod { get; set; } = 1.0;
         public double HCCGM { get; set; } = 1.0;
         public bool HCCGMInitDone { get; set; } = false;
         public double HCCGMRatio { get; set; } = 1.0;
         public double MaxHCCGM { get; set; } = 1.0;
+        public double HasteCastGainMod { get; set; } = 1.0;
         public double HasteGainMod { get; set; } = 1.0;
         public HashSet<HCCGMSource> HCCGMSources { get; set; } = [];
 
@@ -94,6 +94,92 @@ namespace Beaversims.Core
 
         public List<HealDataContainer> AltHeal { get; } = [];
         public List<DmgDataContainer> AltDamage { get; } = [];
+
+        public double TrueHCCGM(User user)
+        {
+            if (HCCGMSources.Count == 0) { return HCCGM; }
+            else
+            {
+                var abilities = user.Abilities;
+                var hccgm = 0.0;
+                foreach (var source in HCCGMSources)
+                {
+                    var sourceAbility = abilities.Get(source.Name);
+                    if (sourceAbility.Name == Name)
+                    {
+                        hccgm += source.HCCGMReliance * HCCGM;
+                    }
+                    else
+                    {
+                        hccgm += source.HCCGMReliance * sourceAbility.TrueHCCGM(user);
+
+                    }
+                    //Console.WriteLine($"this: {Name}");
+                    //Console.WriteLine($"source: {sourceAbility.Name}");
+
+                    //Console.WriteLine();
+                    //hccgm += source.HCCGMReliance * sourceAbility.TrueHCCGM(user);
+
+                }
+                return hccgm;
+            }
+
+        }
+
+        public void HCCGMSourceRelCheck()
+        {
+            if (HCCGMSources.Count > 0)
+            {
+                var tot = 0.0;
+                foreach (var source in HCCGMSources)
+                {
+                    tot += source.HCCGMReliance;
+                }
+                const double tolerance = 1e-9;
+
+                if (Math.Abs(tot - 1.0) > tolerance)
+                {
+
+                    throw new InvalidOperationException(
+                        $"HCCGM Source alloc issue: {Name}."
+                    );
+                }
+            }
+        }
+
+        public void RemoveHST(User user, HasteScalerType hst)
+        {
+            //Console.WriteLine("WARNING");
+            HasteScalers.Remove(hst);
+            //Important that HCCGM sources are updated correctly when removing HST.CAST.
+            if (hst == HST.Cast)
+            {
+                foreach (var ability in user.Abilities)
+                {
+                    HCCGMSource sourcetbr = null;
+                    double rel = 0.0;
+                    int remCount = 0;
+
+                    foreach (var source in ability.HCCGMSources)
+                    {
+                        if (source.Name == Name)
+                        {
+                            sourcetbr = source;
+                            rel = source.HCCGMReliance;
+                            remCount = ability.HCCGMSources.Count - 1;
+                            break;
+                        }
+                    }
+
+                    if (sourcetbr != null && remCount > 0)
+                    {
+                        ability.HCCGMSources.Remove(sourcetbr);
+                        foreach (var source in ability.HCCGMSources)
+                            source.HCCGMReliance += rel / remCount;
+                    }
+                }
+            }
+        }
 
         public bool ScalesWith(StatName statName) => Scalers.Contains(statName);
         public virtual void AlterHCGM(User user)

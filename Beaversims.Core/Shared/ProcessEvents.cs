@@ -78,11 +78,14 @@ namespace Beaversims.Core.Shared
                     if (i == 0)
                     {
                         user.altGearSets[i].Gains[gainType] -= (altEvent.Amount.Eff - evt.Amount.Eff);
+       
                     }
                     else
                     {
                         user.altGearSets[i].Gains[gainType] -= (altEvent.Amount.Eff - evt.AltEvents[0].Amount.Eff);
+ 
                     }
+                    continue;
                 }
                 else if (evt.IsDmgDoneEvent())
                 {

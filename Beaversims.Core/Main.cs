@@ -42,7 +42,13 @@ namespace Beaversims.Core
             ProcessEvents.SharedIteration(events, fight, user, results);
             //ItemSim.TopItems(events, user, fight);
             Console.WriteLine($"Fight Id : {fight.Id}");
+            Console.WriteLine($"Fight Time: {fight.TotalTime}");
             Console.WriteLine($"User HCGM: {user.HCGM}");
+            Console.WriteLine($"User Uptime: {user.TrueCastTimeTotal / fight.TotalTime}");
+            Console.WriteLine($"Cast Time Total: {user.TrueCastTimeTotal}");
+
+
+
             results.TotalTime = fight.TotalTime;
 
 

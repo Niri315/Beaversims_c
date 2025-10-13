@@ -39,6 +39,10 @@ namespace Beaversims.Core
         {
             return castTime / (haste.Eff / (haste.PercentRate * 100) + 1);
         }
+        public static double TrueCdCalc(Haste haste, double cd)
+        {
+            return cd / (haste.Eff / (haste.PercentRate * 100) + 1);
+        }
 
     }
 }

@@ -9,7 +9,16 @@ using System.Threading.Tasks;
 
 namespace Beaversims.Core
 {
-
+    internal class HCCGMSource
+    {
+        public string Name { get; set; }
+        public double HCCGMReliance { get; set; }
+        public HCCGMSource(string name, double hcgmReliance)
+        {
+            Name = name;
+            HCCGMReliance = hcgmReliance;
+        }
+    }
     internal class HealData
     {
         public double Eff { get; set; } = 0;
@@ -46,6 +55,7 @@ namespace Beaversims.Core
         public double Cooldown { get; set; } = 0.0;
         public double ManaCost_p { get; set; } = 0.0;
         public double CastTime { get; set; } = 0.0;
+        public double Cd { get; set; } = 0.0;
         public double BonusCritIncHeal { get; set; } = 0.0;
         public double BonusCritIncDmg { get; set; } = 0.0;
         public HashSet<StatName> Scalers { get; } = [];
@@ -58,13 +68,26 @@ namespace Beaversims.Core
         public bool Gcd { get; set; } = false;  // unused currently. Could implement so gcd = true -> cast time = 1.5.
         public bool ForceTick { get; set; } = false; // For forcing tick in parser. Concecration etc.
         public bool ReverseEffect { get; set; } = false;  // For easily running certain reverse effects like AC as autoscalers. 
+        public double Duration { get; set; } = 0.0;
         public int Casts { get; set; } = 0;
+        public double CdTimeHypo { get; set; } = 0.0;
+        public double CdEnd {  get; set; } = 0.0;
+        public double TrueCastTimeTotal { get; set; } = 0.0;
         public double CastTimeGain { get; set; } = 0.0;
-        public double HGCM { get; set; } = 1.0;
+        public double HasteCastGainMod { get; set; } = 1.0;
+        public double HCCGM { get; set; } = 1.0;
+        public bool HCCGMInitDone { get; set; } = false;
+        public double HCCGMRatio { get; set; } = 1.0;
+        public double MaxHCCGM { get; set; } = 1.0;
         public double HasteGainMod { get; set; } = 1.0;
+        public HashSet<HCCGMSource> HCCGMSources { get; set; } = [];
+
         public bool IgnoreDr {  get; set; } = false;
         public bool LeechSource { get; set; } = true;
         public bool CanDupli {  get; set; } = true;
+
+        public bool SimDupliAbility { get; set; } = false; // ONLY for abilities that we do dupli calcs for, not true for the ones we use derived source for.
+        public double DupliNukeAmount { get; set; } = 0.0;
 
         public HealDataContainer Heal { get; } = new();
         public DmgDataContainer Damage { get; } = new();
@@ -73,6 +96,11 @@ namespace Beaversims.Core
         public List<DmgDataContainer> AltDamage { get; } = [];
 
         public bool ScalesWith(StatName statName) => Scalers.Contains(statName);
+        public virtual void AlterHCGM(User user)
+        {
+
+        }
+        public double AvgCdHypo() => Casts == 0 ? 0 : CdTimeHypo / Casts;
         public double CritUr()
         {
             //Defaults to normal UR if 0 crits

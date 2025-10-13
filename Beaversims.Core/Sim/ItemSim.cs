@@ -128,7 +128,106 @@ namespace Beaversims.Core.Sim
             altGearSet0[ItemSlot.Feet] = ItemGenerator.CreateItem("Interloper's Plated Sabatons", 730, ItemSlot.Feet, []);
             altGearSet0[ItemSlot.Finger1] = ItemGenerator.CreateItem("Ring of Earthen Craftsmanship", 727, ItemSlot.Finger1, [(int)BonusIds.Quickblade]);
             altGearSet0[ItemSlot.Finger2] = ItemGenerator.CreateItem("Devout Zealot's Ring", 730, ItemSlot.Finger2, []);
-            user.altGearSets.Add(altGearSet0); 
+            user.altGearSets.Add(altGearSet0);
+
+            int secStatMax = 4800;
+
+            //var statAlloc0 = new GearSet();
+            //statAlloc0.Name = "Even stats";
+            //statAlloc0[ItemSlot.Head] = ItemGenerator.CreateItem("Soaring Behemoth's Greathelm", 1, ItemSlot.Head, []);
+            //statAlloc0[ItemSlot.Head].Stats[StatName.Intellect] = 135000;
+            //statAlloc0[ItemSlot.Head].Stats[StatName.Stamina] = 780000;
+            //statAlloc0[ItemSlot.Head].Stats[StatName.Crit] = secStatMax / 4;
+            //statAlloc0[ItemSlot.Head].Stats[StatName.Haste] = secStatMax / 4;
+            //statAlloc0[ItemSlot.Head].Stats[StatName.Mastery] = secStatMax / 4;
+            //statAlloc0[ItemSlot.Head].Stats[StatName.Vers] = secStatMax / 4;
+            //user.altGearSets.Add(statAlloc0);
+
+            var leechTest1 = DeepCloneGearset(user.Gear);
+            leechTest1.Name = "1 leech/int";
+            leechTest1[ItemSlot.Head].addStatRating(StatName.Leech, 1);
+            leechTest1[ItemSlot.Head].addStatRating(StatName.Intellect, 1);
+            user.altGearSets.Add(leechTest1);
+
+            var hasteTest1 = DeepCloneGearset(user.Gear);
+            hasteTest1.Name = "Haste + 500";
+            hasteTest1[ItemSlot.Head].addStatRating(StatName.Haste, 500);
+            user.altGearSets.Add(hasteTest1);
+
+            var hasteTest2 = DeepCloneGearset(user.Gear);
+            hasteTest2.Name = "Haste + 1000";
+            hasteTest2[ItemSlot.Head].addStatRating(StatName.Haste, 1000);
+            user.altGearSets.Add(hasteTest2);
+
+
+
+
+            //double[] hasteGrid = { 0.00, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6 };
+            //double[] critGrid = { 0.00, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6 };
+            //double[] masteryGrid = { 0.00, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6 };
+
+            //foreach (var h in hasteGrid)
+            //{
+            //    foreach (var c in critGrid)
+            //    {
+            //        foreach (var m in masteryGrid)
+            //        {
+            //            double v = 1.0 - (h + c + m);
+
+            //            // Must sum to 1 and satisfy caps
+            //            if (v < 0) continue;
+            //            if (h > 0.60 + 1e-9) continue;
+            //            if (c > 0.60 + 1e-9) continue;
+            //            if (m > 0.60 + 1e-9) continue;
+            //            if (v > 0.60 + 1e-9) continue;
+
+            //            // Build the gearset
+            //            var gs = new GearSet();
+            //            gs.Name = $"{Pct(h)} haste, {Pct(c)} crit, {Pct(m)} mastery, {Pct(v)} vers";
+
+            //            gs[ItemSlot.Head] = ItemGenerator.CreateItem("Soaring Behemoth's Greathelm", 1, ItemSlot.Head, []);
+            //            gs[ItemSlot.Head].Stats[StatName.Intellect] = 135000;
+            //            gs[ItemSlot.Head].Stats[StatName.Stamina] = 780000;
+
+            //            // Allocate secondaries with exact-total correction
+            //            int haste = (int)Math.Round(secStatMax * h);
+            //            int crit = (int)Math.Round(secStatMax * c);
+            //            int mastery = (int)Math.Round(secStatMax * m);
+            //            int vers = (int)Math.Round(secStatMax * v);
+
+            //            int total = haste + crit + mastery + vers;
+            //            int diff = secStatMax - total;
+            //            if (diff != 0)
+            //            {
+            //                // Adjust the largest bucket so Crit+Haste+Mastery+Vers == secStatMax
+            //                int k = ArgMax(new[] { h, c, m, v });
+            //                switch (k)
+            //                {
+            //                    case 0: haste += diff; break;
+            //                    case 1: crit += diff; break;
+            //                    case 2: mastery += diff; break;
+            //                    case 3: vers += diff; break;
+            //                }
+            //            }
+
+            //            gs[ItemSlot.Head].Stats[StatName.Haste] = haste;
+            //            gs[ItemSlot.Head].Stats[StatName.Crit] = crit;
+            //            gs[ItemSlot.Head].Stats[StatName.Mastery] = mastery;
+            //            gs[ItemSlot.Head].Stats[StatName.Vers] = vers;
+
+            //            user.altGearSets.Add(gs);
+            //        }
+            //    }
+            //}
+
+            //// --- helpers ---
+            //static string Pct(double r) => $"{(int)Math.Round(r * 100)}%";
+            //static int ArgMax(double[] a)
+            //{
+            //    int idx = 0; double best = a[0];
+            //    for (int i = 1; i < a.Length; i++) if (a[i] > best) { best = a[i]; idx = i; }
+            //    return idx;
+            //}
 
             //foreach (var gearset in user.altGearSets)
             //{
@@ -194,7 +293,10 @@ namespace Beaversims.Core.Sim
             //altGearSet2[ItemSlot.Head] = ItemGenerator.CreateItem("Artoshion's Abyssal Stare", 723, ItemSlot.Head, []);
             //user.altGearSets.Add(altGearSet2);
 
-
+            //user.HCGM.AddRange(
+            //    Enumerable.Range(0, user.altGearSets.Count)
+            //              .Select(_ => 1.0)
+            //);
             foreach (var ability in user.Abilities)
             {
                 ability.AltHeal.AddRange(
@@ -206,6 +308,19 @@ namespace Beaversims.Core.Sim
                     Enumerable.Range(0, user.altGearSets.Count)
                               .Select(_ => new DmgDataContainer())
                 );
+                //ability.HasteGainMods.AddRange(
+                //    Enumerable.Range(0, user.altGearSets.Count)
+                //              .Select(_ => 1.0)
+                //);
+                //ability.HCGM.AddRange(
+                //    Enumerable.Range(0, user.altGearSets.Count)
+                //              .Select(_ => 1.0)
+                //);
+                //ability.CastTimeGains.AddRange(
+                //    Enumerable.Range(0, user.altGearSets.Count)
+                //              .Select(_ => 0.0)
+                //);
+
             }
         }
     }

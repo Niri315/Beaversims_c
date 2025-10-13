@@ -48,7 +48,7 @@ namespace Beaversims.Core
         public AmountContainer Amount { get; set; }
         public StatTracker UserStats { get; set; }
 
-        public double leechNukeRaw { get; set; } = 0.0;
+        public double NukeRaw { get; set; } = 0.0;
         //public StatTracker StatDiffs { get; set; } = new();
         public AltEvent(StatTracker userStats) 
         { 
@@ -81,11 +81,14 @@ namespace Beaversims.Core
         public StatTracker UserStats { get; set; }
         public List<AltEvent> AltEvents { get; set; } = [];
         public bool SummerActive { get; set; } = false;
+        public string? HealAbsorbAbilityName { get; set; }
+
 
         //Paladin
         public int BeaconCount { get; set; }
         public bool AwakenedJudgment { get; set; } = false;
         public bool AwakenedCast {  get; set; } = false;
+        public bool BanCritScaleJudgAC { get; set; } = false;
 
         // TODO implement preEvent option.
         public double? SourceHp_p()//(bool preEvent=false) 
@@ -110,7 +113,7 @@ namespace Beaversims.Core
                 var statDiffs = Enum.GetValues<StatName>()
                     .ToDictionary(stat => stat, stat => 0.0);
 
-                var altStats = user.PuredStats.Clone();
+                var altStats = user.RefStats.Clone();
 
                 foreach (var altGear in altGearSet)
                 {

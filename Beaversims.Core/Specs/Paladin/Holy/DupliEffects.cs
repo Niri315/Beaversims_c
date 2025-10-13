@@ -72,7 +72,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
                 Shared.DupliEffects.LeechSourceGains(evt, user, statName, dupliGainNsnsnaraw, gainType);
             }
         }
-        public static void altBeacon(List<Event> events, User user)
+        public static void altBeacon(List<Event> events, User user, int i)
         {
             var beaconOfLight = (Abilities.BeaconOfLight)user.Abilities.Get(Abilities.BeaconOfLight.name);
 
@@ -82,11 +82,10 @@ namespace Beaversims.Core.Specs.Paladin.Holy
                 {
                     if (IsBeaconEvent((HealEvent)evt, user))
                     {
-                        for (int i = 0; i < evt.AltEvents.Count; i++)
-                        {
-                            var altEvent = evt.AltEvents[i];
-                            beaconOfLight.AltHeal[i].Hypo += altEvent.Amount.Raw * BeaconFormula(hEvt, user);
-                        }
+
+                        var altEvent = evt.AltEvents[i];
+                        beaconOfLight.AltHeal[i].Hypo += altEvent.Amount.Raw * BeaconFormula(hEvt, user);
+                        
                     }
                 }
             }
@@ -94,12 +93,11 @@ namespace Beaversims.Core.Specs.Paladin.Holy
             {
                 if (evt.AbilityName == Abilities.BeaconOfLight.name && evt.AbilityId != Abilities.BeaconOfLight.polId && evt is ThroughputEvent tEvt)
                 {
-                    for (int i = 0; i < evt.AltEvents.Count; i++)
-                    {
-                        var altEvent = evt.AltEvents[i];
-                        var gainRaw = altEvent.Amount.Raw * beaconOfLight.AltHypoTrueRawR(i) - altEvent.Amount.Raw;
-                        altEvent.Amount.UpdateAltGainsFromEvtData(tEvt, gainRaw, i);
-                    }
+
+                    var altEvent = evt.AltEvents[i];
+                    var gainRaw = altEvent.Amount.Raw * beaconOfLight.AltHypoTrueRawR(i) - (altEvent.Amount.Raw + altEvent.NukeRaw);
+                    altEvent.Amount.UpdateAltGainsFromEvtData(tEvt, gainRaw, i);
+                    
                 }
             }
         }
@@ -134,7 +132,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
 
         }
 
-        public static void altSelfless(List<Event> events, User user)
+        public static void altSelfless(List<Event> events, User user, int i)
         {
             if (user.HasTalent(Talents.SelflessHealer.id))
             {
@@ -146,23 +144,22 @@ namespace Beaversims.Core.Specs.Paladin.Holy
 
                     if (evt is HealEvent hEvt && IsSelflessEvt(hEvt, user))
                     {
-                        for (int i = 0; i < evt.AltEvents.Count; i++)
-                        {
-                            var altEvent = evt.AltEvents[i];
-                            selfless_a.AltHeal[i].Hypo += altEvent.Amount.Raw * selfless_t.Coef;
-                        }                    }
+          
+                        var altEvent = evt.AltEvents[i];
+                        selfless_a.AltHeal[i].Hypo += altEvent.Amount.Raw * selfless_t.Coef;
+                             
+                    }
 
                 }
                 foreach (var evt in events)
                 {
                     if (evt.AbilityName == selfless_a.Name && evt is ThroughputEvent tEvt)
                     {
-                        for (int i = 0; i < evt.AltEvents.Count; i++)
-                        {
-                            var altEvent = evt.AltEvents[i];
-                            var gainRaw = altEvent.Amount.Raw * selfless_a.AltHypoTrueRawR(i) - altEvent.Amount.Raw;
-                            altEvent.Amount.UpdateAltGainsFromEvtData(tEvt, gainRaw, i);
-                        }
+                     
+                        var altEvent = evt.AltEvents[i];
+                        var gainRaw = altEvent.Amount.Raw * selfless_a.AltHypoTrueRawR(i) - altEvent.Amount.Raw;
+                        altEvent.Amount.UpdateAltGainsFromEvtData(tEvt, gainRaw, i);
+                        
                     }
                 }
             }

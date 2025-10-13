@@ -7,13 +7,14 @@ using System.Text.Json;
 using static System.Net.WebRequestMethods;
 
 
-//var logLink = "https://www.warcraftlogs.com/reports/PxzAyBCDL7acXRvg?fight=11&type=healing&source=6"; //Salad Nali LS
-var logLink = "https://www.warcraftlogs.com/reports/PJWrjZv6xTpLYmct?fight=128&type=healing&source=1863";  //Salad Ellesmere Herald
+var logLink = "https://www.warcraftlogs.com/reports/PxzAyBCDL7acXRvg?fight=11&type=healing&source=6"; //Salad Nali LS
+//var logLink = "https://www.warcraftlogs.com/reports/PJWrjZv6xTpLYmct?fight=128&type=healing&source=1863";  //Salad Ellesmere Herald
 //var logLink = "https://www.warcraftlogs.com/reports/m4vPb3J71twFXVTA?fight=17&type=damage-done&source=166";  //WTF mastery?
-//var logLink = "https://www.warcraftlogs.com/reports/PWdDcv6ZaHJQm1G9?fight=20&source=37";
+//var logLink = "https://www.warcraftlogs.com/reports/jknw3D642CpcALgq?fight=54&type=healing&source=22"; // Leech + martyr -> need fi
+//var logLink = "https://www.warcraftlogs.com/reports/vLHzyMAp2DgXFwkR?fight=34&type=healing&source=24"; //Frac Nali LS
 
 
-var simAll = false;
+var simAll = false; 
 var ignoreTrash = true;
 var ignoreWipes = false;
 var bossName = "Dimensius, the All-Devouring";

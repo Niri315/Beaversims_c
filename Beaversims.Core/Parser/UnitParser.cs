@@ -213,21 +213,21 @@ namespace Beaversims.Core.Parser
                         sourceUnit = npcUnit;
                     }
 
-                    player.AddBuff(buffName, buffId, sourceUnit, stacks);
+                    player.AddBuff(buffName, buffId, sourceUnit, stacks, timeStamp:0);
                 }
             }
         }
 
         public static void PurifyRefStats(User user)
         {
-            user.PuredStats = user.Stats.Clone();
+            user.RefStats = user.Stats.Clone();
             foreach (var buff in user.Buffs)
             {
                 if (buff is StatBuff sBuff && sBuff.RefImpurity)
                 {
                     foreach (var mod in sBuff.StatMods)
                     {
-                        user.PuredStats.Get(mod.StatName).ChangeAmount(mod.Amount * buff.Stacks, mod.AmountType, removal: true);
+                        user.RefStats.Get(mod.StatName).ChangeAmount(mod.Amount * buff.Stacks, mod.AmountType, removal: true);
                     }
                 }
             }
@@ -249,7 +249,7 @@ namespace Beaversims.Core.Parser
             // Vantus goes here, after ratings reset.
             if (user.HasVantus) 
             {
-                user.AddBuff("Vantus Rune" + fight.Name, Constants.curVantusId, user, 1);
+                user.AddBuff("Vantus Rune" + fight.Name, Constants.curVantusId, user, 1, timeStamp:0);
             }
             PurifyRefStats(user);
             return allUnits;

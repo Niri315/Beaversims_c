@@ -136,33 +136,31 @@ namespace Beaversims.Core.Specs.Paladin.Holy
     => (((amount / ((mastery.Eff * masteryEffectiveness) / (mastery.PercentRate * 100) + 1)) * masteryEffectiveness) / (mastery.PercentRate * 100)) * (1 - (mastery.Bracket * 0.1)) * mastery.Multi;
 
 
-        public static void MasteryAltAmount(HealEvent evt, Mastery stat, double masteryEffectiveness)
+        public static void MasteryAltAmount(HealEvent evt, Mastery stat, int i, double masteryEffectiveness, bool antiGain = false)
         {
-            for (int i = 0; i < evt.AltEvents.Count; i++)
-            {
-                var altEvent = evt.AltEvents[i];
-                var gainPerRatingRaw = MasteryGainCalc(stat, altEvent.Amount.Raw, masteryEffectiveness);
-                var gainPerEffstatRaw = stat.RemoveDryMult(gainPerRatingRaw);
-                var altStat = altEvent.UserStats.Get(stat.Name);
-                var gainRaw = gainPerEffstatRaw * (altStat.Eff - stat.Eff);
-                altEvent.Amount.UpdateAltGainsFromEvtData(evt, gainRaw, i);
-            }
+
+            var altEvent = evt.AltEvents[i];
+            var gainPerRatingRaw = MasteryGainCalc(stat, altEvent.Amount.Raw, masteryEffectiveness);
+            var gainPerEffstatRaw = stat.RemoveDryMult(gainPerRatingRaw);
+            var altStat = altEvent.UserStats.Get(stat.Name);
+            var gainRaw = gainPerEffstatRaw * (altStat.Eff - stat.Eff);
+            if (antiGain) { gainRaw *= -1; }
+            altEvent.Amount.UpdateAltGainsFromEvtData(evt, gainRaw, i);
+
         }
 
-        public static void MasteryGains(HealEvent evt, User user)
+        public static void MasteryGains(HealEvent evt, User user, int i, bool antiGain = false)
         {
             var statName = StatName.Mastery;
-            if (evt.Ability.ScalesWith(StatName.Mastery))
-            {
-                var stat = (Mastery)evt.UserStats.Get(statName);
-                var gainType = GainType.Eff;
-                var gainRaw = MasteryGainCalc(stat, evt.Amount.Raw, evt.masteryEffectiveness);
-                var gain = evt.RawToEffConvert(gainRaw);
-                evt.Gains[statName][gainType] += gain;
-                user.Spec.DupliGainsHeal(evt, user, statName, gainRaw);
 
-                MasteryAltAmount(evt, stat, evt.masteryEffectiveness);
-            }
+            var stat = (Mastery)evt.UserStats.Get(statName);
+            var gainType = GainType.Eff;
+            var gainRaw = MasteryGainCalc(stat, evt.Amount.Raw, evt.masteryEffectiveness);
+            var gain = evt.RawToEffConvert(gainRaw);
+            evt.Gains[statName][gainType] += gain;
+            user.Spec.DupliGainsHeal(evt, user, statName, gainRaw);
+            MasteryAltAmount(evt, stat, i, evt.masteryEffectiveness, antiGain:antiGain);
+            
         }
     }
 }

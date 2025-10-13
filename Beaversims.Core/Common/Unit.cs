@@ -20,18 +20,23 @@ namespace Beaversims.Core
 
         public bool IsUnit(Unit otherUnit) => Id == otherUnit.Id;
         public bool HasBuff(int buffId) => Buffs.Any(b => b.Id == buffId);
+        public Buff? GetBuff(int buffId) => Buffs.Find(b => b.Id == buffId);
         public bool HasAnyBuff(HashSet<int> buffIds) => Buffs.Any(b => buffIds.Contains(b.Id));
         public bool HasAnyBuffFromPlayer(HashSet<int> buffIds, UnitId unitId) => Buffs.Any(b => buffIds.Contains(b.Id) && b.SourceId == unitId);
 
         protected Buff? FindBuff(int buffId, UnitId sourceId) =>
             Buffs.Find(b => b.Id == buffId && b.SourceId == sourceId);
 
-        public virtual void AddBuff(string buffName, int buffId, Unit sourceUnit, int stacks, Logger statLogger = null, double timeStamp = 0)
+        public virtual void AddBuff(string buffName, int buffId, Unit sourceUnit, int stacks, double timeStamp, Logger statLogger = null)
         {
             var buff = new Buff(buffId, sourceUnit.Id, buffName, stacks);
             if (!buff.AllowMultiple)
             {
                 RemoveBuff(buffId, sourceUnit, statLogger);
+            }
+            if (buff.Duration > 0)
+            {
+                buff.BuffEnd = timeStamp + buff.Duration;
             }
             Buffs.Add(buff);
         }
@@ -49,7 +54,7 @@ namespace Beaversims.Core
             var buff = FindBuff(buffId, sourceUnit.Id);
             if (buff is null)
             {
-                AddBuff(buffName, buffId, sourceUnit, newStacks, statLogger);
+                AddBuff(buffName, buffId, sourceUnit, newStacks, timeStamp, statLogger);
                 return;
             }
 
@@ -66,7 +71,7 @@ namespace Beaversims.Core
         public Dictionary<int, Talent> Talents { get; } = [];
         public Dictionary<ItemSlot, Item> Items { get; } = [];
         public GearSet Gear { get; } = [];
-        public double HCGM { get; set; } = 1.0;  //Haste Cast Gain Mod
+
 
         public bool HasVantus { get; set; } = false;
        
@@ -86,13 +91,17 @@ namespace Beaversims.Core
         public HashSet<int> SummonIds { get; set; } = []; // Type Ids only
 
         public StatTracker Stats { get; set; } = new();
-        public StatTracker? PuredStats { get; set; }
+        public StatTracker? RefStats { get; set; }
         // If user doesnt have permanent leech for fight, revert to calculate leech value by leech data from other sims.
         public bool HasPermaLeech {  get; set; } = false;
         public List<GearSet> altGearSets { get; set; } = [];
+        // Don't need alt versions of this, math works out with calculating it based on original log data.
+        public double HCGM { get; set; } = 1;
+        public double TrueCastTimeTotal { get; set; } = 0;
 
         // Paladin
         public bool AwakeningActive { get; set; } = false;
+        public bool BanCritScaleJudgAC { get; set; } = false;
 
 
         public virtual void InitCustomBuffs()
@@ -141,6 +150,7 @@ namespace Beaversims.Core
 
         public void ProcessStatBuff(StatBuff buff, Unit sourceUnit)
         {
+            
             foreach (var mod in buff.StatMods)
             {
                 var amount = mod.Amount;
@@ -166,15 +176,15 @@ namespace Beaversims.Core
                 var stat = Stats.Get(mod.StatName);
                 stat.ChangeAmount(amount * buff.Stacks, mod.AmountType, removal: false);
                 // if PuredStats is null its before event parsing. Stats are copied after init and before vantus. Only need to track PuredStats during events.
-                if (PuredStats != null && !buff.RefImpurity)
+                if (RefStats != null && !buff.RefImpurity)
                 {
-                    var refStat = PuredStats.Get(mod.StatName);
+                    var refStat = RefStats.Get(mod.StatName);
                     refStat.ChangeAmount(amount * buff.Stacks, mod.AmountType, removal: false);
                 }
             }
         }
 
-        public override void AddBuff(string buffName, int buffId, Unit sourceUnit, int stacks, Logger statLogger = null, double timeStamp = 0)
+        public override void AddBuff(string buffName, int buffId, Unit sourceUnit, int stacks, double timeStamp, Logger statLogger = null)
         {
             var sourceId = sourceUnit.Id;
             Buff buff = TryCreateStatBuff(buffId, sourceUnit, stacks, out var created)
@@ -189,6 +199,10 @@ namespace Beaversims.Core
             if (!buff.AllowMultiple)
             {
                 RemoveBuff(buffId, sourceUnit, statLogger);
+            }
+            if (buff.Duration > 0)
+            {
+                buff.BuffEnd = timeStamp + buff.Duration;
             }
             Buffs.Add(buff);
         }
@@ -208,7 +222,7 @@ namespace Beaversims.Core
                     if (statLogger != null) { Stats.LogStats(statLogger, timeStamp); }
                     if (!buff.RefImpurity)
                     {
-                        PuredStats.Get(mod.StatName).ChangeAmount(mod.Amount * buff.Stacks, mod.AmountType, removal: true);
+                        RefStats.Get(mod.StatName).ChangeAmount(mod.Amount * buff.Stacks, mod.AmountType, removal: true);
                     }
                 }
             }
@@ -223,7 +237,7 @@ namespace Beaversims.Core
             var buff = Buffs.Find(b => b.Id == buffId && b.SourceId == sourceId);
             if (buff is null)
             {
-                AddBuff(buffName, buffId, sourceUnit, newStacks, statLogger);
+                AddBuff(buffName, buffId, sourceUnit, newStacks, timeStamp, statLogger);
                 return;
             }
 
@@ -242,7 +256,7 @@ namespace Beaversims.Core
                         if (statLogger != null) { Stats.LogStats(statLogger, timeStamp); }
                         if (!buff.RefImpurity)
                         {
-                            PuredStats.Get(mod.StatName).ChangeAmount(mod.Amount * magnitude, mod.AmountType, removal);
+                            RefStats.Get(mod.StatName).ChangeAmount(mod.Amount * magnitude, mod.AmountType, removal);
                         }
                     }
                 }

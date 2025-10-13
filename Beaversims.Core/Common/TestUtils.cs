@@ -59,8 +59,16 @@ namespace Beaversims.Core.Common
                 GainType.BalDmg
             };
 
+            // Determine padding based on the longest gear set name
+            int longestNameLength = gearSets
+                .Select(gs => (gs.Name ?? $"Set {gs.Id}").Length)
+                .DefaultIfEmpty(0)
+                .Max();
+
+            int nameColumnWidth = Math.Max(longestNameLength + 2, 20); // Add a small buffer for readability
+
             // Header
-            Console.Write("".PadRight(30));
+            Console.Write("".PadRight(nameColumnWidth));
             Console.Write($"{"Total",10}");
             foreach (var gt in orderedGainTypes)
                 Console.Write($"{gt,10}");
@@ -69,10 +77,12 @@ namespace Beaversims.Core.Common
             // Rows
             foreach (var gs in gearSets)
             {
-                Console.Write($"{gs.Name ?? $"Set {gs.Id}",-30}");
+                string name = gs.Name ?? $"Set {gs.Id}";
+                Console.Write($"{name.PadRight(nameColumnWidth)}");
 
                 double val2 = gs.Gains[GainType.Eff] + gs.Gains[GainType.Dmg] + gs.Gains[GainType.Def];
                 Console.Write($"{val2,10:0.00}");
+
                 foreach (var gt in orderedGainTypes)
                 {
                     double val = 0;
@@ -82,10 +92,10 @@ namespace Beaversims.Core.Common
                     Console.Write($"{val,10:0.00}");
                 }
 
-
                 Console.WriteLine();
             }
         }
+
 
     }
 }

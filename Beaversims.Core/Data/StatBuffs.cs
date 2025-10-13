@@ -229,7 +229,6 @@ namespace Beaversims.Core.Data.StatBuffs
         public RelentlessInquisitor(UnitId sourceId, int stacks)
             : base(id, sourceId, name, stacks)
         {
-            RefImpurity = true;
             SourceType = BuffSourceType.Talent;
             SourceObjId = 102575;
             StatMods.Add(
@@ -256,6 +255,18 @@ namespace Beaversims.Core.Data.StatBuffs
                     StatAmountType.Base,
                     2 * Haste.percentRate)
             );
+        }
+    }
+    internal class BlessingOfAutumn : StatBuff
+    {
+        public const int id = 388010;
+        public const string name = "Blessing of Autumn";
+        public double CdrAmount { get; set; } = 0.3;
+
+        public BlessingOfAutumn(UnitId sourceId, int stacks)
+            : base(id, sourceId, name, stacks)
+        {
+            Duration = 30;
         }
     }
     /*--- *

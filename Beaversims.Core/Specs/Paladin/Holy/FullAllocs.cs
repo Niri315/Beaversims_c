@@ -21,7 +21,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
         }
 
 
-        public static void HaaGains(List<Event> events, User user)
+        public static void HaaGains(List<Event> events, User user, int i)
         {
             if (!user.HasTalent(Talents.HammerAndAnvil.id)) { return; }
 
@@ -93,34 +93,33 @@ namespace Beaversims.Core.Specs.Paladin.Holy
                 }
                 if (evt is ThroughputEvent)
                 {
-                    for (int i = 0; i < evt.AltEvents.Count; i++)
+                  
+                    var altEvent = evt.AltEvents[i];
+                    if (evt.AbilityName == Abilities.HammerAndAnvil.name)
                     {
-                        var altEvent = evt.AltEvents[i];
-                        if (evt.AbilityName == Abilities.HammerAndAnvil.name)
-                        {
-                            haa.AltHeal[i].Raw += altEvent.Amount.Raw;
-                            haa.AltHeal[i].Eff += altEvent.Amount.Eff;
-                        }
-                        else if (evt.AbilityName == Abilities.LesserWeapon.name)
-                        {
-                            if (evt.IsHealDoneEvent())
-                            {
-                                lesserWep.AltHeal[i].Raw += altEvent.Amount.Raw;
-                                lesserWep.AltHeal[i].Eff += altEvent.Amount.Eff;
-                            }
-                            else if (evt.IsDmgDoneEvent())
-                            {
-                                lesserWep.AltDamage[i].Dmg += altEvent.Amount.Raw;
-                            }
-
-                        }
-                        else if (evt.AbilityName == Shared.Abilities.LesserBulwark.name)
-                        {
-
-                            lesserBulwark.AltHeal[i].Raw += altEvent.Amount.Raw;
-                            lesserBulwark.AltHeal[i].Eff += altEvent.Amount.Eff;
-                        }
+                        haa.AltHeal[i].Raw += altEvent.Amount.Raw;
+                        haa.AltHeal[i].Eff += altEvent.Amount.Eff;
                     }
+                    else if (evt.AbilityName == Abilities.LesserWeapon.name)
+                    {
+                        if (evt.IsHealDoneEvent())
+                        {
+                            lesserWep.AltHeal[i].Raw += altEvent.Amount.Raw;
+                            lesserWep.AltHeal[i].Eff += altEvent.Amount.Eff;
+                        }
+                        else if (evt.IsDmgDoneEvent())
+                        {
+                            lesserWep.AltDamage[i].Dmg += altEvent.Amount.Raw;
+                        }
+
+                    }
+                    else if (evt.AbilityName == Shared.Abilities.LesserBulwark.name)
+                    {
+
+                        lesserBulwark.AltHeal[i].Raw += altEvent.Amount.Raw;
+                        lesserBulwark.AltHeal[i].Eff += altEvent.Amount.Eff;
+                    }
+                    
                 }
               
             }
@@ -134,41 +133,40 @@ namespace Beaversims.Core.Specs.Paladin.Holy
             {
                 if (evt is ThroughputEvent tEvt)
                 {
-                    for (int i = 0; i < evt.AltEvents.Count; i++)
-                    {
-                        var crit = evt.UserStats.Get(StatName.Crit);
-                        var altCrit = evt.AltEvents[i].UserStats.Get(StatName.Crit);
-                        var altEvent = evt.AltEvents[i];
-                        var gainRaw = 0.0;
-                        if (evt.AbilityName == haa.Name)
-                        {
-                            gainRaw = (altCrit.Eff - crit.Eff) * correctingCoef * haa.AltHeal[i].Raw / ((cs.Damage.Crit.Count) + judg.Damage.Crit.Count) / 100 / Crit.percentRate;
-                        }
-                        if (evt.AbilityName == lesserBulwark.Name)
-                        {
-                            gainRaw = (altCrit.Eff - crit.Eff) * correctingCoef * lesserBulwark.AltHeal[i].Raw / ((cs.Damage.Crit.Count) + judg.Damage.Crit.Count) / 100 / Crit.percentRate;
-                        }
-                        if (evt.AbilityName == lesserWep.Name)
-                        {
-                            if (evt.IsHealDoneEvent())
-                            {
-                                gainRaw = (altCrit.Eff - crit.Eff) * correctingCoef * lesserWep.AltHeal[i].Raw / ((cs.Damage.Crit.Count) + judg.Damage.Crit.Count) / 100 / Crit.percentRate;
-                            }
-                            else if (evt.IsDmgDoneEvent())
-                            {
-                                gainRaw = (altCrit.Eff - crit.Eff) * correctingCoef * lesserWep.AltDamage[i].Dmg / ((cs.Damage.Crit.Count) + judg.Damage.Crit.Count) / 100 / Crit.percentRate;
-                            }
 
+                    var crit = evt.UserStats.Get(StatName.Crit);
+                    var altCrit = evt.AltEvents[i].UserStats.Get(StatName.Crit);
+                    var altEvent = evt.AltEvents[i];
+                    var gainRaw = 0.0;
+                    if (evt.AbilityName == haa.Name)
+                    {
+                        gainRaw = (altCrit.Eff - crit.Eff) * correctingCoef * haa.AltHeal[i].Raw / ((cs.Damage.Crit.Count) + judg.Damage.Crit.Count) / 100 / Crit.percentRate;
+                    }
+                    if (evt.AbilityName == lesserBulwark.Name)
+                    {
+                        gainRaw = (altCrit.Eff - crit.Eff) * correctingCoef * lesserBulwark.AltHeal[i].Raw / ((cs.Damage.Crit.Count) + judg.Damage.Crit.Count) / 100 / Crit.percentRate;
+                    }
+                    if (evt.AbilityName == lesserWep.Name)
+                    {
+                        if (evt.IsHealDoneEvent())
+                        {
+                            gainRaw = (altCrit.Eff - crit.Eff) * correctingCoef * lesserWep.AltHeal[i].Raw / ((cs.Damage.Crit.Count) + judg.Damage.Crit.Count) / 100 / Crit.percentRate;
                         }
-                        altEvent.Amount.UpdateAltGainsFromEvtData(tEvt, gainRaw, i);
+                        else if (evt.IsDmgDoneEvent())
+                        {
+                            gainRaw = (altCrit.Eff - crit.Eff) * correctingCoef * lesserWep.AltDamage[i].Dmg / ((cs.Damage.Crit.Count) + judg.Damage.Crit.Count) / 100 / Crit.percentRate;
+                        }
 
                     }
+                    altEvent.Amount.UpdateAltGainsFromEvtData(tEvt, gainRaw, i);
+
+                    
                 }
                
             }
         }
 
-        public static void SunSearGains(List<Event> events, User user)
+        public static void SunSearGains(List<Event> events, User user, int i)
         {
 
             var abilities = user.Abilities;
@@ -182,15 +180,14 @@ namespace Beaversims.Core.Specs.Paladin.Holy
             {
                 if (evt is ThroughputEvent)
                 {
-                    for (int i = 0; i < evt.AltEvents.Count; i++)
+
+                    var altEvent = evt.AltEvents[i];
+                    if (evt.AbilityName == Abilities.SunSear.name)
                     {
-                        var altEvent = evt.AltEvents[i];
-                        if (evt.AbilityName == Abilities.SunSear.name)
-                        {
-                            sunsear.AltHeal[i].Raw += altEvent.Amount.Raw;
-                            sunsear.AltHeal[i].Eff += altEvent.Amount.Eff;
-                        }
+                        sunsear.AltHeal[i].Raw += altEvent.Amount.Raw;
+                        sunsear.AltHeal[i].Eff += altEvent.Amount.Eff;
                     }
+                    
                 }
 
             }
@@ -203,29 +200,28 @@ namespace Beaversims.Core.Specs.Paladin.Holy
             {
                 if (evt is ThroughputEvent tEvt)
                 {
-                    for (int i = 0; i < evt.AltEvents.Count; i++)
-                    {
-                        var crit = evt.UserStats.Get(StatName.Crit);
-                        var altCrit = evt.AltEvents[i].UserStats.Get(StatName.Crit);
-                        var altEvent = evt.AltEvents[i];
-                        var gainRaw = 0.0;
-                        if (evt.AbilityName == sunsear.Name)
-                        {
-                            gainRaw = (altCrit.Eff - crit.Eff) * correctingCoef * sunsear.AltHeal[i].Raw / (holyshock.Heal.Crit.Count + lod.Heal.Crit.Count) / 100 / Crit.percentRate;
-                        }
-                       
-                        altEvent.Amount.UpdateAltGainsFromEvtData(tEvt, gainRaw, i);
 
+                    var crit = evt.UserStats.Get(StatName.Crit);
+                    var altCrit = evt.AltEvents[i].UserStats.Get(StatName.Crit);
+                    var altEvent = evt.AltEvents[i];
+                    var gainRaw = 0.0;
+                    if (evt.AbilityName == sunsear.Name)
+                    {
+                        gainRaw = (altCrit.Eff - crit.Eff) * correctingCoef * sunsear.AltHeal[i].Raw / (holyshock.Heal.Crit.Count + lod.Heal.Crit.Count) / 100 / Crit.percentRate;
                     }
+                       
+                    altEvent.Amount.UpdateAltGainsFromEvtData(tEvt, gainRaw, i);
+
+                    
                 }
 
             }
         }
 
-        public static void FullAllocGains(List<Event> events, User user)
+        public static void FullAllocGains(List<Event> events, User user, int i)
         {
-            HaaGains(events, user);
-            SunSearGains(events, user);
+            HaaGains(events, user, i);
+            SunSearGains(events, user, i);
         }
     }
 }

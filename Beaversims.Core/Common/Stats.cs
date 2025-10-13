@@ -338,6 +338,13 @@ namespace Beaversims.Core
         public override double PercentRate { get; set; }
         public override double DrRate { get; }
 
+        public override void SetEff()
+        {
+            //Retarded haste scaling
+            var trueBase = Base * (1 + (PostDr / percentRate / 100));
+            Eff = trueBase + PostDr;
+        }
+
         public Haste()
         {
             Name = StatName.Haste;

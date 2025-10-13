@@ -14,7 +14,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Talents
         public TalentCoef GjCoef { get; }
         public InflorescenceOfTheSunwell(int rank) : base(id, rank)
         {
-            GjCoef = new TalentCoef(0.5 *  rank, abilities: [Abilities.GreaterJudgment.name]);
+            GjCoef = new TalentCoef(0.5 * rank, abilities: [Abilities.GreaterJudgment.name]);
         }
     }
 
@@ -106,13 +106,70 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Talents
             Coef = 0.1 * rank;
         }
     }
-    //internal class OverflowingLight : Talent
-    //{
-    //    public const int id = 102535;
-    //    public double Coef { get; }
-    //    public OverflowingLight(int rank) : base(id, rank)
-    //    {
-    //        Coef = 0.3 * rank;
-    //    }
-    //}
+    internal class RisingSunlight : Talent
+    {
+        public const int id = 102581;
+        public double HolyShockCount { get; }
+        public RisingSunlight(int rank) : base(id, rank)
+        {
+            HolyShockCount = 2 * rank;
+        }
+    }
+
+    internal class DivineResonance : Talent
+    {
+        public const int id = 115466;
+        public double HolyShockCount { get; }
+        public DivineResonance(int rank) : base(id, rank)
+        {
+            HolyShockCount = 3 * rank;
+        }
+    }
+    internal class CrusadersMight : Talent
+    {
+        public const int id = 102580;
+        public double CdReduct { get; }
+        public CrusadersMight(int rank) : base(id, rank)
+        {
+            CdReduct = 2.0 * rank;
+        }
+    }
+    internal class ImbuedInfusions : Talent
+    {
+        public const int id = 102536;
+        public double CdReduct { get; }
+        public ImbuedInfusions(int rank) : base(id, rank)
+        {
+            CdReduct = 1.0 * rank;
+        }
+    }
+    internal class EmpyreanLegacy : Talent
+    {
+        public const int id = 102576;
+        public const double cd = 20;
+        public const double coef = 1.25;
+        public EmpyreanLegacy(int rank) : base(id, rank)
+        {
+
+        }
+    }
+    internal class GloriousDawn : Talent
+    {
+        public const int id = 115873;
+        public const double procChance = 0.12;
+        public GloriousDawn(int rank) : base(id, rank)
+        {
+
+        }
+    }
+    internal class RighteousJudgment : Talent
+    {
+        public const int id = 115875;
+        public const double procChance = 1.0;
+        public const double coef = 1.25;
+        public RighteousJudgment(int rank) : base(id, rank)
+        {
+
+        }
+    }
 }

@@ -21,34 +21,33 @@ namespace Beaversims.Core.Specs.DummySpec
             {
                 // Loop for tracking buffs and collecting data.
                 BuffTracker.TrackBuffs(evt, allUnits, statLogger);
-
-            }
-            Utils.CleanUp(allUnits); // To avoid accidental usage.
-            foreach (Event evt in events)
-            {
-                // Hypo loop
+                evt.CreateAltEvents(user);
                 if (evt is ThroughputEvent tEvt)
                 {
                     Shared.DupliEffects.SharedHypo(tEvt, user);
                 }
-            }
 
-            foreach (Event evt in events)
+            }
+            Utils.CleanUp(allUnits); // To avoid accidental usage.
+
+            for (int i = 0; i < user.altGearSets.Count; i++)
             {
-                // Loop for setting gains.
-                evt.CreateAltEvents(user);
-             
-                if (evt is ThroughputEvent tpEvent)
-                {
-                    if (tpEvent.IsHealDoneEvent())
+
+                foreach (Event evt in events)
+                { // Loop for setting gains.
+                    var altEvent = evt.AltEvents[i];
+                    if (evt is ThroughputEvent tpEvent)
                     {
-                        StatGains.AutoStatGainsHeal((HealEvent)tpEvent, user);
+                        if (tpEvent.IsHealDoneEvent())
+                        {
+                            StatGains.AutoStatGainsHeal((HealEvent)tpEvent, user, i);
+                        }
+                        if (tpEvent.IsDmgDoneEvent())
+                        {
+                            StatGains.AutoStatGainsDmg((DamageEvent)tpEvent, user, i);
+                        }
+                        StatGains.AutoStatGainsMisc(tpEvent, user, i);
                     }
-                    if (tpEvent.IsDmgDoneEvent())
-                    {
-                        StatGains.AutoStatGainsDmg((DamageEvent)tpEvent, user);
-                    }
-                    StatGains.AutoStatGainsMisc(tpEvent, user);
                 }
             }
         }

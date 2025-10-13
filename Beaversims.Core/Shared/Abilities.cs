@@ -19,6 +19,7 @@ namespace Beaversims.Core.Shared.Abilities
             Name = name;
             LeechSource = false;
             CanDupli = false;
+            SimDupliAbility = true;
         }
     }
 
@@ -45,6 +46,7 @@ namespace Beaversims.Core.Shared.Abilities
         public BlessingOfSummer()
         {
             Name = name;
+            SimDupliAbility = true;
         }
     }
 
@@ -104,6 +106,19 @@ namespace Beaversims.Core.Shared.Abilities
             IgnoreDr = true;
             LeechSource = false;
             CanDupli = false;
+        }
+    }
+    /* ------- *
+     * Racials *
+     * ------- */
+    internal class LightsJudgment : SharedAbility
+    {
+        public const string name = "Light's Judgment";
+        public LightsJudgment()
+        {
+            Name = name;
+            CastTime = Constants.GCD;
+            Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Vers]);
         }
     }
     /* --- *

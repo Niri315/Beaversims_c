@@ -24,7 +24,7 @@ namespace Beaversims.Core
 
                 if (buffEvent.BuffApplyEvent)
                 {
-                    buffEvent.TargetUnit.AddBuff(buffName, buffId, sourceUnit, buffStacks, statLogger, timestamp);
+                    buffEvent.TargetUnit.AddBuff(buffName, buffId, sourceUnit, buffStacks, timestamp, statLogger);
                 }
                 else if (buffEvent.BuffRemoveEvent)
                 {

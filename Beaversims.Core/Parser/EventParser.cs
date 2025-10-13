@@ -134,6 +134,7 @@ namespace Beaversims.Core.Parser
 
             if (eventType == "healabsorbed")
             {
+                evt.HealAbsorbAbilityName = abilityData.GetProperty("name").GetString();
                 abilityData = logEvent.GetProperty("extraAbility");  // Ability that does the healing is under extraAbility for healabsorb events.
             }
 

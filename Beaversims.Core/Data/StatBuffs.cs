@@ -276,10 +276,13 @@ namespace Beaversims.Core.Data.StatBuffs
     {
         public const int id = 1239641;
         public const string name = "Astral Antenna";
+        
 
         public AstralAntenna(UnitId sourceId, int stacks)
             : base(id, sourceId, name, stacks)
         {
+            SimImpurity = true;
+            Duration = 10;
             SourceType = BuffSourceType.Item;
             SourceObjId = 242395; 
             StatMods.Add(

@@ -37,7 +37,7 @@ namespace Beaversims.Core
         // There are bug in logs where buff refreshes are seen are buff applications
         // Can assume true, but add false on important stat buffs.
         public bool AllowMultiple { get; set; } = true;
-        public bool RefImpurity { get; set; } = false;
+
         public Buff(int id, UnitId sourceId, string name, int stacks)
         {
             Id = id;
@@ -54,6 +54,7 @@ namespace Beaversims.Core
         public List<StatMod> StatMods { get; } = new();
         public BuffSourceType SourceType { get; protected set; } = BuffSourceType.None;
         public int SourceObjId { get; protected set; } = 0;
+        public bool SimImpurity { get; set; } = false;
 
         public StatBuff(int id, UnitId sourceId, string name, int stacks) 
             : base(id, sourceId, name, stacks)

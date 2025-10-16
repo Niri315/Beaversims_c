@@ -526,6 +526,7 @@ namespace Beaversims.Core.Parser
                 //SetCoords(evt, user);
 
             }
+            Utils.AddHeartbeatEvents(events);
             EraseData(allUnits);
             return events;
         }

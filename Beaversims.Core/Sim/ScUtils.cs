@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Beaversims.Core.Sim
 {
@@ -95,6 +96,17 @@ namespace Beaversims.Core.Sim
             amount = ApplyMults(amount, itemSlot, statName, ilvl);
             amount *= scalingData.Coef;
             return amount;
+        }
+
+        public static double TrueRppm(Event evt, double rppm, bool hasteScaling, int i) 
+        {
+            if (hasteScaling) 
+            { 
+                var haste = (Haste)evt.AltEvents[i].UserStats.Get(StatName.Haste);
+                var hasteFactor = 1 + ((haste.Eff / haste.PercentRate) / 100);
+                return rppm * hasteFactor;
+            }
+            return rppm;
         }
     }
 }

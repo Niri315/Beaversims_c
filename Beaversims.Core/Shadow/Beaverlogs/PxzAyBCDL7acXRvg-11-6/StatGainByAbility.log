@@ -1,148 +1,148 @@
 Light's Judgment
 	Intellect
-		Heal: 0,06107124295911878
-		Damage: 2,1071502496921233
+		Heal: 0,06113636878810008
+		Damage: 2,2539016382510164
 -------------------
 Pillar of Lights
 	Intellect
-		Heal: 29,64569440100101
+		Heal: 30,038114025271526
 	Mastery
-		Heal: 61,30680936681881
+		Heal: 59,22620618827725
 -------------------
 Seal of the Crusader
 	Intellect
-		Heal: 2,9081073128191286
+		Heal: 2,7455590749105516
 -------------------
 Consecration
 	Intellect
-		Heal: 0,3794909876975822
-		Damage: 13,957611888782623
+		Heal: 0,36950534776180805
+		Damage: 13,611709508007918
 -------------------
 Golden Path
 	Intellect
-		Heal: 10,425431561294737
+		Heal: 9,861501285148604
 	Mastery
-		Heal: 21,11807303331244
+		Heal: 19,93873036821815
 -------------------
 Truth Prevails
 	Intellect
-		Heal: 16,41106769957169
+		Heal: 15,753668653228356
 	Mastery
-		Heal: 33,180395748353114
+		Heal: 32,2369067803428
 -------------------
 Judgment
 	Intellect
-		Heal: 0,5044480393569063
-		Damage: 18,75110185675934
+		Heal: 0,49235066296494984
+		Damage: 17,63117579110677
 	Crit
-		Heal: 135,2575368438329
-		Damage: 16,294737789162554
+		Heal: 122,07107997628097
+		Damage: 14,635831807343049
 -------------------
 Hammer and Anvil
 	Intellect
-		Heal: 119,40076555018277
+		Heal: 115,32760945960933
 -------------------
 Avenging Crusader
 	Intellect
-		Heal: 69,84548860094857
+		Heal: 68,52275307914381
 	Mastery
-		Heal: 124,25843812117493
+		Heal: 120,57808510595947
 -------------------
 Judgment of Light
 	Intellect
-		Heal: 4,713227092539997
+		Heal: 4,538210101734751
 	Mastery
-		Heal: 9,048979157361837
+		Heal: 8,738137487689091
 -------------------
 Greater Judgment
 	Intellect
-		Heal: 7,680506257484101
+		Heal: 7,267249401208274
 -------------------
 Crusader Strike
 	Intellect
-		Heal: 0,3775416597386701
-		Damage: 14,025524272615948
+		Heal: 0,37997904968214025
+		Damage: 13,743406051114668
 	Crit
-		Heal: 121,44537372464443
-		Damage: 18,488774732859316
+		Heal: 107,23090574441856
+		Damage: 16,4820336258196
 -------------------
 Sacred Weapon
 	Intellect
-		Heal: 40,12511737149398
-		Damage: 8,011634147579455
+		Heal: 37,56543322193487
+		Damage: 7,449325576024107
 	Mastery
-		Heal: 80,85188423302655
+		Heal: 76,9476852023392
 -------------------
 Saved by the Light
 	Intellect
-		Heal: 14,47157226008603
+		Heal: 13,730694123559376
 -------------------
 Word of Glory
 	Intellect
-		Heal: 53,423669512913335
+		Heal: 50,1089422224806
 	Mastery
-		Heal: 106,33147721685427
+		Heal: 97,78886750640737
 -------------------
 Light of Dawn
 	Intellect
-		Heal: 70,86315417804336
+		Heal: 67,89976687378856
 	Mastery
-		Heal: 136,58931980614926
+		Heal: 132,095395992126
 -------------------
 Radiant Aura
 	Intellect
-		Heal: 2,7440062203151347
+		Heal: 2,9350242725686524
 	Mastery
-		Heal: 5,432096070676209
+		Heal: 5,700120097144632
 -------------------
 Sacred Word
 	Intellect
-		Heal: 2,8851065599028813
+		Heal: 2,828873085903278
 	Mastery
-		Heal: 5,380928816701503
+		Heal: 5,437592565767134
 -------------------
 Holy Prism
 	Intellect
-		Heal: 42,32425420583611
-		Damage: 4,047986264186737
+		Heal: 43,277859007619156
+		Damage: 4,00427487849427
 	Mastery
-		Heal: 78,55162867777233
+		Heal: 79,33535947629892
 -------------------
 Shield of the Righteous
 	Intellect
-		Heal: 0,07309058542102383
-		Damage: 2,7498030112977414
+		Heal: 0,07390223676955851
+		Damage: 2,6174102181160173
 -------------------
 Shining Righteousness
 	Intellect
-		Heal: 0,05970682702254317
-		Damage: 2,073641456117557
+		Heal: 0,05705748243027125
+		Damage: 2,077362931761378
 -------------------
 Forge's Reckoning
 	Intellect
-		Damage: 2,2785000903726087
+		Damage: 2,314152130505198
 -------------------
 Lesser Weapon
 	Intellect
-		Heal: 9,143114390160147
-		Damage: 16,191579837941433
+		Heal: 8,990839455955774
+		Damage: 15,609427789097603
 	Mastery
-		Heal: 15,790942377795679
+		Heal: 15,27838214253171
 -------------------
 Holy Shock
 	Intellect
-		Heal: 28,05575854240865
-		Damage: 6,21965119564859
+		Heal: 28,173218123721337
+		Damage: 6,098283681245637
 	Mastery
-		Heal: 53,2296137285141
+		Heal: 51,86532416627767
 -------------------
 Holy Ritual
 	Intellect
-		Heal: 2,002059633314658
+		Heal: 2,048216760289792
 	Mastery
-		Heal: 4,195276750576355
+		Heal: 4,188108686260749
 -------------------
 Lay on Hands
 	Stamina
-		Heal: 0,6812754155921119
+		Heal: 0,784656905005136
 -------------------

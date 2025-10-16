@@ -13,10 +13,12 @@ namespace Beaversims.Core
     {
         //public GainDict Gains { get; set; }
         public Dictionary<StatName, double> Stats = [];
+        public List<SpecialEffect> SpecialEffects = [];
         public override object Clone()
         {
             var clone = (GainItem)base.Clone();
             clone.Stats = new Dictionary<StatName, double>(Stats);
+            clone.SpecialEffects = new List<SpecialEffect>(SpecialEffects);
             return clone;
         }
         public void addStatRating(StatName statName, double rating)

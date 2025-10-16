@@ -21,7 +21,7 @@ namespace Beaversims.Core.Specs.DummySpec
             {
                 // Loop for tracking buffs and collecting data.
                 BuffTracker.TrackBuffs(evt, allUnits, statLogger);
-                evt.CreateAltEvents(user);
+  
                 if (evt is ThroughputEvent tEvt)
                 {
                     Shared.DupliEffects.SharedHypo(tEvt, user);
@@ -30,11 +30,12 @@ namespace Beaversims.Core.Specs.DummySpec
             }
             Utils.CleanUp(allUnits); // To avoid accidental usage.
 
-            for (int i = 0; i < user.altGearSets.Count; i++)
+            for (int i = 0; i < user.AltGearSets.Count; i++)
             {
 
                 foreach (Event evt in events)
                 { // Loop for setting gains.
+                    evt.CreateAltEvents(user, evt);
                     var altEvent = evt.AltEvents[i];
                     if (evt is ThroughputEvent tpEvent)
                     {

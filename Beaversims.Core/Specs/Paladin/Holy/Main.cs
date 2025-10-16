@@ -28,7 +28,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
         public static void SpecMain(List<Event> events, UnitRepo allUnits, Fight fight)
         {
             var user = allUnits.GetUser();
-            Abilities.HolyShock holyShock = (Abilities.HolyShock)user.Abilities.Get(Abilities.HolyShock.name);
+            var holyShock = (Abilities.HolyShock)user.Abilities.Get(Abilities.HolyShock.name);
             var gj = (Abilities.GreaterJudgment)user.Abilities.Get(Abilities.GreaterJudgment.name);
             var martyr = (Abilities.LightOfTheMartyr)user.Abilities.Get(Abilities.LightOfTheMartyr.name);
             var cs = (Abilities.CrusaderStrike)user.Abilities.Get(Abilities.CrusaderStrike.name);
@@ -43,7 +43,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
             {
                 // Loop for tracking buffs and collecting data.
                 BuffTracker.TrackBuffs(evt, allUnits, statLogger);
-                evt.CreateAltEvents(user);
+                evt.CreateAltEvents(user, evt);
                 MasteryTracker.TrackBeacons(evt, beacons, user);
                 MasteryTracker.SetMasteryEff(evt, beacons, user);
                 CastProcessor.ProcessCast(evt, user);
@@ -51,8 +51,11 @@ namespace Beaversims.Core.Specs.Paladin.Holy
                 Awakening.TrackAwakening(evt, user);
                 judg.TrackGJCritChance(evt, user);
                 HCGM.TrackEmpLod(evt, user);
+
+
                 if (evt is ThroughputEvent tEvt)
                 {
+                    //ProcessEvents.StoreNormTotals(tEvt, fight, user);
                     HCGM.TrackACSource(tEvt, user);
                     Shared.DupliEffects.SharedHypo(tEvt, user);
                     if (tEvt.IsHealDoneEvent() && evt is HealEvent hEvt)
@@ -65,55 +68,63 @@ namespace Beaversims.Core.Specs.Paladin.Holy
             Utils.CleanUp(allUnits); // To avoid accidental usage.
             MasteryTracker.CleanUpCoords(allUnits);
 
-            HCGM.ModifyHCCGMSources(user, fight);
+            HCGM.ModifyHCCGMSources(user, fight); // 
             Shared.HCCGM.SetHCCGM(user);
             HCGM.ModifyHCGM(user, fight);
             holyShock.AlterHCGM(user);
-            foreach (var ability in user.Abilities)
-            {
-                Console.WriteLine($"{ability.Name} HCCGM: {ability.HCCGM}, HCGM: {ability.HasteCastGainMod}");
-            }
+
+            Sim.TrinketSim.SimTrinkets(events, user, fight);
+
+            //foreach (var ability in user.Abilities)
+            //{
+            //    Console.WriteLine($"{ability.Name} HCCGM: {ability.HCCGM}, True HCCGM: {ability.TrueHCCGM(user)}, cast gain mod: {ability.HasteCastGainMod}");
+            //}
 
             var degree = Environment.ProcessorCount;
-            Parallel.For(0, user.altGearSets.Count, new ParallelOptions { MaxDegreeOfParallelism = degree }, i =>
+            Parallel.For(0, user.AltGearSets.Count, new ParallelOptions { MaxDegreeOfParallelism = degree }, i =>
             {
-
-                foreach (Event evt in events)
-                {  
-                 
-                    
-                    // Loop for setting gains.
-                    var altEvent = evt.AltEvents[i];
-                    if (evt is ThroughputEvent tEvt)
+              
+                    //Console.WriteLine(y);
+                    foreach (Event evt in events)
                     {
-             
-                        Awakening.JudgAcCritGains(tEvt, user, i);
-                        StatGains.AutoStatGainsMisc(tEvt, user, i);
-                        if (tEvt.IsHealDoneEvent() && evt is HealEvent hEvt)
+                        // Loop for setting gains.
+                        var altEvent = evt.AltEvents[i];
+
+                        if (evt is ThroughputEvent tEvt)
                         {
-                            martyr.MartyrAntiGains(hEvt, user, i);
-                            StatGains.AutoStatGainsHeal((HealEvent)tEvt, user, i);
-                            if (evt.Ability.ScalesWith(StatName.Mastery))
+                            evt.AltEvents[i].Amount = tEvt.Amount.Clone();
+                            Awakening.JudgAcCritGains(tEvt, user, i);
+                            StatGains.AutoStatGainsMisc(tEvt, user, i);
+                            if (tEvt.IsHealDoneEvent() && evt is HealEvent hEvt)
                             {
-         
-                                MasteryTracker.MasteryGains((HealEvent)tEvt, user, i);
+                                martyr.MartyrAntiGains(hEvt, user, i);
+                                StatGains.AutoStatGainsHeal((HealEvent)tEvt, user, i);
+                                if (evt.Ability.ScalesWith(StatName.Mastery))
+                                {
+                                    MasteryTracker.MasteryGains((HealEvent)tEvt, user, i);
+                                }
+                                gj.CritGains(tEvt, user, i);
+                            }
+                            if (tEvt.IsDmgDoneEvent())
+                            {
+                                StatGains.AutoStatGainsDmg((DamageEvent)tEvt, user, i);
                             }
 
-                            gj.CritGains(tEvt, user, i);
                         }
-                        if (tEvt.IsDmgDoneEvent())
-                        {
-                            StatGains.AutoStatGainsDmg((DamageEvent)tEvt, user, i);
-                        }
-  
                     }
-                }
-                FullAllocs.FullAllocGains(events, user, i);
-                DupliEffects.altSelfless(events, user, i);
-                DupliEffects.altBeacon(events, user, i);
-                Shared.DupliEffects.AltSummerSource(events, user, i);
-                Shared.DupliEffects.AltLeechSource(events, user, i);
-
+                    FullAllocs.FullAllocGains(events, user, i);
+                    DupliEffects.altSelfless(events, user, i);
+                    DupliEffects.altBeacon(events, user, i);
+                    Shared.DupliEffects.AltSummerSource(events, user, i);
+                    Shared.DupliEffects.AltLeechSource(events, user, i);
+                    foreach (Event evt in events)
+                    {
+                        if (evt is ThroughputEvent tEvt)
+                        {
+                            Shared.ProcessEvents.StoreTotals(tEvt, user, i);
+                        }
+                    }
+                
             });
         }
     }

@@ -1,5 +1,6 @@
 ﻿using Beaversims.Core.Parser;
 using Beaversims.Core.Sim;
+using System;
 using System.Reflection;
 using System.Xml.Linq;
 
@@ -89,12 +90,13 @@ namespace Beaversims.Core
         public Spec Spec { get; set; }
         public AbilityRepo Abilities { get; } = new();
         public HashSet<int> SummonIds { get; set; } = []; // Type Ids only
-
+        public GainDict Totals { get; set; } = Utils.InitGainDict();
         public StatTracker Stats { get; set; } = new();
+        public HashSet<SpecialEffect> SimEffects { get; } = new();
         public StatTracker? RefStats { get; set; }
         // If user doesnt have permanent leech for fight, revert to calculate leech value by leech data from other sims.
         public bool HasPermaLeech {  get; set; } = false;
-        public List<GearSet> altGearSets { get; set; } = [];
+        public List<GearSet> AltGearSets { get; set; } = [];
         // Don't need alt versions of this, math works out with calculating it based on original log data.
         //public double HCGM { get; set; } = 1;
         public double TrueCastTimeTotal { get; set; } = 0;
@@ -103,6 +105,29 @@ namespace Beaversims.Core
         public bool AwakeningActive { get; set; } = false;
         public bool BanCritScaleJudgAC { get; set; } = false;
 
+        //private bool IsRefImpurity(StatBuff buff)
+        //{
+        //    foreach (var gearSet in AltGearSets)
+        //    {
+        //        foreach (var gear in gearSet)
+        //        {
+        //            //Console.WriteLine(gear.Value.Name);
+        //            //Console.WriteLine($"{gear.Value.Id}");
+        //            if (buff.SourceObjId == gear.Value.Id)
+        //            {
+        //                foreach (var userGear in Gear)
+        //                {
+        //                    if (buff.SourceObjId == userGear.Value.Id && userGear.Value.Ilvl != gear.Value.Ilvl)
+        //                    {
+        //                        //Console.WriteLine(buff.Name);
+        //                        return true;
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //    return false;
+        //}
 
         public virtual void InitCustomBuffs()
         {
@@ -176,7 +201,7 @@ namespace Beaversims.Core
                 var stat = Stats.Get(mod.StatName);
                 stat.ChangeAmount(amount * buff.Stacks, mod.AmountType, removal: false);
                 // if PuredStats is null its before event parsing. Stats are copied after init and before vantus. Only need to track PuredStats during events.
-                if (RefStats != null && !buff.RefImpurity)
+                if (RefStats != null && !buff.SimImpurity)
                 {
                     var refStat = RefStats.Get(mod.StatName);
                     refStat.ChangeAmount(amount * buff.Stacks, mod.AmountType, removal: false);
@@ -193,6 +218,11 @@ namespace Beaversims.Core
 
             if (buff is StatBuff statBuff)
             {
+                if (statBuff.SimImpurity && Constants.swOption)
+                {
+                    statBuff.SimImpurity = false;
+                }
+                
                 ProcessStatBuff(statBuff, sourceUnit);
                 if (statLogger != null) { Stats.LogStats(statLogger, timeStamp); }
             }
@@ -220,7 +250,7 @@ namespace Beaversims.Core
                 {
                     Stats.Get(mod.StatName).ChangeAmount(mod.Amount * buff.Stacks, mod.AmountType, removal: true);
                     if (statLogger != null) { Stats.LogStats(statLogger, timeStamp); }
-                    if (!buff.RefImpurity)
+                    if (!statBuff.SimImpurity)
                     {
                         RefStats.Get(mod.StatName).ChangeAmount(mod.Amount * buff.Stacks, mod.AmountType, removal: true);
                     }
@@ -254,7 +284,7 @@ namespace Beaversims.Core
                     {
                         Stats.Get(mod.StatName).ChangeAmount(mod.Amount * magnitude, mod.AmountType, removal);
                         if (statLogger != null) { Stats.LogStats(statLogger, timeStamp); }
-                        if (!buff.RefImpurity)
+                        if (!statBuff.SimImpurity)
                         {
                             RefStats.Get(mod.StatName).ChangeAmount(mod.Amount * magnitude, mod.AmountType, removal);
                         }

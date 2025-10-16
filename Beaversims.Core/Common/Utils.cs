@@ -31,6 +31,13 @@ namespace Beaversims.Core
             return Enum.GetValues<GainType>()
                 .ToDictionary(gain => gain, _ => 0.0);
         }
+
+        public static Dictionary<StatName, double> InitStatDict()
+        {
+            return Enum.GetValues<StatName>()
+                .ToDictionary(gain => gain, _ => 0.0);
+        }
+
         public static string PrintObject(object obj)
         {
             if (obj == null) return "null";
@@ -112,5 +119,20 @@ namespace Beaversims.Core
         public static bool IsSecondaryStat(StatName statName) => statName == StatName.Crit || statName == StatName.Haste || statName == StatName.Vers || statName == StatName.Mastery;
         public static bool IsTertiaryStat(StatName statName) => statName == StatName.Avoidance || statName == StatName.Leech;  // + speed
 
+        public static void AddHeartbeatEvents(List<Event> events)
+        {
+            int interval = 5;
+            int min = 0;
+            double max = events.Max(e => e.Timestamp);
+
+            for (double t = min; t <= max; t += interval)
+            {
+                events.Add(new Event { Timestamp = t, Heartbeat = true });
+            }
+
+            events.Sort((a, b) => a.Timestamp.CompareTo(b.Timestamp));
+        }
+
+       
     }
 }

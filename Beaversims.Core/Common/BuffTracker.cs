@@ -40,6 +40,7 @@ namespace Beaversims.Core
                 evt.SummerActive = true;
             }
             evt.UserStats = user.Stats.Clone();
+            evt.RefStats = user.RefStats.Clone();
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 
 namespace Beaversims.Core.Shared
@@ -36,25 +37,35 @@ namespace Beaversims.Core.Shared
         public static void TestHCCGMMath(User user)
         {
             var totalCastTimeGain = 0.0;
-            var totalCastTimeGainHCGM = 0.0;
+            var totalCastTimeGainHCCGM = 0.0;
             foreach (var ability in user.Abilities)
             {
                 if (ability.CastTimeGain > 0)
                 {
-                    totalCastTimeGainHCGM += ability.CastTimeGain * ability.HCCGM;
+                    totalCastTimeGainHCCGM += ability.CastTimeGain * ability.HCCGM;
                     totalCastTimeGain += ability.CastTimeGain;
                 }
 
             }
-            Console.WriteLine($"HCCGM Test: {totalCastTimeGainHCGM} VS {totalCastTimeGain}");
+            var tot = totalCastTimeGainHCCGM - totalCastTimeGain;
+            const double tolerance = 1e-9;
+
+            if (Math.Abs(tot) > tolerance)
+            {
+
+                throw new InvalidOperationException(
+                    $"HCCGM Imbalance."
+                );
+            }
+ 
         }
 
 
 
         public static void SetHCCGM(User user)
         {
-            var judg = user.Abilities.Get(Specs.Paladin.Holy.Abilities.Judgment.name);
-            //judg.RemoveHST(user, HST.Cast); // Test
+            // Modifying HCCCM for all cast abilities
+            // And HCGM for all abilities with HCCGM sources.
 
             var abilities = user.Abilities;
             double scaleGain = 0;
@@ -63,6 +74,7 @@ namespace Beaversims.Core.Shared
             foreach (var ability in user.Abilities)
             {
                 ability.HCCGMSourceRelCheck();
+                ability.MaxHCCGM = Math.Max(user.TrueCastTimeTotal / ability.CdTimeHypo, 1.0);
             }
 
             bool allDone = false;
@@ -95,7 +107,6 @@ namespace Beaversims.Core.Shared
 
                 foreach (var ability in user.Abilities)
                 {
-                    ability.MaxHCCGM = Math.Max(user.TrueCastTimeTotal / ability.CdTimeHypo, 1.0);
                     if (ability.MaxHCCGM < hcgmTotalCoef && !ability.HCCGMInitDone && ability.HasteScalers.Contains(HST.Cast))
                     {
                         ability.HCCGMInitDone = true;

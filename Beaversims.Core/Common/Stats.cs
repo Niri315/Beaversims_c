@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Beaversims.Core
 {
@@ -19,7 +20,7 @@ namespace Beaversims.Core
 
         public abstract StatName Name { get; }
         public abstract int Level { get; }
-
+        public abstract double GetEffDiff(double addRating, bool removal);
         public abstract void SetEff();
         public abstract void FullUpdate();
         public double ApplyMult(double amount)
@@ -31,7 +32,7 @@ namespace Beaversims.Core
             return amount / Multi;
         }
 
-        public void ChangeRating(double amount, bool removal)
+        public virtual void ChangeRating(double amount, bool removal)
         {
             if (removal)
             {
@@ -89,6 +90,16 @@ namespace Beaversims.Core
 
     internal abstract class PrimaryStat : Stat
     {
+        public override double GetEffDiff(double addRating, bool removal)
+        {
+            if (removal)
+            {
+                addRating *= -1.0;
+            }
+            var newRating = ((Rating / Multi) + addRating) * Multi;
+            var newEff = newRating + Base;
+            return newEff - Eff;
+        }
         public override void SetEff()
         {
             Eff = Rating + Base;
@@ -118,91 +129,51 @@ namespace Beaversims.Core
             return amount / (1 - (0.1 * Bracket)) / Multi;
         }
 
+        public override void ChangeRating(double amount, bool removal)
+        {
+            if (removal)
+            {
+                amount *= -1.0;
+            }
+            Rating = ((Rating / Multi) + amount) * Multi;
+            FullUpdate();
+        }
+        public override double GetEffDiff(double addRating, bool removal)
+        {
+            if (removal)
+            {
+                addRating *= -1.0;
+            }
+
+            var newRating = ((Rating / Multi) + addRating) * Multi;
+
+
+            var newBracket = Calc.GetBracket(newRating, DrRate);
+            var newPostDr = Calc.CalcPostDr(newBracket, newRating, DrRate);
+
+            var newEff = newPostDr + Base;
+            return newEff - Eff;
+        }
+
         public override void SetEff()
         {
             Eff = PostDr + Base;
         }
+
+        //public double GetPostDr(double rating, double drRate)
+        //{
+        //    var bracket = Calc.GetBracket(rating, drRate);
+        //    var postDr = Calc.CalcPostDr(bracket, rating, drRate);
+        //    return postDr;
+        //}
+
         public override void FullUpdate()
         {
-            SetBracket();
-            CalcPostDr();
+            Bracket = Calc.GetBracket(Rating, DrRate);
+            PostDr = Calc.CalcPostDr(Bracket, Rating, DrRate);
             SetEff();
         }
-        public void SetBracket()
-        {
-            var x = Rating / DrRate;
-
-            if (x <= 30)
-            {
-                Bracket = 0;
-            }
-            else if (x <= 40)
-            {
-                Bracket = 1;
-            }
-            else if (x <= 50)
-            {
-                Bracket = 2;
-            }
-            else if (x <= 60)
-            {
-                Bracket = 3;
-            }
-            else if (x <= 70)
-            {
-                Bracket = 4;
-            }
-            else
-            {
-                Bracket = 5;
-            }
-        }
-        public void CalcPostDr()
-        {
-            var postDiminishAmount = 0.0;
-
-            if (Bracket == 0)
-            {
-                postDiminishAmount += Rating;
-            }
-            else if (Bracket == 1)
-            {
-                postDiminishAmount += DrRate * 30;  // 0–30% amount
-                postDiminishAmount += (Rating - (DrRate * 30)) * 0.9;  // 30–39% amount
-            }
-            else if (Bracket == 2)
-            {
-                postDiminishAmount += DrRate * 30;
-                postDiminishAmount += DrRate * 10 * 0.9;
-                postDiminishAmount += (Rating - (DrRate * 30) - (DrRate * 10)) * 0.8;  // 39–47% amount
-            }
-            else if (Bracket == 3)
-            {
-                postDiminishAmount += DrRate * 30;
-                postDiminishAmount += DrRate * 10 * 0.9;
-                postDiminishAmount += DrRate * 10 * 0.8;
-                postDiminishAmount += (Rating - (DrRate * 30) - (DrRate * 10) - (DrRate * 10)) * 0.7;
-            }
-            else if (Bracket == 4)
-            {
-                postDiminishAmount += DrRate * 30;
-                postDiminishAmount += DrRate * 10 * 0.9;
-                postDiminishAmount += DrRate * 10 * 0.8;
-                postDiminishAmount += DrRate * 10 * 0.7;
-                postDiminishAmount += (Rating - (DrRate * 30) - (DrRate * 10) - (DrRate * 10) - (DrRate * 10)) * 0.6;
-            }
-            else
-            {
-                postDiminishAmount += DrRate * 30;
-                postDiminishAmount += DrRate * 10 * 0.9;
-                postDiminishAmount += DrRate * 10 * 0.8;
-                postDiminishAmount += DrRate * 10 * 0.7;
-                postDiminishAmount += DrRate * 10 * 0.6;
-                postDiminishAmount += (Rating - (DrRate * 30) - (DrRate * 10) - (DrRate * 10) - (DrRate * 10) - (DrRate * 10)) * 0.5;
-            }
-
-            PostDr = postDiminishAmount;
-        }
+      
 
         protected void CopyTo(NonPrimaryStat other)
         {
@@ -337,6 +308,23 @@ namespace Beaversims.Core
 
         public override double PercentRate { get; set; }
         public override double DrRate { get; }
+
+        public override double GetEffDiff(double addRating, bool removal)
+        {
+            if (removal)
+            {
+                addRating *= -1.0;
+            }
+
+            var newRating = ((Rating / Multi) + addRating) * Multi;
+
+
+            var newBracket = Calc.GetBracket(newRating, DrRate);
+            var newPostDr = Calc.CalcPostDr(newBracket, newRating, DrRate);
+            var trueBase = Base * (1 + (newPostDr / percentRate / 100));
+            var newEff = newPostDr + trueBase;
+            return newEff - Eff;
+        }
 
         public override void SetEff()
         {

@@ -95,6 +95,13 @@ namespace Beaversims.Core
         public List<HealDataContainer> AltHeal { get; } = [];
         public List<DmgDataContainer> AltDamage { get; } = [];
 
+
+        //public virtual void ResetAlts(User user, int i)
+        //{
+        //    AltHeal[i] = new HealDataContainer();
+        //    AltDamage[i] = new DmgDataContainer();
+        //}
+
         public double TrueHCCGM(User user)
         {
             if (HCCGMSources.Count == 0) { return HCCGM; }
@@ -114,11 +121,6 @@ namespace Beaversims.Core
                         hccgm += source.HCCGMReliance * sourceAbility.TrueHCCGM(user);
 
                     }
-                    //Console.WriteLine($"this: {Name}");
-                    //Console.WriteLine($"source: {sourceAbility.Name}");
-
-                    //Console.WriteLine();
-                    //hccgm += source.HCCGMReliance * sourceAbility.TrueHCCGM(user);
 
                 }
                 return hccgm;
@@ -149,7 +151,6 @@ namespace Beaversims.Core
 
         public void RemoveHST(User user, HasteScalerType hst)
         {
-            //Console.WriteLine("WARNING");
             HasteScalers.Remove(hst);
             //Important that HCCGM sources are updated correctly when removing HST.CAST.
             if (hst == HST.Cast)

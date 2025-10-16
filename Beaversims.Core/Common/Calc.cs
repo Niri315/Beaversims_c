@@ -44,5 +44,82 @@ namespace Beaversims.Core
             return cd / (haste.Eff / (haste.PercentRate * 100) + 1);
         }
 
+        public static int GetBracket(double rating, double drRate)
+        {
+            var x = rating / drRate;
+
+            if (x <= 30)
+            {
+                return 0;
+            }
+            else if (x <= 40)
+            {
+                return 1;
+            }
+            else if (x <= 50)
+            {
+                return 2;
+            }
+            else if (x <= 60)
+            {
+                return 3;
+            }
+            else if (x <= 70)
+            {
+                return 4;
+            }
+            else
+            {
+                return 5;
+            }
+        }
+        public static double CalcPostDr(int bracket, double rating, double drRate)
+        {
+            var postDiminishAmount = 0.0;
+
+            if (bracket == 0)
+            {
+                postDiminishAmount += rating;
+            }
+            else if (bracket == 1)
+            {
+                postDiminishAmount += drRate * 30;  // 0–30% amount
+                postDiminishAmount += (rating - (drRate * 30)) * 0.9;  // 30–39% amount
+            }
+            else if (bracket == 2)
+            {
+                postDiminishAmount += drRate * 30;
+                postDiminishAmount += drRate * 10 * 0.9;
+                postDiminishAmount += (rating - (drRate * 30) - (drRate * 10)) * 0.8;  // 39–47% amount
+            }
+            else if (bracket == 3)
+            {
+                postDiminishAmount += drRate * 30;
+                postDiminishAmount += drRate * 10 * 0.9;
+                postDiminishAmount += drRate * 10 * 0.8;
+                postDiminishAmount += (rating - (drRate * 30) - (drRate * 10) - (drRate * 10)) * 0.7;
+            }
+            else if (bracket == 4)
+            {
+                postDiminishAmount += drRate * 30;
+                postDiminishAmount += drRate * 10 * 0.9;
+                postDiminishAmount += drRate * 10 * 0.8;
+                postDiminishAmount += drRate * 10 * 0.7;
+                postDiminishAmount += (rating - (drRate * 30) - (drRate * 10) - (drRate * 10) - (drRate * 10)) * 0.6;
+            }
+            else
+            {
+                postDiminishAmount += drRate * 30;
+                postDiminishAmount += drRate * 10 * 0.9;
+                postDiminishAmount += drRate * 10 * 0.8;
+                postDiminishAmount += drRate * 10 * 0.7;
+                postDiminishAmount += drRate * 10 * 0.6;
+                postDiminishAmount += (rating - (drRate * 30) - (drRate * 10) - (drRate * 10) - (drRate * 10) - (drRate * 10)) * 0.5;
+            }
+
+            return postDiminishAmount;
+        }
+
+
     }
 }

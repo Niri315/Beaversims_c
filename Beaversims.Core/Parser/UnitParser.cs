@@ -223,7 +223,7 @@ namespace Beaversims.Core.Parser
             user.RefStats = user.Stats.Clone();
             foreach (var buff in user.Buffs)
             {
-                if (buff is StatBuff sBuff && sBuff.RefImpurity)
+                if (buff is StatBuff sBuff && sBuff.SimImpurity)
                 {
                     foreach (var mod in sBuff.StatMods)
                     {

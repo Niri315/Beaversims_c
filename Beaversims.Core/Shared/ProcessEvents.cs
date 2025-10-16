@@ -65,59 +65,129 @@ namespace Beaversims.Core.Shared
             }
         }
 
-        public static void altAmounts(ThroughputEvent evt, Fight fight, User user)
+        public static void StoreTotals(ThroughputEvent evt, User user, int i)
         {
-
-            for (int i = 0; i < evt.AltEvents.Count; i++)
+            var altEvent = evt.AltEvents[i];
+            var gainType = GainType.Eff;
+            double amount;
+            if (evt.IsDamageTakenEvent())
             {
-                var altEvent = evt.AltEvents[i];
-                var gainType = GainType.Eff;
-                if (evt.IsDamageTakenEvent())
+                gainType = GainType.Def;
+                amount = altEvent.Amount.Eff;
+                //if (!Constants.swOption)
+                //{
+                //    amount /= Constants.iterationCount;
+                //}
+
+                user.AltGearSets[i].Gains[gainType] -= amount;
+                return;
+            }
+            else if (evt.IsDmgDoneEvent())
+            {
+                gainType = GainType.Dmg;
+            }
+
+            else if (evt.IsHealDoneEvent())
+            {
+                gainType = GainType.Eff;
+            }
+            else if (evt.Ability.SuppStamScaler && evt.TargetUnit is User && evt is HealEvent)
+            {
+                gainType = GainType.SupEff;
+            }
+            else if (evt.Ability.SuppStamScaler && evt.TargetUnit is not User && evt is DamageEvent)
+            {
+                gainType = GainType.SupDmg;
+            }
+            else
+            {
+                return;
+            }
+            amount = altEvent.Amount.Eff;
+            //if (!Constants.swOption)
+            //{
+            //    amount /= Constants.iterationCount;
+            //}
+            user.AltGearSets[i].Gains[gainType] += amount;
+        }
+
+
+        public static void SetFinalGains(User user)
+        {
+            for (int i = 0; i < user.AltGearSets.Count; i++)
+            {
+                var gearSet = user.AltGearSets[i];
+                foreach (var gainEntry in gearSet.Gains)
                 {
-                    gainType = GainType.Def;
+                    var gainType = gainEntry.Key;
+                    var gains = gearSet.Gains;
                     if (i == 0)
                     {
-                        user.altGearSets[i].Gains[gainType] -= (altEvent.Amount.Eff - evt.Amount.Eff);
-       
+                        //gains[gainType] -= user.Totals[gainType] / fight.TotalTime;
                     }
                     else
                     {
-                        user.altGearSets[i].Gains[gainType] -= (altEvent.Amount.Eff - evt.AltEvents[0].Amount.Eff);
- 
+                        gains[gainType] -= user.AltGearSets[0].Gains[gainType];
+                        //gains[gainType] /= fight.TotalTime;
                     }
-                    continue;
-                }
-                else if (evt.IsDmgDoneEvent())
-                {
-                    gainType = GainType.Dmg;
-                }
-
-                else if (evt.IsHealDoneEvent())
-                {
-                    gainType = GainType.Eff;
-                }
-                else if (evt.Ability.SuppStamScaler && evt.TargetUnit is User && evt is HealEvent)
-                {
-                    gainType = GainType.SupEff;
-                }
-                else if (evt.Ability.SuppStamScaler && evt.TargetUnit is not User && evt is DamageEvent)
-                {
-                    gainType = GainType.SupDmg;
-                }
-                else
-                {
-                    continue;
-                }
-                if (i == 0)
-                {
-                    user.altGearSets[i].Gains[gainType] += (altEvent.Amount.Eff - evt.Amount.Eff);
-                }
-                else
-                {
-                    user.altGearSets[i].Gains[gainType] += (altEvent.Amount.Eff - evt.AltEvents[0].Amount.Eff);
                 }
             }
         }
+
+
+        //public static void altAmounts(ThroughputEvent evt, Fight fight, User user)
+        //{
+
+        //    for (int i = 0; i < evt.AltEvents.Count; i++)
+        //    {
+        //        var altEvent = evt.AltEvents[i];
+        //        var gainType = GainType.Eff;
+        //        if (evt.IsDamageTakenEvent())
+        //        {
+        //            gainType = GainType.Def;
+        //            if (i == 0)
+        //            {
+        //                user.AltGearSets[i].Gains[gainType] -= (altEvent.Amount.Eff - evt.Amount.Eff);
+       
+        //            }
+        //            else
+        //            {
+        //                user.AltGearSets[i].Gains[gainType] -= (altEvent.Amount.Eff - evt.AltEvents[0].Amount.Eff);
+ 
+        //            }
+        //            continue;
+        //        }
+        //        else if (evt.IsDmgDoneEvent())
+        //        {
+        //            gainType = GainType.Dmg;
+        //        }
+
+        //        else if (evt.IsHealDoneEvent())
+        //        {
+        //            gainType = GainType.Eff;
+        //        }
+        //        else if (evt.Ability.SuppStamScaler && evt.TargetUnit is User && evt is HealEvent)
+        //        {
+        //            gainType = GainType.SupEff;
+        //        }
+        //        else if (evt.Ability.SuppStamScaler && evt.TargetUnit is not User && evt is DamageEvent)
+        //        {
+        //            gainType = GainType.SupDmg;
+        //        }
+        //        else
+        //        {
+        //            continue;
+        //        }
+        //        if (i == 0)
+        //        {
+        //            user.AltGearSets[i].Gains[gainType] += (altEvent.Amount.Eff - evt.Amount.Eff);
+        //        }
+        //        else
+        //        {
+        //            user.AltGearSets[i].Gains[gainType] += (altEvent.Amount.Eff - evt.AltEvents[0].Amount.Eff);
+        //        }
+        //    }
+        //}
 
 
         public static string TranslateGainType(GainType gainType) =>
@@ -178,11 +248,11 @@ namespace Beaversims.Core.Shared
                 StatGains(evt, statGains, abilityGains, fight);
                 if (evt is ThroughputEvent tEvt) 
                 {
-                    altAmounts(tEvt, fight, user);
+                    //altAmounts(tEvt, fight, user);
                 }
             }
-
-            results.altGearSets = user.altGearSets;
+            SetFinalGains(user);
+            results.altGearSets = user.AltGearSets;
             LogAbilityGains(user, abilityGainLogger, abilityGains);
 
             //Console.WriteLine($"AMOUNT COMP EFF: {test[0][GainType.Eff]} vs {test[1][GainType.Eff]}");

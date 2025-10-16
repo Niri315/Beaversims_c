@@ -13,6 +13,10 @@ namespace Beaversims.Core
         public const double BlEffectRating = 30 * Haste.percentRate;
         public const int curVantusId = 1236891; //Manaforge omega
 
+        public const int iterationCount = 100;
+        public const bool swOption = true;
+
+
 
     }
 }

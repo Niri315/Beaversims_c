@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -19,11 +20,17 @@ namespace Beaversims.Core.Sim
 
         public GainDict Gains { get; set; }
 
+        // For non hasted stat trinket sims.
+        public Dictionary<StatName, double> IncRatings { get; set; } = new Dictionary<StatName, double>();
+        public Dictionary<StatName, double> IncEffs{ get; set; } = new Dictionary<StatName, double>();
+
         // Match the Dictionary ctor-overload your code depends on
         public GearSet(IEqualityComparer<ItemSlot>? comparer = null)
         {
             _items = new Dictionary<ItemSlot, GainItem?>(comparer);
             Gains = Utils.InitGainDict();
+            IncRatings = Utils.InitStatDict();
+            IncEffs = Utils.InitStatDict();
 
         }
 
@@ -34,6 +41,8 @@ namespace Beaversims.Core.Sim
             Name = name;
             Id = id;
             Gains = Utils.InitGainDict();
+            IncRatings = Utils.InitStatDict();
+            IncEffs = Utils.InitStatDict();
         }
 
         // Preserve dictionary-like indexer usage: gearset[ItemSlot.Head]
@@ -62,6 +71,7 @@ namespace Beaversims.Core.Sim
     }
     internal static class ItemSim
     {
+
  
         public static GearSet DeepCloneGearset(this GearSet source)
         {
@@ -70,13 +80,16 @@ namespace Beaversims.Core.Sim
             {
                 Name = source.Name,
                 Id = source.Id,
-                Gains = CloneGains(source.Gains) // important
+                Gains = CloneGains(source.Gains), // important
+                IncRatings = new Dictionary<StatName, double>(),
+                IncEffs = new Dictionary<StatName, double>()
             };
 
             foreach (var kv in source)
             {
                 // Deep-clone each GainItem (already defined)
                 clone[kv.Key] = kv.Value is null ? null : (GainItem)kv.Value.Clone();
+                //Console.WriteLine(clone[kv.Key].Name);
             }
 
             return clone;
@@ -93,6 +106,60 @@ namespace Beaversims.Core.Sim
         }
 
 
+
+        public static void SetGearSetIds(User user)
+        {
+            for (int i = 0; i < user.AltGearSets.Count; i++) 
+            {
+                user.AltGearSets[i].Id = i;
+            }
+
+        }
+
+
+       public static void AddSpecialEffects(User user)
+        {
+
+            foreach (var gearSet in user.AltGearSets)
+            {
+                foreach (var gear in gearSet.Values)
+                {
+                    var effect = SpecialEffectFactory.CreateFromName(gear.Name);
+                    if (effect == null) continue;
+
+                    var existing = user.SimEffects.FirstOrDefault(e => e.GetType() == effect.GetType());
+                    var eff = existing ?? effect;
+
+                    eff.Ilvls[gearSet.Id] = gear.Ilvl;
+                    eff.ItemSlots[gearSet.Id] = gear.ItemSlot;
+                    eff.RatingInc[gearSet.Id] = new Dictionary<StatName, double>();
+
+                    if (existing == null)
+                    {
+                        user.SimEffects.Add(eff);
+                    }
+
+                }
+
+            }
+        }
+        public static void AddAltAbilityStuff(User user)
+        {
+            foreach (var ability in user.Abilities)
+            {
+                ability.AltHeal.AddRange(
+                    Enumerable.Range(0, user.AltGearSets.Count)
+                              .Select(_ => new HealDataContainer())
+                );
+
+                ability.AltDamage.AddRange(
+                    Enumerable.Range(0, user.AltGearSets.Count)
+                              .Select(_ => new DmgDataContainer())
+                );
+            }
+        }
+
+
         public static void SwDummyItems(User user)
         {
             foreach (StatName stat in Enum.GetValues(typeof(StatName)))
@@ -100,19 +167,86 @@ namespace Beaversims.Core.Sim
                 var swGear = DeepCloneGearset(user.Gear);
                 swGear.Name = stat.ToString();
                 swGear[ItemSlot.Head].addStatRating(stat, 1);
-                user.altGearSets.Add(swGear);
+                user.AltGearSets.Add(swGear);
             }
         }
 
-        public static void CreateGearSets(User user)
+        public static void StatAllocTest(User user)
         {
-            var refSet = DeepCloneGearset(user.Gear);
-            refSet.Name = "Ref";
-            user.altGearSets.Add(refSet);
+            int secStatMax = 4800;
+            int intellectAmount = 135000;
+            int staminaAmount = 780000;
+
+            double[] hasteGrid = { 0.00, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6 };
+            double[] critGrid = { 0.00, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6 };
+            double[] masteryGrid = { 0.00, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6 };
+
+            foreach (var h in hasteGrid)
+            {
+                foreach (var c in critGrid)
+                {
+                    foreach (var m in masteryGrid)
+                    {
+                        double v = 1.0 - (h + c + m);
+
+                        // Must sum to 1 and satisfy caps
+                        if (v < 0) continue;
+                        if (h > 0.60 + 1e-9) continue;
+                        if (c > 0.60 + 1e-9) continue;
+                        if (m > 0.60 + 1e-9) continue;
+                        if (v > 0.60 + 1e-9) continue;
+
+                        var gs = new GearSet();
+                        gs.Name = $"{Pct(h)} haste, {Pct(c)} crit, {Pct(m)} mastery, {Pct(v)} vers";
+
+                        gs[ItemSlot.Head] = ItemGenerator.CreateItem("Soaring Behemoth's Greathelm", 1, ItemSlot.Head, []);
+                        gs[ItemSlot.Head].Stats[StatName.Intellect] = intellectAmount;
+                        gs[ItemSlot.Head].Stats[StatName.Stamina] = staminaAmount;
+
+                        // Allocate secondaries with exact-total correction
+                        int haste = (int)Math.Round(secStatMax * h);
+                        int crit = (int)Math.Round(secStatMax * c);
+                        int mastery = (int)Math.Round(secStatMax * m);
+                        int vers = (int)Math.Round(secStatMax * v);
+
+                        int total = haste + crit + mastery + vers;
+                        int diff = secStatMax - total;
+                        if (diff != 0)
+                        {
+                            // Adjust the largest bucket so Crit+Haste+Mastery+Vers == secStatMax
+                            int k = ArgMax(new[] { h, c, m, v });
+                            switch (k)
+                            {
+                                case 0: haste += diff; break;
+                                case 1: crit += diff; break;
+                                case 2: mastery += diff; break;
+                                case 3: vers += diff; break;
+                            }
+                        }
+
+                        gs[ItemSlot.Head].Stats[StatName.Haste] = haste;
+                        gs[ItemSlot.Head].Stats[StatName.Crit] = crit;
+                        gs[ItemSlot.Head].Stats[StatName.Mastery] = mastery;
+                        gs[ItemSlot.Head].Stats[StatName.Vers] = vers;
+
+                        user.AltGearSets.Add(gs);
+                    }
+                }
+            }
+
+            // --- helpers ---
+            static string Pct(double r) => $"{(int)Math.Round(r * 100)}%";
+            static int ArgMax(double[] a)
+            {
+                int idx = 0; double best = a[0];
+                for (int i = 1; i < a.Length; i++) if (a[i] > best) { best = a[i]; idx = i; }
+                return idx;
+            }
+        }
 
 
-            SwDummyItems(user);
-
+        public static void CustomGearSets(User user)
+        {
             var altGearSet0 = DeepCloneGearset(user.Gear);
             altGearSet0.Name = "Wishlist";
             altGearSet0[ItemSlot.Head] = ItemGenerator.CreateItem("Soaring Behemoth's Greathelm", 717, ItemSlot.Head, [(int)BonusIds.Leech]);
@@ -128,200 +262,73 @@ namespace Beaversims.Core.Sim
             altGearSet0[ItemSlot.Feet] = ItemGenerator.CreateItem("Interloper's Plated Sabatons", 730, ItemSlot.Feet, []);
             altGearSet0[ItemSlot.Finger1] = ItemGenerator.CreateItem("Ring of Earthen Craftsmanship", 727, ItemSlot.Finger1, [(int)BonusIds.Quickblade]);
             altGearSet0[ItemSlot.Finger2] = ItemGenerator.CreateItem("Devout Zealot's Ring", 730, ItemSlot.Finger2, []);
-            user.altGearSets.Add(altGearSet0);
-
-            int secStatMax = 4800;
-
-            //var statAlloc0 = new GearSet();
-            //statAlloc0.Name = "Even stats";
-            //statAlloc0[ItemSlot.Head] = ItemGenerator.CreateItem("Soaring Behemoth's Greathelm", 1, ItemSlot.Head, []);
-            //statAlloc0[ItemSlot.Head].Stats[StatName.Intellect] = 135000;
-            //statAlloc0[ItemSlot.Head].Stats[StatName.Stamina] = 780000;
-            //statAlloc0[ItemSlot.Head].Stats[StatName.Crit] = secStatMax / 4;
-            //statAlloc0[ItemSlot.Head].Stats[StatName.Haste] = secStatMax / 4;
-            //statAlloc0[ItemSlot.Head].Stats[StatName.Mastery] = secStatMax / 4;
-            //statAlloc0[ItemSlot.Head].Stats[StatName.Vers] = secStatMax / 4;
-            //user.altGearSets.Add(statAlloc0);
-
-            var leechTest1 = DeepCloneGearset(user.Gear);
-            leechTest1.Name = "1 leech/int";
-            leechTest1[ItemSlot.Head].addStatRating(StatName.Leech, 1);
-            leechTest1[ItemSlot.Head].addStatRating(StatName.Intellect, 1);
-            user.altGearSets.Add(leechTest1);
-
-            var hasteTest1 = DeepCloneGearset(user.Gear);
-            hasteTest1.Name = "Haste + 500";
-            hasteTest1[ItemSlot.Head].addStatRating(StatName.Haste, 500);
-            user.altGearSets.Add(hasteTest1);
-
-            var hasteTest2 = DeepCloneGearset(user.Gear);
-            hasteTest2.Name = "Haste + 1000";
-            hasteTest2[ItemSlot.Head].addStatRating(StatName.Haste, 1000);
-            user.altGearSets.Add(hasteTest2);
+            user.AltGearSets.Add(altGearSet0);
 
 
 
+            //var leechTest1 = DeepCloneGearset(user.Gear);
+            //leechTest1.Name = "-1 crot";
+            //leechTest1[ItemSlot.Head].addStatRating(StatName.Crit, -1);
+            //user.AltGearSets.Add(leechTest1);
 
-            //double[] hasteGrid = { 0.00, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6 };
-            //double[] critGrid = { 0.00, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6 };
-            //double[] masteryGrid = { 0.00, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6 };
+            //var hasteTest1 = DeepCloneGearset(user.Gear);
+            //hasteTest1.Name = "Haste + 500";
+            //hasteTest1[ItemSlot.Head].addStatRating(StatName.Haste, 500);
+            //user.AltGearSets.Add(hasteTest1);
 
-            //foreach (var h in hasteGrid)
-            //{
-            //    foreach (var c in critGrid)
-            //    {
-            //        foreach (var m in masteryGrid)
-            //        {
-            //            double v = 1.0 - (h + c + m);
+            //var hasteTest2 = DeepCloneGearset(user.Gear);
+            //hasteTest2.Name = "Haste + 1000";
+            //hasteTest2[ItemSlot.Head].addStatRating(StatName.Haste, 1000);
+            //user.AltGearSets.Add(hasteTest2);
 
-            //            // Must sum to 1 and satisfy caps
-            //            if (v < 0) continue;
-            //            if (h > 0.60 + 1e-9) continue;
-            //            if (c > 0.60 + 1e-9) continue;
-            //            if (m > 0.60 + 1e-9) continue;
-            //            if (v > 0.60 + 1e-9) continue;
+            //AddSpecialEffects(user.Gear);
+            //var trinketTest = DeepCloneGearset(user.Gear);
+            //trinketTest.Name = "Trinket test +3ilvl";
+            //trinketTest[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Astral Antenna", 726, ItemSlot.Trinket1, []);
+            //user.AltGearSets.Add(trinketTest);
 
-            //            // Build the gearset
-            //            var gs = new GearSet();
-            //            gs.Name = $"{Pct(h)} haste, {Pct(c)} crit, {Pct(m)} mastery, {Pct(v)} vers";
+            var trinketTest2 = DeepCloneGearset(user.Gear);
+            trinketTest2.Name = "Trinket test +7ilvl";
+            trinketTest2[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Astral Antenna", 730, ItemSlot.Trinket1, []);
+            user.AltGearSets.Add(trinketTest2);
 
-            //            gs[ItemSlot.Head] = ItemGenerator.CreateItem("Soaring Behemoth's Greathelm", 1, ItemSlot.Head, []);
-            //            gs[ItemSlot.Head].Stats[StatName.Intellect] = 135000;
-            //            gs[ItemSlot.Head].Stats[StatName.Stamina] = 780000;
+            var legTest = DeepCloneGearset(user.Gear);
+            legTest.Name = "Legs +7ilvl";
+            legTest[ItemSlot.Legs] = ItemGenerator.CreateItem("Cuisses of the Lucent Battalion", 730, ItemSlot.Legs, []);
+            user.AltGearSets.Add(legTest);
 
-            //            // Allocate secondaries with exact-total correction
-            //            int haste = (int)Math.Round(secStatMax * h);
-            //            int crit = (int)Math.Round(secStatMax * c);
-            //            int mastery = (int)Math.Round(secStatMax * m);
-            //            int vers = (int)Math.Round(secStatMax * v);
+            var trinkTestNeg = DeepCloneGearset(user.Gear);
+            trinkTestNeg.Name = "Trinket test -7ilvl";
+            trinkTestNeg[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Astral Antenna", 716, ItemSlot.Trinket1, []);
+            user.AltGearSets.Add(trinkTestNeg);
 
-            //            int total = haste + crit + mastery + vers;
-            //            int diff = secStatMax - total;
-            //            if (diff != 0)
-            //            {
-            //                // Adjust the largest bucket so Crit+Haste+Mastery+Vers == secStatMax
-            //                int k = ArgMax(new[] { h, c, m, v });
-            //                switch (k)
-            //                {
-            //                    case 0: haste += diff; break;
-            //                    case 1: crit += diff; break;
-            //                    case 2: mastery += diff; break;
-            //                    case 3: vers += diff; break;
-            //                }
-            //            }
+            var legTestNeg = DeepCloneGearset(user.Gear);
+            legTestNeg.Name = "Legs -7ilvl";
+            legTestNeg[ItemSlot.Legs] = ItemGenerator.CreateItem("Cuisses of the Lucent Battalion", 716, ItemSlot.Legs, []);
+            user.AltGearSets.Add(legTestNeg);
 
-            //            gs[ItemSlot.Head].Stats[StatName.Haste] = haste;
-            //            gs[ItemSlot.Head].Stats[StatName.Crit] = crit;
-            //            gs[ItemSlot.Head].Stats[StatName.Mastery] = mastery;
-            //            gs[ItemSlot.Head].Stats[StatName.Vers] = vers;
+        }
 
-            //            user.altGearSets.Add(gs);
-            //        }
-            //    }
-            //}
+        public static void CreateGearSets(User user)
+        {
+            var refSet = DeepCloneGearset(user.Gear);
+            refSet.Name = "Ref";
+            user.AltGearSets.Add(refSet);
 
-            //// --- helpers ---
-            //static string Pct(double r) => $"{(int)Math.Round(r * 100)}%";
-            //static int ArgMax(double[] a)
-            //{
-            //    int idx = 0; double best = a[0];
-            //    for (int i = 1; i < a.Length; i++) if (a[i] > best) { best = a[i]; idx = i; }
-            //    return idx;
-            //}
-
-            //foreach (var gearset in user.altGearSets)
-            //{
-            //    gearset[ItemSlot.Head].addStatRating(StatName.Haste, 100);
-            //}
-
-            //var altGearSet1 = DeepCloneGearset(user.Gear);
-            //altGearSet1.Name = "Devout Zealot ring slot 1";
-            //altGearSet0[ItemSlot.Finger1] = ItemGenerator.CreateItem("Devout Zealot's Ring", 730, ItemSlot.Finger1, []);
-            //altGearSet1[ItemSlot.Finger2] = ItemGenerator.CreateItem("Ring of Earthen Craftsmanship", 727, ItemSlot.Finger2, [(int)BonusIds.Quickblade]);
-            //user.altGearSets.Add(altGearSet1);
-
-            //var altGearSet1 = DeepCloneGearset(user.Gear);
-            //altGearSet1.Name = "Dimensius ring slot 2";
-            //altGearSet1[ItemSlot.Finger2] = ItemGenerator.CreateItem("Band of the Shattered Soul", 723, ItemSlot.Finger2, []);
-            //user.altGearSets.Add(altGearSet1);
-
-            //Console.WriteLine(altGearSet0[ItemSlot.Finger1].Name);
-            //foreach (var stat in altGearSet0[ItemSlot.Finger1].Stats)
-            //{
-            //    Console.WriteLine($"{stat.Key}: {stat.Value}");
-            //}
-            //Console.WriteLine(user.Gear[ItemSlot.Finger1].Name);
-            //foreach (var stat in user.Gear[ItemSlot.Finger1].Stats)
-            //{
-            //    Console.WriteLine($"{stat.Key}: {stat.Value}");
-            //}
-
-
-            //var altGearSet0 = DeepCloneGearset(user.Gear);
-            //altGearSet0.Name = "Soulbinder neck 730";
-            //altGearSet0[ItemSlot.Neck] = ItemGenerator.CreateItem("Chrysalis of Sundered Souls", 730, ItemSlot.Neck, []);
-            //user.altGearSets.Add(altGearSet0);
-
-            //var altGearSet1 = DeepCloneGearset(user.Gear);
-            //altGearSet1.Name = "cur neck 8/8";
-            //altGearSet1[ItemSlot.Neck] = ItemGenerator.CreateItem("Ornately Engraved Amplifier", 717, ItemSlot.Neck, []);
-            //user.altGearSets.Add(altGearSet1);
-
-            //var altGearSet2 = DeepCloneGearset(user.Gear);
-            //altGearSet2.Name = "cur neck 4/8";
-            //altGearSet2[ItemSlot.Neck] = ItemGenerator.CreateItem("Ornately Engraved Amplifier", 704, ItemSlot.Neck, []);
-            //user.altGearSets.Add(altGearSet2);
-
-
-            //var altGearSet2 = DeepCloneGearset(user.Gear);
-            //altGearSet2.Name = "Belt: crit/vers + leech";
-            //altGearSet2[ItemSlot.Waist] = ItemGenerator.CreateItem("Improvisational Girdle", 723, ItemSlot.Waist, [(int)BonusIds.Leech]);
-            //user.altGearSets.Add(altGearSet2);
-
-            //var altGearSet0 = DeepCloneGearset(user.Gear);
-            //altGearSet0.Name = "Helm 710 + leech";
-            //altGearSet0[ItemSlot.Head] = ItemGenerator.CreateItem("Soaring Behemoth's Greathelm", 710, ItemSlot.Head, [(int)BonusIds.Leech]);
-            //user.altGearSets.Add(altGearSet0);
-
-            //var altGearSet1 = DeepCloneGearset(user.Gear);
-            //altGearSet1.Name = "Craft helm";
-            //altGearSet1[ItemSlot.Head] = ItemGenerator.CreateItem("Everforged Helm", 720, ItemSlot.Head, [(int)BonusIds.Quickblade]);
-            //user.altGearSets.Add(altGearSet1);
-
-            //var altGearSet2 = DeepCloneGearset(user.Gear);
-            //altGearSet2.Name = "Helm 723 shitstats";
-            //altGearSet2[ItemSlot.Head] = ItemGenerator.CreateItem("Artoshion's Abyssal Stare", 723, ItemSlot.Head, []);
-            //user.altGearSets.Add(altGearSet2);
-
-            //user.HCGM.AddRange(
-            //    Enumerable.Range(0, user.altGearSets.Count)
-            //              .Select(_ => 1.0)
-            //);
-            foreach (var ability in user.Abilities)
+            if (Constants.swOption)
             {
-                ability.AltHeal.AddRange(
-                    Enumerable.Range(0, user.altGearSets.Count)
-                              .Select(_ => new HealDataContainer())
-                );
-
-                ability.AltDamage.AddRange(
-                    Enumerable.Range(0, user.altGearSets.Count)
-                              .Select(_ => new DmgDataContainer())
-                );
-                //ability.HasteGainMods.AddRange(
-                //    Enumerable.Range(0, user.altGearSets.Count)
-                //              .Select(_ => 1.0)
-                //);
-                //ability.HCGM.AddRange(
-                //    Enumerable.Range(0, user.altGearSets.Count)
-                //              .Select(_ => 1.0)
-                //);
-                //ability.CastTimeGains.AddRange(
-                //    Enumerable.Range(0, user.altGearSets.Count)
-                //              .Select(_ => 0.0)
-                //);
+                SwDummyItems(user);
 
             }
+            else
+            {
+                CustomGearSets(user);
+            }
+
+            SetGearSetIds(user);
+            AddSpecialEffects(user);
+            AddAltAbilityStuff(user);
+
         }
     }
 }

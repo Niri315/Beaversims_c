@@ -32,64 +32,25 @@ namespace Beaversims.Core.Specs.Paladin.Holy
             var judg = (Abilities.Judgment)user.Abilities.Get(Abilities.Judgment.name);
             var cs = (Abilities.CrusaderStrike)user.Abilities.Get(Abilities.CrusaderStrike.name);
             var lesserWep = (Abilities.LesserWeapon)user.Abilities.Get(Abilities.LesserWeapon.name);
+            var lesserBulwark = (Shared.Abilities.LesserBulwark)user.Abilities.Get(Shared.Abilities.LesserBulwark.name);
 
             var wepRaw = lesserWep.Heal.Raw;
             var haaRaw = haa.Heal.Raw;
             var wepDmg = lesserWep.Damage.Dmg;
-            var bulwarkRaw = 0.0;
-
-            Shared.Abilities.LesserBulwark lesserBulwark;
-            if (abilities.Contains(Shared.Abilities.LesserBulwark.name))
-            {
-                lesserBulwark = (Shared.Abilities.LesserBulwark)user.Abilities.Get(Shared.Abilities.LesserBulwark.name);
-                bulwarkRaw += lesserBulwark.Heal.Raw;
-            }
-            else
-            {
-                lesserBulwark = new Shared.Abilities.LesserBulwark();
-            }
+            var bulwarkRaw = lesserBulwark.Heal.Raw;            
 
             var gainPerTriggerHaaRaw = haaRaw / ((cs.Damage.Crit.Count * cs.HaaFactor) + judg.Damage.Crit.Count) / 100 / Crit.percentRate;
             var gainPerWepRaw = ((wepRaw / ((cs.Damage.Crit.Count) + judg.Damage.Crit.Count)) / 100) / Crit.percentRate;
             var gainPerBulwarkRaw = ((bulwarkRaw / ((cs.Damage.Crit.Count) + judg.Damage.Crit.Count)) / 100) / Crit.percentRate;
             var gainPerWepDmg = ((wepDmg / ((cs.Damage.Crit.Count) + judg.Damage.Crit.Count)) / 100) / Crit.percentRate;
 
-
             var posHaaEvtCount = 0;
-            var statName = StatName.Crit;
             foreach (var evt in events)
             {
                 if (IsPosHaaEvent(evt))
                 {
                     posHaaEvtCount += 1;
-                    var crit = (Crit)evt.UserStats.Get(statName);
 
-                    var gainHaaRaw = crit.ApplyDryMult(gainPerTriggerHaaRaw);
-                    var gainWepRaw = crit.ApplyDryMult(gainPerWepRaw);
-                    var gainBulwarkRaw = crit.ApplyDryMult(gainPerBulwarkRaw);
-                    var gainDmg = crit.ApplyDryMult(gainPerWepDmg);
-                    if (evt.AbilityName == Abilities.CrusaderStrike.name)
-                    {
-                        gainHaaRaw *= cs.HaaFactor;
-                    }
-                    var gainHaaEff = haa.RawToEffConvert(gainHaaRaw);
-                    var gainWepEff = lesserWep.RawToEffConvert(gainWepRaw);
-                    var gainEff = gainHaaEff + gainWepEff;
-
-
-                    lesserBulwark = (Shared.Abilities.LesserBulwark)user.Abilities.Get(Shared.Abilities.LesserBulwark.name);
-                    var gainBulwarkEff = lesserBulwark.RawToEffConvert(gainBulwarkRaw);
-                    gainEff += gainBulwarkEff;
-
-
-                    evt.Gains[statName][GainType.Eff] += gainEff;
-                    evt.Gains[statName][GainType.Dmg] += gainDmg;
-
-                    var gainNsnsnarawHaa = haa.RawToNsnsnarawConvert(gainHaaRaw);
-
-                    Shared.DupliEffects.LeechSourceGains((ThroughputEvent)evt, user, statName, gainNsnsnarawHaa, GainType.Eff);
-                    Shared.DupliEffects.SummerGains((ThroughputEvent)evt, user, statName, gainHaaRaw, haa, evt.SummerActive, false, user, GainType.Eff);
-                    // Not sending summer/leech (eff) for lesser wep as its not from user.
                 }
                 if (evt is ThroughputEvent)
                 {

@@ -100,34 +100,19 @@ namespace Beaversims.Core
         // Don't need alt versions of this, math works out with calculating it based on original log data.
         //public double HCGM { get; set; } = 1;
         public double TrueCastTimeTotal { get; set; } = 0;
+        public double HasteCapCTLoss { get; set; } = 0;
 
         // Paladin
         public bool AwakeningActive { get; set; } = false;
         public bool BanCritScaleJudgAC { get; set; } = false;
+        public int AwakeningCount { get; set; } = 0;
+        public double AvengingUseEnd { get; set; } = 0; // Only the active use avenging, not the awakening effect.
 
-        //private bool IsRefImpurity(StatBuff buff)
-        //{
-        //    foreach (var gearSet in AltGearSets)
-        //    {
-        //        foreach (var gear in gearSet)
-        //        {
-        //            //Console.WriteLine(gear.Value.Name);
-        //            //Console.WriteLine($"{gear.Value.Id}");
-        //            if (buff.SourceObjId == gear.Value.Id)
-        //            {
-        //                foreach (var userGear in Gear)
-        //                {
-        //                    if (buff.SourceObjId == userGear.Value.Id && userGear.Value.Ilvl != gear.Value.Ilvl)
-        //                    {
-        //                        //Console.WriteLine(buff.Name);
-        //                        return true;
-        //                    }
-        //                }
-        //            }
-        //        }
-        //    }
-        //    return false;
-        //}
+        public double HasteCapCTLossMod(int i)
+        {
+            return 1 - (AltGearSets[i].HasteCapCTLoss / TrueCastTimeTotal);
+        }
+        
 
         public virtual void InitCustomBuffs()
         {
@@ -218,7 +203,7 @@ namespace Beaversims.Core
 
             if (buff is StatBuff statBuff)
             {
-                if (statBuff.SimImpurity && Constants.swOption)
+                if (statBuff.SimImpurity && (Constants.swOption || Constants.deactivateSims))
                 {
                     statBuff.SimImpurity = false;
                 }

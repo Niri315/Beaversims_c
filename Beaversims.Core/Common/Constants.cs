@@ -9,13 +9,13 @@ namespace Beaversims.Core
     internal class Constants
     {
         public const double GCD = 1.5;
-        public const double castTimeCap = 0.75;
+        public const double castTimeCap = GCD / 2;
         public const double BlEffectRating = 30 * Haste.percentRate;
         public const int curVantusId = 1236891; //Manaforge omega
 
         public const int iterationCount = 100;
         public const bool swOption = true;
-
+        public const bool deactivateSims = true; // For testing.
 
 
     }

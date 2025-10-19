@@ -23,6 +23,7 @@ namespace Beaversims.Core.Sim
         // For non hasted stat trinket sims.
         public Dictionary<StatName, double> IncRatings { get; set; } = new Dictionary<StatName, double>();
         public Dictionary<StatName, double> IncEffs{ get; set; } = new Dictionary<StatName, double>();
+        public double HasteCapCTLoss { get; set; } = 0;
 
         // Match the Dictionary ctor-overload your code depends on
         public GearSet(IEqualityComparer<ItemSlot>? comparer = null)
@@ -156,6 +157,7 @@ namespace Beaversims.Core.Sim
                     Enumerable.Range(0, user.AltGearSets.Count)
                               .Select(_ => new DmgDataContainer())
                 );
+
             }
         }
 
@@ -164,7 +166,7 @@ namespace Beaversims.Core.Sim
         {
             foreach (StatName stat in Enum.GetValues(typeof(StatName)))
             {
-                var swGear = DeepCloneGearset(user.Gear);
+                var swGear = DeepCloneGearset(user.AltGearSets[0]);
                 swGear.Name = stat.ToString();
                 swGear[ItemSlot.Head].addStatRating(stat, 1);
                 user.AltGearSets.Add(swGear);
@@ -247,7 +249,7 @@ namespace Beaversims.Core.Sim
 
         public static void CustomGearSets(User user)
         {
-            var altGearSet0 = DeepCloneGearset(user.Gear);
+            var altGearSet0 = DeepCloneGearset(user.AltGearSets[0]);
             altGearSet0.Name = "Wishlist";
             altGearSet0[ItemSlot.Head] = ItemGenerator.CreateItem("Soaring Behemoth's Greathelm", 717, ItemSlot.Head, [(int)BonusIds.Leech]);
             altGearSet0[ItemSlot.Neck] = ItemGenerator.CreateItem("Amulet of Earthen Craftsmanship", 727, ItemSlot.Neck, [(int)BonusIds.Quickblade]);
@@ -266,10 +268,20 @@ namespace Beaversims.Core.Sim
 
 
 
-            //var leechTest1 = DeepCloneGearset(user.Gear);
-            //leechTest1.Name = "-1 crot";
-            //leechTest1[ItemSlot.Head].addStatRating(StatName.Crit, -1);
-            //user.AltGearSets.Add(leechTest1);
+            var HasteTest1 = DeepCloneGearset(user.Gear);
+            HasteTest1.Name = "Haste +1";
+            HasteTest1[ItemSlot.Head].addStatRating(StatName.Haste, 1);
+            user.AltGearSets.Add(HasteTest1);
+
+            var HasteTest3 = DeepCloneGearset(user.Gear);
+            HasteTest3.Name = "Haste - 10000";
+            HasteTest3[ItemSlot.Head].addStatRating(StatName.Haste, -10000);
+            user.AltGearSets.Add(HasteTest3);
+
+            var HasteTest2 = DeepCloneGearset(user.Gear);
+            HasteTest2.Name = "Haste + 10000";
+            HasteTest2[ItemSlot.Head].addStatRating(StatName.Haste, 10000);
+            user.AltGearSets.Add(HasteTest2);
 
             //var hasteTest1 = DeepCloneGearset(user.Gear);
             //hasteTest1.Name = "Haste + 500";
@@ -287,30 +299,32 @@ namespace Beaversims.Core.Sim
             //trinketTest[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Astral Antenna", 726, ItemSlot.Trinket1, []);
             //user.AltGearSets.Add(trinketTest);
 
-            var trinketTest2 = DeepCloneGearset(user.Gear);
-            trinketTest2.Name = "Trinket test +7ilvl";
-            trinketTest2[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Astral Antenna", 730, ItemSlot.Trinket1, []);
-            user.AltGearSets.Add(trinketTest2);
+            //var trinketTest2 = DeepCloneGearset(user.AltGearSets[0]);
+            //trinketTest2.Name = "Trinket test +7ilvl";
+            //trinketTest2[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Astral Antenna", 730, ItemSlot.Trinket1, []);
+            //user.AltGearSets.Add(trinketTest2);
 
-            var legTest = DeepCloneGearset(user.Gear);
-            legTest.Name = "Legs +7ilvl";
-            legTest[ItemSlot.Legs] = ItemGenerator.CreateItem("Cuisses of the Lucent Battalion", 730, ItemSlot.Legs, []);
-            user.AltGearSets.Add(legTest);
+            //var legTest = DeepCloneGearset(user.AltGearSets[0]);
+            //legTest.Name = "Legs +7ilvl";
+            //legTest[ItemSlot.Legs] = ItemGenerator.CreateItem("Cuisses of the Lucent Battalion", 737, ItemSlot.Legs, []);
+            //user.AltGearSets.Add(legTest);
 
-            var trinkTestNeg = DeepCloneGearset(user.Gear);
-            trinkTestNeg.Name = "Trinket test -7ilvl";
-            trinkTestNeg[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Astral Antenna", 716, ItemSlot.Trinket1, []);
-            user.AltGearSets.Add(trinkTestNeg);
+            //var trinkTestNeg = DeepCloneGearset(user.AltGearSets[0]);
+            //trinkTestNeg.Name = "Trinket test -7ilvl";
+            //trinkTestNeg[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Astral Antenna", 716, ItemSlot.Trinket1, []);
+            //user.AltGearSets.Add(trinkTestNeg);
 
-            var legTestNeg = DeepCloneGearset(user.Gear);
-            legTestNeg.Name = "Legs -7ilvl";
-            legTestNeg[ItemSlot.Legs] = ItemGenerator.CreateItem("Cuisses of the Lucent Battalion", 716, ItemSlot.Legs, []);
-            user.AltGearSets.Add(legTestNeg);
+            //var legTestNeg = DeepCloneGearset(user.AltGearSets[0]);
+            //legTestNeg.Name = "Legs -7ilvl";
+            //legTestNeg[ItemSlot.Legs] = ItemGenerator.CreateItem("Cuisses of the Lucent Battalion", 723, ItemSlot.Legs, []);
+            //user.AltGearSets.Add(legTestNeg);
 
         }
 
         public static void CreateGearSets(User user)
         {
+            // Obs ! For stat weights we cant currently change special effects in ref. To be able to do this we need to change
+            // how we deal with SimImpurities.
             var refSet = DeepCloneGearset(user.Gear);
             refSet.Name = "Ref";
             user.AltGearSets.Add(refSet);

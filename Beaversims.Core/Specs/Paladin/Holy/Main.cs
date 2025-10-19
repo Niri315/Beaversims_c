@@ -1,6 +1,7 @@
 ﻿
 using Beaversims.Core.Common;
 using Beaversims.Core.Shared;
+using Beaversims.Core.Specs.Paladin.Holy.Abilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,37 @@ namespace Beaversims.Core.Specs.Paladin.Holy
     internal class Main
 
     {
+        public static void StatGainMathTest()
+        {
+            var evt = new HealEvent();
+            evt.Amount.Raw = 10000;
+            var altEvt = new AltEvent();
+            altEvt.Amount = new AmountContainer();
+            altEvt.Amount.Raw = evt.Amount.Raw;
+            evt.AltEvents.Add(altEvt);
+            evt.Ability = new Ability();
+            var altStats = new StatTracker();
+            altEvt.UserStats = altStats;
+
+            altStats.InitMastery(Specs.Paladin.Holy.HolyPaladin.masteryPr_s);
+            altStats.Get(StatName.Intellect).Eff = 100000;
+            altStats.Get(StatName.Vers).Eff = 780;
+            altStats.Get(StatName.Mastery).Eff = 14000;
+
+            var intOri = new Intellect();
+            intOri.Eff = 150000;
+            var oriVers = new Vers();
+            oriVers.Eff = 7800;
+            var oriMastery = new Mastery(Specs.Paladin.Holy.HolyPaladin.masteryPr_s);
+            oriMastery.Eff = 1400;
+
+            StatGains.PrimaryAltAmount(evt, intOri, 0);
+            StatGains.SecondaryAltAmount(evt, oriVers, 0);
+            MasteryTracker.MasteryAltAmount(evt, oriMastery, 0, 1.0);
+            Console.WriteLine($"Final Test Amount: {altEvt.Amount.Raw}");
+
+        }
+
         private static void SpecInit(User user)
         {
             if (user.HasTalent(Talents.Awestruck.id)) 
@@ -27,6 +59,8 @@ namespace Beaversims.Core.Specs.Paladin.Holy
 
         public static void SpecMain(List<Event> events, UnitRepo allUnits, Fight fight)
         {
+            //StatGainMathTest();
+            //return;
             var user = allUnits.GetUser();
             var holyShock = (Abilities.HolyShock)user.Abilities.Get(Abilities.HolyShock.name);
             var gj = (Abilities.GreaterJudgment)user.Abilities.Get(Abilities.GreaterJudgment.name);
@@ -44,18 +78,17 @@ namespace Beaversims.Core.Specs.Paladin.Holy
                 // Loop for tracking buffs and collecting data.
                 BuffTracker.TrackBuffs(evt, allUnits, statLogger);
                 evt.CreateAltEvents(user, evt);
+                CastProcessor.ProcessCast(evt, user);
                 MasteryTracker.TrackBeacons(evt, beacons, user);
                 MasteryTracker.SetMasteryEff(evt, beacons, user);
-                CastProcessor.ProcessCast(evt, user);
                 DupliEffects.AddBeaconPolHeal(evt);
                 Awakening.TrackAwakening(evt, user);
                 judg.TrackGJCritChance(evt, user);
+                HCGM.TrackIoL(evt, user);
                 HCGM.TrackEmpLod(evt, user);
-
 
                 if (evt is ThroughputEvent tEvt)
                 {
-                    //ProcessEvents.StoreNormTotals(tEvt, fight, user);
                     HCGM.TrackACSource(tEvt, user);
                     Shared.DupliEffects.SharedHypo(tEvt, user);
                     if (tEvt.IsHealDoneEvent() && evt is HealEvent hEvt)
@@ -68,17 +101,17 @@ namespace Beaversims.Core.Specs.Paladin.Holy
             Utils.CleanUp(allUnits); // To avoid accidental usage.
             MasteryTracker.CleanUpCoords(allUnits);
 
-            HCGM.ModifyHCCGMSources(user, fight); // 
-            Shared.HCCGM.SetHCCGM(user);
-            HCGM.ModifyHCGM(user, fight);
-            holyShock.AlterHCGM(user);
+            
+            HCGM.ModifyCIMSources(user, fight); // 
+            Shared.CIM.SetCIM(user);
+            //HCGM.ModifyHCGM(user, fight);
 
-            Sim.TrinketSim.SimTrinkets(events, user, fight);
+            Sim.TrinketSim.StatProcTrinkets(events, user, fight);
 
-            //foreach (var ability in user.Abilities)
-            //{
-            //    Console.WriteLine($"{ability.Name} HCCGM: {ability.HCCGM}, True HCCGM: {ability.TrueHCCGM(user)}, cast gain mod: {ability.HasteCastGainMod}");
-            //}
+            foreach (var ability in user.Abilities)
+            {
+                Console.WriteLine($"{ability.Name} HCCGM: {ability.CIM}");
+            }
 
             var degree = Environment.ProcessorCount;
             Parallel.For(0, user.AltGearSets.Count, new ParallelOptions { MaxDegreeOfParallelism = degree }, i =>
@@ -87,6 +120,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
                     //Console.WriteLine(y);
                     foreach (Event evt in events)
                     {
+                    //if (evt.AbilityName == HolyShock.name) { continue; }
                         // Loop for setting gains.
                         var altEvent = evt.AltEvents[i];
 
@@ -97,13 +131,13 @@ namespace Beaversims.Core.Specs.Paladin.Holy
                             StatGains.AutoStatGainsMisc(tEvt, user, i);
                             if (tEvt.IsHealDoneEvent() && evt is HealEvent hEvt)
                             {
-                                martyr.MartyrAntiGains(hEvt, user, i);
+                            martyr.MartyrAntiGains(hEvt, user, i);
+                            gj.CritGains(tEvt, user, i);
                                 StatGains.AutoStatGainsHeal((HealEvent)tEvt, user, i);
                                 if (evt.Ability.ScalesWith(StatName.Mastery))
                                 {
                                     MasteryTracker.MasteryGains((HealEvent)tEvt, user, i);
                                 }
-                                gj.CritGains(tEvt, user, i);
                             }
                             if (tEvt.IsDmgDoneEvent())
                             {

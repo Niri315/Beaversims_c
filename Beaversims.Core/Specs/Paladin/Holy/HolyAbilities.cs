@@ -6,6 +6,21 @@ using System.Text;
 using System.Threading.Tasks;
 
 
+/* TODO List
+ // REMOVED FOR MIDNIGHT SKIP - Awakening - Extract build in gains from haste and get remaining value.
+Infusion of Light - Remove haste value from iol increases due to low true HCCGM from holy shock.
+Truth Prevails - dupli effect
+Tempered in Battle - dupli effect only
+Blessing of An'she
+Armaments haste/mastery testing
+
+HASTE:
+For herald its most likely a +-=0 scenario with the most significant inaccurasies lying in
+undervalue for awakening, and overvalue for iol.
+
+For Lightsmith, its probably an undervalue due to 
+*/
+
 namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
 {
     internal abstract class HpalAbility : Ability
@@ -28,6 +43,9 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
         public const string name = "Avenging Crusader";
         public double judgSourceDmg = 0.0;
         public double csSourceDmg = 0.0;
+        public double onUseDur = 15;
+        public double awakeningDur = 8;
+        public const int buffId = 216331;
         public AvengingCrusader()
         {
             Name = name;
@@ -36,12 +54,15 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
             ReverseEffect = true;
             Scalers.UnionWith([SN.Intellect, SN.Haste, SN.Mastery, SN.Vers]);  // Crit seperate for awakening.
             HasteScalers.UnionWith([HST.Cast]);
-            // HCGM Sources added later.
+            // HCCGM Sources added later.
         }
     }
     internal class AvengingWrath : HpalAbility
     {
         public const string name = "Avenging Wrath";
+        public double onUseDur = 20;
+        public double awakeningDur = 12;
+        public const int buffId = 31884;
         public AvengingWrath()
         {
             Name = name;
@@ -265,6 +286,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
             Name = name;
             Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Haste, SN.Mastery, SN.Vers]);
             HasteScalers.UnionWith([HST.Cast]);
+            // HCCGM sources in HCGM
         }
     }
 
@@ -343,7 +365,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
             Name = name;
             Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Haste, SN.Mastery, SN.Vers]);
             HasteScalers.UnionWith([HST.Cast, HST.Tick]);
-            HCCGMSources.Add(new HCCGMSource(Consecration.name, 1.0));
+            CIMSources.Add(new CIMSource(Consecration.name, 1.0));
         }
     }
 
@@ -377,7 +399,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
             Name = name;
             Scalers.UnionWith([SN.Intellect, SN.Haste, SN.Vers]);
             HasteScalers.UnionWith([HST.Cast]);
-            HCCGMSources.Add(new HCCGMSource(Judgment.name, 1.0));
+            CIMSources.Add(new CIMSource(Judgment.name, 1.0));
 
         }
     }
@@ -393,7 +415,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
             ManaCost_p = 0.028;
             Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Haste, SN.Vers]);
             HasteScalers.UnionWith([HST.Cast]);
-            HCCGMSources.Add(new HCCGMSource(Judgment.name, 1.0));
+            CIMSources.Add(new CIMSource(Judgment.name, 1.0));
         }
     }
     internal class HammerOfJustice : HpalAbility
@@ -463,51 +485,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
     internal class HolyShock : HpalAbility
     {
         public const string name = "Holy Shock";
-        public override void AlterHCGM(User user)
-        {
-            // Note Second sunrise: Procs from all Holy Shocks EXCEPT for the 4/5 from divine toll, and the 2 extra from rising sunlight.
-
-            var divineToll = (DivineToll)user.Abilities.Get(DivineToll.name);
-            var aw = (AvengingWrath)user.Abilities.Get(AvengingWrath.name);
-            var ac = (AvengingCrusader)user.Abilities.Get(AvengingCrusader.name);
-
-
-            var castValue = 0.0;
-            var nonCastValue = 0.0;
-
-            castValue += Casts;
-            nonCastValue += divineToll.Casts * divineToll.holyShockCount;
-
-            if (user.HasTalent(Talents.SecondSunrise.id))
-            {
-                var ssTal = (Talents.SecondSunrise)user.Talents[Talents.SecondSunrise.id];
-                var ssCoef = ssTal.Coef;
-                castValue += Casts * ssCoef;
-                nonCastValue += ssCoef * 1; // Only 1 extra from divine toll.
-            }
-            if (user.HasTalent(Talents.RisingSunlight.id))
-            {
-                var rs = (Talents.RisingSunlight)user.Talents[Talents.RisingSunlight.id];
-                nonCastValue += aw.Casts * 2 * rs.HolyShockCount;
-                nonCastValue += ac.Casts * rs.HolyShockCount;
-                nonCastValue += divineToll.Casts * 2 * rs.HolyShockCount;
-            }
-            if (user.HasTalent(Talents.DivineResonance.id))
-            {
-                var dr = (Talents.DivineResonance)user.Talents[Talents.DivineResonance.id];
-                nonCastValue += dr.HolyShockCount * divineToll.Casts;
-                if (user.HasTalent(Talents.SecondSunrise.id))
-                {
-                    var ssTal = (Talents.SecondSunrise)user.Talents[Talents.SecondSunrise.id];
-                    var ssCoef = ssTal.Coef;
-                    nonCastValue += dr.HolyShockCount * ssCoef * divineToll.Casts;
-                }
-             }
-            var totalValue = castValue + nonCastValue;
-            HasteCastGainMod *= castValue / totalValue;
-            
-              
-        }
+      
         public HolyShock()
         {
             Name = name;
@@ -564,7 +542,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
             Name = name;
             Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Haste, SN.Mastery, SN.Vers]);
             HasteScalers.UnionWith([HST.Cast]);
-            HCCGMSources.Add(new HCCGMSource(Judgment.name, 1.0));
+            CIMSources.Add(new CIMSource(Judgment.name, 1.0));
 
         }
     }
@@ -596,7 +574,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
     internal class LightOfDawn : HpalAbility
     {
         public const string name = "Light of Dawn";
-        public int EmpCasts {  get; set; } = 0;
+        public int EmpCasts { get; set; } = 0;
         public LightOfDawn()
         {
             Name = name;
@@ -608,6 +586,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
             HasteScalers.UnionWith([HST.Cast]);
         }
     }
+
     internal class LightOfTheMartyr : HpalAbility
     {
         //OBS ! Absorb healing wont show for Leech (maybe more abilities) on wowlogs overall, but the events are present. 
@@ -623,7 +602,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
                 Shared.StatGains.VersGainsHeal(evt, user, i, antiGain: true);
                 //Shared.StatGains.HasteGainsHeal(evt, user, i, ability: holyshock, antiGain: true);
                 // Getting Past the checks to send directly as cast scaler.
-                Shared.StatGains.SecondaryAltAmount(evt, (Haste)evt.UserStats.Get(StatName.Haste), i, mod: holyshock.TrueHCCGM(user) * holyshock.HasteCastGainMod * holyshock.HasteGainMod * user.Spec.HasteGainMod, antiGain: true);
+                Shared.StatGains.SecondaryAltAmount(evt, (Haste)evt.UserStats.Get(StatName.Haste), i, mod: holyshock.FullHCGM(user, i) * holyshock.HasteGainMod * user.Spec.HasteGainMod, antiGain: true);
                 MasteryTracker.MasteryGains(evt, user, i, antiGain: true);
                 Shared.StatGains.CritGainsHealDerived(evt, user, i, sourceAbility:holyshock, antiGain: true);
             }
@@ -663,7 +642,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
             DerivedCritScaler = true;
             SourceAbility = HolyShock.name;
             HasteScalers.UnionWith([HST.Cast]);
-            HCCGMSources.Add(new HCCGMSource(HolyShock.name, 1.0));
+            CIMSources.Add(new CIMSource(HolyShock.name, 1.0));
         }
     }
 
@@ -687,7 +666,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
             Name = name;
             Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Haste, SN.Mastery, SN.Vers]);
             HasteScalers.UnionWith([HST.Cast]);
-            HCCGMSources.Add(new HCCGMSource(LightOfDawn.name, 1.0));
+            CIMSources.Add(new CIMSource(LightOfDawn.name, 1.0));
         }
     }
     internal class Repentance : HpalAbility
@@ -709,7 +688,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
             HasteScalers.UnionWith([HST.Cast]);
             DerivedCritScaler = true;
             SourceAbility = HolyLight.name;
-            HCCGMSources.Add(new HCCGMSource(HolyLight.name, 1.0));
+            CIMSources.Add(new CIMSource(HolyLight.name, 1.0));
         }
     }
 
@@ -735,13 +714,13 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
             Name = name;
             Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Haste, SN.Mastery, SN.Vers]);
             HasteScalers.UnionWith([HST.Cast]);
-            HCCGMSources.Add(new HCCGMSource(WordOfGlory.name, 1.0));
+            CIMSources.Add(new CIMSource(WordOfGlory.name, 1.0));
 
         }
     }
 
     internal class SacredWeapon : HpalAbility
-        // TODO Need mastery testing.
+        // Scales with mastery.
         // Scales with haste.
     {
         public const string name = "Sacred Weapon";
@@ -805,7 +784,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
             Name = name;
             Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Haste, SN.Vers]);
             HasteScalers.UnionWith([HST.Cast]);
-            HCCGMSources.Add(new HCCGMSource(ShieldOfTheRighteous.name, 1.0));
+            CIMSources.Add(new CIMSource(ShieldOfTheRighteous.name, 1.0));
 
         }
     }
@@ -813,10 +792,13 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
     internal class SunsAvatar : HpalAbility
     {
         public const string name = "Sun's Avatar";
+        public double AwakeningHealRaw { get; set; } = 0;
         public SunsAvatar()
         {
             Name = name;
-            Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Mastery, SN.Vers]);
+            Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Haste, SN.Mastery, SN.Vers]);
+            HasteScalers.UnionWith([HST.Cast]); // Cast gain from awakening only.
+            // HCCGM sources in HCGM.
         }
     }
 
@@ -828,7 +810,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
             Name = name;
             Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Haste, SN.Mastery, SN.Vers]);
             HasteScalers.UnionWith([HST.Cast, HST.Tick]);
-            // TODO Holy shock / LoD HCGM Source
+            // HCCGM sources in HCGM
         }
     }
     internal class TruthPrevails : HpalAbility
@@ -840,7 +822,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
             Name = name;
             Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Haste, SN.Mastery, SN.Vers]);
             HasteScalers.UnionWith([HST.Cast]);
-            HCCGMSources.Add(new HCCGMSource(Judgment.name, 1.0));
+            CIMSources.Add(new CIMSource(Judgment.name, 1.0));
 
         }
     }
@@ -878,7 +860,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
             Direct = true;
             Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Haste, SN.Mastery, SN.Vers]);
             HasteScalers.UnionWith([HST.Cast]);
-            HCCGMSources.Add(new HCCGMSource(HammerOfWrath.name, 1.0));
+            CIMSources.Add(new CIMSource(HammerOfWrath.name, 1.0));
 
         }
     }

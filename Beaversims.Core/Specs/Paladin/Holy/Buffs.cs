@@ -13,11 +13,16 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Buffs
         public static readonly HashSet<string> Abilities = [Holy.Abilities.HolyLight.name, Holy.Abilities.FlashOfLight.name, Holy.Abilities.Judgment.name];
 
     }
-    internal static class AvengingCrusader
-    {
-        public const int buffId = 216331;
+    //internal static class AvengingCrusader
+    //{
+    //    public const int buffId = 216331;
 
-    }
+    //}
+    //internal static class AvengingWrath
+    //{
+    //    public const int buffId = 31884;
+
+    //}
 
     internal static class EmpyreanLegacy
     {

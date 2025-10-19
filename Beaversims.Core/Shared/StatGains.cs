@@ -7,15 +7,19 @@ using System.Threading.Tasks;
 
 namespace Beaversims.Core.Shared
 {
+    // Math using altEvent amounts/stats alongside original is CORRECT. Done thorough testing and doublechecking. It looks weird but that math works out.
+    // DNDC DNDC DNDC DNDC
+
     internal static class StatGains
     {
-
         public static void PrimaryAltAmount(ThroughputEvent evt, Stat stat, int i, bool antiGain = false)
         {
 
             var altEvent = evt.AltEvents[i];
 
             var altStat = altEvent.UserStats.Get(stat.Name);
+
+
             var gainPerPrimRaw = altEvent.Amount.Raw / stat.Eff;
             var gainRaw = gainPerPrimRaw * (altStat.Eff - stat.Eff);
             if (antiGain)
@@ -30,6 +34,8 @@ namespace Beaversims.Core.Shared
             altEvent.Amount.UpdateAltGainsFromEvtData(evt, gainRaw, i);
 
         }
+
+      
 
         public static void SecondaryAltAmount(ThroughputEvent evt, SecondaryStat stat, int i, double mod = 1, bool antiGain = false)
         {
@@ -249,7 +255,7 @@ namespace Beaversims.Core.Shared
 
             if (IsCastScaler(evt, ability))
             {
-                SecondaryAltAmount(evt, stat, i, mod: ability.TrueHCCGM(user) * ability.HasteCastGainMod * ability.HasteGainMod * user.Spec.HasteGainMod, antiGain: antiGain);
+                SecondaryAltAmount(evt, stat, i, mod: ability.FullHCGM(user, i) * ability.HasteGainMod * user.Spec.HasteGainMod, antiGain: antiGain);
             }
             if (IsTickScaler(evt))
             {
@@ -272,7 +278,7 @@ namespace Beaversims.Core.Shared
 
             if (IsCastScaler(evt, ability))
             {
-                SecondaryAltAmount(evt, stat, i, mod: ability.TrueHCCGM(user) * ability.HasteCastGainMod * ability.HasteGainMod * user.Spec.HasteGainMod, antiGain: antiGain);
+                SecondaryAltAmount(evt, stat, i, mod: ability.FullHCGM(user, i) * ability.HasteGainMod * user.Spec.HasteGainMod, antiGain: antiGain);
 
             }
             if (IsTickScaler(evt))

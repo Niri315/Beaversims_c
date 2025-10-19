@@ -221,6 +221,25 @@ namespace Beaversims.Core.Data.StatBuffs
     /* ------- *
      * Paladin *
      * ------- */
+
+
+    internal class AvengingWrath : StatBuff
+    {
+        public const int id = 31884;
+        public const string name = "Avenging Wrath";
+
+        public AvengingWrath(UnitId sourceId, int stacks)
+            : base(id, sourceId, name, stacks)
+        {
+            StatMods.Add(
+                new StatMod(
+                    StatName.Crit,
+                    StatAmountType.Base,
+                    15 * Crit.percentRate)
+            );
+        }
+    }
+
     internal class RelentlessInquisitor : StatBuff
     {
         public const int id = 383389;
@@ -290,6 +309,74 @@ namespace Beaversims.Core.Data.StatBuffs
                     StatName.Crit,
                     StatAmountType.Rating,
                     scData: new ScalingData(-7, 1.466488))
+            );
+        }
+    }
+    internal class FlaskOfTemperedAggression : StatBuff
+    {
+        public const int id = 431971;
+        public const string name = "Flask of Tempered Aggression";
+
+
+        public FlaskOfTemperedAggression(UnitId sourceId, int stacks)
+            : base(id, sourceId, name, stacks)
+        {
+            StatMods.Add(
+                new StatMod(
+                    StatName.Crit,
+                    StatAmountType.Rating,
+                    3323)
+            );
+        }
+    }
+    internal class FlaskOfTemperedSwiftness : StatBuff
+    {
+        public const int id = 431972;
+        public const string name = "Flask of Tempered Swiftness";
+
+
+        public FlaskOfTemperedSwiftness(UnitId sourceId, int stacks)
+            : base(id, sourceId, name, stacks)
+        {
+            StatMods.Add(
+                new StatMod(
+                    StatName.Haste,
+                    StatAmountType.Rating,
+                    3323)
+            );
+        }
+    }
+    internal class FlaskOfTemperedMastery : StatBuff
+    {
+        public const int id = 431974;
+        public const string name = "Flask of Tempered Mastery";
+
+
+        public FlaskOfTemperedMastery(UnitId sourceId, int stacks)
+            : base(id, sourceId, name, stacks)
+        {
+            StatMods.Add(
+                new StatMod(
+                    StatName.Mastery,
+                    StatAmountType.Rating,
+                    3323)
+            );
+        }
+    }
+    internal class FlaskOfTemperedVersatility : StatBuff
+    {
+        public const int id = 431973;
+        public const string name = "Flask of Tempered Aggression";
+
+
+        public FlaskOfTemperedVersatility(UnitId sourceId, int stacks)
+            : base(id, sourceId, name, stacks)
+        {
+            StatMods.Add(
+                new StatMod(
+                    StatName.Vers,
+                    StatAmountType.Rating,
+                    3323)
             );
         }
     }

@@ -344,6 +344,12 @@ namespace Beaversims.Core.Parser
                         ability.Heal.Hit.Raw += tpEvent.Amount.Raw;
                         ability.Heal.Hit.Count += 1;
                     }
+                    if (tpEvent.Tick)
+                    {
+                        ability.Heal.Tick.Eff += tpEvent.Amount.Eff;
+                        ability.Heal.Tick.Raw += tpEvent.Amount.Raw;
+                        ability.Heal.Tick.Count += 1;
+                    }
                 }
                 else if (evt.TargetUnit != user && evt is DamageEvent)  // Filtering out self damage.
                 {

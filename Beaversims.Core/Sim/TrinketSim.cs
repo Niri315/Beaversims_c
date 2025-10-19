@@ -73,9 +73,9 @@ namespace Beaversims.Core.Sim
             }
         }
 
-        public static void SimTrinkets(List<Event> events, User user, Fight fight)
+        public static void StatProcTrinkets(List<Event> events, User user, Fight fight)
         {
-            if (Constants.swOption)
+            if (Constants.swOption || Constants.deactivateSims)
             {
                 return; 
             }

@@ -188,7 +188,7 @@ namespace Beaversims.Core.Parser
                         : 1;
                     var buffName = buffElement.GetProperty("name").GetString();
 
-                    if (buffName.StartsWith("Vantus Rune"))
+                    if (buffName.StartsWith("Vantus Rune") && unit is User)
                     {
                         if (VantusCheck(buffName, fight))
                         {
@@ -214,6 +214,7 @@ namespace Beaversims.Core.Parser
                     }
 
                     player.AddBuff(buffName, buffId, sourceUnit, stacks, timeStamp:0);
+                    if (unit is User) { Console.WriteLine(buffName); }
                 }
             }
         }

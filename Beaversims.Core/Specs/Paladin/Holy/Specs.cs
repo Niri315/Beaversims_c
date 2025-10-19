@@ -19,6 +19,8 @@ namespace Beaversims.Core.Specs.Paladin.Holy
         protected override string SpecTalentNamespace => "Beaversims.Core.Specs.Paladin.Holy.Talents";
         protected override SpecName SpecName => SpecName.HolyPaladin;
 
+
+
         public override void DupliGainsHeal(ThroughputEvent evt, User user, StatName statName, double gainRaw, GainType gainType = GainType.Eff)
         {
             DupliEffects.BeaconGains(evt, user, statName, gainRaw, gainType);

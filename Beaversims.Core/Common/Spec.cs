@@ -72,6 +72,8 @@ namespace Beaversims.Core
         {
             abilities.Add(new Shared.Abilities.Leech());
             abilities.Add(new Shared.Abilities.BlessingOfSummer());
+            abilities.Add(new Shared.Abilities.ZeroCIMDummy());
+
         }
     }
 

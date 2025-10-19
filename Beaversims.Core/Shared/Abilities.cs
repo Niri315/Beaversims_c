@@ -7,6 +7,18 @@ using System.Threading.Tasks;
 
 namespace Beaversims.Core.Shared.Abilities
 {
+    /* --------*
+     * Dummies *
+     * --------*/
+    internal class ZeroCIMDummy : SharedAbility
+    {
+        public const string name = "ZeroCIMDummy";
+        public ZeroCIMDummy()
+        {
+            Name = name;
+        }
+    }
+
     /* -------*
      * Common *
      * -------*/
@@ -78,6 +90,9 @@ namespace Beaversims.Core.Shared.Abilities
         {
             Name = name;
             CastTime = Constants.GCD;
+            Scalers.UnionWith([SN.Haste]);
+            HasteScalers.UnionWith([HST.Cast]);
+            CIMSources.Add(new CIMSource(Specs.Paladin.Holy.Abilities.ShieldOfTheRighteous.name, 1.0));
             SuppStamScaler = true;
         }
     }

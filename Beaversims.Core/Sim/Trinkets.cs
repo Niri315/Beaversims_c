@@ -15,9 +15,9 @@ namespace Beaversims.Core.Sim.SpecialEffects
         public StatName statName { get; protected set; }
         public Dictionary<int, double> Amounts { get; protected set; } = [];
 
-        // Just gonna have successRate affect the duration of the buff.
-        public const double successRate = 0.7;
-        
+        private static readonly Random random = new Random();
+        public const double successRate = 0.5;
+
         //public const double Delay = 2;
 
 
@@ -56,11 +56,12 @@ namespace Beaversims.Core.Sim.SpecialEffects
            
             if (evt.Heartbeat)
             {
-                // OBS ! i = 0 ONLY FOR NON HASTE RPPM - need another solution for haste scaling effects.
                 var isProc = Proc.ProcessProcAttempt(ref blp, Rppm, ref lastAttempt, evt.Timestamp);
                 if (isProc)
                 {
-                    var duration = evt.Timestamp + (Buff.Duration * successRate);
+                    if (random.NextDouble() > successRate) { return; }
+                    //Console.WriteLine()
+                    var duration = evt.Timestamp + Buff.Duration;
                     buffEnds.Add(evt.Timestamp + duration);
                     foreach (var id in Amounts.Keys)
                     {

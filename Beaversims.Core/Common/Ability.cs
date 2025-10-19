@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace Beaversims.Core
 {
-    internal class HCCGMSource
+    internal class CIMSource
     {
         public string Name { get; set; }
-        public double HCCGMReliance { get; set; }
-        public HCCGMSource(string name, double hcgmReliance)
+        public double CIMReliance { get; set; }
+        public CIMSource(string name, double hcgmReliance)
         {
             Name = name;
-            HCCGMReliance = hcgmReliance;
+            CIMReliance = hcgmReliance;
         }
     }
     internal class HealData
@@ -28,6 +28,7 @@ namespace Beaversims.Core
     }
     internal class HealDataContainer : HealData
     {
+        public HealData Tick { get; set; } = new();
         public HealData Crit { get; set; } = new();
         public HealData Hit { get; set; } = new();
         public HealData Nsnsna { get; set; } = new();
@@ -74,13 +75,14 @@ namespace Beaversims.Core
         public double CdEnd {  get; set; } = 0.0;
         public double TrueCastTimeTotal { get; set; } = 0.0;
         public double CastTimeGain { get; set; } = 0.0;
-        public double HCCGM { get; set; } = 1.0;
-        public bool HCCGMInitDone { get; set; } = false;
-        public double HCCGMRatio { get; set; } = 1.0;
-        public double MaxHCCGM { get; set; } = 1.0;
-        public double HasteCastGainMod { get; set; } = 1.0;
+        public double CIM { get; set; } = 1.0;
+        public bool CIMInitDone { get; set; } = false;
+        public double CIMRatio { get; set; } = 1.0;
+        public double MaxCIM { get; set; } = 1.0;
+
+        //public double HCGM { get; set; } = 1.0;  // Maybe this will have a place later, but for now CIMSources are more reliable to use.
         public double HasteGainMod { get; set; } = 1.0;
-        public HashSet<HCCGMSource> HCCGMSources { get; set; } = [];
+        public HashSet<CIMSource> CIMSources { get; set; } = [];
 
         public bool IgnoreDr {  get; set; } = false;
         public bool LeechSource { get; set; } = true;
@@ -95,47 +97,82 @@ namespace Beaversims.Core
         public List<HealDataContainer> AltHeal { get; } = [];
         public List<DmgDataContainer> AltDamage { get; } = [];
 
+        // Paladin
+        public int IolCount { get; set; } = 0;
 
-        //public virtual void ResetAlts(User user, int i)
-        //{
-        //    AltHeal[i] = new HealDataContainer();
-        //    AltDamage[i] = new DmgDataContainer();
-        //}
 
-        public double TrueHCCGM(User user)
+        public double CIMDerivedQIM(User user)
         {
-            if (HCCGMSources.Count == 0) { return HCCGM; }
+            if (CIMSources.Count == 0) { return CIM; }
             else
             {
                 var abilities = user.Abilities;
                 var hccgm = 0.0;
-                foreach (var source in HCCGMSources)
+                foreach (var source in CIMSources)
                 {
                     var sourceAbility = abilities.Get(source.Name);
                     if (sourceAbility.Name == Name)
                     {
-                        hccgm += source.HCCGMReliance * HCCGM;
+                        hccgm += source.CIMReliance * CIM;
                     }
                     else
                     {
-                        hccgm += source.HCCGMReliance * sourceAbility.TrueHCCGM(user);
+                        hccgm += source.CIMReliance * sourceAbility.CIMDerivedQIM(user);
 
                     }
 
                 }
                 return hccgm;
             }
+        }
+
+        public double FullHCGM(User user, int i)
+        {
+            if (CIMSources.Count == 0) { return CIM * user.HasteCapCTLossMod(i); } // * HCGM
+            else
+            {
+                var abilities = user.Abilities;
+                var hccgm = 0.0;
+                foreach (var source in CIMSources)
+                {
+                    var sourceAbility = abilities.Get(source.Name);
+                    if (sourceAbility.Name == Name)
+                    {
+                        hccgm += source.CIMReliance * CIM;
+                    }
+                    else
+                    {
+
+                        hccgm += source.CIMReliance * sourceAbility.CIMDerivedQIM(user);
+                        //if (Name == SunSear.name)
+                        //{
+
+                        //    Console.WriteLine(source.Name);
+                        //    Console.WriteLine(source.CIMReliance);
+                        //    Console.WriteLine(sourceAbility.CIMDerivedHCGM(user));
+                        //    Console.WriteLine(hccgm);
+                        //    Console.WriteLine("----");
+
+
+                        //}
+                        //hccgm += source.CIMReliance * sourceAbility.FullHCGM(user);
+
+                    }
+
+                }
+                return hccgm * user.HasteCapCTLossMod(i); // * HCGM
+            }
 
         }
 
-        public void HCCGMSourceRelCheck()
+        public void CIMSourceRelCheck()
         {
-            if (HCCGMSources.Count > 0)
+            if (CIMSources.Count > 0)
             {
                 var tot = 0.0;
-                foreach (var source in HCCGMSources)
+                foreach (var source in CIMSources)
                 {
-                    tot += source.HCCGMReliance;
+                    tot += source.CIMReliance;
                 }
                 const double tolerance = 1e-9;
 
@@ -143,7 +180,7 @@ namespace Beaversims.Core
                 {
 
                     throw new InvalidOperationException(
-                        $"HCCGM Source alloc issue: {Name}."
+                        $"CIM Source alloc issue: {Name}."
                     );
                 }
             }
@@ -157,26 +194,26 @@ namespace Beaversims.Core
             {
                 foreach (var ability in user.Abilities)
                 {
-                    HCCGMSource sourcetbr = null;
+                    CIMSource sourcetbr = null;
                     double rel = 0.0;
                     int remCount = 0;
 
-                    foreach (var source in ability.HCCGMSources)
+                    foreach (var source in ability.CIMSources)
                     {
                         if (source.Name == Name)
                         {
                             sourcetbr = source;
-                            rel = source.HCCGMReliance;
-                            remCount = ability.HCCGMSources.Count - 1;
+                            rel = source.CIMReliance;
+                            remCount = ability.CIMSources.Count - 1;
                             break;
                         }
                     }
 
                     if (sourcetbr != null && remCount > 0)
                     {
-                        ability.HCCGMSources.Remove(sourcetbr);
-                        foreach (var source in ability.HCCGMSources)
-                            source.HCCGMReliance += rel / remCount;
+                        ability.CIMSources.Remove(sourcetbr);
+                        foreach (var source in ability.CIMSources)
+                            source.CIMReliance += rel / remCount;
                     }
                 }
             }
@@ -228,7 +265,7 @@ namespace Beaversims.Core
         }
         public virtual double AltHypoTrueDmgR(int i)
         {
-            //             if (AltDamage[i].Hypo == 0) { return 1; }
+            // if (AltDamage[i].Hypo == 0) { return 1; }
             // Should do this for normal hypo trues as well (?)
 
             if (AltDamage[i].Hypo == 0) { return 1; }
@@ -245,7 +282,6 @@ namespace Beaversims.Core
         {
             if (AltHeal[i].Hypo == 0) { return 1; }
             if (Heal.Raw == 0) { return 0; }
-            //Console.WriteLine($"{HypoTrueRawR()} vs {AltHeal[i].Hypo} vs {Heal.Raw}");
             return HypoTrueRawR() * AltHeal[i].Hypo / Heal.Raw;
         }
         public double RawToNsnsnarawConvert(double amount)

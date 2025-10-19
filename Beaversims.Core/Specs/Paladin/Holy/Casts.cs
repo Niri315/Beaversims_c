@@ -25,7 +25,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
             // We don't really care how technically accurate this is.
             // We are only interested in knowing what filler abilities are capped by users rotation and to what degree.
             // For this we can make the assumption that all cd fillers are always on CD. 
-            // Technically incorrect, but the math will fit.
+            // Technically incorrect, but works practically.
 
         {
             var timestamp = evt.Timestamp;
@@ -96,7 +96,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
                 if (castTime > 0)
                 {
                     castTime = ApplyReductEffects(cEvt, user, castTime);
-                    Shared.HCCGM.CastTimeGains(cEvt, user, castTime);
+                    Shared.CIM.CastTimeGains(cEvt, user, castTime);
                 }
 
                 TrackCdTime(cEvt, user);

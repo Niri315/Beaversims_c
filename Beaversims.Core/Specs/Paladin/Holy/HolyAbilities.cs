@@ -12,7 +12,7 @@ Infusion of Light - Remove haste value from iol increases due to low true HCCGM 
 Truth Prevails - dupli effect
 Tempered in Battle - dupli effect only
 Blessing of An'she
-Armaments haste/mastery testing
+
 
 HASTE:
 For herald its most likely a +-=0 scenario with the most significant inaccurasies lying in
@@ -54,7 +54,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
             ReverseEffect = true;
             Scalers.UnionWith([SN.Intellect, SN.Haste, SN.Mastery, SN.Vers]);  // Crit seperate for awakening.
             HasteScalers.UnionWith([HST.Cast]);
-            // HCCGM Sources added later.
+            // CIM/HCCGM Sources added later.
         }
     }
     internal class AvengingWrath : HpalAbility
@@ -364,7 +364,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
         {
             Name = name;
             Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Haste, SN.Mastery, SN.Vers]);
-            HasteScalers.UnionWith([HST.Cast, HST.Tick]);
+            HasteScalers.UnionWith([HST.Cast, HST.Auto]);
             CIMSources.Add(new CIMSource(Consecration.name, 1.0));
         }
     }
@@ -373,7 +373,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
     {
         public const string name = "Greater Judgment";
 
-        public void CritGains(ThroughputEvent evt, User user, int i)
+        public void CritGains(TpEvent evt, User user, int i)
         {
             // todo awakening no crit scaler
 
@@ -495,7 +495,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
             Direct = true;
             Spell = true;
             Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Haste, SN.Mastery, SN.Vers]);
-            HasteScalers.UnionWith([HST.Cast]);
+            HasteScalers.UnionWith([HST.Cast, HST.Auto]);
         }
     }
 
@@ -519,7 +519,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
         {
             if (evt.IsDmgDoneEvent() && evt.AbilityName == Name)
             {
-                GJCritEffRepo += evt.UserStats.Get(StatName.Crit).Eff;
+                GJCritEffRepo += evt.UserStats.Get(StatName.Crit).TrueEff();
                 GJCount += 1;
             }
         }
@@ -598,11 +598,13 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
             {
                 var holyshock = user.Abilities.Get(Abilities.HolyShock.name);
                 // Same as Holy Shock Scalers
-                Shared.StatGains.PrimaryGainsHeal(evt, user, StatName.Intellect, i, antiGain:true);
-                Shared.StatGains.VersGainsHeal(evt, user, i, antiGain: true);
+                Shared.StatGains.PrimaryGains(evt, user, StatName.Intellect, i, antiGain:true);
+                Shared.StatGains.VersGains(evt, user, i, antiGain: true);
                 //Shared.StatGains.HasteGainsHeal(evt, user, i, ability: holyshock, antiGain: true);
                 // Getting Past the checks to send directly as cast scaler.
-                Shared.StatGains.SecondaryAltAmount(evt, (Haste)evt.UserStats.Get(StatName.Haste), i, mod: holyshock.FullHCGM(user, i) * holyshock.HasteGainMod * user.Spec.HasteGainMod, antiGain: true);
+                var haste = (Haste)evt.UserStats.Get(StatName.Haste);
+                Shared.StatGains.SecondaryAltAmount(evt, haste, i, mod: holyshock.HasteAutoModHeal * holyshock.HasteGainMod * user.Spec.HasteGainMod, antiGain: true);
+                Shared.StatGains.SecondaryAltAmount(evt, haste, i, mod: holyshock.TrueQIM(user, i) * holyshock.TrueHealHCGM(user) * holyshock.HasteGainMod * user.Spec.HasteGainMod, antiGain: true);
                 MasteryTracker.MasteryGains(evt, user, i, antiGain: true);
                 Shared.StatGains.CritGainsHealDerived(evt, user, i, sourceAbility:holyshock, antiGain: true);
             }
@@ -641,12 +643,15 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
             Scalers.UnionWith([SN.Intellect, SN.Haste, SN.Mastery, SN.Vers]);
             DerivedCritScaler = true;
             SourceAbility = HolyShock.name;
-            HasteScalers.UnionWith([HST.Cast]);
+            // Adjusting Auto mod alongside HolyShock in HCGM.
+            HasteScalers.UnionWith([HST.Cast, HST.Auto]);
             CIMSources.Add(new CIMSource(HolyShock.name, 1.0));
+            HCGMSources.Add(new HCGMSource(HolyShock.name, 1.0));
+
         }
     }
 
-        internal class PillarOfLights : HpalAbility
+    internal class PillarOfLights : HpalAbility
     // Ability name is different from talent name. They will probably fix it someday, keep an eye out.
     {
         public const string name = "Pillar of Lights";
@@ -689,6 +694,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
             DerivedCritScaler = true;
             SourceAbility = HolyLight.name;
             CIMSources.Add(new CIMSource(HolyLight.name, 1.0));
+            HCGMSources.Add(new HCGMSource(HolyLight.name, 1.0));
         }
     }
 
@@ -720,10 +726,12 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
     }
 
     internal class SacredWeapon : HpalAbility
+        // Scales with the paladin's stats.
         // Scales with mastery.
         // Scales with haste.
     {
         public const string name = "Sacred Weapon";
+        public const int buffId = 432502;
         public SacredWeapon()
         {
             Name = name;
@@ -798,7 +806,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
             Name = name;
             Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Haste, SN.Mastery, SN.Vers]);
             HasteScalers.UnionWith([HST.Cast]); // Cast gain from awakening only.
-            // HCCGM sources in HCGM.
+            // CIM sources in HCGM.
         }
     }
 
@@ -810,13 +818,15 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
             Name = name;
             Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Haste, SN.Mastery, SN.Vers]);
             HasteScalers.UnionWith([HST.Cast, HST.Tick]);
-            // HCCGM sources in HCGM
+            // CIM sources in HCGM
         }
     }
     internal class TruthPrevails : HpalAbility
     {
         //Todo need a derived crit scaler for the dupli value.
         public const string name = "Truth Prevails";
+        public const double dupliId = 461529;
+        public const double normalId = 461546;
         public TruthPrevails()
         {
             Name = name;
@@ -861,6 +871,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
             Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Haste, SN.Mastery, SN.Vers]);
             HasteScalers.UnionWith([HST.Cast]);
             CIMSources.Add(new CIMSource(HammerOfWrath.name, 1.0));
+            HCGMSources.Add(new HCGMSource(HammerOfWrath.name, 1.0));
 
         }
     }

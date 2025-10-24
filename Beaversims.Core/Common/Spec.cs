@@ -65,13 +65,14 @@ namespace Beaversims.Core
         }
 
         public abstract void SpecIteration(List<Event> events, UnitRepo allUnits, Fight fight);
-        public abstract void DupliGainsHeal(ThroughputEvent tEvt, User user, StatName statName, double gainRaw, GainType gainType = GainType.Eff);
-        public abstract void DupliGainsDmg(ThroughputEvent tEvt, User user, StatName statName, double gain, GainType gainType = GainType.Dmg);
+        public abstract void DupliGainsHeal(TpEvent tEvt, User user, StatName statName, double gainRaw, GainType gainType = GainType.Eff);
+        public abstract void DupliGainsDmg(TpEvent tEvt, User user, StatName statName, double gain, GainType gainType = GainType.Dmg);
 
         public void InitSharedAbilities(AbilityRepo abilities)
         {
             abilities.Add(new Shared.Abilities.Leech());
             abilities.Add(new Shared.Abilities.BlessingOfSummer());
+            abilities.Add(new Shared.Abilities.HolyBulwark());
             abilities.Add(new Shared.Abilities.ZeroCIMDummy());
 
         }
@@ -85,10 +86,10 @@ namespace Beaversims.Core
         protected override string SpecTalentNamespace => "";
         protected override SpecName SpecName => SpecName.HolyPaladin;
 
-        public override void DupliGainsHeal(ThroughputEvent evt, User user, StatName statName, double gainRaw, GainType gainType = GainType.Eff)
+        public override void DupliGainsHeal(TpEvent evt, User user, StatName statName, double gainRaw, GainType gainType = GainType.Eff)
         {
         }
-        public override void DupliGainsDmg(ThroughputEvent evt, User user, StatName statName, double gain, GainType gainType = GainType.Dmg)
+        public override void DupliGainsDmg(TpEvent evt, User user, StatName statName, double gain, GainType gainType = GainType.Dmg)
         {
 
         }

@@ -33,6 +33,7 @@ namespace Beaversims.Core
         public int Stacks { get; set; }
         public double Duration { get; set; } = 0;
         public double BuffEnd { get; set; } = 0;
+        public int MaxStacks { get; set; }
 
         // There are bug in logs where buff refreshes are seen are buff applications
         // Can assume true, but add false on important stat buffs.

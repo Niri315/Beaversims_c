@@ -10,18 +10,18 @@ namespace Beaversims.Core
     {
         public static double PrimaryGainCalc(Stat stat, double amount)
         {
-            return (amount / stat.Eff) * stat.Multi;
+            return (amount / stat.TrueEff()) * stat.Multi;
         }
         public static double SecondaryGainCalc(SecondaryStat stat, double amount, double percentRate)
         {
-            var gain = amount / (stat.Eff + (100 * percentRate));
+            var gain = amount / (stat.TrueEff() + (100 * percentRate));
             gain = stat.ApplyDryMult(gain);
             return gain;
         }
 
         public static double DefGainCalc(NonPrimaryStat stat, double amount, double percentRate)
         {
-            var pureAmountRaw = (amount * (1 + (stat.Eff / percentRate / 100)));
+            var pureAmountRaw = (amount * (1 + (stat.TrueEff() / percentRate / 100)));
             var gain = pureAmountRaw * (1 / percentRate / 100) * (1 - (stat.Bracket * 0.1)) * stat.Multi;
             return gain;
         }
@@ -37,11 +37,11 @@ namespace Beaversims.Core
         }
         public static double TrueCastTimeCalc(Haste haste, double castTime)
         {
-            return castTime / (haste.Eff / (haste.PercentRate * 100) + 1);
+            return castTime / (haste.TrueEff() / (haste.PercentRate * 100) + 1);
         }
         public static double TrueCdCalc(Haste haste, double cd)
         {
-            return cd / (haste.Eff / (haste.PercentRate * 100) + 1);
+            return cd / (haste.TrueEff() / (haste.PercentRate * 100) + 1);
         }
 
         public static int GetBracket(double rating, double drRate)

@@ -52,7 +52,7 @@ namespace Beaversims.Core
                 if (stat is NonPrimaryStat npStat) 
                 {
                     var basePercent = Math.Round(npStat.Base / npStat.PercentRate, 2);
-                    var effPercent = Math.Round(npStat.Eff / npStat.PercentRate, 2);
+                    var effPercent = Math.Round(npStat.TrueEff() / npStat.PercentRate, 2);
                     statLogger.Log($"\t DR Bracket: {npStat.Bracket}");
                     statLogger.Log($"\t Base: {basePercent}%");
                     statLogger.Log($"\t Effective Percent: {effPercent}%");

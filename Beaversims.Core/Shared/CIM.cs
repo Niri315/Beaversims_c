@@ -17,7 +17,7 @@ namespace Beaversims.Core.Shared
             // We're just gonna store loss from hitting GCD cap and apply it later when fetching full HCGM.
             // For this we are not having the GCD Cap affect gain nor true cast time total.
             // Alot easier than having to deal with it here and with CIM.
-            // Shouldnt really matter in any case.
+            // Shouldnt really matter in any case. This way we can keep it universal.
 
             var ability = evt.Ability;
             var haste = (Haste)evt.UserStats.Get(StatName.Haste);
@@ -25,7 +25,7 @@ namespace Beaversims.Core.Shared
 
             var trueCastTime = Calc.TrueCastTimeCalc(haste, castTime);
             //trueCastTime = Math.Max(trueCastTime, Constants.castTimeCap);
-            ability.TrueCastTimeTotal += trueCastTime;
+
 
             for (int i = 0; i < evt.AltEvents.Count; i++)
             {
@@ -36,8 +36,8 @@ namespace Beaversims.Core.Shared
                     user.AltGearSets[i].HasteCapCTLoss += Constants.castTimeCap - trueCastTime_i;
                 }
             }
-
             ability.CastTimeGain += gain;
+            ability.TrueCastTimeTotal += trueCastTime;
             user.TrueCastTimeTotal += trueCastTime;
 
             if (trueCastTime < Constants.castTimeCap)

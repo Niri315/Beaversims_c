@@ -21,7 +21,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
 
 
 
-        public override void DupliGainsHeal(ThroughputEvent evt, User user, StatName statName, double gainRaw, GainType gainType = GainType.Eff)
+        public override void DupliGainsHeal(TpEvent evt, User user, StatName statName, double gainRaw, GainType gainType = GainType.Eff)
         {
             DupliEffects.BeaconGains(evt, user, statName, gainRaw, gainType);
             var gainNaraw = evt.RawToNarawConvert(gainRaw);
@@ -33,7 +33,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
 
             Shared.DupliEffects.SummerGains(evt, user, statName, gainRaw, evt.Ability, evt.SummerActive, evt.AbsorbAbility, evt.SourceUnit, gainType);
         }
-        public override void DupliGainsDmg(ThroughputEvent evt, User user, StatName statName, double gain, GainType gainType = GainType.Dmg)
+        public override void DupliGainsDmg(TpEvent evt, User user, StatName statName, double gain, GainType gainType = GainType.Dmg)
         {
             var gainNaeff = evt.EffToNaeffConvert(gain);
             if (Shared.DupliEffects.IsLeechSourceEvent(evt))

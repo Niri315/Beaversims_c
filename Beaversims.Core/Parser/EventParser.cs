@@ -140,7 +140,7 @@ namespace Beaversims.Core.Parser
 
             var abilityName = abilityData.GetProperty("name").GetString();
 
-            if (evt is CastEvent || evt is ThroughputEvent)
+            if (evt is CastEvent || evt is TpEvent)
             {
                 if (!user.Abilities.Contains(abilityName))
                 {
@@ -213,7 +213,7 @@ namespace Beaversims.Core.Parser
             castEvent.EmpCastLevel = logEvent.GetInt32OrDefault("empowermentLevel");
         }
 
-        public static void ParseThroughputEvents(JsonElement logEvent, ThroughputEvent tpEvent, User user)
+        public static void ParseThroughputEvents(JsonElement logEvent, TpEvent tpEvent, User user)
         {
             var eventType = logEvent.GetProperty("type").GetString();
 
@@ -256,7 +256,7 @@ namespace Beaversims.Core.Parser
             var abilityData = logEvent.GetProperty("ability");
             var eventType = logEvent.GetProperty("type").GetString();
 
-            if (evt is ThroughputEvent tpEvent)
+            if (evt is TpEvent tpEvent)
             {
                 ParseThroughputEvents(logEvent, tpEvent, user);
             }
@@ -310,7 +310,7 @@ namespace Beaversims.Core.Parser
                     ability.Casts += 1;
                 }
             }
-            if (evt is ThroughputEvent tpEvent && evt.UserSuperSource)
+            if (evt is TpEvent tpEvent && evt.UserSuperSource)
             {
                 if (tpEvent is HealEvent)
                 {
@@ -379,7 +379,7 @@ namespace Beaversims.Core.Parser
 
         public static void AdjustEvent(Event evt)
         {
-            if (evt is ThroughputEvent tpEvent && tpEvent.Ability.ForceTick)
+            if (evt is TpEvent tpEvent && tpEvent.Ability.ForceTick)
             {
                 tpEvent.Tick = true;
             }
@@ -388,7 +388,7 @@ namespace Beaversims.Core.Parser
 
         public static void TrackHp(JsonElement logEvent, Event evt)
         {
-            if (evt is ThroughputEvent)
+            if (evt is TpEvent)
             {
                 if (logEvent.TryGetProperty("hitPoints", out _))
             {
@@ -418,7 +418,7 @@ namespace Beaversims.Core.Parser
         {
             var sourceUnit = evt.SourceUnit;
             var targetUnit = evt.TargetUnit;
-            if (evt is ThroughputEvent)
+            if (evt is TpEvent)
             {
                 if (evt.TargetHp != null)
                 {
@@ -448,7 +448,7 @@ namespace Beaversims.Core.Parser
             {
                 var x = logEvent.GetProperty("x").GetInt32() / 100.0;
                 var y = logEvent.GetProperty("y").GetInt32() / 100.0;
-                if (evt is ThroughputEvent)
+                if (evt is TpEvent)
                 {
                     evt.TargetCoords = new Coord(x, y);
                 }

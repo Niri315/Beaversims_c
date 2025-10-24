@@ -288,9 +288,213 @@ namespace Beaversims.Core.Data.StatBuffs
             Duration = 30;
         }
     }
-    /*--- *
-    * WW3 *
-    * --- */
+    /* ----------- *
+     * Timewalking *
+     * ----------- */
+    internal class FelInfusion : StatBuff 
+        // Skull of Gul'Dan
+    {
+        public const int id = 244176;
+        public const string name = "Fel Infusion";
+
+
+        public FelInfusion(UnitId sourceId, int stacks)
+            : base(id, sourceId, name, stacks)
+        {
+            SimImpurity = true;
+            Duration = 20;
+            SourceType = BuffSourceType.Item;
+            SourceObjId = 150522;
+            StatMods.Add(
+                new StatMod(
+                    StatName.Haste,
+                    StatAmountType.Rating,
+                    scData: new ScalingData(-7, 1.815054))
+            );
+        }
+    }
+    internal class AlacrityOfTheElements : StatBuff
+    // Elemental Focus Stone
+    {
+        public const int id = 65004;
+        public const string name = "Alacrity of the Elements";
+
+
+        public AlacrityOfTheElements(UnitId sourceId, int stacks)
+            : base(id, sourceId, name, stacks)
+        {
+            SimImpurity = true;
+            Duration = 10;
+            SourceType = BuffSourceType.Item;
+            SourceObjId = 156288;
+            StatMods.Add(
+                new StatMod(
+                    StatName.Haste,
+                    StatAmountType.Rating,
+                    scData: new ScalingData(-7, 1.8995))
+            );
+        }
+    }
+
+    internal class EnergySiphon : StatBuff
+    // Elemental Focus Stone
+    {
+        public const int id = 65008;
+        public const string name = "Alacrity of the Elements";
+
+
+        public EnergySiphon(UnitId sourceId, int stacks)
+            : base(id, sourceId, name, stacks)
+        {
+            SimImpurity = true;
+            Duration = 20;
+            SourceType = BuffSourceType.Item;
+            SourceObjId = 156021;
+            StatMods.Add(
+                new StatMod(
+                    StatName.Crit,
+                    StatAmountType.Rating,
+                    scData: new ScalingData(-7, 2.399108))
+            );
+        }
+    }
+    internal class EyeOfTheBroodmother : StatBuff
+    {
+        public const int id = 65006;
+        public const string name = "Eye of the Broodmother";
+
+
+        public EyeOfTheBroodmother(UnitId sourceId, int stacks)
+            : base(id, sourceId, name, stacks)
+        {
+            SimImpurity = true;
+            Duration = 10;
+            MaxStacks = 5;
+            SourceType = BuffSourceType.Item;
+            SourceObjId = 156036;
+            StatMods.Add(
+                new StatMod(
+                    StatName.Intellect,
+                    StatAmountType.Rating,
+                    scData: new ScalingData(-1, 0.09978))
+            );
+        }
+    }
+
+    internal class FlameOfTheHeavens : StatBuff
+    // Flare of the Heavens
+    {
+        public const int id = 64713;
+        public const string name = "Flame of the Heavens";
+
+
+        public FlameOfTheHeavens(UnitId sourceId, int stacks)
+            : base(id, sourceId, name, stacks)
+        {
+            SimImpurity = true;
+            Duration = 10;
+            SourceType = BuffSourceType.Item;
+            SourceObjId = 156230;
+            StatMods.Add(
+                new StatMod(
+                    StatName.Intellect,
+                    StatAmountType.Rating,
+                    scData: new ScalingData(-1, 2.353487))
+            );
+        }
+    }
+    internal class LivingFlame : StatBuff
+    {
+        public const int id = 64712;
+        public const string name = "Living Flame";
+
+
+        public LivingFlame(UnitId sourceId, int stacks)
+            : base(id, sourceId, name, stacks)
+        {
+            SimImpurity = true;
+            Duration = 20;
+            SourceType = BuffSourceType.Item;
+            SourceObjId = 155947;
+            StatMods.Add(
+                new StatMod(
+                    StatName.Intellect,
+                    StatAmountType.Rating,
+                    scData: new ScalingData(-1, 1.9003))
+            );
+        }
+    }
+
+    internal class PandorasPlea : StatBuff
+    {
+        public const int id = 64741;
+        public const string name = "Pandora's Plea";
+
+
+        public PandorasPlea(UnitId sourceId, int stacks)
+            : base(id, sourceId, name, stacks)
+        {
+            SimImpurity = true;
+            Duration = 10;
+            SourceType = BuffSourceType.Item;
+            SourceObjId = 156207;
+            StatMods.Add(
+                new StatMod(
+                    StatName.Intellect,
+                    StatAmountType.Rating,
+                    scData: new ScalingData(-1, 1.561615))
+            );
+        }
+    }
+    internal class ScaleOfFates : StatBuff
+    {
+        public const int id = 64707;
+        public const string name = "Scale of Fates";
+
+
+        public ScaleOfFates(UnitId sourceId, int stacks)
+            : base(id, sourceId, name, stacks)
+        {
+            SimImpurity = true;
+            Duration = 20;
+            SourceType = BuffSourceType.Item;
+            SourceObjId = 156187;
+            StatMods.Add(
+                new StatMod(
+                    StatName.Haste,
+                    StatAmountType.Rating,
+                    scData: new ScalingData(-7, 2.39909))
+            );
+        }
+    }
+
+    internal class MemoriesOfLove : StatBuff
+    // Sif's Remembrance
+    {
+        public const int id = 65003;
+        public const string name = "Memories of Love";
+
+
+        public MemoriesOfLove(UnitId sourceId, int stacks)
+            : base(id, sourceId, name, stacks)
+        {
+            SimImpurity = true;
+            Duration = 15;
+            SourceType = BuffSourceType.Item;
+            SourceObjId = 156308;
+            StatMods.Add(
+                new StatMod(
+                    StatName.Intellect,
+                    StatAmountType.Rating,
+                    scData: new ScalingData(-1, 1.125146))
+            );
+        }
+    }
+
+    /* --- *
+     * WW3 *
+     * --- */
+
     internal class AstralAntenna : StatBuff
     {
         public const int id = 1239641;

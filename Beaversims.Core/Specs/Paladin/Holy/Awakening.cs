@@ -38,7 +38,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
             }
 
             if (IsAwakenedAw(evt, user)) {
-                if (evt.AbilityName == Abilities.SunsAvatar.name && evt.IsHealDoneEvent() && evt is ThroughputEvent tEvt)
+                if (evt.AbilityName == Abilities.SunsAvatar.name && evt.IsHealDoneEvent() && evt is TpEvent tEvt)
                 {
                     var sunsAvatar = (Abilities.SunsAvatar)user.Abilities.Get(Abilities.SunsAvatar.name);
                     sunsAvatar.AwakeningHealRaw += tEvt.Amount.Raw;
@@ -74,7 +74,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
             }
             evt.BanCritScaleJudgAC = user.BanCritScaleJudgAC;
         }
-        public static void JudgAcCritGains(ThroughputEvent tEvt, User user, int i)
+        public static void JudgAcCritGains(TpEvent tEvt, User user, int i)
         {
 
             if ((tEvt.AbilityName == Abilities.Judgment.name || tEvt.AbilityName == AvengingCrusader.name) && !tEvt.BanCritScaleJudgAC)

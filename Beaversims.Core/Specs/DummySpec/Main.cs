@@ -22,7 +22,7 @@ namespace Beaversims.Core.Specs.DummySpec
                 // Loop for tracking buffs and collecting data.
                 BuffTracker.TrackBuffs(evt, allUnits, statLogger);
   
-                if (evt is ThroughputEvent tEvt)
+                if (evt is TpEvent tEvt)
                 {
                     Shared.DupliEffects.SharedHypo(tEvt, user);
                 }
@@ -37,17 +37,9 @@ namespace Beaversims.Core.Specs.DummySpec
                 { // Loop for setting gains.
                     evt.CreateAltEvents(user, evt);
                     var altEvent = evt.AltEvents[i];
-                    if (evt is ThroughputEvent tpEvent)
+                    if (evt is TpEvent tpEvent)
                     {
-                        if (tpEvent.IsHealDoneEvent())
-                        {
-                            StatGains.AutoStatGainsHeal((HealEvent)tpEvent, user, i);
-                        }
-                        if (tpEvent.IsDmgDoneEvent())
-                        {
-                            StatGains.AutoStatGainsDmg((DamageEvent)tpEvent, user, i);
-                        }
-                        StatGains.AutoStatGainsMisc(tpEvent, user, i);
+                        StatGains.AutoStatGains(tpEvent, user, i);
                     }
                 }
             }

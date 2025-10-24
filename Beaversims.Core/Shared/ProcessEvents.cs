@@ -15,6 +15,7 @@ internal class Results
     public GainMatrix StatGains { get; set; } = Utils.InitGainMatrix();
     public GainMatrix swGains { get; set; } = Utils.InitGainMatrix();
     public List<GearSet> altGearSets { get; set; } = [];
+    public GainDict OriginalTotals { get; set; } = Utils.InitGainDict();
     public void ToPerSec()
     {
         foreach (var statEntry in StatGains)
@@ -34,6 +35,11 @@ internal class Results
                 var gainType = gainEntry.Key;
                 altGearSet.Gains[gainType] /= TotalTime;
             }
+        }
+        foreach (var gainEntry in OriginalTotals)
+        {
+            var gainType = gainEntry.Key;
+            OriginalTotals[gainType] /= TotalTime;
         }
     }
 
@@ -65,7 +71,7 @@ namespace Beaversims.Core.Shared
             }
         }
 
-        public static void StoreTotals(ThroughputEvent evt, User user, int i)
+        public static void StoreTotals(TpEvent evt, User user, int i)
         {
             var altEvent = evt.AltEvents[i];
             var gainType = GainType.Eff;
@@ -109,6 +115,46 @@ namespace Beaversims.Core.Shared
             //    amount /= Constants.iterationCount;
             //}
             user.AltGearSets[i].Gains[gainType] += amount;
+        }
+        public static void OriginalTotals(TpEvent evt, User user)
+        {
+            var gainType = GainType.Eff;
+            double amount;
+            if (evt.IsDamageTakenEvent())
+            {
+                gainType = GainType.Def;
+                amount = evt.Amount.Eff;
+
+                user.OriginalTotals[gainType] -= amount;
+                return;
+            }
+            else if (evt.IsDmgDoneEvent())
+            {
+                gainType = GainType.Dmg;
+            }
+
+            else if (evt.IsHealDoneEvent())
+            {
+                gainType = GainType.Eff;
+            }
+            else if (evt.Ability.SuppStamScaler && evt.TargetUnit is User && evt is HealEvent)
+            {
+                gainType = GainType.SupEff;
+            }
+            else if (evt.Ability.SuppStamScaler && evt.TargetUnit is not User && evt is DamageEvent)
+            {
+                gainType = GainType.SupDmg;
+            }
+            else
+            {
+                return;
+            }
+            amount = evt.Amount.Eff;
+            //if (!Constants.swOption)
+            //{
+            //    amount /= Constants.iterationCount;
+            //}
+            user.OriginalTotals[gainType] += amount;
         }
 
 
@@ -243,17 +289,20 @@ namespace Beaversims.Core.Shared
             //}
 
 
-            foreach (Event evt in events)
-            {
-                StatGains(evt, statGains, abilityGains, fight);
-                if (evt is ThroughputEvent tEvt) 
-                {
-                    //altAmounts(tEvt, fight, user);
-                }
-            }
+            //foreach (Event evt in events)
+            //{
+            //    //StatGains(evt, statGains, abilityGains, fight);
+            //    if (evt is TpEvent tEvt) 
+            //    {
+            //        OriginalTotals(tEvt, user);
+            //        //altAmounts(tEvt, fight, user);
+            //    }
+            //}
             SetFinalGains(user);
             results.altGearSets = user.AltGearSets;
+            results.OriginalTotals = user.OriginalTotals;
             LogAbilityGains(user, abilityGainLogger, abilityGains);
+            
 
             //Console.WriteLine($"AMOUNT COMP EFF: {test[0][GainType.Eff]} vs {test[1][GainType.Eff]}");
             //Console.WriteLine($"AMOUNT COMP DMG: {test[0][GainType.Dmg]} vs {test[1][GainType.Dmg]}");

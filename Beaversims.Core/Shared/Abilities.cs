@@ -65,11 +65,14 @@ namespace Beaversims.Core.Shared.Abilities
     internal class HolyBulwark : SharedAbility
     {
         public const string name = "Holy Bulwark";
+        public const int buffId = 432496;  // NOT the id of the buff that hold the absorb.
         public HolyBulwark()
         {
             Name = name;
             CastTime = Constants.GCD;
             SuppStamScaler = true;
+            Scalers.UnionWith([SN.Haste]);
+            HasteScalers.UnionWith([HST.Auto]);  // Divine Inspiration.
         }
     }
 

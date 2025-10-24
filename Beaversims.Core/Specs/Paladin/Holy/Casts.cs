@@ -98,9 +98,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
                     castTime = ApplyReductEffects(cEvt, user, castTime);
                     Shared.CIM.CastTimeGains(cEvt, user, castTime);
                 }
-
                 TrackCdTime(cEvt, user);
-
             }
         }
     }

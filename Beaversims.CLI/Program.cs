@@ -7,12 +7,12 @@ using System.Text.Json;
 using static System.Net.WebRequestMethods;
 
 
-var logLink = "https://www.warcraftlogs.com/reports/PxzAyBCDL7acXRvg?fight=11&type=healing&source=6"; //Salad Nali LS
+//var logLink = "https://www.warcraftlogs.com/reports/PxzAyBCDL7acXRvg?fight=11&type=healing&source=6"; //Salad Nali LS
 //var logLink = "https://www.warcraftlogs.com/reports/PJWrjZv6xTpLYmct?fight=128&type=healing&source=1863";  //Salad Ellesmere Herald
 //var logLink = "https://www.warcraftlogs.com/reports/m4vPb3J71twFXVTA?fight=17&type=damage-done&source=166";  //WTF mastery?
 //var logLink = "https://www.warcraftlogs.com/reports/jknw3D642CpcALgq?fight=54&type=healing&source=22"; // Leech + martyr -> need fi
-//var logLink = "https://www.warcraftlogs.com/reports/vLHzyMAp2DgXFwkR?fight=34&type=healing&source=24"; //Dimensius Nali AstralAntenna
-//var logLink = "https://www.warcraftlogs.com/reports/tHjZpgrcCVf4M69N?fight=27&type=healing&source=20"; //  
+//var logLink = "https://www.warcraftlogs.com/reports/vlhzymap2dgxfwkr?fight=34&type=healing&source=24"; //frac nali antenna
+var logLink = "https://www.warcraftlogs.com/reports/yJzZKjGq2v6g8bT1?fight=10&type=damage-taken&source=39"; //  
 
 
 var simAll = false; 
@@ -92,6 +92,6 @@ else
 
 finalResults.ToPerSec();
 //TestUtils.PrintStatWeights(finalResults.swGains);
-TestUtils.PrintAltGearResults(finalResults.altGearSets);
+TestUtils.PrintAltGearResults(finalResults);
 totalTime.Stop();
 Console.WriteLine($"Total Time: {totalTime}");

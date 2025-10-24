@@ -214,7 +214,6 @@ namespace Beaversims.Core.Parser
                     }
 
                     player.AddBuff(buffName, buffId, sourceUnit, stacks, timeStamp:0);
-                    if (unit is User) { Console.WriteLine(buffName); }
                 }
             }
         }

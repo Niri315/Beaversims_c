@@ -19,6 +19,16 @@ namespace Beaversims.Core
             CIMReliance = hcgmReliance;
         }
     }
+    internal class HCGMSource
+    {
+        public string Name { get; set; }
+        public double HCGMReliance { get; set; }
+        public HCGMSource(string name, double hcgmReliance)
+        {
+            Name = name;
+            HCGMReliance = hcgmReliance;
+        }
+    }
     internal class HealData
     {
         public double Eff { get; set; } = 0;
@@ -79,10 +89,13 @@ namespace Beaversims.Core
         public bool CIMInitDone { get; set; } = false;
         public double CIMRatio { get; set; } = 1.0;
         public double MaxCIM { get; set; } = 1.0;
-
-        //public double HCGM { get; set; } = 1.0;  // Maybe this will have a place later, but for now CIMSources are more reliable to use.
+        public double HealHCGM { get; set; } = 1.0;
+        public double DmgHCGM { get; set; } = 1.0;
         public double HasteGainMod { get; set; } = 1.0;
+        public double HasteAutoModHeal { get; set; } = 1.0;
+        public double HasteAutoModDmg { get; set; } = 1.0;
         public HashSet<CIMSource> CIMSources { get; set; } = [];
+        public HashSet<HCGMSource> HCGMSources { get; set; } = [];
 
         public bool IgnoreDr {  get; set; } = false;
         public bool LeechSource { get; set; } = true;
@@ -118,17 +131,15 @@ namespace Beaversims.Core
                     else
                     {
                         hccgm += source.CIMReliance * sourceAbility.CIMDerivedQIM(user);
-
                     }
-
                 }
                 return hccgm;
             }
         }
 
-        public double FullHCGM(User user, int i)
+        public double TrueQIM(User user, int i)
         {
-            if (CIMSources.Count == 0) { return CIM * user.HasteCapCTLossMod(i); } // * HCGM
+            if (CIMSources.Count == 0) { return CIM * user.HasteCapCTLossMod(i);} // * HCGM
             else
             {
                 var abilities = user.Abilities;
@@ -142,27 +153,58 @@ namespace Beaversims.Core
                     }
                     else
                     {
-
                         hccgm += source.CIMReliance * sourceAbility.CIMDerivedQIM(user);
-                        //if (Name == SunSear.name)
-                        //{
-
-                        //    Console.WriteLine(source.Name);
-                        //    Console.WriteLine(source.CIMReliance);
-                        //    Console.WriteLine(sourceAbility.CIMDerivedHCGM(user));
-                        //    Console.WriteLine(hccgm);
-                        //    Console.WriteLine("----");
-
-
-                        //}
-                        //hccgm += source.CIMReliance * sourceAbility.FullHCGM(user);
-
                     }
-
                 }
                 return hccgm * user.HasteCapCTLossMod(i); // * HCGM
             }
 
+        }
+
+        public double TrueHealHCGM(User user)
+        {
+            if (HCGMSources.Count == 0) { return HealHCGM; }
+            else
+            {
+                var abilities = user.Abilities;
+                var hcgm = 0.0;
+                foreach (var source in HCGMSources)
+                {
+                    var sourceAbility = abilities.Get(source.Name);
+                    if (sourceAbility.Name == Name)
+                    {
+                        hcgm += source.HCGMReliance * HealHCGM;
+                    }
+                    else
+                    {
+                        hcgm += source.HCGMReliance * sourceAbility.TrueHealHCGM(user);
+                    }
+                }
+                return hcgm;
+            }
+        }
+
+        public double TrueDmgHCGM(User user)
+        {
+            if (HCGMSources.Count == 0) { return DmgHCGM; }
+            else
+            {
+                var abilities = user.Abilities;
+                var hcgm = 0.0;
+                foreach (var source in HCGMSources)
+                {
+                    var sourceAbility = abilities.Get(source.Name);
+                    if (sourceAbility.Name == Name)
+                    {
+                        hcgm += source.HCGMReliance * DmgHCGM;
+                    }
+                    else
+                    {
+                        hcgm += source.HCGMReliance * sourceAbility.TrueDmgHCGM(user);
+                    }
+                }
+                return hcgm;
+            }
         }
 
         public void CIMSourceRelCheck()

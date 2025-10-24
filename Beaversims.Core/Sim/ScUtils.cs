@@ -90,10 +90,13 @@ namespace Beaversims.Core.Sim
             return amount;
         }
 
-        public static double ScaledEffectValue(int ilvl, ItemSlot itemSlot, StatName statName, ScalingData scalingData)
+        public static double ScaledEffectValue(int ilvl, ItemSlot itemSlot, ScalingData scalingData, StatName? statName=null)
         {
             var amount = GetEffectRPP(ilvl, scalingData.Class);
-            amount = ApplyMults(amount, itemSlot, statName, ilvl);
+            if (statName is StatName _statName)
+            {
+                amount = ApplyMults(amount, itemSlot, _statName, ilvl);
+            }
             amount *= scalingData.Coef;
             return amount;
         }
@@ -103,7 +106,7 @@ namespace Beaversims.Core.Sim
             if (hasteScaling) 
             { 
                 var haste = (Haste)evt.AltEvents[i].UserStats.Get(StatName.Haste);
-                var hasteFactor = 1 + ((haste.Eff / haste.PercentRate) / 100);
+                var hasteFactor = 1 + ((haste.TrueEff() / haste.PercentRate) / 100);
                 return rppm * hasteFactor;
             }
             return rppm;

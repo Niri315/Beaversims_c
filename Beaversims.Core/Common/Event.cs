@@ -27,7 +27,7 @@ namespace Beaversims.Core
             };
         }
 
-        public void UpdateAltGainsFromEvtData(ThroughputEvent evt, double gainRaw, int i)
+        public void UpdateAltGainsFromEvtData(TpEvent evt, double gainRaw, int i)
         {
             // Note: Tested throughly. 100% correct to use alt converts for alt gains.
             // Currently doesnt seem to be any issue with negative eff amounts from crit, but this could change.
@@ -48,7 +48,7 @@ namespace Beaversims.Core
         public AmountContainer Amount { get; set; }
         public StatTracker? UserStats { get; set; }
         public Dictionary<StatName, double> SimStatEffInc { get; set; } = Utils.InitStatDict();
-
+        //public Dictionary<StatName, double> SimStatRatingInc { get; set; } = Utils.InitStatDict();
         public double NukeRaw { get; set; } = 0.0;
         //public StatTracker StatDiffs { get; set; } = new();
         public AltEvent() 
@@ -152,7 +152,7 @@ namespace Beaversims.Core
                 }
                 altStats.UpdateAllStats();
                 var altEvent = new AltEvent();
-                if (evt is ThroughputEvent _tEvt)
+                if (evt is TpEvent _tEvt)
                 {
                     altEvent.Amount = _tEvt.Amount.Clone();
                 }
@@ -169,7 +169,7 @@ namespace Beaversims.Core
         }
     }
 
-    internal abstract class ThroughputEvent : Event
+    internal abstract class TpEvent : Event
     {
         public bool Tick { get; set; } = false;
         public bool Crit { get; set; } = false;
@@ -217,12 +217,12 @@ namespace Beaversims.Core
 
     }
 
-    internal sealed class DamageEvent : ThroughputEvent
+    internal sealed class DamageEvent : TpEvent
     {
 
     }
 
-    internal sealed class HealEvent : ThroughputEvent
+    internal sealed class HealEvent : TpEvent
     {
 
 

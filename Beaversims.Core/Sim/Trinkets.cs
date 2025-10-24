@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Beaversims.Core.Sim.SpecialEffects
 {
-    internal class AstralAntenna : SpecialEffect
+    internal class AstralAntenna : StatProcEffect
     {
         public static readonly HashSet<string> Sources = ["Astral Antenna"];
         public Data.StatBuffs.AstralAntenna Buff { get; }
@@ -16,7 +16,7 @@ namespace Beaversims.Core.Sim.SpecialEffects
         public Dictionary<int, double> Amounts { get; protected set; } = [];
 
         private static readonly Random random = new Random();
-        public const double successRate = 0.5;
+        public const double successRate = 0.95;
 
         //public const double Delay = 2;
 
@@ -36,38 +36,45 @@ namespace Beaversims.Core.Sim.SpecialEffects
             {
                 var id = gearSet.Key;
                 var ilvl = gearSet.Value;
-                RatingInc[id][statName] = 0.0;
-
-                Amounts[id] = ScUtils.ScaledEffectValue(ilvl, ItemSlots[id], statName, statMod.ScalingData);
+                //RatingIncTracker[id][statName] = 0.0;
+                
+                Amounts[id] = ScUtils.ScaledEffectValue(ilvl, ItemSlots[id], statMod.ScalingData, statName);
+              
             }
         }
         public override void Call(Event evt, User user)
         {
             int expired = buffEnds.RemoveAll(end => end <= evt.Timestamp);
-
-            if (expired > 0 )
+            if (expired > 0)
             {
+                //Console.WriteLine($"{evt.Timestamp}: Removal");
                 foreach (var id in Amounts.Keys)
                 {
-                    user.AltGearSets[id].IncRatings[statName] -= Amounts[id] * expired;
-                    RatingInc[id][statName] -= Amounts[id] * expired;
+                   
+                    user.AltGearSets[id].SimIncRatings[statName] -= Amounts[id] * expired;
+                  
                 }
+             
             }
-           
+
             if (evt.Heartbeat)
             {
                 var isProc = Proc.ProcessProcAttempt(ref blp, Rppm, ref lastAttempt, evt.Timestamp);
                 if (isProc)
                 {
                     if (random.NextDouble() > successRate) { return; }
-                    //Console.WriteLine()
-                    var duration = evt.Timestamp + Buff.Duration;
+                    var duration = Buff.Duration;
                     buffEnds.Add(evt.Timestamp + duration);
+                    //Console.WriteLine($"{evt.Timestamp}: Proc");
                     foreach (var id in Amounts.Keys)
                     {
-                        user.AltGearSets[id].IncRatings[statName] += Amounts[id];
-                        RatingInc[id][statName] += Amounts[id];
+                  
+                        user.AltGearSets[id].SimIncRatings[statName] += Amounts[id];
+                       
+                        //RatingInc[id][statName] += Amounts[id];
+
                     }
+                 
                 }
 
             }

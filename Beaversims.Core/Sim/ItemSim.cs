@@ -21,8 +21,10 @@ namespace Beaversims.Core.Sim
         public GainDict Gains { get; set; }
 
         // For non hasted stat trinket sims.
-        public Dictionary<StatName, double> IncRatings { get; set; } = new Dictionary<StatName, double>();
+        public Dictionary<StatName, double> SimIncRatings { get; set; } = new Dictionary<StatName, double>();
         public Dictionary<StatName, double> IncEffs{ get; set; } = new Dictionary<StatName, double>();
+        public List<HasteProcEffect> HasteProcEffects { get; set; } = [];
+        public double ManaGain { get; set; } = 0;
         public double HasteCapCTLoss { get; set; } = 0;
 
         // Match the Dictionary ctor-overload your code depends on
@@ -30,8 +32,9 @@ namespace Beaversims.Core.Sim
         {
             _items = new Dictionary<ItemSlot, GainItem?>(comparer);
             Gains = Utils.InitGainDict();
-            IncRatings = Utils.InitStatDict();
+            SimIncRatings = Utils.InitStatDict();
             IncEffs = Utils.InitStatDict();
+            HasteProcEffects = [];
 
         }
 
@@ -42,8 +45,9 @@ namespace Beaversims.Core.Sim
             Name = name;
             Id = id;
             Gains = Utils.InitGainDict();
-            IncRatings = Utils.InitStatDict();
+            SimIncRatings = Utils.InitStatDict();
             IncEffs = Utils.InitStatDict();
+            HasteProcEffects = [];
         }
 
         // Preserve dictionary-like indexer usage: gearset[ItemSlot.Head]
@@ -82,8 +86,9 @@ namespace Beaversims.Core.Sim
                 Name = source.Name,
                 Id = source.Id,
                 Gains = CloneGains(source.Gains), // important
-                IncRatings = new Dictionary<StatName, double>(),
-                IncEffs = new Dictionary<StatName, double>()
+                SimIncRatings = Utils.InitStatDict(),
+                IncEffs = Utils.InitStatDict(),
+                HasteProcEffects = []
             };
 
             foreach (var kv in source)
@@ -127,18 +132,46 @@ namespace Beaversims.Core.Sim
                 {
                     var effect = SpecialEffectFactory.CreateFromName(gear.Name);
                     if (effect == null) continue;
-
-                    var existing = user.SimEffects.FirstOrDefault(e => e.GetType() == effect.GetType());
-                    var eff = existing ?? effect;
-
-                    eff.Ilvls[gearSet.Id] = gear.Ilvl;
-                    eff.ItemSlots[gearSet.Id] = gear.ItemSlot;
-                    eff.RatingInc[gearSet.Id] = new Dictionary<StatName, double>();
-
-                    if (existing == null)
+                    
+                    if (effect is ProcEffect procEffect)
                     {
-                        user.SimEffects.Add(eff);
+                        if (procEffect is HasteProcEffect hasteProcEffect)
+                        {
+                            hasteProcEffect.Ilvl = gear.Ilvl;
+                            hasteProcEffect.ItemSlot = gear.ItemSlot;
+                            gearSet.HasteProcEffects.Add(hasteProcEffect);
+                            user.AllEffects.Add(hasteProcEffect);
+                        }
+                        else
+                        {
+                            var existing = user.NonHasteProcEffects.FirstOrDefault(e => e.GetType() == effect.GetType());
+                            var eff = existing ?? effect;
+                            
+                            eff.Ilvls[gearSet.Id] = gear.Ilvl;
+                            eff.ItemSlots[gearSet.Id] = gear.ItemSlot;
+
+                            if (existing == null)
+                            {
+                                user.NonHasteProcEffects.Add((NonHasteProcEffect)eff);
+                                user.AllEffects.Add(eff);
+                            }
+                        }
                     }
+                    else  // On use effect
+                    {
+                        var existing = user.OnUseEffects.FirstOrDefault(e => e.GetType() == effect.GetType());
+                        var eff = existing ?? effect;
+
+                        eff.Ilvls[gearSet.Id] = gear.Ilvl;
+                        eff.ItemSlots[gearSet.Id] = gear.ItemSlot;
+                        Console.WriteLine(eff.Name);
+                        if (existing == null)
+                        {
+                            user.OnUseEffects.Add((OnUseEffect)eff);
+                            user.AllEffects.Add(eff);
+                        }
+                    }
+                   
 
                 }
 
@@ -267,21 +300,72 @@ namespace Beaversims.Core.Sim
             user.AltGearSets.Add(altGearSet0);
 
 
+            var trinketTest0 = DeepCloneGearset(user.Gear);
+            trinketTest0.Name = "Antenna";
+            trinketTest0[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Astral Antenna", 723, ItemSlot.Trinket1, []);
+            user.AltGearSets.Add(trinketTest0);
 
-            var HasteTest1 = DeepCloneGearset(user.Gear);
-            HasteTest1.Name = "Haste +1";
-            HasteTest1[ItemSlot.Head].addStatRating(StatName.Haste, 1);
-            user.AltGearSets.Add(HasteTest1);
+            var trinketTest1 = DeepCloneGearset(user.Gear);
+            trinketTest1.Name = "Tyrande meme";
+            trinketTest1[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Memento of Tyrande", 723, ItemSlot.Trinket1, []);
+            user.AltGearSets.Add(trinketTest1);
 
-            var HasteTest3 = DeepCloneGearset(user.Gear);
-            HasteTest3.Name = "Haste - 10000";
-            HasteTest3[ItemSlot.Head].addStatRating(StatName.Haste, -10000);
-            user.AltGearSets.Add(HasteTest3);
+            var trinketTest2 = DeepCloneGearset(user.Gear);
+            trinketTest2.Name = "skull of Guldan";
+            trinketTest2[ItemSlot.Trinket1] = ItemGenerator.CreateItem("The Skull of Gul'Dan", 723, ItemSlot.Trinket1, []);
+            user.AltGearSets.Add(trinketTest2);
 
-            var HasteTest2 = DeepCloneGearset(user.Gear);
-            HasteTest2.Name = "Haste + 10000";
-            HasteTest2[ItemSlot.Head].addStatRating(StatName.Haste, 10000);
-            user.AltGearSets.Add(HasteTest2);
+
+            var trinketTest3 = DeepCloneGearset(user.Gear);
+            trinketTest3.Name = "Elemental Focus Stone";
+            trinketTest3[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Elemental Focus Stone", 723, ItemSlot.Trinket1, []);
+            user.AltGearSets.Add(trinketTest3);
+
+            var trinketTest4 = DeepCloneGearset(user.Gear);
+            trinketTest4.Name = "Energy Siphon";
+            trinketTest4[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Energy Siphon", 723, ItemSlot.Trinket1, []);
+            user.AltGearSets.Add(trinketTest4);
+
+            var trinketTest5 = DeepCloneGearset(user.Gear);
+            trinketTest5.Name = "Eye of the Broodmother";
+            trinketTest5[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Eye of the Broodmother", 723, ItemSlot.Trinket1, []);
+            user.AltGearSets.Add(trinketTest5);
+
+            var trinketTest6 = DeepCloneGearset(user.Gear);
+            trinketTest6.Name = "Flare of the Heavens";
+            trinketTest6[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Flare of the Heavens", 723, ItemSlot.Trinket1, []);
+            user.AltGearSets.Add(trinketTest6);
+
+            var trinketTest7 = DeepCloneGearset(user.Gear);
+            trinketTest7.Name = "Living Flame";
+            trinketTest7[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Living Flame", 723, ItemSlot.Trinket1, []);
+            user.AltGearSets.Add(trinketTest7);
+
+
+            var trinketTest8 = DeepCloneGearset(user.Gear);
+            trinketTest8.Name = "Pandora's Plea";
+            trinketTest8[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Pandora's Plea", 723, ItemSlot.Trinket1, []);
+            user.AltGearSets.Add(trinketTest8);
+
+            var trinketTest9 = DeepCloneGearset(user.Gear);
+            trinketTest9.Name = "Scale of Fates";
+            trinketTest9[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Scale of Fates", 723, ItemSlot.Trinket1, []);
+            user.AltGearSets.Add(trinketTest9);
+
+            var trinketTest10 = DeepCloneGearset(user.Gear);
+            trinketTest10.Name = "Show of Faith";
+            trinketTest10[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Show of Faith", 723, ItemSlot.Trinket1, []);
+            user.AltGearSets.Add(trinketTest10);
+
+            //var HasteTest3 = DeepCloneGearset(user.Gear);
+            //HasteTest3.Name = "Haste - 10000";
+            //HasteTest3[ItemSlot.Head].addStatRating(StatName.Haste, -10000);
+            //user.AltGearSets.Add(HasteTest3);
+
+            //var HasteTest2 = DeepCloneGearset(user.Gear);
+            //HasteTest2.Name = "Haste + 10000";
+            //HasteTest2[ItemSlot.Head].addStatRating(StatName.Haste, 10000);
+            //user.AltGearSets.Add(HasteTest2);
 
             //var hasteTest1 = DeepCloneGearset(user.Gear);
             //hasteTest1.Name = "Haste + 500";

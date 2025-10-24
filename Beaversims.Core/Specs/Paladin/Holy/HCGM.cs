@@ -12,11 +12,11 @@ namespace Beaversims.Core.Specs.Paladin.Holy
 
     {
         // Currently in almost all situations both high and low priority casts are holy power generating.
-        // More casts will not affect spenders more than the rest hccgm does.
-        // It is appropriate to deal with holy power spenders as normal rest hccgm casts.
-        // If this changes we should make spenders hccgm be affected and scale alongside hccgm of generators.
+        // More casts will not affect spenders more than the rest CIM does.
+        // It is therefore appropriate to deal with holy power spenders as normal rest CIM casts.
+        // If this changes we should make spenders CIM be affected and scale alongside CIM of generators.
 
-        public static void TrackACSource(ThroughputEvent evt, User user)
+        public static void TrackACSource(TpEvent evt, User user)
         {
             var ac = (Abilities.AvengingCrusader)user.Abilities.Get(Abilities.AvengingCrusader.name);
             if (evt.IsDmgDoneEvent())
@@ -51,6 +51,8 @@ namespace Beaversims.Core.Specs.Paladin.Holy
             var acCsRatio = ac.csSourceDmg / (ac.judgSourceDmg + ac.csSourceDmg);
             ac.CIMSources.Add(new CIMSource(judg.Name, acJudgRatio));
             ac.CIMSources.Add(new CIMSource(cs.Name, acCsRatio));
+            ac.HCGMSources.Add(new HCGMSource(judg.Name, acJudgRatio));
+            ac.HCGMSources.Add(new HCGMSource(cs.Name, acCsRatio));
         }
 
         private static void RemoveJudgCastScaling(User user, Fight fight, Ability judg)
@@ -79,13 +81,20 @@ namespace Beaversims.Core.Specs.Paladin.Holy
 
         private static void ConsecHCCGMSource(User user, Ability judg, Ability consec)
         {
+            // Note due to the limit 1 of normal concec, we cant really have it as a normal cast scaler.
+            
             if (user.HasTalent(Talents.RighteousJudgment.id))
             {
-                double consecJudgRatio = (double)judg.Casts / (judg.Casts + consec.Casts);
-                double consecRatio = (double)consec.Casts / (judg.Casts + consec.Casts);
+                //double consecJudgRatio = (double)judg.Casts / (judg.Casts + consec.Casts);
+                //double consecRatio = (double)consec.Casts / (judg.Casts + consec.Casts);
 
-                consec.CIMSources.Add(new CIMSource(judg.Name, consecJudgRatio));
-                consec.CIMSources.Add(new CIMSource(consec.Name, consecRatio));
+                //consec.CIMSources.Add(new CIMSource(judg.Name, consecJudgRatio));
+                //consec.CIMSources.Add(new CIMSource(consec.Name, consecRatio));
+                consec.CIMSources.Add(new CIMSource(judg.Name, 1.0));
+            }
+            else
+            {
+                consec.RemoveHST(user, HasteScalerType.Cast);
             }
         }
 
@@ -150,45 +159,51 @@ namespace Beaversims.Core.Specs.Paladin.Holy
 
         }
 
-
-        public static void ModifyCIMSources(User user, Fight fight)
+        public static void TrackAnshe(Event evt, User user)
         {
-     
-            var judg = user.Abilities.Get(Abilities.Judgment.name);
-            var cs = user.Abilities.Get(Abilities.CrusaderStrike.name);
-            var ac = (Abilities.AvengingCrusader)user.Abilities.Get(Abilities.AvengingCrusader.name);
-            var aw = (Abilities.AvengingWrath)user.Abilities.Get(Abilities.AvengingWrath.name);
-            var sunsAvatar = (Abilities.SunsAvatar)user.Abilities.Get(Abilities.SunsAvatar.name);
-            var sunSear = (Abilities.SunSear)user.Abilities.Get(Abilities.SunSear.name);
-            var divineGuidance = (Abilities.DivineGuidance)user.Abilities.Get(Abilities.DivineGuidance.name);
-            var holyShock = (HolyShock)user.Abilities.Get(Abilities.HolyShock.name);
-            var consec = user.Abilities.Get(Abilities.Consecration.name);
-            var lod = (Abilities.LightOfDawn)user.Abilities.Get(Abilities.LightOfDawn.name);
+            if (!user.HasTalent(Talents.BlessingOfAnshe.id)) { return; }
+            var anshe = (Talents.BlessingOfAnshe)user.Talents[Talents.BlessingOfAnshe.id];
 
-
-            AcHCCGMSource(ac, judg, cs);
-            RemoveJudgCastScaling(user, fight, judg);
-            HolyShockCdTime(holyShock);
-            ConsecHCCGMSource(user, judg, consec);
-            SunsAvatarHCCGMSource(user, sunsAvatar);
-            SunSearHCCGMSource(user, sunSear, lod, holyShock);
-            DivineGuidanceHCCGMSource(user, divineGuidance);
-            HolyShockHCGM(user, holyShock);
-            EmpyreanLod(lod);
-
+            if (evt is BuffEvent bEvt && (bEvt.BuffApplyEvent || bEvt.BuffRefreshEvent) && bEvt.AbilityId == Talents.BlessingOfAnshe.buffId)
+            {
+                anshe.Active = true;
+                anshe.BuffEnd = evt.Timestamp + anshe.BuffDur;
+            }
+            if (evt.Timestamp > anshe.BuffEnd) 
+            {
+                anshe.Active = false;
+            }
+            if (evt.AbilityName == HolyShock.name && anshe.Active && (evt.IsDmgDoneEvent() ||evt.IsHealDoneEvent()))
+            { 
+                TpEvent tEvt = (TpEvent)evt;
+                var pureAmount = tEvt.Amount.Raw / (1.0 + anshe.Coef);
+                var ansheVal = pureAmount * anshe.Coef;
+                if (evt.IsDmgDoneEvent())
+                {
+                    anshe.DmgValue += ansheVal;
+                }
+                else if (evt.IsHealDoneEvent())
+                {
+                    anshe.HealValue += ansheVal;
+                    Console.WriteLine($"Anshe val: {ansheVal} Original: {tEvt.Amount.Raw}");
+                }
+                anshe.Active = false;
+            }
         }
 
-        private static void EmpyreanLod(LightOfDawn lod)
+
+        private static void EmpyreanLod(User user, LightOfDawn lod)
         {
+            if (!user.HasTalent(Talents.EmpyreanLegacy.id)) { return; }
             var pureLodhpc = lod.Heal.Raw / (lod.Casts + (lod.EmpCasts * Talents.EmpyreanLegacy.coef));
             //lod.HCGM *= pureLodhpc * lod.Casts / lod.Heal.Raw;
-            var hcgm = pureLodhpc * lod.Casts / lod.Heal.Raw;
-            lod.CIMSources.Add(new CIMSource(lod.Name, hcgm));
-            lod.CIMSources.Add(new CIMSource(Shared.Abilities.ZeroCIMDummy.name, 1 - hcgm));
+            var qim = pureLodhpc * lod.Casts / lod.Heal.Raw;
+            lod.CIMSources.Add(new CIMSource(lod.Name, qim));
+            lod.CIMSources.Add(new CIMSource(Shared.Abilities.ZeroCIMDummy.name, 1 - qim));
 
         }
 
-        public static void HolyShockHCGM(User user, HolyShock holyShock)
+        public static void HolyShockCIM(User user, HolyShock holyShock)
         {
             // Note Second sunrise: Procs from all Holy Shocks EXCEPT for the 4/5 from divine toll, and the 2 extra from rising sunlight.
 
@@ -232,33 +247,58 @@ namespace Beaversims.Core.Specs.Paladin.Holy
     
             holyShock.CIMSources.Add(new CIMSource(holyShock.Name, castValue / totalValue));
             holyShock.CIMSources.Add(new CIMSource(divineToll.Name, nonCastValue / totalValue));
-            //foreach (var source in holyShock.CIMSources)
-            //{
-            //    Console.WriteLine(source.CIMReliance);
-            //    Console.WriteLine(source.Name);
-            //    Console.WriteLine(user.Abilities.Get(source.Name).CIMDerivedHCGM(user));
 
-            //}
-            //Console.WriteLine(holyShock.FullHCGM(user, 0));
-            //Console.WriteLine(holyShock.HCGM);
-            //Console.WriteLine(holyShock.CIM);
             var sunSear = (Abilities.SunSear)user.Abilities.Get(Abilities.SunSear.name);
             //Console.WriteLine(sunSear.FullHCGM(user, 0));
-
-
-
         }
 
-        //public static void ModifyHCGM(User user, Fight fight)
-        //{
-        //    var judg = user.Abilities.Get(Abilities.Judgment.name);
-        //    var holyShock = (HolyShock)user.Abilities.Get(Abilities.HolyShock.name);
-        //    var cs = user.Abilities.Get(Abilities.CrusaderStrike.name);
-        //    var ac = (Abilities.AvengingCrusader)user.Abilities.Get(Abilities.AvengingCrusader.name);
-        //    var lod = (Abilities.LightOfDawn)user.Abilities.Get(Abilities.LightOfDawn.name);
+        public static void HolyShockHCGM(User user, HolyShock holyShock, OverflowingLight oLight)
+        {
+            // Removing value from Anshe from Cast and placing it in Auto instead.
+            if (!user.HasTalent(Talents.BlessingOfAnshe.id)) { return; }
+            var anshe = (Talents.BlessingOfAnshe)user.Talents[Talents.BlessingOfAnshe.id];
 
-        //    //holyShock.AlterHCGM(user);
+            var totalHeal = holyShock.Heal.Raw;
+            var totalDmg = holyShock.Damage.Dmg;
+            var ansheRatioHeal = anshe.HealValue / totalHeal;
+            var ansheRatioDmg = anshe.DmgValue / totalDmg;
 
-        //}
+            holyShock.HealHCGM *= 1 - ansheRatioHeal;
+            holyShock.DmgHCGM *= 1 - ansheRatioDmg;
+            holyShock.HasteAutoModHeal *= ansheRatioHeal;
+            holyShock.HasteAutoModDmg *= ansheRatioDmg;
+            oLight.HasteAutoModHeal *= ansheRatioHeal;
+            oLight.HasteAutoModDmg *= ansheRatioDmg;
+        }
+
+
+        public static void ModifyCIMSources(User user, Fight fight)
+        {
+
+            var judg = user.Abilities.Get(Abilities.Judgment.name);
+            var cs = user.Abilities.Get(Abilities.CrusaderStrike.name);
+            var ac = (Abilities.AvengingCrusader)user.Abilities.Get(Abilities.AvengingCrusader.name);
+            var aw = (Abilities.AvengingWrath)user.Abilities.Get(Abilities.AvengingWrath.name);
+            var sunsAvatar = (Abilities.SunsAvatar)user.Abilities.Get(Abilities.SunsAvatar.name);
+            var sunSear = (Abilities.SunSear)user.Abilities.Get(Abilities.SunSear.name);
+            var divineGuidance = (Abilities.DivineGuidance)user.Abilities.Get(Abilities.DivineGuidance.name);
+            var holyShock = (HolyShock)user.Abilities.Get(Abilities.HolyShock.name);
+            var oLight = (OverflowingLight)user.Abilities.Get(Abilities.OverflowingLight.name);
+
+            var consec = user.Abilities.Get(Abilities.Consecration.name);
+            var lod = (Abilities.LightOfDawn)user.Abilities.Get(Abilities.LightOfDawn.name);
+
+
+            AcHCCGMSource(ac, judg, cs);
+            RemoveJudgCastScaling(user, fight, judg);
+            HolyShockCdTime(holyShock);
+            ConsecHCCGMSource(user, judg, consec);
+            SunsAvatarHCCGMSource(user, sunsAvatar);  // Remove at midnight.
+            SunSearHCCGMSource(user, sunSear, lod, holyShock);
+            DivineGuidanceHCCGMSource(user, divineGuidance);
+            HolyShockCIM(user, holyShock);
+            HolyShockHCGM(user, holyShock, oLight);
+            EmpyreanLod(user, lod);
+        }
     }
 }

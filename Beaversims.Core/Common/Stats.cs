@@ -16,13 +16,18 @@ namespace Beaversims.Core
         public double Rating { get; set; } = 0.0;
         public double Base { get; set; } = 0.0;
         public double Multi { get; set; } = 1.0;
-        public double Eff { get; set; } = 0.0;
+        protected double Eff { get; set; } = 0.0;
+        public double SimExtraEff { get; set; } = 0.0;
 
         public abstract StatName Name { get; }
         public abstract int Level { get; }
         public abstract double GetEffDiff(double addRating, bool removal);
         public abstract void SetEff();
         public abstract void FullUpdate();
+        public double TrueEff()
+        {
+            return Eff + SimExtraEff;
+        }
         public double ApplyMult(double amount)
         {
             return amount * Multi;

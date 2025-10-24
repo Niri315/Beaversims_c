@@ -172,4 +172,27 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Talents
 
         }
     }
+    internal class DivineInspiration : Talent
+    {
+        public const int id = 117877;
+        public DivineInspiration(int rank) : base(id, rank)
+        {
+
+        }
+    }
+    internal class BlessingOfAnshe : Talent
+    {
+        public const int id = 117668;
+        public const int buffId = 445204;
+        public double Coef { get; }
+        public double HealValue { get; set; } = 0;
+        public double DmgValue { get; set; } = 0;
+        public bool Active { get; set; } = false;
+        public double BuffDur { get; set; } = 20;
+        public double BuffEnd { get; set; } = 0;
+        public BlessingOfAnshe(int rank) : base(id, rank)
+        {
+            Coef = rank * 2.0;
+        }
+    }
 }

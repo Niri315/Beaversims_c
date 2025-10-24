@@ -56,7 +56,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
             }
 
         }
-        public static void BeaconGains(ThroughputEvent evt, User user, StatName statName, double gainRaw, GainType gainType)
+        public static void BeaconGains(TpEvent evt, User user, StatName statName, double gainRaw, GainType gainType)
         {
             if (IsBeaconEvent((HealEvent)evt, user))
             {
@@ -72,7 +72,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
                 Shared.DupliEffects.LeechSourceGains(evt, user, statName, dupliGainNsnsnaraw, gainType);
             }
         }
-        public static void altBeacon(List<Event> events, User user, int i)
+        public static void altBeacon(List<TpEvent> events, User user, int i)
         {
             var beaconOfLight = (Abilities.BeaconOfLight)user.Abilities.Get(Abilities.BeaconOfLight.name);
 
@@ -91,12 +91,12 @@ namespace Beaversims.Core.Specs.Paladin.Holy
             }
             foreach (var evt in events)
             {
-                if (evt.AbilityName == Abilities.BeaconOfLight.name && evt.AbilityId != Abilities.BeaconOfLight.polId && evt is ThroughputEvent tEvt)
+                if (evt.AbilityName == Abilities.BeaconOfLight.name && evt.AbilityId != Abilities.BeaconOfLight.polId)
                 {
 
                     var altEvent = evt.AltEvents[i];
                     var gainRaw = altEvent.Amount.Raw * beaconOfLight.AltHypoTrueRawR(i) - (altEvent.Amount.Raw + altEvent.NukeRaw);
-                    altEvent.Amount.UpdateAltGainsFromEvtData(tEvt, gainRaw, i);
+                    altEvent.Amount.UpdateAltGainsFromEvtData(evt, gainRaw, i);
                     
                 }
             }
@@ -132,7 +132,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
 
         }
 
-        public static void altSelfless(List<Event> events, User user, int i)
+        public static void altSelfless(List<TpEvent> events, User user, int i)
         {
             if (user.HasTalent(Talents.SelflessHealer.id))
             {
@@ -153,12 +153,12 @@ namespace Beaversims.Core.Specs.Paladin.Holy
                 }
                 foreach (var evt in events)
                 {
-                    if (evt.AbilityName == selfless_a.Name && evt is ThroughputEvent tEvt)
+                    if (evt.AbilityName == selfless_a.Name)
                     {
                      
                         var altEvent = evt.AltEvents[i];
                         var gainRaw = altEvent.Amount.Raw * selfless_a.AltHypoTrueRawR(i) - altEvent.Amount.Raw;
-                        altEvent.Amount.UpdateAltGainsFromEvtData(tEvt, gainRaw, i);
+                        altEvent.Amount.UpdateAltGainsFromEvtData(evt, gainRaw, i);
                         
                     }
                 }

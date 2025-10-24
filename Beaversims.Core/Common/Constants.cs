@@ -13,9 +13,9 @@ namespace Beaversims.Core
         public const double BlEffectRating = 30 * Haste.percentRate;
         public const int curVantusId = 1236891; //Manaforge omega
 
-        public const int iterationCount = 100;
-        public const bool swOption = true;
-        public const bool deactivateSims = true; // For testing.
+        public const int iterationCount = 500;
+        public const bool swOption = false;
+        public const bool deactivateSims = false; // For testing.
 
 
     }

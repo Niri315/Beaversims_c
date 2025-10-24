@@ -9,7 +9,7 @@ namespace Beaversims.Core
 {
     internal static class BuffTracker
     {
-        public static void TrackBuffs(Event evt, UnitRepo allUnits, Logger statLogger = null)
+        public static void TrackBuffs(Event evt, UnitRepo allUnits, Logger statLogger = null, Logger refStatLogger = null)
         {
             var user = allUnits.GetUser();
 
@@ -24,15 +24,15 @@ namespace Beaversims.Core
 
                 if (buffEvent.BuffApplyEvent)
                 {
-                    buffEvent.TargetUnit.AddBuff(buffName, buffId, sourceUnit, buffStacks, timestamp, statLogger);
+                    buffEvent.TargetUnit.AddBuff(buffName, buffId, sourceUnit, buffStacks, timestamp, statLogger, refStatLogger);
                 }
                 else if (buffEvent.BuffRemoveEvent)
                 {
-                    buffEvent.TargetUnit.RemoveBuff(buffId, sourceUnit, statLogger, timestamp);
+                    buffEvent.TargetUnit.RemoveBuff(buffId, sourceUnit, statLogger, timestamp, refStatLogger);
                 }
                 else if (buffEvent.BuffStackEvent)
                 {
-                    buffEvent.TargetUnit.ChangeBuffStack(buffName, buffId, sourceUnit, buffStacks, statLogger, timestamp);
+                    buffEvent.TargetUnit.ChangeBuffStack(buffName, buffId, sourceUnit, buffStacks, statLogger, timestamp, refStatLogger);
                 }
             }
             if (user.HasBuff(Shared.Abilities.BlessingOfSummer.buffId))

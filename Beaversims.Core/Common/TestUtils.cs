@@ -37,8 +37,10 @@ namespace Beaversims.Core.Common
                 Console.WriteLine();
             }
         }
-        public static void PrintAltGearResults(List<GearSet> gearSets)
+        public static void PrintAltGearResults(Results results)
         {
+            var gearSets = results.altGearSets;
+            var originals = results.OriginalTotals;
             if (gearSets == null || gearSets.Count == 0)
             {
                 Console.WriteLine("No gear sets to display.");
@@ -74,6 +76,20 @@ namespace Beaversims.Core.Common
                 Console.Write($"{gt,10}");
             Console.WriteLine();
 
+            Console.Write($"{"Originals".PadRight(nameColumnWidth)}");
+            double val_o = originals[GainType.Eff] + originals[GainType.Dmg] + originals[GainType.Def];
+            Console.Write($"{val_o,11:0.00}");
+
+            foreach (var gt in orderedGainTypes)
+            {
+                double val = 0;
+                if (originals != null && originals.TryGetValue(gt, out double gain))
+                    val = gain;
+
+                Console.Write($"{val,11:0.00}");
+            }
+
+            Console.WriteLine();
             // Rows
             foreach (var gs in gearSets)
             {
@@ -81,7 +97,7 @@ namespace Beaversims.Core.Common
                 Console.Write($"{name.PadRight(nameColumnWidth)}");
 
                 double val2 = gs.Gains[GainType.Eff] + gs.Gains[GainType.Dmg] + gs.Gains[GainType.Def];
-                Console.Write($"{val2,10:0.00}");
+                Console.Write($"{val2,11:0.00}");
 
                 foreach (var gt in orderedGainTypes)
                 {
@@ -89,7 +105,7 @@ namespace Beaversims.Core.Common
                     if (gs.Gains != null && gs.Gains.TryGetValue(gt, out double gain))
                         val = gain;
 
-                    Console.Write($"{val,10:0.00}");
+                    Console.Write($"{val,11:0.00}");
                 }
 
                 Console.WriteLine();

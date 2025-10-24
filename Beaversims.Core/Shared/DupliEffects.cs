@@ -11,25 +11,25 @@ namespace Beaversims.Core.Shared
 {
     internal class DupliEffects
     {
-        public static bool IsLeechSourceEvent(ThroughputEvent evt) => !evt.FullyAbsorbed &&
+        public static bool IsLeechSourceEvent(TpEvent evt) => !evt.FullyAbsorbed &&
             evt.TargetUnit is not User &&
             evt.SourceUnit is User &&
             evt.Ability.LeechSource &&
             evt.Ability.CanDupli;
 
-        public static void LeechHypo(ThroughputEvent evt, User user)
+        public static void LeechHypo(TpEvent evt, User user)
         {
             if (user.HasPermaLeech && IsLeechSourceEvent(evt))
             {   
                 var leechAbility = user.Abilities.Get(Abilities.Leech.name);
                 var leechStat = (Leech)evt.UserStats.Get(StatName.Leech);
-                var hypoRaw = evt.Amount.Naraw / (leechStat.PercentRate * 100) * leechStat.Eff;
+                var hypoRaw = evt.Amount.Naraw / (leechStat.PercentRate * 100) * leechStat.TrueEff();
                 hypoRaw = leechStat.ApplyDryMult(hypoRaw);
                 leechAbility.Heal.Hypo += hypoRaw;
             }
         }
 
-        public static void LeechSourceGains(ThroughputEvent evt, User user, StatName statName, double gainNaraw, GainType gainType)
+        public static void LeechSourceGains(TpEvent evt, User user, StatName statName, double gainNaraw, GainType gainType)
         {
             // If called with checking IsLeechSourceGain(), send Naraw.
             // Otherwise, send Nsnsnaraw and check if event qualifies as leech source event.
@@ -39,12 +39,12 @@ namespace Beaversims.Core.Shared
                 gainType = Utils.GainTypeToHeal(gainType);
                 var leechAbility = user.Abilities.Get(Abilities.Leech.name);
                 var leechStat = (Leech)evt.UserStats.Get(StatName.Leech);
-                var gain = gainNaraw * (leechStat.Eff / (leechStat.PercentRate * 100)) * leechAbility.HypoTrueUr();
+                var gain = gainNaraw * (leechStat.TrueEff() / (leechStat.PercentRate * 100)) * leechAbility.HypoTrueUr();
                 gain = leechStat.ApplyDryMult(gain);
                 evt.Gains[statName][gainType] += gain;
             }
         }
-        public static bool IsSummerEvent(User user, ThroughputEvent evt)
+        public static bool IsSummerEvent(User user, TpEvent evt)
 
         {
             var summer = user.Abilities.Get(Abilities.BlessingOfSummer.name);
@@ -58,7 +58,7 @@ namespace Beaversims.Core.Shared
                 && evt.Ability.Name != Abilities.BlessingOfSummer.name;
         }
 
-        public static void SummerHypo(ThroughputEvent evt, User user)
+        public static void SummerHypo(TpEvent evt, User user)
         {
 
             if (IsSummerEvent(user, evt))
@@ -77,7 +77,7 @@ namespace Beaversims.Core.Shared
             }
         }
 
-        public static void SummerGains(ThroughputEvent evt, User user, StatName statName, double gainRaw, Ability ability, bool summerActive, bool absorbAbility, Unit sourceUnit, GainType gainType)
+        public static void SummerGains(TpEvent evt, User user, StatName statName, double gainRaw, Ability ability, bool summerActive, bool absorbAbility, Unit sourceUnit, GainType gainType)
         {
             //if (IsSummerEvent(user, ability, summerActive, sourceUnit, absorbAbility))
             //{
@@ -108,19 +108,19 @@ namespace Beaversims.Core.Shared
         }
 
 
-        public static void SharedHypo(ThroughputEvent evt, User user)
+        public static void SharedHypo(TpEvent evt, User user)
         {
             LeechHypo(evt, user);
             SummerHypo(evt, user);
 
         }
 
-        public static void AltSummerSource(List<Event> events, User user, int i)
+        public static void AltSummerSource(List<TpEvent> events, User user, int i)
         {
             var summer = (Abilities.BlessingOfSummer)user.Abilities.Get(Abilities.BlessingOfSummer.name);
             foreach (var evt in events)
             {
-                if (evt is ThroughputEvent tEvt && IsSummerEvent(user, tEvt))
+                if (IsSummerEvent(user, evt))
                 {
                     var altEvent = evt.AltEvents[i];
                     var hypoAmount = altEvent.Amount.Raw * summer.Coef;
@@ -136,45 +136,45 @@ namespace Beaversims.Core.Shared
             }
             foreach (var evt in events)
             {
-                if (evt.AbilityName == Abilities.BlessingOfSummer.name && evt is ThroughputEvent tEvt)
+                if (evt.AbilityName == Abilities.BlessingOfSummer.name)
                 {
                     var altEvent = evt.AltEvents[i];
                     if (evt.IsHealDoneEvent())
                     {
                         var gainRaw = altEvent.Amount.Raw * summer.AltHypoTrueRawR(i) - (altEvent.Amount.Raw + altEvent.NukeRaw);
-                        altEvent.Amount.UpdateAltGainsFromEvtData(tEvt, gainRaw, i);
+                        altEvent.Amount.UpdateAltGainsFromEvtData(evt, gainRaw, i);
                     }
                     else if (evt.IsDmgDoneEvent())
                     {
                         var gainRaw = altEvent.Amount.Raw * summer.AltHypoTrueDmgR(i) - (altEvent.Amount.Raw + altEvent.NukeRaw);
-                        altEvent.Amount.UpdateAltGainsFromEvtData(tEvt, gainRaw, i);
+                        altEvent.Amount.UpdateAltGainsFromEvtData(evt, gainRaw, i);
                     }
                 }
             }
         }
 
-        public static void AltLeechSource(List<Event> events, User user, int i)
+        public static void AltLeechSource(List<TpEvent> events, User user, int i)
         {
             var leechAbility = (Abilities.Leech)user.Abilities.Get(Abilities.Leech.name);
 
             foreach (var evt in events)
             {
-                if (evt is ThroughputEvent tEvt && user.HasPermaLeech && IsLeechSourceEvent(tEvt))
+                if (user.HasPermaLeech && IsLeechSourceEvent(evt))
                 {
                     var altEvent = evt.AltEvents[i];
                     var leechStat = (Leech)altEvent.UserStats.Get(StatName.Leech);
-                    leechAbility.AltHeal[i].Hypo += altEvent.Amount.Naraw / (leechStat.PercentRate * 100) * leechStat.Eff;
+                    leechAbility.AltHeal[i].Hypo += altEvent.Amount.Naraw / (leechStat.PercentRate * 100) * leechStat.TrueEff();
                 }
             }
 
             foreach (var evt in events)
             {
-                if (evt.AbilityName == Abilities.Leech.name && evt is ThroughputEvent tEvt)
+                if (evt.AbilityName == Abilities.Leech.name)
                 {
 
                     var altEvent = evt.AltEvents[i];
                     var gainRaw = altEvent.Amount.Raw * leechAbility.AltHypoTrueRawR(i) - (altEvent.Amount.Raw + altEvent.NukeRaw);
-                    altEvent.Amount.UpdateAltGainsFromEvtData(tEvt, gainRaw, i);
+                    altEvent.Amount.UpdateAltGainsFromEvtData(evt, gainRaw, i);
 
                 }
             }

@@ -8,25 +8,63 @@ namespace Beaversims.Core.Sim
 {
     internal class SimUtils
     {
-
-        public static List<Event> FetchTimingEvents(List<Event> events, double dur, double cd)
+        public static double VersMod(StatTracker curStats)
         {
-            if (events == null || events.Count == 0)
-                return new List<Event>();
+            var vers = (Vers)curStats.Get(StatName.Vers);
+            return 1 + (vers.SimTempEff() / vers.PercentRate / 100);
+        }
 
-            var timings = UseTimingsCalc(events, dur, cd);
+        public static double VersCritMod(StatTracker curStats)
+        {
+            var crit = (Crit)curStats.Get(StatName.Crit);
+            var vers = (Vers)curStats.Get(StatName.Vers);
+            //Console.WriteLine(1 + ((crit.SimTempEff() / crit.PercentRate / 100)));
+            //Console.WriteLine(VersMod(curStats));
+
+            return (1 + ((crit.SimTempEff() / crit.PercentRate / 100) * (crit.IncHeal - 1))) * VersMod(curStats);
+        }
+
+        public static List<Event> AvailableUseEvents(List<Event> events, List<double> useTimings, double sharedCd)
+        {
+            var availableEvents = new List<Event>();
+            double lastUseTime = double.MinValue;
+
+            foreach (var evt in events)
+            {
+                var timestamp = evt.Timestamp;
+                bool banned = false;
+
+                foreach (var window in useTimings)
+                {
+                    if (timestamp >= window && timestamp < window + sharedCd)
+                    {
+                        banned = true;
+                        break;
+                    }
+                }
+                if (!banned)
+                {
+                    availableEvents.Add(evt);
+                }
+            }
+            return availableEvents;
+        }
+
+        public static List<Event> FetchTimingEvents(List<double> useTimings, List<Event> events, double dur, double cd, int i)
+        {
+
             var activeEvents = new List<Event>();
-
+            //foreach (var timing in useTimings) { Console.WriteLine(timing.ToString()); }
+            
             foreach (var ev in events)
             {
                 var timestamp = ev.Timestamp;
-                foreach (var window in timings)
+                foreach (var window in useTimings)
                 {
-                    // strict inequalities to mirror: if timestamp > window > timestamp - dur
                     if (window < timestamp && window > timestamp - dur)
                     {
                         activeEvents.Add(ev);
-                        break; // avoid duplicates if multiple windows fall in the same event window
+                        break;
                     }
                 }
             }
@@ -34,30 +72,23 @@ namespace Beaversims.Core.Sim
             return activeEvents;
         }
 
-        public static List<double> UseTimingsCalc(
-            List<Event> events,
-            double duration,
-            double cd,
-            Stat? statTarget = null)
+        public static List<double> UseTimingsCalc(List<Event> events, double duration, double cd, int i)
         {
             if (events == null || events.Count == 0)
                 return new List<double>();
 
-            // Assumes events are sorted by time; if not, sort them.
-            // events = events.OrderBy(e => e.Timestamp).ToList();
-
             var samples = new Dictionary<int, double>();
-            int intervalNum = 5; // May need to scale with encounter time
+            int intervalNum = 1;
             double endTime = events[^1].Timestamp;
             var intervals = new List<int>();
 
             // Build interval sample points every 'intervalNum' seconds up to round(end_time)
-            for (int i = 0; i < Math.Round(endTime); i++)
+            for (int z = 0; z < Math.Round(endTime); z++)
             {
-                if (i % intervalNum == 0)
+                if (z % intervalNum == 0)
                 {
-                    samples[i] = 0.0;
-                    intervals.Add(i);
+                    samples[z] = 0.0;
+                    intervals.Add(z);
                 }
             }
 
@@ -73,11 +104,11 @@ namespace Beaversims.Core.Sim
                     amount = tEvt.Amount.Eff;
 
 
-                    foreach (int i in intervals)
+                    foreach (int z in intervals)
                     {
-                        if (i > timestamp - duration && i < timestamp)
+                        if (z > timestamp - duration && z < timestamp)
                         {
-                            samples[i] += amount;
+                            samples[z] += amount;
                         }
                     }
                 }
@@ -93,48 +124,48 @@ namespace Beaversims.Core.Sim
             var maxGain = new double[n];
 
             // DP to compute optimal total gain with cooldown constraint
-            for (int i = 0; i < n; i++)
+            for (int z = 0; z < n; z++)
             {
-                int timestamp = sortedData[i].Key;
-                double amount = sortedData[i].Value;
+                int timestamp = sortedData[z].Key;
+                double amount = sortedData[z].Value;
 
                 // Option 1: don't use at i
-                if (i > 0) maxGain[i] = maxGain[i - 1];
+                if (z > 0) maxGain[z] = maxGain[z - 1];
 
                 // Option 2: use at i
                 double maxGainWithUse = amount;
 
                 // find the last index j whose timestamp <= timestamp - cd
-                int j = i - 1;
+                int j = z - 1;
                 while (j >= 0 && sortedData[j].Key > timestamp - cd)
                     j--;
 
                 if (j >= 0)
                     maxGainWithUse += maxGain[j];
 
-                maxGain[i] = Math.Max(maxGain[i], maxGainWithUse);
+                maxGain[z] = Math.Max(maxGain[z], maxGainWithUse);
             }
 
             // Backtrack to recover chosen timestamps
             var optimalTimestamps = new List<double>();
             {
-                int i = n - 1;
-                while (i >= 0)
+                int z = n - 1;
+                while (z >= 0)
                 {
-                    if (i == 0 || maxGain[i] != maxGain[i - 1])
+                    if (z == 0 || maxGain[z] != maxGain[z - 1])
                     {
                         // we used the timestamp at i
-                        optimalTimestamps.Add(sortedData[i].Key);
+                        optimalTimestamps.Add(sortedData[z].Key);
 
                         // skip indices within cooldown of this choice
-                        int j = i - 1;
-                        while (j >= 0 && sortedData[j].Key > sortedData[i].Key - cd)
+                        int j = z - 1;
+                        while (j >= 0 && sortedData[j].Key > sortedData[z].Key - cd)
                             j--;
-                        i = j;
+                        z = j;
                     }
                     else
                     {
-                        i--;
+                        z--;
                     }
                 }
             }

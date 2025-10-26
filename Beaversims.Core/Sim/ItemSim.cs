@@ -23,9 +23,21 @@ namespace Beaversims.Core.Sim
         // For non hasted stat trinket sims.
         public Dictionary<StatName, double> SimIncRatings { get; set; } = new Dictionary<StatName, double>();
         public Dictionary<StatName, double> IncEffs{ get; set; } = new Dictionary<StatName, double>();
-        public List<HasteProcEffect> HasteProcEffects { get; set; } = [];
+        //public List<HasteProcEffect> HasteProcEffects { get; set; } = [];
+        public List<OnUseEffect> OnUseEffects { get; set; } = [];
+        public List<ProcEffect> ProcEffects { get; set; } = [];
         public double ManaGain { get; set; } = 0;
         public double HasteCapCTLoss { get; set; } = 0;
+
+        public void ResetProcEffects()
+        {
+            SimIncRatings = Utils.InitStatDict();
+            IncEffs = Utils.InitStatDict();
+            foreach (var procEffect in ProcEffects)
+            {
+                procEffect.Reset();
+            }
+        }
 
         // Match the Dictionary ctor-overload your code depends on
         public GearSet(IEqualityComparer<ItemSlot>? comparer = null)
@@ -34,7 +46,8 @@ namespace Beaversims.Core.Sim
             Gains = Utils.InitGainDict();
             SimIncRatings = Utils.InitStatDict();
             IncEffs = Utils.InitStatDict();
-            HasteProcEffects = [];
+            OnUseEffects = [];
+            ProcEffects = [];
 
         }
 
@@ -47,7 +60,8 @@ namespace Beaversims.Core.Sim
             Gains = Utils.InitGainDict();
             SimIncRatings = Utils.InitStatDict();
             IncEffs = Utils.InitStatDict();
-            HasteProcEffects = [];
+            OnUseEffects = [];
+            ProcEffects = [];
         }
 
         // Preserve dictionary-like indexer usage: gearset[ItemSlot.Head]
@@ -88,7 +102,8 @@ namespace Beaversims.Core.Sim
                 Gains = CloneGains(source.Gains), // important
                 SimIncRatings = Utils.InitStatDict(),
                 IncEffs = Utils.InitStatDict(),
-                HasteProcEffects = []
+                OnUseEffects = [],
+                ProcEffects = []
             };
 
             foreach (var kv in source)
@@ -130,47 +145,60 @@ namespace Beaversims.Core.Sim
             {
                 foreach (var gear in gearSet.Values)
                 {
-                    var effect = SpecialEffectFactory.CreateFromName(gear.Name);
+                    var effect = SpecialEffectFactory.CreateFromName(gear.Name, gear.Ilvl, gear.ItemSlot);
                     if (effect == null) continue;
-                    
+
+
+                    //effect.Ilvl = gear.Ilvl;
+                    //effect.ItemSlot = gear.ItemSlot;
                     if (effect is ProcEffect procEffect)
                     {
-                        if (procEffect is HasteProcEffect hasteProcEffect)
-                        {
-                            hasteProcEffect.Ilvl = gear.Ilvl;
-                            hasteProcEffect.ItemSlot = gear.ItemSlot;
-                            gearSet.HasteProcEffects.Add(hasteProcEffect);
-                            user.AllEffects.Add(hasteProcEffect);
-                        }
-                        else
-                        {
-                            var existing = user.NonHasteProcEffects.FirstOrDefault(e => e.GetType() == effect.GetType());
-                            var eff = existing ?? effect;
-                            
-                            eff.Ilvls[gearSet.Id] = gear.Ilvl;
-                            eff.ItemSlots[gearSet.Id] = gear.ItemSlot;
-
-                            if (existing == null)
-                            {
-                                user.NonHasteProcEffects.Add((NonHasteProcEffect)eff);
-                                user.AllEffects.Add(eff);
-                            }
-                        }
+                        gearSet.ProcEffects.Add(procEffect);
                     }
-                    else  // On use effect
+                    else if (effect is OnUseEffect onUseEffect)
                     {
-                        var existing = user.OnUseEffects.FirstOrDefault(e => e.GetType() == effect.GetType());
-                        var eff = existing ?? effect;
-
-                        eff.Ilvls[gearSet.Id] = gear.Ilvl;
-                        eff.ItemSlots[gearSet.Id] = gear.ItemSlot;
-                        Console.WriteLine(eff.Name);
-                        if (existing == null)
-                        {
-                            user.OnUseEffects.Add((OnUseEffect)eff);
-                            user.AllEffects.Add(eff);
-                        }
+                        gearSet.OnUseEffects.Add(onUseEffect);
                     }
+                    
+
+                    //if (effect is ProcEffect procEffect)
+                    //{
+                    //    if (procEffect is HasteProcEffect hasteProcEffect)
+                    //    {
+                    //        hasteProcEffect.Ilvl = gear.Ilvl;
+                    //        hasteProcEffect.ItemSlot = gear.ItemSlot;
+                    //        gearSet.HasteProcEffects.Add(hasteProcEffect);
+                    //        user.AllEffects.Add(hasteProcEffect);
+                    //    }
+                    //    else
+                    //    {
+                    //        var existing = user.NonHasteProcEffects.FirstOrDefault(e => e.GetType() == effect.GetType());
+                    //        var eff = existing ?? effect;
+                            
+                    //        eff.Ilvls[gearSet.Id] = gear.Ilvl;
+                    //        eff.ItemSlots[gearSet.Id] = gear.ItemSlot;
+
+                    //        if (existing == null)
+                    //        {
+                    //            user.NonHasteProcEffects.Add((NonHasteProcEffect)eff);
+                    //            user.AllEffects.Add(eff);
+                    //        }
+                    //    }
+                    //}
+                    //else  // On use effect
+                    //{
+                    //    var existing = user.OnUseEffects.FirstOrDefault(e => e.GetType() == effect.GetType());
+                    //    var eff = existing ?? effect;
+
+                    //    eff.Ilvls[gearSet.Id] = gear.Ilvl;
+                    //    eff.ItemSlots[gearSet.Id] = gear.ItemSlot;
+                    //    Console.WriteLine(eff.Name);
+                    //    if (existing == null)
+                    //    {
+                    //        user.OnUseEffects.Add((OnUseEffect)eff);
+                    //        user.AllEffects.Add(eff);
+                    //    }
+                    //}
                    
 
                 }
@@ -357,6 +385,22 @@ namespace Beaversims.Core.Sim
             trinketTest10[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Show of Faith", 723, ItemSlot.Trinket1, []);
             user.AltGearSets.Add(trinketTest10);
 
+            var trinketTest11 = DeepCloneGearset(user.Gear);
+            trinketTest11.Name = "Eye of Blazing Power";
+            trinketTest11[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Eye of Blazing Power", 723, ItemSlot.Trinket1, []);
+            user.AltGearSets.Add(trinketTest11);
+
+            var trinketTest12 = DeepCloneGearset(user.Gear);
+            trinketTest12.Name = "Necromantic Focus";
+            trinketTest12[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Necromantic Focus", 723, ItemSlot.Trinket1, []);
+            user.AltGearSets.Add(trinketTest12);
+
+
+            var trinketTest13 = DeepCloneGearset(user.Gear);
+            trinketTest13.Name = "double on use";
+            trinketTest13[ItemSlot.Trinket1] = ItemGenerator.CreateItem("The Skull of Gul'Dan", 723, ItemSlot.Trinket1, []);
+            trinketTest13[ItemSlot.Trinket2] = ItemGenerator.CreateItem("Living Flame", 723, ItemSlot.Trinket1, []);
+            user.AltGearSets.Add(trinketTest13);
             //var HasteTest3 = DeepCloneGearset(user.Gear);
             //HasteTest3.Name = "Haste - 10000";
             //HasteTest3[ItemSlot.Head].addStatRating(StatName.Haste, -10000);

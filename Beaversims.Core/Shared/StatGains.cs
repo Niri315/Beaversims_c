@@ -91,7 +91,7 @@ namespace Beaversims.Core.Shared
             {
                 if (evt.IsHealDoneEvent())
                 {
-                    gainEff = gainRaw * ability.CritUr();
+                    gainEff = gainRaw * ability.CritUhr();
                 }
                 else
                 {

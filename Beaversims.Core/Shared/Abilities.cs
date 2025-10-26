@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -59,6 +60,7 @@ namespace Beaversims.Core.Shared.Abilities
         {
             Name = name;
             SimDupliAbility = true;
+            ClassAbility = true;
         }
     }
 
@@ -73,6 +75,7 @@ namespace Beaversims.Core.Shared.Abilities
             SuppStamScaler = true;
             Scalers.UnionWith([SN.Haste]);
             HasteScalers.UnionWith([HST.Auto]);  // Divine Inspiration.
+            ClassAbility = true;
         }
     }
 
@@ -83,6 +86,7 @@ namespace Beaversims.Core.Shared.Abilities
         {
             Name = name;
             SuppStamScaler = true;
+            ClassAbility = true;
         }
     }
 
@@ -97,6 +101,7 @@ namespace Beaversims.Core.Shared.Abilities
             HasteScalers.UnionWith([HST.Cast]);
             CIMSources.Add(new CIMSource(Specs.Paladin.Holy.Abilities.ShieldOfTheRighteous.name, 1.0));
             SuppStamScaler = true;
+            ClassAbility = true;
         }
     }
     /* ------- *
@@ -110,6 +115,7 @@ namespace Beaversims.Core.Shared.Abilities
             Name = name;
             CastTime = Constants.GCD;
             SuppStamScaler = true;
+            ClassAbility = true;
         }
     }
     /* ------ *
@@ -124,6 +130,7 @@ namespace Beaversims.Core.Shared.Abilities
             IgnoreDr = true;
             LeechSource = false;
             CanDupli = false;
+            ClassAbility = true;
         }
     }
     /* ------- *
@@ -139,6 +146,22 @@ namespace Beaversims.Core.Shared.Abilities
             Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Vers]);
         }
     }
+
+    /* ----------- *
+     * Timewalking *
+     * ----------- */
+    internal class BlazeOfLife : SharedAbility
+    // Eye of Blazing Power
+    {
+        public const string name = "Blaze of Life";
+        public BlazeOfLife()
+        {
+            Name = name;
+            Scalers.UnionWith([SN.Vers, SN.Crit]);
+            SimImpurity = true;
+        }
+    }
+
     /* --- *
      * WW3 *
      * --- */
@@ -189,6 +212,7 @@ namespace Beaversims.Core.Shared.Abilities
         {
             Name = name;
             Scalers.UnionWith([SN.Vers]);
+            SimImpurity = true;
         }
     }
 }

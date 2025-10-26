@@ -51,6 +51,25 @@ namespace Beaversims.Core.Shared
 
     internal class ProcessEvents
     {
+
+        public static void AddProcEvents(List<TpEvent> tpEvents, List<TpEvent> procEvents)
+        {
+            if (Constants.swOption || Constants.deactivateSims)
+            {
+                return;
+            }
+            for (int e = 0; e < procEvents.Count; e++)
+            {
+                var evt = procEvents[e];
+                evt.Amount.Raw /= Constants.iterationCount;
+                evt.Amount.Eff /= Constants.iterationCount;
+                evt.Amount.Naraw /= Constants.iterationCount;
+                evt.Amount.Naeff /= Constants.iterationCount;
+            }
+            tpEvents.AddRange(procEvents);
+            tpEvents = tpEvents.OrderBy(e => e.Timestamp).ToList();
+        }
+
         public static void StatGains(Event evt, GainMatrix statGains, AbilityGainMatrix abilityGains, Fight fight)
         {
 
@@ -73,18 +92,22 @@ namespace Beaversims.Core.Shared
 
         public static void StoreTotals(TpEvent evt, User user, int i)
         {
-            var altEvent = evt.AltEvents[i];
+
+            AmountContainer amounts;
+            if (evt.SimEvent)
+            {
+                amounts = evt.Amount;
+            }
+            else
+            {
+                amounts = evt.AltEvents[i].Amount;
+            }
             var gainType = GainType.Eff;
             double amount;
             if (evt.IsDamageTakenEvent())
             {
                 gainType = GainType.Def;
-                amount = altEvent.Amount.Eff;
-                //if (!Constants.swOption)
-                //{
-                //    amount /= Constants.iterationCount;
-                //}
-
+                amount = amounts.Eff;
                 user.AltGearSets[i].Gains[gainType] -= amount;
                 return;
             }
@@ -107,15 +130,13 @@ namespace Beaversims.Core.Shared
             }
             else
             {
-                return;
+            return;
             }
-            amount = altEvent.Amount.Eff;
-            //if (!Constants.swOption)
-            //{
-            //    amount /= Constants.iterationCount;
-            //}
+            amount = amounts.Eff;
             user.AltGearSets[i].Gains[gainType] += amount;
+            
         }
+
         public static void OriginalTotals(TpEvent evt, User user)
         {
             var gainType = GainType.Eff;

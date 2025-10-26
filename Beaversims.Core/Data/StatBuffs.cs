@@ -491,6 +491,30 @@ namespace Beaversims.Core.Data.StatBuffs
         }
     }
 
+    internal class SoulFragment : StatBuff
+    // Necromantic Focus
+    {
+        public const int id = 96962;
+        public const string name = "Soul Fragment";
+
+
+        public SoulFragment(UnitId sourceId, int stacks)
+            : base(id, sourceId, name, stacks)
+        {
+            SimImpurity = true;
+            Duration = 10;
+            MaxStacks = 10;
+            SourceType = BuffSourceType.Item;
+            SourceObjId = 171644;
+            StatMods.Add(
+                new StatMod(
+                    StatName.Mastery,
+                    StatAmountType.Rating,
+                    scData: new ScalingData(-7, 0.0471))
+            );
+        }
+    }
+
     /* --- *
      * WW3 *
      * --- */

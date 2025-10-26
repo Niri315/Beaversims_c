@@ -62,12 +62,13 @@ namespace Beaversims.Core
     {
         public double Timestamp { get; set; }
         public bool Heartbeat { get; set; } = false;
+        public bool Proc { get; set; } = false;
         public Unit SourceUnit { get; set; }
         public Unit TargetUnit { get; set; }
         public int AbilityId { get; set; }
         public string AbilityName { get; set; }
         public Ability Ability { get; set; }
-        public bool UserSuperSource { get; set; } = false;
+        public virtual bool UserSuperSource { get; set; } = false;
         public Coord? TargetCoords { get; set; }
         public Coord? SourceCoords { get; set; }
         public Coord? UserCoords { get; set; }
@@ -85,6 +86,8 @@ namespace Beaversims.Core
         public List<AltEvent> AltEvents { get; set; } = [];
         public bool SummerActive { get; set; } = false;
         public string? HealAbsorbAbilityName { get; set; }
+        public bool SimImpurity { get; set; } = false;
+        public virtual bool SimEvent { get; set; } = false;
 
 
         //Paladin
@@ -174,6 +177,7 @@ namespace Beaversims.Core
         public bool Tick { get; set; } = false;
         public bool Crit { get; set; } = false;
         public bool Aoe { get; set; } = false;
+
         public AmountContainer Amount { get; } = new();
         public bool FullyAbsorbed { get; set; } = false;
         public bool AbsorbAbility { get; set; } = false;
@@ -217,17 +221,28 @@ namespace Beaversims.Core
 
     }
 
-    internal sealed class DamageEvent : TpEvent
+    internal class DamageEvent : TpEvent
     {
 
     }
 
-    internal sealed class HealEvent : TpEvent
+    internal class HealEvent : TpEvent
     {
 
 
         public double masteryEffectiveness { get; set; }
 
+    }
+
+    internal class SimDamageEvent : DamageEvent
+    {
+        public override bool UserSuperSource  { get; set; } = true;
+        public override bool SimEvent { get; set; } = true;
+    }
+    internal class SimHealEvent : HealEvent
+    {
+        public override bool UserSuperSource { get; set; } = true;
+        public override bool SimEvent { get; set; } = true;
     }
 
     internal sealed class CastEvent : Event

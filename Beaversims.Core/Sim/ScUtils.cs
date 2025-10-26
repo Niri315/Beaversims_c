@@ -101,12 +101,12 @@ namespace Beaversims.Core.Sim
             return amount;
         }
 
-        public static double TrueRppm(Event evt, double rppm, bool hasteScaling, int i) 
+        public static double TrueRppm(StatTracker curAltStats, double rppm, bool hasteScaling, int i) 
         {
             if (hasteScaling) 
             { 
-                var haste = (Haste)evt.AltEvents[i].UserStats.Get(StatName.Haste);
-                var hasteFactor = 1 + ((haste.TrueEff() / haste.PercentRate) / 100);
+                var haste = (Haste)curAltStats.Get(StatName.Haste);
+                var hasteFactor = 1 + ((haste.SimTempEff() / haste.PercentRate) / 100);
                 return rppm * hasteFactor;
             }
             return rppm;

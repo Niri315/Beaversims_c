@@ -63,7 +63,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
                 var beaconOfLight = (Abilities.BeaconOfLight)user.Abilities.Get(Abilities.BeaconOfLight.name);
                 var hypoGain = gainRaw * BeaconFormula(evt, user);
                 var dupliGainRaw = hypoGain * beaconOfLight.HypoTrueRawR();
-                var dupliGainEff = hypoGain * beaconOfLight.HypoTrueUr();
+                var dupliGainEff = hypoGain * beaconOfLight.HypoTrueUhr();
                 evt.Gains[statName][gainType] += dupliGainEff;
 
                 var dupliGainNsnsnaraw = beaconOfLight.RawToNsnsnarawConvert(dupliGainRaw);

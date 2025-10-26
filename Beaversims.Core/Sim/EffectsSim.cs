@@ -17,127 +17,79 @@ namespace Beaversims.Core.Sim
         //    }
         //}
 
-        public static void AddStatInc(Event evt, User user)
+        public static void AddStatInc(Event evt, GearSet gearSet, StatTracker curAltStats)
         {
 
-            for (int x = 0; x < user.AltGearSets.Count; x++)
+            foreach (var stat in gearSet.SimIncRatings)
             {
-                var altEvent = evt.AltEvents[x];
-                var gearSet = user.AltGearSets[x];
-                foreach (var stat in gearSet.SimIncRatings)
-                {
-                    if (stat.Value == 0) { continue; }
+                if (stat.Value == 0) { continue; }
 
-                    var statName = stat.Key;
-                    var altStat = altEvent.UserStats.Get(statName);
-                    var effDiff = altStat.GetEffDiff(stat.Value, false);
-                    //evt.AltEvents[x].SimStatEffInc[stat.Key] += effDiff;
-                    // Dangerous, need to change how we deal with eff stat for altevents infor the stat gain iteration.
-                    altStat.SimExtraEff += effDiff / Constants.iterationCount;
-                }
+                var statName = stat.Key;
+                var curAltStat = curAltStats.Get(statName);
+                var effDiff = curAltStat.GetEffDiff(stat.Value, false);
+
+                //evt.AltEvents[x].SimStatEffInc[stat.Key] += effDiff;
+                // Dangerous, need to change how we deal with eff stat for altevents infor the stat gain iteration.
+                curAltStat.SimExtraEff += effDiff / Constants.iterationCount;
+                curAltStat.TempExtraEff = effDiff;
             }
-            //foreach (var simEffect in user.SimEffects)
-            //{
-            //    foreach (var entry in simEffect.RatingIncTracker)
-            //    {
-            //        var gearSetId = entry.Key;
-            //        var altEvent = evt.AltEvents[gearSetId];
-            //        var statDict = entry.Value;
-            //        foreach (var stat in statDict)
-            //        {
-            //            var statName = stat.Key;
-            //            var altStat = altEvent.UserStats.Get(statName);
-            //            var effDiff = altStat.GetEffDiff(stat.Value, false);
-            //            //Console.WriteLine(stat.Value);
-            //            altEvent.SimStatEffInc[statName] += effDiff;
-            //        }
-
-            //    }
-            //}
         }
 
-        //public static void ApplyStatDiffs(List<Event> events, User user)
-        //{
-        //    foreach (var evt in events)
-        //    {
-        //        for (int x = 0; x < evt.AltEvents.Count; x++)
-        //        {
-        //            var altEvent = evt.AltEvents[x];
-        //            var gearSet = user.AltGearSets[x];
 
-        //            foreach (var stat in altEvent.SimStatEffInc)
-        //            {
-        //                var altStat = evt.AltEvents[x].UserStats.Get(stat.Key);
-        //                // Dangerous, need to change how we deal with eff stat for altevents infor the stat gain iteration.
-        //                altStat.Eff += stat.Value / Constants.iterationCount;  
-        //            }
-        //        }
-        //        //for (int x = 0; x < evt.AltEvents.Count; x++)
-        //        //{
-        //        //    var altEvent = evt.AltEvents[x];
-        //        //    var gearSet = user.AltGearSets[x];
-
-        //        //    foreach (var stat in altEvent.SimStatEffInc)
-        //        //    {
-        //        //        var altStat = evt.AltEvents[x].UserStats.Get(stat.Key);
-        //        //        altStat.Eff += stat.Value / Constants.iterationCount;
-        //        //    }
-        //        //}
-        //    }
-        //}
-
-        public static void ProcEffects(List<Event> events, User user, Fight fight)
-        {
-            foreach (var specialEffect in user.AllEffects)
-            {
-                specialEffect.Init(events, user, fight);
-            }
-          
-            for (int y = 0; y < Constants.iterationCount; y++)
-            {
-
-                foreach (var specialEffect in user.NonHasteProcEffects)
-                {
-                    specialEffect.Reset(user, fight);
-                }
-
-                for (int i = 0; i < user.AltGearSets.Count; i++)
-                {
-                    foreach (var hasteEffect in user.AltGearSets[i].HasteProcEffects)
-                    {
-                        hasteEffect.Reset(user, fight);
-                    }
-                }
-
-                foreach (var evt in events)
-                {
-                    foreach (var specialEffect in user.NonHasteProcEffects)
-                    {
-                        specialEffect.Call(evt, user);
-                    }
-                    AddStatInc(evt, user);
-                    for (int i = 0; i < user.AltGearSets.Count; i++)
-                    {
-                        foreach (var hasteEffect in user.AltGearSets[i].HasteProcEffects)
-                        {
-                            hasteEffect.Call(evt, user, i);
-                        }
-                    }
-
-                }
-            }
-            //ApplyStatDiffs(events, user);
-        }
      
 
-        public static void SimEffects(List<Event> events, User user, Fight fight)
+        public static List<TpEvent>? SimEffects(List<Event> events, User user, Fight fight, int i)
         {
             if (Constants.swOption || Constants.deactivateSims)
             {
-                return;
+                return null;
             }
 
-            ProcEffects(events, user, fight);
+            var gearSet = user.AltGearSets[i];
+            List<TpEvent> procEvents = [];
+            var usePosEvents = new List<Event>(events);  // To find use timings
+            var useEffects = gearSet.OnUseEffects.OrderBy(e => e.Priority).ToList();
+            foreach (var specialEffect in useEffects)
+            {
+                usePosEvents = specialEffect.FindUseTimings(usePosEvents, user, fight, i);
+            }
+            foreach (var specialEffect in useEffects)
+            {
+                specialEffect.Run(events, user, fight, i);
+            }
+            foreach (var specialEffect in gearSet.ProcEffects)
+            {
+                specialEffect.Init(events, user, fight, i);
+            }
+
+            for (int y = 0; y < Constants.iterationCount; y++)
+            {
+                List<Event> tempEvents = new List<Event>(events);
+                gearSet.ResetProcEffects();
+                StatTracker curAltStats = events[0].AltEvents[gearSet.Id].UserStats;
+                for (int e = 0; e < tempEvents.Count; e++)
+                {
+                    var evt = tempEvents[e];
+                    if (!evt.Proc)
+                    {
+                        curAltStats = evt.AltEvents[gearSet.Id].UserStats;
+                    }
+                    AddStatInc(evt, gearSet, curAltStats);
+                    foreach (var specialEffect in gearSet.ProcEffects)
+                    {
+                        specialEffect.Call(procEvents, tempEvents, evt, user, curAltStats, i);
+                    }
+                    if (evt.Proc && evt is TpEvent tEvt)
+                    {
+                        //Console.WriteLine(evt.Timestamp.ToString());
+                        tEvt.UserStats = curAltStats;
+                        procEvents.Add(tEvt);
+                        // Remove the proc event here
+                    }
+                }
+            }
+
+            return procEvents;
         }
     }
 }

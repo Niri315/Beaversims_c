@@ -82,6 +82,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
         private static void ConsecHCCGMSource(User user, Ability judg, Ability consec)
         {
             // Note due to the limit 1 of normal concec, we cant really have it as a normal cast scaler.
+            consec.ZeroCIM = true;
             
             if (user.HasTalent(Talents.RighteousJudgment.id))
             {

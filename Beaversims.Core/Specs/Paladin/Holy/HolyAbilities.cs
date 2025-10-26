@@ -119,7 +119,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
 
         public HealData PolHeal { get; } = new();
 
-        public override double HypoTrueUr()
+        public override double HypoTrueUhr()
         {
             if (Heal.Hypo == 0) { return 0;}
             return (Heal.Eff - PolHeal.Eff) / Heal.Hypo;
@@ -133,7 +133,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
         public override double AltHypoTrueUr(int i)
         {
             if (Heal.Eff == 0) { return 0; }
-            return HypoTrueUr() * AltHeal[i].Hypo / (Heal.Eff - PolHeal.Eff);
+            return HypoTrueUhr() * AltHeal[i].Hypo / (Heal.Eff - PolHeal.Eff);
         }
         public override double AltHypoTrueRawR(int i)
         {
@@ -226,6 +226,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
             Cd = 9;
             Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Haste, SN.Vers]);
             HasteScalers.UnionWith([HST.Cast, HST.Auto]);
+            ForceTick = true; // Behaves like tick with procs etc.
             //HCGM Sources in HCGM.
         }
     }

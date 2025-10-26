@@ -76,11 +76,6 @@ namespace Beaversims.Core.Shared
 
         public static void SetCIM(User user)
         {
-            // Modifying CIM for all cast abilities
-            // There are fringe cases where CIM would technically alter due to the amount of haste.
-            // For example more haste -> lower IoL usage ratio -> less relative holy power from judgment -> lower CIM for spenders.
-            // We are ignoring this for now since it's so minor and would make the entire process 100 times more complicated.
-            // For now we go by the rule that CIM does not change by gearset.
 
             var abilities = user.Abilities;
             double scaleGain = 0;
@@ -100,7 +95,7 @@ namespace Beaversims.Core.Shared
 
                 foreach (var ability in abilities)
                 {
-                    if (ability.HasteScalers.Contains(HST.Cast))
+                    if (ability.HasteScalers.Contains(HST.Cast) && !ability.ZeroCIM)
                     {
 
                         scaleGain += ability.CastTimeGain * ability.CIMRatio;
@@ -122,7 +117,7 @@ namespace Beaversims.Core.Shared
 
                 foreach (var ability in user.Abilities)
                 {
-                    if (ability.MaxCIM < hcgmTotalCoef && !ability.CIMInitDone && ability.HasteScalers.Contains(HST.Cast))
+                    if (ability.MaxCIM < hcgmTotalCoef && !ability.CIMInitDone && ability.HasteScalers.Contains(HST.Cast) && !ability.ZeroCIM)
                     {
                         ability.CIMInitDone = true;
                         anyUpdated = true;
@@ -140,7 +135,7 @@ namespace Beaversims.Core.Shared
 
             foreach (var ability in abilities)
             {
-                if (ability.HasteScalers.Contains(HST.Cast))
+                if (ability.HasteScalers.Contains(HST.Cast) && !ability.ZeroCIM)
                 {
 
                     scaleGain += ability.CastTimeGain * ability.CIMRatio;
@@ -156,7 +151,7 @@ namespace Beaversims.Core.Shared
             {
                 foreach (var ability in abilities)
                 {
-                    if (ability.HasteScalers.Contains(HST.Cast) && ability.CastTimeGain > 0)
+                    if (ability.HasteScalers.Contains(HST.Cast) && ability.CastTimeGain > 0 && !ability.ZeroCIM)
                     {
                         ability.CIM = (scaleGain + (nonScaleGain * ability.CIMRatio)) / (scaleGain);
                         ability.CIMInitDone = true;

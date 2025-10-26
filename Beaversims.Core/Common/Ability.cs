@@ -74,6 +74,7 @@ namespace Beaversims.Core
         public bool DerivedCritScaler { get; set; } = false;
         public string SourceAbility {  get; set; } = string.Empty;
         public HashSet<HasteScalerType> HasteScalers { get; } = [];
+        public virtual bool ClassAbility { get; set; } = true;
         public bool Direct {  get; set; } = false;
         public bool Spell {  get; set; } = false;
         public bool Gcd { get; set; } = false;  // unused currently. Could implement so gcd = true -> cast time = 1.5.
@@ -85,6 +86,7 @@ namespace Beaversims.Core
         public double CdEnd {  get; set; } = 0.0;
         public double TrueCastTimeTotal { get; set; } = 0.0;
         public double CastTimeGain { get; set; } = 0.0;
+        public bool ZeroCIM { get; set; } = false;
         public double CIM { get; set; } = 1.0;
         public bool CIMInitDone { get; set; } = false;
         public double CIMRatio { get; set; } = 1.0;
@@ -101,6 +103,7 @@ namespace Beaversims.Core
         public bool LeechSource { get; set; } = true;
         public bool CanDupli {  get; set; } = true;
 
+        public bool SimImpurity { get; set; } = false;
         public bool SimDupliAbility { get; set; } = false; // ONLY for abilities that we do dupli calcs for, not true for the ones we use derived source for.
         public double DupliNukeAmount { get; set; } = 0.0;
 
@@ -267,7 +270,7 @@ namespace Beaversims.Core
 
         }
         public double AvgCdHypo() => Casts == 0 ? 0 : CdTimeHypo / Casts;
-        public double CritUr()
+        public double CritUhr()
         {
             //Defaults to normal UR if 0 crits
             if (Heal.Crit.Raw > 0)
@@ -284,12 +287,12 @@ namespace Beaversims.Core
                 return 0;
             }
         }
-        public double Ur()
+        public double Uhr()
         {
             if (Heal.Raw == 0) { return 0; }
             return Heal.Eff / Heal.Raw;
         }
-        public virtual double HypoTrueUr()
+        public virtual double HypoTrueUhr()
         {
             if (Heal.Hypo == 0) { return 0; }
             return Heal.Eff / Heal.Hypo;
@@ -318,7 +321,7 @@ namespace Beaversims.Core
         {
             if (AltHeal[i].Hypo == 0) { return 1; }
             if (Heal.Eff == 0) { return 0; }
-            return HypoTrueUr() * AltHeal[i].Hypo / Heal.Eff;
+            return HypoTrueUhr() * AltHeal[i].Hypo / Heal.Eff;
         }
         public virtual double AltHypoTrueRawR(int i)
         {
@@ -339,5 +342,6 @@ namespace Beaversims.Core
     }
     internal abstract class SharedAbility : Ability
     {
+        public override bool ClassAbility { get; set; } = false;
     }
 }

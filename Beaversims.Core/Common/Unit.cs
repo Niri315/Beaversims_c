@@ -92,9 +92,9 @@ namespace Beaversims.Core
         public HashSet<int> SummonIds { get; set; } = []; // Type Ids only
         public GainDict OriginalTotals { get; set; } = Utils.InitGainDict();
         public StatTracker Stats { get; set; } = new();
-        public HashSet<NonHasteProcEffect> NonHasteProcEffects { get; } = new();
-        public HashSet<OnUseEffect> OnUseEffects { get; } = new();
-        public List<SpecialEffect> AllEffects {  get; } = new();
+        //public HashSet<NonHasteProcEffect> NonHasteProcEffects { get; } = new();
+        //public HashSet<OnUseEffect> OnUseEffects { get; } = new();
+        //public List<SpecialEffect> AllEffects {  get; } = new();
         public StatTracker? RefStats { get; set; }
         // If user doesnt have permanent leech for fight, revert to calculate leech value by leech data from other sims.
         public bool HasPermaLeech {  get; set; } = false;
@@ -207,7 +207,7 @@ namespace Beaversims.Core
 
             if (buff is StatBuff statBuff)
             {
-                if (statBuff.SimImpurity && (Constants.swOption || Constants.deactivateSims))
+                if (statBuff.SimImpurity && (Constants.swOption || Constants.deactivateSims || sourceUnit is not User))
                 {
                     statBuff.SimImpurity = false;
                 }

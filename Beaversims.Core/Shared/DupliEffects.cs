@@ -39,7 +39,7 @@ namespace Beaversims.Core.Shared
                 gainType = Utils.GainTypeToHeal(gainType);
                 var leechAbility = user.Abilities.Get(Abilities.Leech.name);
                 var leechStat = (Leech)evt.UserStats.Get(StatName.Leech);
-                var gain = gainNaraw * (leechStat.TrueEff() / (leechStat.PercentRate * 100)) * leechAbility.HypoTrueUr();
+                var gain = gainNaraw * (leechStat.TrueEff() / (leechStat.PercentRate * 100)) * leechAbility.HypoTrueUhr();
                 gain = leechStat.ApplyDryMult(gain);
                 evt.Gains[statName][gainType] += gain;
             }
@@ -118,12 +118,32 @@ namespace Beaversims.Core.Shared
         public static void AltSummerSource(List<TpEvent> events, User user, int i)
         {
             var summer = (Abilities.BlessingOfSummer)user.Abilities.Get(Abilities.BlessingOfSummer.name);
+            var evtHasSummer = false;
             foreach (var evt in events)
             {
+                if (evt.SimEvent)
+                {
+                    evt.SummerActive = evtHasSummer;
+                }
+                else
+                {
+                    evtHasSummer = evt.SummerActive;
+                }
                 if (IsSummerEvent(user, evt))
                 {
-                    var altEvent = evt.AltEvents[i];
-                    var hypoAmount = altEvent.Amount.Raw * summer.Coef;
+                    AmountContainer amountCont;
+                    if (evt.SimEvent)
+                    {
+                        amountCont = evt.Amount;
+                        Console.WriteLine($"{evt.AbilityName}: {evt.Amount.Raw}");
+
+                    }
+                    else
+                    {
+                        amountCont = evt.AltEvents[i].Amount;
+                    }
+                    var hypoAmount = amountCont.Raw * summer.Coef;
+
                     if (evt.IsHealDoneEvent())
                     {
                         summer.AltDamage[i].Hypo += hypoAmount;
@@ -161,9 +181,21 @@ namespace Beaversims.Core.Shared
             {
                 if (user.HasPermaLeech && IsLeechSourceEvent(evt))
                 {
-                    var altEvent = evt.AltEvents[i];
-                    var leechStat = (Leech)altEvent.UserStats.Get(StatName.Leech);
-                    leechAbility.AltHeal[i].Hypo += altEvent.Amount.Naraw / (leechStat.PercentRate * 100) * leechStat.TrueEff();
+                    AmountContainer amountCont;
+                    StatTracker stats;
+                    if (evt.SimEvent)
+                    {
+                        amountCont = evt.Amount;
+                        stats = evt.UserStats;
+                    }
+                    else
+                    {
+                        amountCont = evt.AltEvents[i].Amount;
+                        stats = evt.AltEvents[i].UserStats;
+                    }
+
+                    var leechStat = (Leech)stats.Get(StatName.Leech);
+                    leechAbility.AltHeal[i].Hypo += amountCont.Naraw / (leechStat.PercentRate * 100) * leechStat.TrueEff();
                 }
             }
 

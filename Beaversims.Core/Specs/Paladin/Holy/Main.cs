@@ -107,34 +107,24 @@ namespace Beaversims.Core.Specs.Paladin.Holy
             Utils.CleanUp(allUnits); // To avoid accidental usage.
             MasteryTracker.CleanUpCoords(allUnits);
 
-            
             HCGM.ModifyCIMSources(user, fight); // 
             Shared.CIM.SetCIM(user);
             Misc.SetArmamentsAutoMod(user);
 
-
-
-            foreach (var gearSet in user.AltGearSets)
+            if (!(Constants.swOption || Constants.deactivateSims))
             {
-                Console.WriteLine($"{gearSet.Name} Mana Gain: {gearSet.ManaGain}");
-
+                events.RemoveAll(e => e.Ability != null && e.Ability.SimImpurity && e.UserSuperSource);
             }
-            //foreach (var ability in user.Abilities)
-            //{
-            //    Console.WriteLine($"{ability.Name} HCCGM: {ability.CIM}");
-            //}
 
-            //List<TpEvent> tpEvents = events.OfType<TpEvent>().ToList();
-
-            Sim.EffectsSim.SimEffects(events, user, fight);
-            // OBS ! Only TpEvents will have accurate data from here on. 
-            // 
             var degree = Environment.ProcessorCount;
             Parallel.For(0, user.AltGearSets.Count, new ParallelOptions { MaxDegreeOfParallelism = degree }, i =>
             {
-                var altEventList = new List<Event>(events);
 
+                var altEventList = new List<Event>(events);
                 List<TpEvent> tpEvents = altEventList.OfType<TpEvent>().ToList();
+                var procEvents = Sim.EffectsSim.SimEffects(altEventList, user, fight, i);
+                // Sim events added here will not be present in the stat gain iteration.
+                // But stat tracker will pick up stat changes for tpEvents.
 
                 foreach (TpEvent evt in tpEvents)
                 {
@@ -152,18 +142,22 @@ namespace Beaversims.Core.Specs.Paladin.Holy
                             MasteryTracker.MasteryGains((HealEvent)evt, user, i);
                         }
                     }
-                    
                 }
                 FullAllocs.FullAllocGains(tpEvents, user, i);
                 DupliEffects.altSelfless(tpEvents, user, i);
                 DupliEffects.altBeacon(tpEvents, user, i);
+
+                // Only summer and leech will react to this.
+                tpEvents = altEventList.OfType<TpEvent>().ToList(); // Updating here to include non proc sim events
+                Shared.ProcessEvents.AddProcEvents(tpEvents, procEvents); 
+
                 Shared.DupliEffects.AltSummerSource(tpEvents, user, i);
                 Shared.DupliEffects.AltLeechSource(tpEvents, user, i);
+
                 foreach (TpEvent evt in tpEvents)
                 {
                     Shared.ProcessEvents.StoreTotals(evt, user, i);
                 }
-                
             });
         }
     }

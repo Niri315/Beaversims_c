@@ -17,7 +17,7 @@ namespace Beaversims.Core.Sim
         //    }
         //}
 
-        public static void AddStatInc(Event evt, GearSet gearSet, StatTracker curAltStats)
+        public static void AddStatInc(Event evt, GearSet gearSet, StatTracker curAltStats, int iterationCount)
         {
 
             foreach (var stat in gearSet.SimIncRatings)
@@ -30,7 +30,7 @@ namespace Beaversims.Core.Sim
 
                 //evt.AltEvents[x].SimStatEffInc[stat.Key] += effDiff;
                 // Dangerous, need to change how we deal with eff stat for altevents infor the stat gain iteration.
-                curAltStat.SimExtraEff += effDiff / Constants.iterationCount;
+                curAltStat.SimExtraEff += effDiff / iterationCount;
                 curAltStat.TempExtraEff = effDiff;
             }
         }
@@ -38,9 +38,9 @@ namespace Beaversims.Core.Sim
 
      
 
-        public static List<TpEvent>? SimEffects(List<Event> events, User user, Fight fight, int i)
+        public static List<TpEvent>? SimEffects(List<Event> events, User user, Fight fight, int i, int iterationCount)
         {
-            if (Constants.swOption || Constants.deactivateSims)
+            if (user.SwMode || Constants.deactivateSims)
             {
                 return null;
             }
@@ -62,7 +62,7 @@ namespace Beaversims.Core.Sim
                 specialEffect.Init(events, user, fight, i);
             }
 
-            for (int y = 0; y < Constants.iterationCount; y++)
+            for (int y = 0; y < iterationCount; y++)
             {
                 List<Event> tempEvents = new List<Event>(events);
                 gearSet.ResetProcEffects();
@@ -74,10 +74,10 @@ namespace Beaversims.Core.Sim
                     {
                         curAltStats = evt.AltEvents[gearSet.Id].UserStats;
                     }
-                    AddStatInc(evt, gearSet, curAltStats);
+                    AddStatInc(evt, gearSet, curAltStats, iterationCount);
                     foreach (var specialEffect in gearSet.ProcEffects)
                     {
-                        specialEffect.Call(procEvents, tempEvents, evt, user, curAltStats, i);
+                        specialEffect.Call(procEvents, tempEvents, evt, user, curAltStats, i, iterationCount);
                     }
                     if (evt.Proc && evt is TpEvent tEvt)
                     {

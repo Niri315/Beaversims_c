@@ -195,4 +195,14 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Talents
             Coef = rank * 2.0;
         }
     }
+    internal class TowerOfRadiance : Talent
+    {
+        public const int id = 102571;
+        public TowerOfRadiance(int rank) : base(id, rank)
+        {
+
+        }
+    }
 }
+
+

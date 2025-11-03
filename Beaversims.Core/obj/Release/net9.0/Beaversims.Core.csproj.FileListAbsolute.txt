@@ -1,0 +1,12 @@
+C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Core\bin\Release\net9.0\Beaversims.Core.deps.json
+C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Core\bin\Release\net9.0\Beaversims.Core.dll
+C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Core\bin\Release\net9.0\Beaversims.Core.pdb
+C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Core\obj\Release\net9.0\Beaversims.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Core\obj\Release\net9.0\Beaversims.Core.AssemblyInfoInputs.cache
+C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Core\obj\Release\net9.0\Beaversims.Core.AssemblyInfo.cs
+C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Core\obj\Release\net9.0\Beaversims.Core.csproj.CoreCompileInputs.cache
+C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Core\obj\Release\net9.0\Beaversims.Core.sourcelink.json
+C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Core\obj\Release\net9.0\Beaversims.Core.dll
+C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Core\obj\Release\net9.0\refint\Beaversims.Core.dll
+C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Core\obj\Release\net9.0\Beaversims.Core.pdb
+C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Core\obj\Release\net9.0\ref\Beaversims.Core.dll

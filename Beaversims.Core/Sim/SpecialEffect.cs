@@ -97,7 +97,7 @@ namespace Beaversims.Core
 
 
         public abstract void Init(List<Event> events, User user, Fight fight, int i);
-        public abstract void Call(List<TpEvent> procEvents, List<Event> events, Event evt, User user, StatTracker curAltStats, int i);
+        public abstract void Call(List<TpEvent> procEvents, List<Event> events, Event evt, User user, StatTracker curAltStats, int i, int iterationCount);
 
         //public abstract void Call(Event evt, User user, int i);
         public virtual void Reset()
@@ -124,7 +124,7 @@ namespace Beaversims.Core
             Amount = ScUtils.ScaledEffectValue(Ilvl, ItemSlot, ScalingData, StatName);
 
         }
-        public override void Call(List<TpEvent> procEvents, List<Event> events, Event evt, User user, StatTracker curAltStats, int i)
+        public override void Call(List<TpEvent> procEvents, List<Event> events, Event evt, User user, StatTracker curAltStats, int i, int iterationCount)
         {
             if (buffEnd < evt.Timestamp && active)
             {
@@ -162,7 +162,7 @@ namespace Beaversims.Core
             StatName = statMod.StatName;
             Amount = ScUtils.ScaledEffectValue(Ilvl, ItemSlot, statMod.ScalingData, StatName);
         }
-        public override void Call(List<TpEvent> procEvents, List<Event> events, Event evt, User user, StatTracker curAltStats, int i)
+        public override void Call(List<TpEvent> procEvents, List<Event> events, Event evt, User user, StatTracker curAltStats, int i, int iterationCount)
         {
             var timestamp = evt.Timestamp;
 
@@ -191,7 +191,7 @@ namespace Beaversims.Core
         {
             Amount = ScUtils.ScaledEffectValue(Ilvl, ItemSlot, ScalingData);
         }
-        public override void Call(List<TpEvent> procEvents, List<Event> events, Event evt, User user, StatTracker curAltStats, int i)
+        public override void Call(List<TpEvent> procEvents, List<Event> events, Event evt, User user, StatTracker curAltStats, int i, int iterationCount)
         {
             var timestamp = evt.Timestamp;
             if (Proc.IsProcAttempt(evt, ProcFlags, lastProc, icd, timestamp))
@@ -199,7 +199,7 @@ namespace Beaversims.Core
                 var isProc = Proc.ProcessProcAttempt(ref blp, ScUtils.TrueRppm(curAltStats, Rppm, HasteScaling, i), ref lastAttempt, ref lastProc, timestamp);
                 if (isProc)
                 {
-                    user.AltGearSets[i].ManaGain += Amount / Constants.iterationCount;
+                    user.AltGearSets[i].ManaGain += Amount / iterationCount;
                 }
             }
         }

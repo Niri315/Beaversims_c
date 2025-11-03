@@ -186,7 +186,6 @@ namespace Beaversims.Core.Specs.Paladin.Holy
                 else if (evt.IsHealDoneEvent())
                 {
                     anshe.HealValue += ansheVal;
-                    Console.WriteLine($"Anshe val: {ansheVal} Original: {tEvt.Amount.Raw}");
                 }
                 anshe.Active = false;
             }
@@ -217,7 +216,9 @@ namespace Beaversims.Core.Specs.Paladin.Holy
             var nonCastValue = 0.0;
 
             castValue += holyShock.Casts;
+            holyShock.HolyPowerScaleCount += holyShock.Casts;
             nonCastValue += divineToll.Casts * divineToll.holyShockCount;
+            holyShock.HolyPowerNonScaleCount += divineToll.Casts * divineToll.holyShockCount;
 
             if (user.HasTalent(Talents.SecondSunrise.id))
             {
@@ -232,11 +233,16 @@ namespace Beaversims.Core.Specs.Paladin.Holy
                 nonCastValue += aw.Casts * 2 * rs.HolyShockCount;
                 nonCastValue += ac.Casts * rs.HolyShockCount;
                 nonCastValue += divineToll.Casts * 2 * rs.HolyShockCount;
+                holyShock.HolyPowerNonScaleCount += aw.Casts * 2 * rs.HolyShockCount;
+                holyShock.HolyPowerNonScaleCount += ac.Casts * rs.HolyShockCount;
+                holyShock.HolyPowerNonScaleCount += divineToll.Casts * 2 * rs.HolyShockCount;
             }
             if (user.HasTalent(Talents.DivineResonance.id))
             {
                 var dr = (Talents.DivineResonance)user.Talents[Talents.DivineResonance.id];
                 nonCastValue += dr.HolyShockCount * divineToll.Casts;
+                holyShock.HolyPowerNonScaleCount += dr.HolyShockCount * divineToll.Casts;
+
                 if (user.HasTalent(Talents.SecondSunrise.id))
                 {
                     var ssTal = (Talents.SecondSunrise)user.Talents[Talents.SecondSunrise.id];

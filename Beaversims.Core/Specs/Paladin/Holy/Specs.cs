@@ -43,9 +43,9 @@ namespace Beaversims.Core.Specs.Paladin.Holy
             Shared.DupliEffects.SummerGains(evt, user, statName, gain, evt.Ability, evt.SummerActive, evt.AbsorbAbility, evt.SourceUnit, gainType);
 
         }
-        public override void SpecIteration(List<Event> events, UnitRepo allUnits, Fight fight)
+        public override void SpecIteration(List<Event> events, UnitRepo allUnits, Fight fight, int iterationCount)
         {
-            Main.SpecMain(events, allUnits, fight);
+            Main.SpecMain(events, allUnits, fight, iterationCount);
         }
 
     }

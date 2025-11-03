@@ -58,7 +58,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
             DupliEffects.SetBeaconCoef(user);
         }
 
-        public static void SpecMain(List<Event> events, UnitRepo allUnits, Fight fight)
+        public static void SpecMain(List<Event> events, UnitRepo allUnits, Fight fight, int iterationCount)
         {
             //StatGainMathTest();
             //return;
@@ -78,7 +78,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
             foreach (Event evt in events)
             {
                 // Loop for tracking buffs and collecting data.
-                BuffTracker.TrackBuffs(evt, allUnits, statLogger, refStatLogger);
+                BuffTracker.TrackBuffs(user.SwMode, evt, allUnits, statLogger, refStatLogger);
                 evt.CreateAltEvents(user, evt);
           
                 CastProcessor.ProcessCast(evt, user);
@@ -108,12 +108,15 @@ namespace Beaversims.Core.Specs.Paladin.Holy
             MasteryTracker.CleanUpCoords(allUnits);
 
             HCGM.ModifyCIMSources(user, fight); // 
+            Misc.HolyPowerQIM(user);
             Shared.CIM.SetCIM(user);
             Misc.SetArmamentsAutoMod(user);
 
-            if (!(Constants.swOption || Constants.deactivateSims))
+            Utils.RemoveImpurities(events, user);
+
+            foreach (var ability in user.Abilities)
             {
-                events.RemoveAll(e => e.Ability != null && e.Ability.SimImpurity && e.UserSuperSource);
+                Console.WriteLine($"{ability.Name}: CIM: {ability.CIM} Max: {ability.MaxCIM} Ratio: {ability.CIMRatio}, Rest rel Ratio: {ability.RestRelCIMRatio}");
             }
 
             var degree = Environment.ProcessorCount;
@@ -122,7 +125,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
 
                 var altEventList = new List<Event>(events);
                 List<TpEvent> tpEvents = altEventList.OfType<TpEvent>().ToList();
-                var procEvents = Sim.EffectsSim.SimEffects(altEventList, user, fight, i);
+                var procEvents = Sim.EffectsSim.SimEffects(altEventList, user, fight, i, iterationCount);
                 // Sim events added here will not be present in the stat gain iteration.
                 // But stat tracker will pick up stat changes for tpEvents.
 
@@ -149,8 +152,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
 
                 // Only summer and leech will react to this.
                 tpEvents = altEventList.OfType<TpEvent>().ToList(); // Updating here to include non proc sim events
-                Shared.ProcessEvents.AddProcEvents(tpEvents, procEvents); 
-
+                Shared.ProcessEvents.AddProcEvents(tpEvents, procEvents, iterationCount, user.SwMode); 
                 Shared.DupliEffects.AltSummerSource(tpEvents, user, i);
                 Shared.DupliEffects.AltLeechSource(tpEvents, user, i);
 

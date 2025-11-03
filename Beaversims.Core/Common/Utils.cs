@@ -134,6 +134,13 @@ namespace Beaversims.Core
             events.Sort((a, b) => a.Timestamp.CompareTo(b.Timestamp));
         }
 
+        public static void RemoveImpurities(List<Event> events, User user)
+        {
+            if (!(user.SwMode || Constants.deactivateSims))
+            {
+                events.RemoveAll(e => e.Ability != null && e.Ability.SimImpurity && e.UserSuperSource);
+            }
+        }
        
     }
 }

@@ -27,7 +27,6 @@ namespace Beaversims.Core.Sim
         public static List<Event> AvailableUseEvents(List<Event> events, List<double> useTimings, double sharedCd)
         {
             var availableEvents = new List<Event>();
-            double lastUseTime = double.MinValue;
 
             foreach (var evt in events)
             {

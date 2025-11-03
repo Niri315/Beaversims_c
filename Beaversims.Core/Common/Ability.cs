@@ -85,10 +85,13 @@ namespace Beaversims.Core
         public double CdTimeHypo { get; set; } = 0.0;
         public double CdEnd {  get; set; } = 0.0;
         public double TrueCastTimeTotal { get; set; } = 0.0;
-        public double CastTimeGain { get; set; } = 0.0;
+        public double CTGain { get; set; } = 0.0;
+        public double ScalingCTGain { get; set; } = 0.0;
         public bool ZeroCIM { get; set; } = false;
         public double CIM { get; set; } = 1.0;
         public bool CIMInitDone { get; set; } = false;
+        public bool RestRelCIM { get; set; } = false;
+        public double RestRelCIMRatio {  get; set; } = 1.0;
         public double CIMRatio { get; set; } = 1.0;
         public double MaxCIM { get; set; } = 1.0;
         public double HealHCGM { get; set; } = 1.0;

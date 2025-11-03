@@ -307,7 +307,8 @@ namespace Beaversims.Core.Parser
 
                 if (evt.SourceUnit == user)
                 {
-                    ability.Casts += 1;
+                    ability.Casts++;
+                    user.Casts++;
                 }
             }
             if (evt is TpEvent tpEvent && evt.UserSuperSource)

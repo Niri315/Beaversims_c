@@ -1,0 +1,196 @@
+﻿/* --- Top Gear layout --- */
+
+.tg-wrap {
+    max-width: 1200px;
+    margin: 16px auto;
+    padding: 0 12px;
+    color: #eee;
+    font-family: system-ui, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+.tg-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 12px 0 20px;
+}
+
+    .tg-head .count {
+        margin-left: auto;
+        opacity: .85;
+    }
+
+/* Grid of sections */
+.tg-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+}
+
+@media (max-width: 1100px) {
+    .tg-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 720px) {
+    .tg-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Section (slot group) */
+.tg-slot {
+    background: #1b1c21;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.4);
+    padding: 10px 10px 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+    .tg-slot h3 {
+        font-size: .95rem;
+        letter-spacing: .12rem;
+        color: #bfc6ff;
+        margin: 0 2px 2px;
+    }
+
+/* List of items in a section */
+.tg-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 360px;
+    overflow: auto;
+    padding-right: 4px;
+}
+
+    .tg-list::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    .tg-list::-webkit-scrollbar-thumb {
+        background: #2b2b2b;
+        border-radius: 8px;
+    }
+
+    .tg-list::-webkit-scrollbar-track {
+        background: #0d0d0d;
+    }
+
+/* Item card */
+.tg-item {
+    position: relative;
+    display: grid;
+    grid-template-columns: 40px 1fr auto;
+    gap: 10px;
+    align-items: center;
+    background: #262730;
+    border: 1px solid #333846;
+    border-radius: 8px;
+    padding: 8px 10px;
+    cursor: pointer;
+    transition: transform .07s ease, border-color .07s ease, box-shadow .07s ease;
+}
+
+    .tg-item:hover {
+        transform: translateY(-1px);
+        border-color: #545b6f;
+    }
+
+    .tg-item.is-selected {
+        border-color: #f8d363;
+        box-shadow: 0 0 0 1px #f8d363 inset;
+    }
+
+/* Icon */
+.tg-ico {
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+    background: #141519;
+    overflow: hidden;
+}
+
+/* Text */
+.tg-name {
+    font-weight: 600;
+}
+
+.tg-sub {
+    font-size: .85rem;
+    opacity: .85;
+}
+
+.tg-badges {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.tg-badge {
+    font-size: .7rem;
+    background: #334;
+    padding: 2px 6px;
+    border-radius: 999px;
+    opacity: .95;
+}
+
+.tg-ilvl {
+    font-variant-numeric: tabular-nums;
+    opacity: .9;
+    padding-left: .25rem;
+}
+
+/* Remove button for user-added items */
+.tg-remove {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 22px;
+    height: 22px;
+    border: 0;
+    border-radius: 6px;
+    background: #3a3a3a;
+    color: #fff;
+    font-weight: 700;
+    line-height: 22px;
+    text-align: center;
+    cursor: pointer;
+    opacity: .8;
+}
+
+    .tg-remove:hover {
+        opacity: 1;
+        background: #4a4a4a;
+    }
+
+/* Footer area (if you add run controls inline) */
+.tg-footer {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 12px;
+}
+
+.tg-run {
+    padding: 10px 14px;
+    border-radius: 9px;
+    border: 0;
+    background: #4c7ef5;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+    .tg-run:disabled {
+        opacity: .5;
+        cursor: not-allowed;
+    }
+
+.tg-note {
+    opacity: .8;
+    font-size: .9rem;
+}

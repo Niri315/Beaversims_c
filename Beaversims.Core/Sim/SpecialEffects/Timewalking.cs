@@ -167,7 +167,7 @@ namespace Beaversims.Core.Sim.SpecialEffects
         {
             Amount = ScUtils.ScaledEffectValue(Ilvl, ItemSlot, ScalingData);
         }
-        public override void Call(List<TpEvent> procEvents, List<Event> events, Event evt, User user, StatTracker curAltStats, int i)
+        public override void Call(List<TpEvent> procEvents, List<Event> events, Event evt, User user, StatTracker curAltStats, int i, int iterationCount)
         {
             if (Proc.IsProcAttempt(evt, ProcFlags, lastProc, icd, evt.Timestamp))
             {

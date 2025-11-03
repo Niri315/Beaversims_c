@@ -24,7 +24,7 @@ namespace Beaversims.Core.Sim.SpecialEffects
             buffEnds = [];
         }
 
-        public override void Call(List<TpEvent> procEvents, List<Event> events, Event evt, User user, StatTracker curAltStats, int i)
+        public override void Call(List<TpEvent> procEvents, List<Event> events, Event evt, User user, StatTracker curAltStats, int i, int iterationCount)
         {
             int expired = buffEnds.RemoveAll(end => end <= evt.Timestamp);
             if (expired > 0)

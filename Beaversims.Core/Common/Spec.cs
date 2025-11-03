@@ -64,7 +64,7 @@ namespace Beaversims.Core
             return TryCreateSpecTalent(id, rank, out var t) ? t : new Talent(id, rank);
         }
 
-        public abstract void SpecIteration(List<Event> events, UnitRepo allUnits, Fight fight);
+        public abstract void SpecIteration(List<Event> events, UnitRepo allUnits, Fight fight, int iterationCount);
         public abstract void DupliGainsHeal(TpEvent tEvt, User user, StatName statName, double gainRaw, GainType gainType = GainType.Eff);
         public abstract void DupliGainsDmg(TpEvent tEvt, User user, StatName statName, double gain, GainType gainType = GainType.Dmg);
 
@@ -93,9 +93,9 @@ namespace Beaversims.Core
         {
 
         }
-        public override void SpecIteration(List<Event> events, UnitRepo allUnits, Fight fight)
+        public override void SpecIteration(List<Event> events, UnitRepo allUnits, Fight fight, int iterationCount)
         {
-            Specs.DummySpec.Main.SpecMain(events, allUnits, fight);
+            Specs.DummySpec.Main.SpecMain(events, allUnits, fight, iterationCount);
         }
 
     }

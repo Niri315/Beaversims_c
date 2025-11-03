@@ -1,0 +1,2 @@
+C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\wwwroot\index.html
+wwwroot\index.html

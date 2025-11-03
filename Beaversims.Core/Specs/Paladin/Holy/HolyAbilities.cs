@@ -486,7 +486,8 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
     internal class HolyShock : HpalAbility
     {
         public const string name = "Holy Shock";
-      
+        public double HolyPowerScaleCount { get; set; } = 0;
+        public double HolyPowerNonScaleCount { get; set; } = 0;
         public HolyShock()
         {
             Name = name;

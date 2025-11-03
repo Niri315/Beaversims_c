@@ -1,0 +1,36 @@
+﻿<!-- /top-gear.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Beaversims — Top Gear</title>
+    <link rel="stylesheet" href="/css/site.css" />
+    <link rel="stylesheet" href="/css/import-form.css" />
+    <link rel="stylesheet" href="/css/top-gear.css">
+    <link rel="stylesheet" href="/css/item-search.css">
+    <script>
+        const whTooltips = {
+            colorLinks: true,
+            iconizeLinks: false,
+            renameLinks: false,
+            hide: { sellprice: true }
+        };
+    </script>
+    <script defer src="https://wow.zamimg.com/js/tooltips.js"></script>
+</head>
+<body>
+    <div id="site-header"></div>
+    <div id="import-form-container"></div>
+    <div class="tg-search">
+        <input id="item-search" type="text" placeholder="Search items…" />
+        <input id="item-ilvl" type="number" inputmode="numeric"
+               min="1" max="2000" step="1" placeholder="ilvl" />
+        <div id="item-results" class="tg-search-results"></div>
+    </div>
+    <div id="top-gear-mount" style="margin:1rem 0;"></div>
+    <button id="run-top-gear-btn" disabled>Run Top Gear</button>
+
+    <script type="module" src="/js/top-gear.js"></script>
+    <script src="/js/site.js"></script>
+</body>
+</html>

@@ -1,4 +1,5 @@
 ﻿using Beaversims.Core.Common;
+using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace Beaversims.Core
 {
     internal static class BuffTracker
     {
-        public static void TrackBuffs(Event evt, UnitRepo allUnits, Logger statLogger = null, Logger refStatLogger = null)
+        public static void TrackBuffs(bool swOption, Event evt, UnitRepo allUnits, Logger statLogger = null, Logger refStatLogger = null)
         {
             var user = allUnits.GetUser();
 
@@ -24,7 +25,7 @@ namespace Beaversims.Core
 
                 if (buffEvent.BuffApplyEvent)
                 {
-                    buffEvent.TargetUnit.AddBuff(buffName, buffId, sourceUnit, buffStacks, timestamp, statLogger, refStatLogger);
+                    buffEvent.TargetUnit.AddBuff(swOption, buffName, buffId, sourceUnit, buffStacks, timestamp, statLogger, refStatLogger);
                 }
                 else if (buffEvent.BuffRemoveEvent)
                 {
@@ -32,7 +33,7 @@ namespace Beaversims.Core
                 }
                 else if (buffEvent.BuffStackEvent)
                 {
-                    buffEvent.TargetUnit.ChangeBuffStack(buffName, buffId, sourceUnit, buffStacks, statLogger, timestamp, refStatLogger);
+                    buffEvent.TargetUnit.ChangeBuffStack(swOption, buffName, buffId, sourceUnit, buffStacks, statLogger, timestamp, refStatLogger);
                 }
             }
             if (user.HasBuff(Shared.Abilities.BlessingOfSummer.buffId))

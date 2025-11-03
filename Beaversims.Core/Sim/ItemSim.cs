@@ -227,7 +227,7 @@ namespace Beaversims.Core.Sim
         {
             foreach (StatName stat in Enum.GetValues(typeof(StatName)))
             {
-                var swGear = DeepCloneGearset(user.AltGearSets[0]);
+                var swGear = DeepCloneGearset(user.Gear);
                 swGear.Name = stat.ToString();
                 swGear[ItemSlot.Head].addStatRating(stat, 1);
                 user.AltGearSets.Add(swGear);
@@ -310,97 +310,107 @@ namespace Beaversims.Core.Sim
 
         public static void CustomGearSets(User user)
         {
-            var altGearSet0 = DeepCloneGearset(user.AltGearSets[0]);
-            altGearSet0.Name = "Wishlist";
-            altGearSet0[ItemSlot.Head] = ItemGenerator.CreateItem("Soaring Behemoth's Greathelm", 717, ItemSlot.Head, [(int)BonusIds.Leech]);
-            altGearSet0[ItemSlot.Neck] = ItemGenerator.CreateItem("Amulet of Earthen Craftsmanship", 727, ItemSlot.Neck, [(int)BonusIds.Quickblade]);
-            altGearSet0[ItemSlot.Shoulders] = ItemGenerator.CreateItem("Chargers of the Lucent Battalion", 730, ItemSlot.Shoulders, []);
-            altGearSet0[ItemSlot.Chest] = ItemGenerator.CreateItem("Cuirass of the Lucent Battalion", 730, ItemSlot.Chest, []);
-            altGearSet0[ItemSlot.Wrist] = ItemGenerator.CreateItem("Everforged Vambraces", 727, ItemSlot.Wrist, [(int)BonusIds.Quickblade]);
-            altGearSet0[ItemSlot.MainHand] = ItemGenerator.CreateItem("Voidglass Sovereign's Blade", 730, ItemSlot.MainHand, []);
-            altGearSet0[ItemSlot.OffHand] = ItemGenerator.CreateItem("Ward of the Weaving-Beast", 730, ItemSlot.OffHand, []);
-            altGearSet0[ItemSlot.Hands] = ItemGenerator.CreateItem("Protectors of the Lucent Battalion", 730, ItemSlot.Hands, []);
-            altGearSet0[ItemSlot.Waist] = ItemGenerator.CreateItem("Seal of the Lucent Battalion", 730, ItemSlot.Waist, [(int)BonusIds.Leech]);
-            altGearSet0[ItemSlot.Legs] = ItemGenerator.CreateItem("Cuisses of the Lucent Battalion", 730, ItemSlot.Legs, []);
-            altGearSet0[ItemSlot.Feet] = ItemGenerator.CreateItem("Interloper's Plated Sabatons", 730, ItemSlot.Feet, []);
-            altGearSet0[ItemSlot.Finger1] = ItemGenerator.CreateItem("Ring of Earthen Craftsmanship", 727, ItemSlot.Finger1, [(int)BonusIds.Quickblade]);
-            altGearSet0[ItemSlot.Finger2] = ItemGenerator.CreateItem("Devout Zealot's Ring", 730, ItemSlot.Finger2, []);
-            user.AltGearSets.Add(altGearSet0);
+            var helmtest1 = DeepCloneGearset(user.Gear);
+            helmtest1.Name = "717 Leech";
+            helmtest1[ItemSlot.Head] = ItemGenerator.CreateItem("Soaring Behemoth's Greathelm", 717, ItemSlot.Head, [(int)BonusIds.Leech]);
+            user.AltGearSets.Add(helmtest1);
+
+            var helmtest = DeepCloneGearset(user.Gear);
+            helmtest.Name = "730 no Leech";
+            helmtest[ItemSlot.Head] = ItemGenerator.CreateItem("Soaring Behemoth's Greathelm", 730, ItemSlot.Head, []);
+            user.AltGearSets.Add(helmtest);
+
+            //var altGearSet0 = DeepCloneGearset(user.AltGearSets[0]);
+            //altGearSet0.Name = "Wishlist";
+            //altGearSet0[ItemSlot.Head] = ItemGenerator.CreateItem("Soaring Behemoth's Greathelm", 717, ItemSlot.Head, [(int)BonusIds.Leech]);
+            //altGearSet0[ItemSlot.Neck] = ItemGenerator.CreateItem("Amulet of Earthen Craftsmanship", 727, ItemSlot.Neck, [(int)BonusIds.Quickblade]);
+            //altGearSet0[ItemSlot.Shoulders] = ItemGenerator.CreateItem("Chargers of the Lucent Battalion", 730, ItemSlot.Shoulders, []);
+            //altGearSet0[ItemSlot.Chest] = ItemGenerator.CreateItem("Cuirass of the Lucent Battalion", 730, ItemSlot.Chest, []);
+            //altGearSet0[ItemSlot.Wrist] = ItemGenerator.CreateItem("Everforged Vambraces", 727, ItemSlot.Wrist, [(int)BonusIds.Quickblade]);
+            //altGearSet0[ItemSlot.MainHand] = ItemGenerator.CreateItem("Voidglass Sovereign's Blade", 730, ItemSlot.MainHand, []);
+            //altGearSet0[ItemSlot.OffHand] = ItemGenerator.CreateItem("Ward of the Weaving-Beast", 730, ItemSlot.OffHand, []);
+            //altGearSet0[ItemSlot.Hands] = ItemGenerator.CreateItem("Protectors of the Lucent Battalion", 730, ItemSlot.Hands, []);
+            //altGearSet0[ItemSlot.Waist] = ItemGenerator.CreateItem("Seal of the Lucent Battalion", 730, ItemSlot.Waist, [(int)BonusIds.Leech]);
+            //altGearSet0[ItemSlot.Legs] = ItemGenerator.CreateItem("Cuisses of the Lucent Battalion", 730, ItemSlot.Legs, []);
+            //altGearSet0[ItemSlot.Feet] = ItemGenerator.CreateItem("Interloper's Plated Sabatons", 730, ItemSlot.Feet, []);
+            //altGearSet0[ItemSlot.Finger1] = ItemGenerator.CreateItem("Ring of Earthen Craftsmanship", 727, ItemSlot.Finger1, [(int)BonusIds.Quickblade]);
+            //altGearSet0[ItemSlot.Finger2] = ItemGenerator.CreateItem("Devout Zealot's Ring", 730, ItemSlot.Finger2, []);
+            //user.AltGearSets.Add(altGearSet0);
 
 
-            var trinketTest0 = DeepCloneGearset(user.Gear);
-            trinketTest0.Name = "Antenna";
-            trinketTest0[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Astral Antenna", 723, ItemSlot.Trinket1, []);
-            user.AltGearSets.Add(trinketTest0);
+            //var trinketTest0 = DeepCloneGearset(user.Gear);
+            //trinketTest0.Name = "Antenna";
+            //trinketTest0[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Astral Antenna", 723, ItemSlot.Trinket1, []);
+            //user.AltGearSets.Add(trinketTest0);
 
-            var trinketTest1 = DeepCloneGearset(user.Gear);
-            trinketTest1.Name = "Tyrande meme";
-            trinketTest1[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Memento of Tyrande", 723, ItemSlot.Trinket1, []);
-            user.AltGearSets.Add(trinketTest1);
+            //var trinketTest1 = DeepCloneGearset(user.Gear);
+            //trinketTest1.Name = "Tyrande meme";
+            //trinketTest1[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Memento of Tyrande", 723, ItemSlot.Trinket1, []);
+            //user.AltGearSets.Add(trinketTest1);
 
-            var trinketTest2 = DeepCloneGearset(user.Gear);
-            trinketTest2.Name = "skull of Guldan";
-            trinketTest2[ItemSlot.Trinket1] = ItemGenerator.CreateItem("The Skull of Gul'Dan", 723, ItemSlot.Trinket1, []);
-            user.AltGearSets.Add(trinketTest2);
-
-
-            var trinketTest3 = DeepCloneGearset(user.Gear);
-            trinketTest3.Name = "Elemental Focus Stone";
-            trinketTest3[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Elemental Focus Stone", 723, ItemSlot.Trinket1, []);
-            user.AltGearSets.Add(trinketTest3);
-
-            var trinketTest4 = DeepCloneGearset(user.Gear);
-            trinketTest4.Name = "Energy Siphon";
-            trinketTest4[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Energy Siphon", 723, ItemSlot.Trinket1, []);
-            user.AltGearSets.Add(trinketTest4);
-
-            var trinketTest5 = DeepCloneGearset(user.Gear);
-            trinketTest5.Name = "Eye of the Broodmother";
-            trinketTest5[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Eye of the Broodmother", 723, ItemSlot.Trinket1, []);
-            user.AltGearSets.Add(trinketTest5);
-
-            var trinketTest6 = DeepCloneGearset(user.Gear);
-            trinketTest6.Name = "Flare of the Heavens";
-            trinketTest6[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Flare of the Heavens", 723, ItemSlot.Trinket1, []);
-            user.AltGearSets.Add(trinketTest6);
-
-            var trinketTest7 = DeepCloneGearset(user.Gear);
-            trinketTest7.Name = "Living Flame";
-            trinketTest7[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Living Flame", 723, ItemSlot.Trinket1, []);
-            user.AltGearSets.Add(trinketTest7);
+            //var trinketTest2 = DeepCloneGearset(user.Gear);
+            //trinketTest2.Name = "skull of Guldan";
+            //trinketTest2[ItemSlot.Trinket1] = ItemGenerator.CreateItem("The Skull of Gul'Dan", 723, ItemSlot.Trinket1, []);
+            //user.AltGearSets.Add(trinketTest2);
 
 
-            var trinketTest8 = DeepCloneGearset(user.Gear);
-            trinketTest8.Name = "Pandora's Plea";
-            trinketTest8[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Pandora's Plea", 723, ItemSlot.Trinket1, []);
-            user.AltGearSets.Add(trinketTest8);
+            //var trinketTest3 = DeepCloneGearset(user.Gear);
+            //trinketTest3.Name = "Elemental Focus Stone";
+            //trinketTest3[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Elemental Focus Stone", 723, ItemSlot.Trinket1, []);
+            //user.AltGearSets.Add(trinketTest3);
 
-            var trinketTest9 = DeepCloneGearset(user.Gear);
-            trinketTest9.Name = "Scale of Fates";
-            trinketTest9[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Scale of Fates", 723, ItemSlot.Trinket1, []);
-            user.AltGearSets.Add(trinketTest9);
+            //var trinketTest4 = DeepCloneGearset(user.Gear);
+            //trinketTest4.Name = "Energy Siphon";
+            //trinketTest4[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Energy Siphon", 723, ItemSlot.Trinket1, []);
+            //user.AltGearSets.Add(trinketTest4);
 
-            var trinketTest10 = DeepCloneGearset(user.Gear);
-            trinketTest10.Name = "Show of Faith";
-            trinketTest10[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Show of Faith", 723, ItemSlot.Trinket1, []);
-            user.AltGearSets.Add(trinketTest10);
+            //var trinketTest5 = DeepCloneGearset(user.Gear);
+            //trinketTest5.Name = "Eye of the Broodmother";
+            //trinketTest5[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Eye of the Broodmother", 723, ItemSlot.Trinket1, []);
+            //user.AltGearSets.Add(trinketTest5);
 
-            var trinketTest11 = DeepCloneGearset(user.Gear);
-            trinketTest11.Name = "Eye of Blazing Power";
-            trinketTest11[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Eye of Blazing Power", 723, ItemSlot.Trinket1, []);
-            user.AltGearSets.Add(trinketTest11);
+            //var trinketTest6 = DeepCloneGearset(user.Gear);
+            //trinketTest6.Name = "Flare of the Heavens";
+            //trinketTest6[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Flare of the Heavens", 723, ItemSlot.Trinket1, []);
+            //user.AltGearSets.Add(trinketTest6);
 
-            var trinketTest12 = DeepCloneGearset(user.Gear);
-            trinketTest12.Name = "Necromantic Focus";
-            trinketTest12[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Necromantic Focus", 723, ItemSlot.Trinket1, []);
-            user.AltGearSets.Add(trinketTest12);
+            //var trinketTest7 = DeepCloneGearset(user.Gear);
+            //trinketTest7.Name = "Living Flame";
+            //trinketTest7[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Living Flame", 723, ItemSlot.Trinket1, []);
+            //user.AltGearSets.Add(trinketTest7);
 
 
-            var trinketTest13 = DeepCloneGearset(user.Gear);
-            trinketTest13.Name = "double on use";
-            trinketTest13[ItemSlot.Trinket1] = ItemGenerator.CreateItem("The Skull of Gul'Dan", 723, ItemSlot.Trinket1, []);
-            trinketTest13[ItemSlot.Trinket2] = ItemGenerator.CreateItem("Living Flame", 723, ItemSlot.Trinket1, []);
-            user.AltGearSets.Add(trinketTest13);
+            //var trinketTest8 = DeepCloneGearset(user.Gear);
+            //trinketTest8.Name = "Pandora's Plea";
+            //trinketTest8[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Pandora's Plea", 723, ItemSlot.Trinket1, []);
+            //user.AltGearSets.Add(trinketTest8);
+
+            //var trinketTest9 = DeepCloneGearset(user.Gear);
+            //trinketTest9.Name = "Scale of Fates";
+            //trinketTest9[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Scale of Fates", 723, ItemSlot.Trinket1, []);
+            //user.AltGearSets.Add(trinketTest9);
+
+            //var trinketTest10 = DeepCloneGearset(user.Gear);
+            //trinketTest10.Name = "Show of Faith";
+            //trinketTest10[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Show of Faith", 723, ItemSlot.Trinket1, []);
+            //user.AltGearSets.Add(trinketTest10);
+
+            //var trinketTest11 = DeepCloneGearset(user.Gear);
+            //trinketTest11.Name = "Eye of Blazing Power";
+            //trinketTest11[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Eye of Blazing Power", 723, ItemSlot.Trinket1, []);
+            //user.AltGearSets.Add(trinketTest11);
+
+            //var trinketTest12 = DeepCloneGearset(user.Gear);
+            //trinketTest12.Name = "Necromantic Focus";
+            //trinketTest12[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Necromantic Focus", 723, ItemSlot.Trinket1, []);
+            //user.AltGearSets.Add(trinketTest12);
+
+
+            //var trinketTest13 = DeepCloneGearset(user.Gear);
+            //trinketTest13.Name = "double on use";
+            //trinketTest13[ItemSlot.Trinket1] = ItemGenerator.CreateItem("The Skull of Gul'Dan", 723, ItemSlot.Trinket1, []);
+            //trinketTest13[ItemSlot.Trinket2] = ItemGenerator.CreateItem("Living Flame", 723, ItemSlot.Trinket1, []);
+            //user.AltGearSets.Add(trinketTest13);
             //var HasteTest3 = DeepCloneGearset(user.Gear);
             //HasteTest3.Name = "Haste - 10000";
             //HasteTest3[ItemSlot.Head].addStatRating(StatName.Haste, -10000);
@@ -451,19 +461,15 @@ namespace Beaversims.Core.Sim
 
         public static void CreateGearSets(User user)
         {
-            // Obs ! For stat weights we cant currently change special effects in ref. To be able to do this we need to change
-            // how we deal with SimImpurities.
-            var refSet = DeepCloneGearset(user.Gear);
-            refSet.Name = "Ref";
-            user.AltGearSets.Add(refSet);
-
-            if (Constants.swOption)
+            if (user.SwMode)
             {
                 SwDummyItems(user);
-
             }
             else
             {
+                var refSet = DeepCloneGearset(user.Gear);
+                refSet.Name = "Ref";
+                user.AltGearSets.Add(refSet);
                 CustomGearSets(user);
             }
 

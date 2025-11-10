@@ -13,7 +13,15 @@ internal class Results
 {
     public double TotalTime { get; set; } = 0;
     public List<GearSet> altGearSets { get; set; } = [];
+    public string SpecName { get; set; }
+    public string HeroTlName { get; set; }
+    public string FightName { get; set; }
+    public int FightId { get; set; }
+    public string PlayerName { get; set; }
     public GainDict OriginalTotals { get; set; } = Utils.InitGainDict();
+    public int Difficulty { get; set; }
+    public double WipePercent { get; set; }
+    public bool Success { get; set; }
     public void ToPerSec()
     {
         foreach (var altGearSet in altGearSets)
@@ -40,9 +48,9 @@ namespace Beaversims.Core.Shared
     internal class ProcessEvents
     {
 
-        public static void AddProcEvents(List<TpEvent> tpEvents, List<TpEvent> procEvents, int iterationCount, bool swMode)
+        public static void AddProcEvents(List<TpEvent> tpEvents, List<TpEvent> procEvents, int iterationCount, User user)
         {
-            if (swMode || Constants.deactivateSims)
+            if (!Utils.SimsActive(user))
             {
                 return;
             }
@@ -63,6 +71,7 @@ namespace Beaversims.Core.Shared
         {
 
             AmountContainer amounts;
+
             if (evt.SimEvent)
             {
                 amounts = evt.Amount;
@@ -71,6 +80,7 @@ namespace Beaversims.Core.Shared
             {
                 amounts = evt.AltEvents[i].Amount;
             }
+
             var gainType = GainType.Eff;
             double amount;
             if (evt.IsDamageTakenEvent())
@@ -157,13 +167,13 @@ namespace Beaversims.Core.Shared
                 {
                     var gainType = gainEntry.Key;
                     var gains = gearSet.Gains;
-                    if (user.SwMode)
+                    if (user.SimMode == SimMode.SW)
                     {
 
                         gains[gainType] -= user.OriginalTotals[gainType];
 
                     }
-                    else
+                    if (user.SimMode == SimMode.TopGear)
                     {
                         if (i == 0)
                         {
@@ -175,7 +185,11 @@ namespace Beaversims.Core.Shared
                             //gains[gainType] /= fight.TotalTime;
                         }
                     }
-                   
+                    if (user.SimMode == SimMode.StatAlloc)
+                    {
+
+                    }
+
                 }
             }
         }
@@ -231,6 +245,7 @@ namespace Beaversims.Core.Shared
             SetFinalGains(user);
             results.altGearSets = user.AltGearSets;
             results.OriginalTotals = user.OriginalTotals;
+
             LogAbilityGains(user, abilityGainLogger, abilityGains);
 
         }

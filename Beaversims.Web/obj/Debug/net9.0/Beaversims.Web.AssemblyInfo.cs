@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Beaversims.Web")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+75376570dd661249539d98aa77256cb0e91464ea")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4e50fdf49b7425ffbe02b87a32d27939a50b4ffd")]
 [assembly: System.Reflection.AssemblyProductAttribute("Beaversims.Web")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Beaversims.Web")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

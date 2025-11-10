@@ -1,0 +1,58 @@
+﻿/* result-options.css — shared */
+
+.card.ro {
+    background: #141423;
+    border: 1px solid #2e2e3b;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.35);
+    padding: 1rem 1.25rem;
+    margin: 1.25rem auto;
+    max-width: 900px;
+}
+
+    .card.ro h2 {
+        margin: 0 0 .75rem;
+        color: #fff;
+        font-size: 1.15rem;
+    }
+
+.ro-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+}
+
+.ro-group {
+    display: flex;
+    gap: .75rem;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.ro-label {
+    color: #ddd;
+    font-weight: 600;
+    margin-right: .5rem;
+}
+
+.ro-radio, .ro-check {
+    display: inline-flex;
+    gap: .4rem;
+    align-items: center;
+    background: #1a1a2b;
+    border: 1px solid #2e2e3b;
+    color: #ddd;
+    padding: .35rem .6rem;
+    border-radius: 8px;
+    user-select: none;
+}
+
+    .ro-radio input, .ro-check input {
+        accent-color: #7ab4ff;
+    }
+
+@media (max-width: 720px) {
+    .ro-row {
+        grid-template-columns: 1fr;
+    }
+}

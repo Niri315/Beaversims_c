@@ -1,4 +1,6 @@
-﻿body {
+﻿/* results.css */
+
+body {
     background-color: #111;
     color: #eee;
     font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -39,4 +41,77 @@ canvas {
     border-radius: 6px;
     padding: 6px 10px;
     font-size: 13px;
+}
+
+.fs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1rem 0 1.25rem;
+}
+
+.fs-card {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1rem;
+    align-items: center;
+    padding: 1rem 1.25rem;
+    background: #141423;
+    border: 1px solid #2e2e3b;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.35);
+    min-height: 96px;
+}
+
+.fs-left {
+    display: flex;
+    flex-direction: column;
+    gap: .6rem;
+}
+
+.fs-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+    background: #1f1f2e;
+}
+
+.fs-icon-lg {
+    width: 56px;
+    height: 56px;
+    border-radius: 8px;
+}
+
+.fs-main {
+    min-width: 0;
+}
+
+.fs-title {
+    color: #f0f0f6;
+    font-weight: 700;
+    font-size: 1.05rem;
+    line-height: 1.25rem;
+}
+
+.fs-sub {
+    color: #b9b9c9;
+    font-size: .92rem;
+    margin-top: .25rem;
+}
+
+.fs-metrics {
+    margin-top: .6rem;
+    display: flex;
+    gap: 1rem;
+    color: #ddd;
+}
+
+    .fs-metrics div {
+        font-variant-numeric: tabular-nums;
+    }
+
+@media (max-width: 900px) {
+    .fs {
+        grid-template-columns: 1fr;
+    }
 }

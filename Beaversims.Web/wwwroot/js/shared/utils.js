@@ -1,4 +1,6 @@
-﻿export function msToMinSec(ms) {
+﻿//utils.js
+
+export function msToMinSec(ms) {
     const s = Math.max(0, Math.round(ms / 1000));
     const m = Math.floor(s / 60);
     const r = s % 60;
@@ -24,4 +26,9 @@ export function el(tag, attrs = {}, ...children) {
     }
     for (const c of children) node.append(c);
     return node;
+}
+
+export function icon(name) {
+    const id = name?.toLowerCase().replace(/\s+/g, "_") || "default";
+    return `/icons/${id}.jpg`;
 }

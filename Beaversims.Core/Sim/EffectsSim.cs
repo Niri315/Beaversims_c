@@ -36,11 +36,12 @@ namespace Beaversims.Core.Sim
         }
 
 
-     
+
 
         public static List<TpEvent>? SimEffects(List<Event> events, User user, Fight fight, int i, int iterationCount)
         {
-            if (user.SwMode || Constants.deactivateSims)
+            var simMode = user.SimMode;
+            if (simMode == SimMode.SW || simMode == SimMode.StatAlloc || Constants.deactivateSims)
             {
                 return null;
             }
@@ -84,7 +85,6 @@ namespace Beaversims.Core.Sim
                         //Console.WriteLine(evt.Timestamp.ToString());
                         tEvt.UserStats = curAltStats;
                         procEvents.Add(tEvt);
-                        // Remove the proc event here
                     }
                 }
             }

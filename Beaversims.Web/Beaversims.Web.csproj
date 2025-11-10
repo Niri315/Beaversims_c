@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\css\NewFolder\" />
+    <Folder Include="wwwroot\icons\" />
   </ItemGroup>
 
   <ItemGroup>

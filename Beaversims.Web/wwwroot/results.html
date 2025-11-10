@@ -5,6 +5,7 @@
     <title>Simulation Results</title>
     <link rel="stylesheet" href="/css/site.css">
     <link rel="stylesheet" href="/css/results.css">
+    <link rel="stylesheet" href="css/result-options.css">
     <script>
         const whTooltips = {
             colorLinks: true,
@@ -16,11 +17,81 @@
     <script defer src="https://wow.zamimg.com/js/tooltips.js"></script>
 </head>
 <body>
+    <div id="site-header"></div>
     <h1>Simulation Results</h1>
+    <section id="fight-summary" class="fs">
+        <!-- Player card -->
+        <div class="fs-card fs-player">
+            <div class="fs-left">
+                <img id="fs-spec-icon" class="fs-icon" alt="">
+                <img id="fs-hero-icon" class="fs-icon" alt="">
+            </div>
+
+            <div class="fs-main">
+                <div id="fs-player-name" class="fs-title">PlayerName</div>
+                <div id="fs-spec-hero" class="fs-sub">Spec · Hero</div>
+
+                <div class="fs-metrics">
+                    <div>HPS <span id="fs-hps">0</span></div>
+                    <div>DPS <span id="fs-dps">0</span></div>
+                    <div>DTPS <span id="fs-dtps">0</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fight/Boss card -->
+        <div class="fs-card fs-fight">
+            <div class="fs-left">
+                <img id="fs-boss-icon" class="fs-icon fs-icon-lg" alt="">
+            </div>
+
+            <div class="fs-main">
+                <div id="fs-boss-name" class="fs-title">BossName</div>
+                <!-- No labels here: just values -->
+                <div class="fs-sub">
+                    <span id="fs-diff">—</span> ·
+                    <span id="fs-time">0:00</span> ·
+                    <span id="fs-outcome">—</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="card ro" id="result-options" aria-labelledby="ro-title">
+
+        <div class="ro-row">
+            <div class="ro-group">
+                <label class="ro-radio">
+                    <input type="radio" name="ro-metric" value="total" checked>
+                    <span>Total</span>
+                </label>
+                <label class="ro-radio">
+                    <input type="radio" name="ro-metric" value="heal">
+                    <span>Heal</span>
+                </label>
+                <label class="ro-radio">
+                    <input type="radio" name="ro-metric" value="damage">
+                    <span>Damage</span>
+                </label>
+            </div>
+
+            <div class="ro-group">
+                <label class="ro-check">
+                    <input type="checkbox" id="ro-dr" />
+                    <span>Damage Reduction</span>
+                </label>
+                <label class="ro-check">
+                    <input type="checkbox" id="ro-support" />
+                    <span>Support effects</span>
+                </label>
+            </div>
+        </div>
+    </section>
     <canvas id="resultsChart"></canvas>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="module" src="/js/results.js"></script>
+    <script type="module" src="/js/shared/result-options.js"></script>
     <script src="/js/site.js"></script>
 </body>
 </html>

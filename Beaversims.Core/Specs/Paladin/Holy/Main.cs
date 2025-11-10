@@ -78,7 +78,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
             foreach (Event evt in events)
             {
                 // Loop for tracking buffs and collecting data.
-                BuffTracker.TrackBuffs(user.SwMode, evt, allUnits, statLogger, refStatLogger);
+                BuffTracker.TrackBuffs(evt, allUnits, statLogger, refStatLogger);
                 evt.CreateAltEvents(user, evt);
           
                 CastProcessor.ProcessCast(evt, user);
@@ -152,7 +152,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
 
                 // Only summer and leech will react to this.
                 tpEvents = altEventList.OfType<TpEvent>().ToList(); // Updating here to include non proc sim events
-                Shared.ProcessEvents.AddProcEvents(tpEvents, procEvents, iterationCount, user.SwMode); 
+                Shared.ProcessEvents.AddProcEvents(tpEvents, procEvents, iterationCount, user); 
                 Shared.DupliEffects.AltSummerSource(tpEvents, user, i);
                 Shared.DupliEffects.AltLeechSource(tpEvents, user, i);
 

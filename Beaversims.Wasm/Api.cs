@@ -26,7 +26,16 @@ public static partial class Api
                     gains = gs.Gains.ToDictionary(kvp => kvp.Key.ToString(), kvp => kvp.Value),
                     id = gs.Id,
                     name = gs.Name
-                })
+                }),
+                specName = r.SpecName,             
+                heroTlName = r.HeroTlName,          
+                fightId = r.FightId,                
+                fightName = r.FightName,   
+                playerName = r.PlayerName,
+                success = r.Success,
+                difficulty = r.Difficulty,
+                wipePercent = r.WipePercent
+
             };
 
             var json = JsonSerializer.Serialize(dto, new JsonSerializerOptions

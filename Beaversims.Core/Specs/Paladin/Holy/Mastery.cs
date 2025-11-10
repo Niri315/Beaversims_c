@@ -158,7 +158,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
             var gainRaw = MasteryGainCalc(stat, evt.Amount.Raw, evt.masteryEffectiveness);
             var gain = evt.RawToEffConvert(gainRaw);
             evt.Gains[statName][gainType] += gain;
-            user.Spec.DupliGainsHeal(evt, user, statName, gainRaw);
+            //user.Spec.DupliGainsHeal(evt, user, statName, gainRaw);
             MasteryAltAmount(evt, stat, i, evt.masteryEffectiveness, antiGain:antiGain);
             
         }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Beaversims.Core
 {
-    public enum SimMode { SW, GearComp }
+    public enum SimMode { SW, TopGear, StatAlloc }
     public enum GainType {Eff, Dmg, Def, SupEff, SupDmg, MsEff, MsDmg, BalEff, BalDmg}
     public enum Race
     { 
@@ -21,6 +21,11 @@ namespace Beaversims.Core
         PreservationEvoker,
         RestorationDruid,
         RestorationShaman, 
+    }
+    public enum HeroTlName
+    {
+        Lightsmith,
+        HeraldOfTheSun,
     }
 
     public enum ScalingClass

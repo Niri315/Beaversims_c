@@ -30,7 +30,8 @@ namespace Beaversims.CLI
             //var logLink = "https://www.warcraftlogs.com/reports/vlhzymap2dgxfwkr?fight=34&type=healing&source=24"; //frac nali antenna
             var logLink = "https://www.warcraftlogs.com/reports/J1Z84KGD2BfyTHrP?fight=11&source=3"; //  
 
-            var swMode = true;
+            //var swMode = true;
+            SimMode simMode = SimMode.SW;
             var totalTime = Stopwatch.StartNew();
             var linkElements = WclClient.ParseLogLink(logLink);
 
@@ -40,13 +41,18 @@ namespace Beaversims.CLI
             var logs = await WclClient.GetLogs(reportCode, fightId, userId);
             Results finalResults;
 
-            if (swMode)
+            if (simMode == SimMode.SW)
             {
                 finalResults = RunMain.SwMain(logs, userId, reportCode);
             }
+            else if (simMode == SimMode.TopGear) 
+            {
+                finalResults = RunMain.TgMain(logs, userId, reportCode);
+            }
             else
             {
-                finalResults = RunMain.GcMain(logs, userId, reportCode);
+                finalResults = RunMain.SaMain(logs, userId, reportCode);
+                TestUtils.PrintTopStatAllocs(finalResults);
             }
 
             //TestUtils.PrintStatWeights(finalResults.swGains);

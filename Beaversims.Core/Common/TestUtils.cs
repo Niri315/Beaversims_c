@@ -113,5 +113,63 @@ namespace Beaversims.Core.Common
         }
 
 
+
+        public static void PrintTopStatAllocs(Results results)
+        {
+            if (results?.altGearSets == null || results.altGearSets.Count == 0)
+            {
+                Console.WriteLine("No gear sets available.");
+                return;
+            }
+
+            // Safely get a gain value, treating missing entries as 0
+            double Get(GearSet gs, GainType t)
+            {
+                if (gs?.Gains == null) return 0;
+                return gs.Gains.TryGetValue(t, out var v) ? v : 0;
+            }
+
+            // Find the best gearset by a given score selector
+            (GearSet gs, double val) Best(Func<GearSet, double> selector)
+            {
+                GearSet best = null;
+                double bestVal = double.NegativeInfinity;
+
+                foreach (var g in results.altGearSets)
+                {
+                    var s = selector(g);
+                    if (s > bestVal)
+                    {
+                        bestVal = s;
+                        best = g;
+                    }
+                }
+                return (best, bestVal);
+            }
+
+            // Try to get a human-friendly name; fall back to ToString()
+            string NameOf(GearSet g)
+            {
+                if (g == null) return "<none>";
+                var nameProp = g.GetType().GetProperty("Name");
+                var name = nameProp?.GetValue(g) as string;
+                return string.IsNullOrWhiteSpace(name) ? g.ToString() : name;
+            }
+
+            var topEff = Best(g => Get(g, GainType.Eff));
+            var topDmg = Best(g => Get(g, GainType.Dmg));
+            var topEffDmg = Best(g => Get(g, GainType.Eff) + Get(g, GainType.Dmg));
+            var topEffDef = Best(g => Get(g, GainType.Eff) + Get(g, GainType.Def));
+            var topEffDmgDef = Best(g => Get(g, GainType.Eff) + Get(g, GainType.Dmg) + Get(g, GainType.Def));
+
+            Console.WriteLine("Top GearSets by Category:");
+            Console.WriteLine($"eff:              {NameOf(topEff.gs)} ({topEff.val:F3})");
+            Console.WriteLine($"dmg:              {NameOf(topDmg.gs)} ({topDmg.val:F3})");
+            Console.WriteLine($"eff + dmg:        {NameOf(topEffDmg.gs)} ({topEffDmg.val:F3})");
+            Console.WriteLine($"eff + def:        {NameOf(topEffDef.gs)} ({topEffDef.val:F3})");
+            Console.WriteLine($"eff + dmg + def:  {NameOf(topEffDmgDef.gs)} ({topEffDmgDef.val:F3})");
+        }
+
+
     }
 }

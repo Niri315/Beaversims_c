@@ -1,0 +1,121 @@
+﻿#stat-alloc {
+    display: grid;
+    gap: 1rem;
+    max-width: 720px;
+    margin: 8vh auto 0;
+}
+
+.sa-card {
+    background: #141423;
+    border: 1px solid #2e2e3b;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.35);
+    padding: 1.25rem;
+}
+
+.sa-row {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: .75rem;
+    align-items: center;
+    margin-bottom: .75rem;
+}
+
+    .sa-row label {
+        color: #ddd;
+        font-weight: 600;
+    }
+
+    .sa-row select {
+        height: 42px;
+        border-radius: 6px;
+        border: 1px solid #333;
+        background: #1a1a2b;
+        color: #eee;
+        padding: 0 .6rem;
+    }
+
+.sa-help {
+    color: #bfbfd4;
+    opacity: .9;
+    font-size: .95rem;
+    margin-top: .25rem;
+}
+
+.sa-actions {
+    display: flex;
+    gap: .6rem;
+    justify-content: flex-end;
+    margin-top: .5rem;
+}
+
+.sa-btn {
+    padding: .6rem 1.1rem;
+    border-radius: 6px;
+    border: 1px solid #555;
+    background: #2b2b2b;
+    color: #fff;
+    cursor: pointer;
+}
+
+    .sa-btn:disabled {
+        opacity: .6;
+        cursor: not-allowed;
+    }
+
+
+/* --- Chart card --- */
+.sa-chart {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 1.25rem;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.sa-stats {
+    color: #ddd;
+}
+
+    .sa-stats .sa-best {
+        font-weight: 700;
+        margin-bottom: .75rem;
+    }
+
+.sa-stat {
+    display: flex;
+    gap: .5rem;
+    align-items: baseline;
+    margin: .25rem 0;
+    opacity: .95;
+}
+
+    .sa-stat .val {
+        width: 2.4rem;
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+    }
+
+    .sa-stat .name {
+        color: #bfbfd4;
+    }
+
+
+#sa-spec, #sa-hero {
+    color: var(--class-color, #ddd);
+}
+/* Canvas look */
+.sa-canvas {
+    background: #1a1a2b;
+    border: 1px solid #2e2e3b;
+    border-radius: 12px;
+    padding: .75rem;
+}
+
+    .sa-canvas canvas {
+        display: block;
+        width: 100%;
+        max-width: 520px;
+        margin: 0 auto;
+    }
+

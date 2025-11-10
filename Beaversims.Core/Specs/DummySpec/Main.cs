@@ -20,7 +20,7 @@ namespace Beaversims.Core.Specs.DummySpec
             foreach (Event evt in events)
             {
                 // Loop for tracking buffs and collecting data.
-                BuffTracker.TrackBuffs(user.SwMode, evt, allUnits, statLogger);
+                BuffTracker.TrackBuffs(evt, allUnits, statLogger);
   
                 if (evt is TpEvent tEvt)
                 {

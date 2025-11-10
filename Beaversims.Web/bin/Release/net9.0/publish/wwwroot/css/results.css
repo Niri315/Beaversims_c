@@ -1,0 +1,104 @@
+﻿/* results.css */
+
+body {
+    background-color: #111;
+    color: #eee;
+    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    text-align: center;
+    padding: 2rem;
+    margin: 0;
+}
+
+h1 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.5px;
+    color: #fff;
+}
+
+canvas {
+    display: block;
+    max-width: 900px;
+    width: 100%;
+    margin: 0 auto;
+    background: #1b1b1b;
+    border-radius: 12px;
+    box-shadow: 0 0 16px rgba(0, 0, 0, 0.4);
+    padding: 1rem;
+}
+
+/* optional loading text (if you want a spinner or waiting state) */
+.loading {
+    color: #aaa;
+    font-size: 1.1rem;
+    margin-top: 2rem;
+}
+
+/* tooltip override (optional, if you later want a dark theme tooltip) */
+.chartjs-tooltip {
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 13px;
+}
+
+.result-info.card {
+    background: #141423;
+    border: 1px solid #2e2e3b;
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    margin: 1rem auto 1.25rem;
+    max-width: 1000px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.35);
+}
+
+.result-info h2 {
+    margin: 0 0 .75rem;
+    color: #fff;
+    font-size: 1.1rem;
+}
+
+.ri-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: .75rem 1rem;
+}
+
+.ri-item {
+    min-width: 0;
+}
+
+.ri-label {
+    color: #b8b8c9;
+    font-size: .85rem;
+    margin-bottom: .25rem;
+}
+
+.ri-value {
+    color: #e6e6ef;
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    min-height: 24px;
+}
+
+.ri-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    background: #1f1f2e;
+    display: inline-block;
+}
+
+@media (max-width: 900px) {
+    .ri-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 640px) {
+    .ri-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}

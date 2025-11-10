@@ -21,6 +21,7 @@ namespace Beaversims.Core.Sim
         public GainDict Gains { get; set; }
 
         // For non hasted stat trinket sims.
+        public Dictionary<StatName, double> TotalGearRatings { get; set; } = new Dictionary<StatName, double>();
         public Dictionary<StatName, double> SimIncRatings { get; set; } = new Dictionary<StatName, double>();
         public Dictionary<StatName, double> IncEffs{ get; set; } = new Dictionary<StatName, double>();
         //public List<HasteProcEffect> HasteProcEffects { get; set; } = [];
@@ -28,6 +29,18 @@ namespace Beaversims.Core.Sim
         public List<ProcEffect> ProcEffects { get; set; } = [];
         public double ManaGain { get; set; } = 0;
         public double HasteCapCTLoss { get; set; } = 0;
+
+        public void SetTotalGearRatings()
+        {
+            TotalGearRatings = Utils.InitStatDict();
+            foreach (var item in _items.Values)
+            {
+                foreach (var stat in item.Stats)
+                {
+                    TotalGearRatings[stat.Key] += stat.Value;
+                }
+            }
+        }
 
         public void ResetProcEffects()
         {
@@ -46,6 +59,7 @@ namespace Beaversims.Core.Sim
             Gains = Utils.InitGainDict();
             SimIncRatings = Utils.InitStatDict();
             IncEffs = Utils.InitStatDict();
+            TotalGearRatings = Utils.InitStatDict();
             OnUseEffects = [];
             ProcEffects = [];
 
@@ -60,6 +74,7 @@ namespace Beaversims.Core.Sim
             Gains = Utils.InitGainDict();
             SimIncRatings = Utils.InitStatDict();
             IncEffs = Utils.InitStatDict();
+            TotalGearRatings = Utils.InitStatDict();
             OnUseEffects = [];
             ProcEffects = [];
         }
@@ -102,6 +117,7 @@ namespace Beaversims.Core.Sim
                 Gains = CloneGains(source.Gains), // important
                 SimIncRatings = Utils.InitStatDict(),
                 IncEffs = Utils.InitStatDict(),
+                TotalGearRatings = Utils.InitStatDict(),
                 OnUseEffects = [],
                 ProcEffects = []
             };
@@ -236,13 +252,27 @@ namespace Beaversims.Core.Sim
 
         public static void StatAllocTest(User user)
         {
-            int secStatMax = 4800;
-            int intellectAmount = 135000;
-            int staminaAmount = 780000;
-
-            double[] hasteGrid = { 0.00, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6 };
-            double[] critGrid = { 0.00, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6 };
-            double[] masteryGrid = { 0.00, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6 };
+            int secStatMax = 0;
+            //int intellectAmount = 135000;
+            //int staminaAmount = 780000;
+            foreach (var gear in user.Gear.Values)
+            {
+                if (gear == null) continue;
+                foreach (var stat in gear.Stats)
+                {
+                    if (Utils.IsSecondaryStat(stat.Key))
+                    {
+                        Console.WriteLine($"{gear.Name}: {stat.Key.ToString()}: {stat.Value}");
+                        secStatMax += (int)stat.Value;
+                    }
+                }
+            }
+            Console.WriteLine($"SEC MAX {secStatMax} ");
+            //double[] grid = { 0.00, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7 };
+            double[] grid = {0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6};
+            double[] hasteGrid = grid;
+            double[] critGrid = grid;
+            double[] masteryGrid = grid;
 
             foreach (var h in hasteGrid)
             {
@@ -263,8 +293,8 @@ namespace Beaversims.Core.Sim
                         gs.Name = $"{Pct(h)} haste, {Pct(c)} crit, {Pct(m)} mastery, {Pct(v)} vers";
 
                         gs[ItemSlot.Head] = ItemGenerator.CreateItem("Soaring Behemoth's Greathelm", 1, ItemSlot.Head, []);
-                        gs[ItemSlot.Head].Stats[StatName.Intellect] = intellectAmount;
-                        gs[ItemSlot.Head].Stats[StatName.Stamina] = staminaAmount;
+                        gs[ItemSlot.Head].Stats[StatName.Intellect] = user.TotalGearRatings[StatName.Intellect];
+                        gs[ItemSlot.Head].Stats[StatName.Stamina] = user.TotalGearRatings[StatName.Stamina];
 
                         // Allocate secondaries with exact-total correction
                         int haste = (int)Math.Round(secStatMax * h);
@@ -286,7 +316,7 @@ namespace Beaversims.Core.Sim
                                 case 3: vers += diff; break;
                             }
                         }
-
+                        //Console.WriteLine($"{gs.Name}: Haste: {haste}, Vers: {vers} Crit: {crit}, Mastery: {mastery}");
                         gs[ItemSlot.Head].Stats[StatName.Haste] = haste;
                         gs[ItemSlot.Head].Stats[StatName.Crit] = crit;
                         gs[ItemSlot.Head].Stats[StatName.Mastery] = mastery;
@@ -459,23 +489,52 @@ namespace Beaversims.Core.Sim
 
         }
 
+        public static void AddRefSet(User user)
+        {
+            var refSet = DeepCloneGearset(user.Gear);
+            refSet.Name = "Ref";
+            user.AltGearSets.Add(refSet);
+        }
+
         public static void CreateGearSets(User user)
         {
-            if (user.SwMode)
+            var simMode = user.SimMode;
+            user.SetTotalGearRatings();
+            if (simMode == SimMode.SW)
             {
                 SwDummyItems(user);
             }
+            else if (simMode == SimMode.StatAlloc)
+            {
+                StatAllocTest(user);
+            }
             else
             {
-                var refSet = DeepCloneGearset(user.Gear);
-                refSet.Name = "Ref";
-                user.AltGearSets.Add(refSet);
+                AddRefSet(user);
                 CustomGearSets(user);
             }
 
             SetGearSetIds(user);
             AddSpecialEffects(user);
             AddAltAbilityStuff(user);
+            foreach (var gearSet in user.AltGearSets)
+            {
+                gearSet.SetTotalGearRatings();
+            }
+
+            Console.WriteLine("Original:");
+            foreach (var stat in user.TotalGearRatings)
+            {
+                Console.WriteLine($"{stat.Key} {stat.Value}");
+            }
+            foreach (var gearSet in user.AltGearSets)
+            {
+                Console.WriteLine(gearSet.Name);
+                foreach (var stat in gearSet.TotalGearRatings)
+                {
+                    Console.WriteLine($"{stat.Key} {stat.Value}");
+                }
+            }
 
         }
     }

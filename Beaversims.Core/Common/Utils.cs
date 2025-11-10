@@ -136,11 +136,45 @@ namespace Beaversims.Core
 
         public static void RemoveImpurities(List<Event> events, User user)
         {
-            if (!(user.SwMode || Constants.deactivateSims))
+            if (SimsActive(user))
             {
                 events.RemoveAll(e => e.Ability != null && e.Ability.SimImpurity && e.UserSuperSource);
             }
         }
-       
+
+        public static bool SimsActive(User user)
+        {
+            var simMode = user.SimMode;
+            if (simMode == SimMode.SW) return false;
+            if (simMode == SimMode.StatAlloc) return false;
+            if (Constants.deactivateSims) return false;
+            return true;
+        }
+
+
+        public static string SpecNameToString(SpecName specName)
+        {
+            return specName switch
+            {
+                SpecName.DisciplinePriest => "Discipline Priest",
+                SpecName.HolyPaladin => "Holy Paladin",
+                SpecName.HolyPriest => "Holy Priest",
+                SpecName.MistweaverMonk => "Mistweaver Monk",
+                SpecName.PreservationEvoker => "Preservation Evoker",
+                SpecName.RestorationDruid => "Restoration Druid",
+                SpecName.RestorationShaman => "Restoration Shaman",
+                _ => specName.ToString()
+            };
+        }
+
+        public static string HeroTlNameToString(HeroTlName heroName)
+        {
+            return heroName switch
+            {
+                HeroTlName.Lightsmith => "Lightsmith",
+                HeroTlName.HeraldOfTheSun => "Herald of the Sun",
+                _ => heroName.ToString()
+            };
+        }
     }
 }

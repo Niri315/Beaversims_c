@@ -28,7 +28,7 @@ namespace Beaversims.Core
         protected Buff? FindBuff(int buffId, UnitId sourceId) =>
             Buffs.Find(b => b.Id == buffId && b.SourceId == sourceId);
 
-        public virtual void AddBuff(bool swOption, string buffName, int buffId, Unit sourceUnit, int stacks, double timeStamp, Logger statLogger = null, Logger refStatLogger = null)
+        public virtual void AddBuff(string buffName, int buffId, Unit sourceUnit, int stacks, double timeStamp, Logger statLogger = null, Logger refStatLogger = null)
         {
             var buff = new Buff(buffId, sourceUnit.Id, buffName, stacks);
             if (!buff.AllowMultiple)
@@ -50,12 +50,12 @@ namespace Beaversims.Core
             return true;
         }
 
-        public virtual void ChangeBuffStack(bool swOption, string buffName, int buffId, Unit sourceUnit, int newStacks, Logger statLogger = null, double timeStamp = 0, Logger refStatLogger = null)
+        public virtual void ChangeBuffStack(string buffName, int buffId, Unit sourceUnit, int newStacks, Logger statLogger = null, double timeStamp = 0, Logger refStatLogger = null)
         {
             var buff = FindBuff(buffId, sourceUnit.Id);
             if (buff is null)
             {
-                AddBuff(swOption, buffName, buffId, sourceUnit, newStacks, timeStamp, statLogger);
+                AddBuff(buffName, buffId, sourceUnit, newStacks, timeStamp, statLogger);
                 return;
             }
 
@@ -87,12 +87,15 @@ namespace Beaversims.Core
 
     internal class User : Player
     {
-        public bool SwMode { get; set; }
+        //public bool SwMode { get; set; }
+        public SimMode SimMode { get; set; }
         public Spec Spec { get; set; }
         public AbilityRepo Abilities { get; } = new();
         public HashSet<int> SummonIds { get; set; } = []; // Type Ids only
         public GainDict OriginalTotals { get; set; } = Utils.InitGainDict();
         public StatTracker Stats { get; set; } = new();
+        public Dictionary<StatName, double> TotalGearRatings { get; set; } = Utils.InitStatDict();
+
         //public HashSet<NonHasteProcEffect> NonHasteProcEffects { get; } = new();
         //public HashSet<OnUseEffect> OnUseEffects { get; } = new();
         //public List<SpecialEffect> AllEffects {  get; } = new();
@@ -107,6 +110,7 @@ namespace Beaversims.Core
         public double HasteCapCTLoss { get; set; } = 0;
         public int Casts {  get; set; } = 0;
 
+
         // Paladin
         public bool AwakeningActive { get; set; } = false;
         public bool BanCritScaleJudgAC { get; set; } = false;
@@ -118,7 +122,18 @@ namespace Beaversims.Core
         {
             return 1 - (AltGearSets[i].HasteCapCTLoss / TrueCastTimeTotal);
         }
-        
+
+        public void SetTotalGearRatings()
+        {
+            TotalGearRatings = Utils.InitStatDict();
+            foreach (var gear in Gear.Values)
+            {
+                foreach (var stat in gear.Stats)
+                {
+                    TotalGearRatings[stat.Key] += stat.Value;
+                }
+            }
+        }
 
         public virtual void InitCustomBuffs()
         {
@@ -201,7 +216,7 @@ namespace Beaversims.Core
             }
         }
 
-        public override void AddBuff(bool swOption, string buffName, int buffId, Unit sourceUnit, int stacks, double timeStamp, Logger statLogger = null, Logger refStatLogger = null)
+        public override void AddBuff(string buffName, int buffId, Unit sourceUnit, int stacks, double timeStamp, Logger statLogger = null, Logger refStatLogger = null)
         {
             var sourceId = sourceUnit.Id;
             Buff buff = TryCreateStatBuff(buffId, sourceUnit, stacks, out var created)
@@ -210,7 +225,7 @@ namespace Beaversims.Core
 
             if (buff is StatBuff statBuff)
             {
-                if (statBuff.SimImpurity && (swOption || Constants.deactivateSims || sourceUnit is not User))
+                if (statBuff.SimImpurity && (!Utils.SimsActive(this) || sourceUnit is not User))
                 {
                     statBuff.SimImpurity = false;
                 }
@@ -256,13 +271,13 @@ namespace Beaversims.Core
             return true;
         }
 
-        public override void ChangeBuffStack(bool swOption, string buffName, int buffId, Unit sourceUnit, int newStacks, Logger statLogger = null, double timeStamp = 0, Logger refStatLogger = null)
+        public override void ChangeBuffStack(string buffName, int buffId, Unit sourceUnit, int newStacks, Logger statLogger = null, double timeStamp = 0, Logger refStatLogger = null)
         {
             var sourceId = sourceUnit.Id;
             var buff = Buffs.Find(b => b.Id == buffId && b.SourceId == sourceId);
             if (buff is null)
             {
-                AddBuff(swOption, buffName, buffId, sourceUnit, newStacks, timeStamp, statLogger);
+                AddBuff(buffName, buffId, sourceUnit, newStacks, timeStamp, statLogger);
                 return;
             }
 

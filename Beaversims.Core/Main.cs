@@ -16,15 +16,21 @@ namespace Beaversims.Core
     {
         public static Results SwMain(JsonDocument logs, int userId, string reportCode)
         {
-            return Run(logs, userId, reportCode, swMode: true, iterationCount: 0);
+            return Run(logs, userId, reportCode, simMode: SimMode.SW, iterationCount: 0);
         }
 
-        public static Results GcMain(JsonDocument logs, int userId, string reportCode, int iterationCount = Constants.defaultIterCount)
+        public static Results TgMain(JsonDocument logs, int userId, string reportCode, int iterationCount = Constants.defaultIterCount)
         {
-            return Run(logs, userId, reportCode, swMode: false, iterationCount);
+            return Run(logs, userId, reportCode, simMode: SimMode.TopGear, iterationCount);
         }
 
-        private static Results Run(JsonDocument logs, int userId, string reportCode, bool swMode, int iterationCount)
+        public static Results SaMain(JsonDocument logs, int userId, string reportCode)
+        {
+            return Run(logs, userId, reportCode, simMode: SimMode.StatAlloc, iterationCount: 0);
+        }
+
+
+        private static Results Run(JsonDocument logs, int userId, string reportCode, SimMode simMode, int iterationCount)
         {
 
   
@@ -45,7 +51,7 @@ namespace Beaversims.Core
             }
 
             var fight = FightParser.ParseFight(fightData, reportCode);
-            var allUnits = UnitParser.ParseUnits(playerData, combatantEvents, userInfo, userId, fight, swMode);
+            var allUnits = UnitParser.ParseUnits(playerData, combatantEvents, userInfo, userId, fight, simMode);
             var events = EventParser.ParseUserEvents(userEvents, allUnits, fight);
             var user = allUnits.GetUser();
 
@@ -62,6 +68,14 @@ namespace Beaversims.Core
 
             results.TotalTime = fight.TotalTime;
             results.ToPerSec();
+            results.SpecName = Utils.SpecNameToString(user.Spec.SpecName);
+            results.HeroTlName = Utils.HeroTlNameToString(user.Spec.HeroTlName);
+            results.FightId = fight.EncounterId;
+            results.FightName = fight.Name;
+            results.PlayerName = user.Name;
+            results.Success = fight.Success;
+            results.WipePercent = fight.WipePercent;
+            results.Difficulty = fight.Difficulty;
             return results;
         }
     }

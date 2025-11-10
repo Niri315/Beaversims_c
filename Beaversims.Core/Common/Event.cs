@@ -123,20 +123,20 @@ namespace Beaversims.Core
 
                 var altStats = evt.RefStats.Clone();
 
-                foreach (var altGear in altGearSet)
+                //foreach (var altGear in altGearSet)
+                //{
+                foreach (var stat in altGearSet.TotalGearRatings)
                 {
-                    foreach (var stat in altGear.Value.Stats)
-                    {
-                        statDiffs[stat.Key] += stat.Value;
-                    }
+                    statDiffs[stat.Key] += stat.Value;
                 }
-                foreach (var gear in user.Gear)
+                //}
+                //foreach (var gear in user.Gear)
+                //{
+                foreach (var stat in user.TotalGearRatings)
                 {
-                    foreach (var stat in gear.Value.Stats)
-                    {
-                        statDiffs[stat.Key] -= stat.Value;
-                    }
+                    statDiffs[stat.Key] -= stat.Value;
                 }
+                //}
 
                 foreach (var stat in statDiffs)
                 {

@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Simulation Results</title>
+    <link rel="stylesheet" href="/css/site.css">
+    <link rel="stylesheet" href="/css/results.css">
+    <link rel="stylesheet" href="css/result-options.css">
+    <script>
+        const whTooltips = {
+            colorLinks: true,
+            iconizeLinks: false,
+            renameLinks: false,
+            hide: { sellprice: true }
+        };
+    </script>
+    <script defer src="https://wow.zamimg.com/js/tooltips.js"></script>
+</head>
+<body>
+    <div id="site-header"></div>
+    <h1>Simulation Results</h1>
+    <section class="result-info card" id="result-info" aria-labelledby="ri-title">
+        <h2 id="ri-title">Fight Info</h2>
+
+        <div class="ri-grid">
+            <div class="ri-item">
+                <div class="ri-label">Spec</div>
+                <div class="ri-value">
+                    <img id="ri-spec-icon" class="ri-icon" alt="" />
+                    <span id="ri-spec-name">—</span>
+                </div>
+            </div>
+
+            <div class="ri-item">
+                <div class="ri-label">Hero Talent</div>
+                <div class="ri-value">
+                    <img id="ri-hero-icon" class="ri-icon" alt="" />
+                    <span id="ri-hero-name">—</span>
+                </div>
+            </div>
+
+            <div class="ri-item">
+                <div class="ri-label">Fight</div>
+                <div class="ri-value">
+                    <img id="ri-fight-icon" class="ri-icon" alt="" />
+                    <span id="ri-fight-name">—</span>
+                </div>
+            </div>
+
+            <div class="ri-item">
+                <div class="ri-label">Difficulty</div>
+                <div class="ri-value" id="ri-diff">—</div>
+            </div>
+
+            <div class="ri-item">
+                <div class="ri-label">Player</div>
+                <div class="ri-value" id="ri-player">—</div>
+            </div>
+
+            <div class="ri-item">
+                <div class="ri-label">Result</div>
+                <div class="ri-value" id="ri-result">—</div>
+            </div>
+
+            <div class="ri-item">
+                <div class="ri-label">Length</div>
+                <div class="ri-value" id="ri-length">—</div>
+            </div>
+
+            <div class="ri-item">
+                <div class="ri-label">HPS</div>
+                <div class="ri-value" id="ri-hps">—</div>
+            </div>
+
+            <div class="ri-item">
+                <div class="ri-label">DPS</div>
+                <div class="ri-value" id="ri-dps">—</div>
+            </div>
+
+            <div class="ri-item">
+                <div class="ri-label">DTPS</div>
+                <div class="ri-value" id="ri-dtps">—</div>
+            </div>
+        </div>
+    </section>
+    <section class="card ro" id="result-options" aria-labelledby="ro-title">
+
+        <div class="ro-row">
+            <div class="ro-group">
+                <label class="ro-radio">
+                    <input type="radio" name="ro-metric" value="total" checked>
+                    <span>Total</span>
+                </label>
+                <label class="ro-radio">
+                    <input type="radio" name="ro-metric" value="heal">
+                    <span>Heal</span>
+                </label>
+                <label class="ro-radio">
+                    <input type="radio" name="ro-metric" value="damage">
+                    <span>Damage</span>
+                </label>
+            </div>
+
+            <div class="ro-group">
+                <label class="ro-check">
+                    <input type="checkbox" id="ro-dr" />
+                    <span>Damage Reduction</span>
+                </label>
+                <label class="ro-check">
+                    <input type="checkbox" id="ro-support" />
+                    <span>Support effects</span>
+                </label>
+            </div>
+        </div>
+    </section>
+    <canvas id="resultsChart"></canvas>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module" src="/js/results.js"></script>
+    <script type="module" src="/js/shared/result-options.js"></script>
+    <script src="/js/site.js"></script>
+</body>
+</html>

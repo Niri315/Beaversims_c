@@ -1,0 +1,7 @@
+C:\Users\Ludde\Projects\Beaversims_c\Beaversims.CLI\bin\Release\net9.0\publish\Beaversims.CLI.exe
+C:\Users\Ludde\Projects\Beaversims_c\Beaversims.CLI\bin\Release\net9.0\publish\Beaversims.CLI.dll
+C:\Users\Ludde\Projects\Beaversims_c\Beaversims.CLI\bin\Release\net9.0\publish\Beaversims.CLI.deps.json
+C:\Users\Ludde\Projects\Beaversims_c\Beaversims.CLI\bin\Release\net9.0\publish\Beaversims.CLI.runtimeconfig.json
+C:\Users\Ludde\Projects\Beaversims_c\Beaversims.CLI\bin\Release\net9.0\publish\Beaversims.CLI.pdb
+C:\Users\Ludde\Projects\Beaversims_c\Beaversims.CLI\bin\Release\net9.0\publish\Beaversims.Core.dll
+C:\Users\Ludde\Projects\Beaversims_c\Beaversims.CLI\bin\Release\net9.0\publish\Beaversims.Core.pdb

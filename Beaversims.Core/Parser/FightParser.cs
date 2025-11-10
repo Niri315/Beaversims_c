@@ -21,7 +21,9 @@ namespace Beaversims.Core.Parser
             fight.EncounterId = fightData.GetProperty("encounterID").GetInt32();
             fight.Name = fightData.GetProperty("name").ToString();
             fight.ReportCode = reportCode;
-
+            fight.Success = fightData.GetProperty("kill").GetBoolean();
+            fight.Difficulty = fightData.GetProperty("difficulty").GetInt32();
+            fight.WipePercent = fightData.GetProperty("fightPercentage").GetDouble();
             return fight;
         }
 

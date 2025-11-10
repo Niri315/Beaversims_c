@@ -13,6 +13,9 @@ namespace Beaversims.Core.Common
         public int EncounterId { get; set; }
         public string Name { get; set; } = string.Empty;
         public string ReportCode { get; set; } = String.Empty;
+        public bool Success { get; set; }
+        public int Difficulty { get; set; }
+        public double WipePercent { get; set; }
 
     }
 }

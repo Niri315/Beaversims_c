@@ -1,0 +1,3 @@
+C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Core\bin\Release\net9.0\publish\Beaversims.Core.dll
+C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Core\bin\Release\net9.0\publish\Beaversims.Core.deps.json
+C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Core\bin\Release\net9.0\publish\Beaversims.Core.pdb

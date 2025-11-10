@@ -171,7 +171,7 @@ namespace Beaversims.Core.Parser
         public static bool VantusCheck(string name, Fight fight) => name.EndsWith(fight.Name);
 
 
-        public static void AddStarterBuffs(JsonElement combatantEvents, UnitRepo allUnits, Fight fight, bool swMode)
+        public static void AddStarterBuffs(JsonElement combatantEvents, UnitRepo allUnits, Fight fight)
         {
             foreach (var playerElement in combatantEvents.EnumerateArray())
             {
@@ -213,7 +213,7 @@ namespace Beaversims.Core.Parser
                         sourceUnit = npcUnit;
                     }
 
-                    player.AddBuff(swMode, buffName, buffId, sourceUnit, stacks, timeStamp:0);
+                    player.AddBuff(buffName, buffId, sourceUnit, stacks, timeStamp:0);
                 }
             }
         }
@@ -233,11 +233,11 @@ namespace Beaversims.Core.Parser
             }
         }
 
-        public static UnitRepo ParseUnits(JsonElement playerData, JsonElement combatantEvents, JsonElement userInfo, int userId, Fight fight, bool swMode)
+        public static UnitRepo ParseUnits(JsonElement playerData, JsonElement combatantEvents, JsonElement userInfo, int userId, Fight fight, SimMode simMode)
         {
             var allUnits = InitPlayers(playerData, userId);
             var user = allUnits.GetUser();
-            user.SwMode = swMode;
+            user.SimMode = simMode;
             user.Spec = FindSpec(userInfo);
             user.Spec.InitAbilities(user.Abilities);
             user.Spec.InitSharedAbilities(user.Abilities);
@@ -245,12 +245,12 @@ namespace Beaversims.Core.Parser
             SetThroughputValues(allUnits, playerData);
             SetItemsTalents(playerData, allUnits);
             user.InitCustomBuffs();
-            AddStarterBuffs(combatantEvents, allUnits, fight, user.SwMode);
+            AddStarterBuffs(combatantEvents, allUnits, fight);
             GetStarterRatings(user, userInfo); // Resetting ratings here.
             // Vantus goes here, after ratings reset.
             if (user.HasVantus) 
             {
-                user.AddBuff(swMode, "Vantus Rune" + fight.Name, Constants.curVantusId, user, 1, timeStamp:0);
+                user.AddBuff("Vantus Rune" + fight.Name, Constants.curVantusId, user, 1, timeStamp:0);
             }
             PurifyRefStats(user);
             return allUnits;

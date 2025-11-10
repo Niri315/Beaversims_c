@@ -15,7 +15,8 @@ namespace Beaversims.Core
         public abstract double MasteryPr { get; }
         protected abstract string SpecAbilityNamespace { get; }
         protected abstract string SpecTalentNamespace { get; }
-        protected abstract SpecName SpecName { get; }
+        public virtual SpecName SpecName { get; }
+        public virtual HeroTlName HeroTlName { get; }
         public virtual double HasteGainMod { get; } = 1.0;
         public virtual void InitAbilities(AbilityRepo abilities)
         {
@@ -65,8 +66,8 @@ namespace Beaversims.Core
         }
 
         public abstract void SpecIteration(List<Event> events, UnitRepo allUnits, Fight fight, int iterationCount);
-        public abstract void DupliGainsHeal(TpEvent tEvt, User user, StatName statName, double gainRaw, GainType gainType = GainType.Eff);
-        public abstract void DupliGainsDmg(TpEvent tEvt, User user, StatName statName, double gain, GainType gainType = GainType.Dmg);
+        //public abstract void DupliGainsHeal(TpEvent tEvt, User user, StatName statName, double gainRaw, GainType gainType = GainType.Eff);
+        //public abstract void DupliGainsDmg(TpEvent tEvt, User user, StatName statName, double gain, GainType gainType = GainType.Dmg);
 
         public void InitSharedAbilities(AbilityRepo abilities)
         {
@@ -84,15 +85,15 @@ namespace Beaversims.Core
         public override double MasteryPr { get; } = masteryPr_s;
         protected override string SpecAbilityNamespace => "Beaversims.Core.Specs.DummySpec";
         protected override string SpecTalentNamespace => "";
-        protected override SpecName SpecName => SpecName.HolyPaladin;
+        public override SpecName SpecName => SpecName.HolyPaladin;
 
-        public override void DupliGainsHeal(TpEvent evt, User user, StatName statName, double gainRaw, GainType gainType = GainType.Eff)
-        {
-        }
-        public override void DupliGainsDmg(TpEvent evt, User user, StatName statName, double gain, GainType gainType = GainType.Dmg)
-        {
+        //public override void DupliGainsHeal(TpEvent evt, User user, StatName statName, double gainRaw, GainType gainType = GainType.Eff)
+        //{
+        //}
+        //public override void DupliGainsDmg(TpEvent evt, User user, StatName statName, double gain, GainType gainType = GainType.Dmg)
+        //{
 
-        }
+        //}
         public override void SpecIteration(List<Event> events, UnitRepo allUnits, Fight fight, int iterationCount)
         {
             Specs.DummySpec.Main.SpecMain(events, allUnits, fight, iterationCount);

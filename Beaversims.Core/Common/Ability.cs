@@ -63,6 +63,7 @@ namespace Beaversims.Core
     internal class Ability
     {
         public string Name { get; set; } = "Unnamed Ability";
+        public int BuffId { get; set; }
         public double Cooldown { get; set; } = 0.0;
         public double ManaCost_p { get; set; } = 0.0;
         public double CastTime { get; set; } = 0.0;

@@ -16,6 +16,14 @@ namespace Beaversims.Core.Specs.Druid.Resto
             {
                 return Constants.GCD;
             }
+            if (evt.UserHasHotw)
+            {
+                var ability = (Abilities.RestoAbility)evt.Ability;
+                if (ability.BalanceSpell)
+                {
+                    castTime *= (1 - Abilities.HeartOfTheWild.balanceSpellsCTCoef);
+                }
+            }
             return castTime;
         }
 

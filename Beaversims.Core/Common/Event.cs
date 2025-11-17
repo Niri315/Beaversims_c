@@ -106,6 +106,8 @@ namespace Beaversims.Core
         //Druid
         public bool TargetHasRegrowth { get; set; } = false;
         public int AbundanceStacks { get; set; } = 0;
+        public bool IsSymbRelEvent { get; set; } = false;
+        public bool UserHasHotw {  get; set; } = false;
 
         // TODO implement preEvent option.
         public double? SourceHp_p()//(bool preEvent=false) 

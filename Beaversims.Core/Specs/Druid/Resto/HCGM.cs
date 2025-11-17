@@ -1,5 +1,6 @@
 ﻿using Beaversims.Core.Common;
 using Beaversims.Core.Shared.Abilities;
+using Beaversims.Core.Specs.Druid.Resto.Abilities;
 using Beaversims.Core.Specs.Paladin.Holy.Abilities;
 using System;
 using System.Collections.Generic;
@@ -34,6 +35,18 @@ namespace Beaversims.Core.Specs.Druid.Resto
                         regrowth.NonSumDirectCount++;
                     }
                 }
+                if (evt.AbilityName == Abilities.EmbraceOfTheDream.name)
+                {
+                    foreach (var sourceAbility in Abilities.EmbraceOfTheDream.abilitySources)
+                    {
+                        var _sourceAbility = (Abilities.RestoAbility)user.Abilities.Get(sourceAbility);
+                        if (evt.TargetUnit.HasBuff(_sourceAbility.BuffId))
+                        {
+                            _sourceAbility.EotdCount++;
+                        }
+                    }
+                  
+                }
             }
             if (evt is CastEvent cEvt)
             {
@@ -58,6 +71,7 @@ namespace Beaversims.Core.Specs.Druid.Resto
             var rejuv = (Abilities.Rejuvenation)user.Abilities.Get(Abilities.Rejuvenation.name);
             var germ = (Abilities.RejuvenationGermination)user.Abilities.Get(Abilities.RejuvenationGermination.name);
             var wrath = (Abilities.Wrath)user.Abilities.Get(Abilities.Wrath.name);
+            var eotd = (Abilities.EmbraceOfTheDream)user.Abilities.Get(Abilities.EmbraceOfTheDream.name);   
             var zeroCIMDummy = user.Abilities.Get(Shared.Abilities.ZeroCIMDummy.name);
 
             // Tackling Convoke, Power of the archdruid and Sylvan Beckoning here.
@@ -94,6 +108,13 @@ namespace Beaversims.Core.Specs.Druid.Resto
             Console.WriteLine($"HCGM: Regrowth - {regrowth.HealHCGM} Rejuv - {rejuv.HealHCGM} Wrath - {wrath.DmgHCGM}");
             //Console.WriteLine($"Tick Count: {regrowth.Heal.Tick.Count} All: {regrowth.Heal.Count} Non Tick: {regrowth.Heal.Count - regrowth.Heal.Tick.Count} Casts: {regrowth.Casts}");
             Console.WriteLine($"{rejuv.Name}: Count: {rejuv.ApplyyRefreshCount + germ.ApplyyRefreshCount}, Casts: {rejuv.Casts}");
+
+            // Embrace the dream
+            var eotdRejuvRatio = (double)(rejuv.EotdCount + germ.EotdCount) / (regrowth.EotdCount + rejuv.EotdCount + germ.EotdCount);
+            eotd.CIMSources.Add(new CIMSource(rejuv.Name, eotdRejuvRatio));
+            eotd.CIMSources.Add(new CIMSource(regrowth.Name, 1 - eotdRejuvRatio));
+            Console.WriteLine($" EotD Rejuv source: {eotdRejuvRatio} Regrowth: {1 - eotdRejuvRatio}");
+
 
 
 

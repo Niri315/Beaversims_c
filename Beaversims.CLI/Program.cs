@@ -28,10 +28,11 @@ namespace Beaversims.CLI
             //var logLink = "https://www.warcraftlogs.com/reports/m4vPb3J71twFXVTA?fight=17&type=damage-done&source=166";  //WTF mastery?
             //var logLink = "https://www.warcraftlogs.com/reports/jknw3D642CpcALgq?fight=54&type=healing&source=22"; // Leech + martyr -> need fi
             //var logLink = "https://www.warcraftlogs.com/reports/vlhzymap2dgxfwkr?fight=34&type=healing&source=24"; //frac nali antenna
-            var logLink = "https://www.warcraftlogs.com/reports/8DqKYV9vhZmj7QJW?fight=32&type=healing&source=19"; // Erooxdruid Soulhunters
+            //var logLink = "https://www.warcraftlogs.com/reports/8DqKYV9vhZmj7QJW?fight=32&type=healing&source=19"; // Erooxdruid Soulhunters
             //var logLink = "https://www.warcraftlogs.com/reports/aB9HyhkFgKGnjM3R?fight=51&type=casts&source=2"; // dim druid Ns
             //var logLink = "https://www.warcraftlogs.com/reports/aB9HyhkFgKGnjM3R?fight=30&type=healing&source=2"; // frac druid
-
+            //var logLink = "https://www.warcraftlogs.com/reports/tDhM4LRkB8yamrVF?fight=13&type=damage-done&source=143"; // embrace the dream
+            var logLink = "https://www.warcraftlogs.com/reports/87JLGncYpP9Mwgd3?fight=20&type=damage-done&source=15"; // dream of cenarius
 
             //var swMode = true;
             SimMode simMode = SimMode.SW;

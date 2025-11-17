@@ -15,7 +15,14 @@ namespace Beaversims.Core.Specs.Druid.Resto
     internal class Main
 
     {
-    
+        public static void TrackHotw(Event evt, User user)
+        {
+            if (user.HasBuff(Abilities.HeartOfTheWild.buffId))
+            {
+                evt.UserHasHotw = true;
+
+            }
+        }
         public static void TrackRegrowth(Event evt)
         {
             if (evt.TargetUnit.HasBuff(Abilities.Regrowth.buffId))
@@ -93,12 +100,22 @@ namespace Beaversims.Core.Specs.Druid.Resto
                 MasteryTracker.SetMasteryEff(evt, user);
                 TrackRegrowth(evt);
                 TrackAbundance(evt, user);
+                TrackHotw(evt, user);
                 HCGM.GatherData(evt, user);
 
                 if (evt is TpEvent tEvt)
                 {
                     ProcessEvents.OriginalTotals(tEvt, user);
                     Shared.DupliEffects.SharedHypo(tEvt, user);
+                    if (evt is HealEvent hEvt)
+                    {
+                        DupliEffects.SymbRelHypo(hEvt, user);
+                    }
+                    if (evt is DamageEvent dEvt)
+                    {
+                        DupliEffects.DocHypo(dEvt, user);
+                    }
+
                 }
             }
             Utils.CleanUp(allUnits); // To avoid accidental usage.
@@ -140,6 +157,9 @@ namespace Beaversims.Core.Specs.Druid.Resto
                         }
                     }
                 }
+                DupliEffects.AltDoc(tpEvents, user, i);
+                DupliEffects.AltSymbRel(tpEvents, user, i);
+
 
                 // Only summer and leech will react to this.
                 tpEvents = altGearSet.AltEventList.OfType<TpEvent>().ToList(); // Updating here to include non proc sim events

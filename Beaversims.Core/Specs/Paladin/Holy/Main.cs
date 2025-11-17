@@ -112,8 +112,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
             Utils.CleanUp(allUnits); // To avoid accidental usage.
             MasteryTracker.CleanUpCoords(allUnits);
 
-
-            HCGM.ModifyCIMSources(user, fight); // 
+            HCGM.ModifyCIMSources(user, fight);
             Misc.HolyPowerQIM(user);
             Shared.CIM.SetCIM(user);
             Misc.SetArmamentsAutoMod(user);

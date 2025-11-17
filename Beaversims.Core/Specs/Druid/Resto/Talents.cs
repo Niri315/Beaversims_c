@@ -57,6 +57,28 @@ namespace Beaversims.Core.Specs.Druid.Resto.Talents
         {
         }
     }
+
+    internal class SymbioticRelationship : Talent
+        // Does not work with summoned healing in or out
+        // Only class abilities
+        // Non SP abilities works.
+    {
+        public const int id = 123792;
+        public const double outCoef = 0.1;
+        public const double inCoef = 0.08;
+
+        public SymbioticRelationship(int rank) : base(id, rank)
+        {
+        }
+    }
+
+    internal class DreamOfCenarius : Talent
+    {
+        public const int id = 103122;
+        public DreamOfCenarius(int rank) : base(id, rank)
+        {
+        }
+    }
 }
 
 

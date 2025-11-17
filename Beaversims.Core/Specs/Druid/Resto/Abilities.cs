@@ -12,11 +12,7 @@ using System.Threading.Tasks;
 High Prio:
     
     Dungeon/ <20 raid CIM
-
-    Embrace the dream split CIM between rejuv & regrowth.
-
-    Symbiotic Relationship
-    Dream of Cenarius
+    Hotw cast inc.
 
     Midnight:
 
@@ -60,6 +56,8 @@ namespace Beaversims.Core.Specs.Druid.Resto.Abilities
     {
         public int ApplyyRefreshCount { get; set; } = 0;
         public int SotfCount { get; set; } = 0;
+        public int EotdCount { get; set; } = 0;
+        public bool BalanceSpell {  get; set; } = false;
     }
 
     internal class AessinasRenewal : RestoAbility
@@ -146,6 +144,7 @@ namespace Beaversims.Core.Specs.Druid.Resto.Abilities
         {
             Name = name;
             CastTime = 1.7;
+            BalanceSpell = true;
         }
     }
 
@@ -156,6 +155,23 @@ namespace Beaversims.Core.Specs.Druid.Resto.Abilities
         {
             Name = name;
             Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Vers, SN.Mastery]);
+        }
+    }
+
+    internal class DreamOfCenarius : RestoAbility
+    {
+        public const string name = "Dream of Cenarius";
+        public static readonly Dictionary<string, double> abilityCoefs = new()
+        {
+            { Wrath.name, 1.0 },
+            { Shred.name, 1.0 },
+            { Starfire.name, 0.5 },
+            { Swipe.name, 0.5 },
+        };
+        public const double hotwInc = 2.0;
+        public DreamOfCenarius()
+        {
+            Name = name;
         }
     }
 
@@ -174,6 +190,7 @@ namespace Beaversims.Core.Specs.Druid.Resto.Abilities
     internal class EmbraceOfTheDream : RestoAbility
     {
         public const string name = "Embrace of the Dream";
+        public static readonly HashSet<string> abilitySources = [Rejuvenation.name, RejuvenationGermination.name, Regrowth.name];
         public EmbraceOfTheDream()
         {
             Name = name;
@@ -191,6 +208,7 @@ namespace Beaversims.Core.Specs.Druid.Resto.Abilities
         {
             Name = name;
             CastTime = 1.7;
+            BalanceSpell = true;
         }
     }
     internal class FerociousBite : RestoAbility
@@ -230,6 +248,8 @@ namespace Beaversims.Core.Specs.Druid.Resto.Abilities
     internal class HeartOfTheWild : RestoAbility
     {
         public const string name = "Heart of the Wild";
+        public const int buffId = 319454;
+        public const double balanceSpellsCTCoef = 0.3;
         public HeartOfTheWild()
         {
             Name = name;
@@ -245,6 +265,7 @@ namespace Beaversims.Core.Specs.Druid.Resto.Abilities
         {
             Name = name;
             CastTime = 1.5;
+            BalanceSpell = true;
         }
     }
 
@@ -471,12 +492,14 @@ namespace Beaversims.Core.Specs.Druid.Resto.Abilities
         // If correct we need to remove CC value from cast value.
 
         public const string name = "Regrowth";
-        public const int buffId = 8936;
+
         public int NonSumDirectCount { get; set; } = 0;
+        public const int buffId = 8936;
 
         public Regrowth()
         {
             Name = name;
+            BuffId = buffId;
             CastTime = 1.5;
             Scalers.UnionWith([SN.Intellect, SN.Vers, SN.Haste, SN.Mastery]);   //Crit separate to check for cap.
             HasteScalers.UnionWith([HST.Tick, HST.Cast]);
@@ -489,6 +512,7 @@ namespace Beaversims.Core.Specs.Druid.Resto.Abilities
         public Rejuvenation()
         {
             Name = name;
+            BuffId = 774;
             CastTime = Constants.GCD;
             Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Vers, SN.Haste, SN.Mastery]);
             HasteScalers.UnionWith([HST.Tick, HST.Cast]);
@@ -500,6 +524,7 @@ namespace Beaversims.Core.Specs.Druid.Resto.Abilities
         public RejuvenationGermination()
         {
             Name = name;
+            BuffId = 155777;
             CastTime = Constants.GCD;
             Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Vers, SN.Haste, SN.Mastery]);
             HasteScalers.UnionWith([HST.Tick, HST.Cast]);
@@ -570,6 +595,7 @@ namespace Beaversims.Core.Specs.Druid.Resto.Abilities
             CastTime = 2.5;
             Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Vers, SN.Haste]);
             HasteScalers.UnionWith([HST.Cast]);
+            BalanceSpell = true;
         }
     }
 
@@ -631,7 +657,12 @@ namespace Beaversims.Core.Specs.Druid.Resto.Abilities
 
     internal class SymbioticRelationship : RestoAbility
     {
+        // Does not work with summoned healing in or out
+        // Only class abilities
+        // Non SP abilities works.
         public const string name = "Symbiotic Relationship";
+        public const int selfBuffId = 474754;
+        public const int targetBuffId = 474750;
         public SymbioticRelationship()
         {
             Name = name;
@@ -747,6 +778,7 @@ namespace Beaversims.Core.Specs.Druid.Resto.Abilities
             CastTime = 1.5;
             Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Vers, SN.Haste]);
             HasteScalers.UnionWith([HST.Cast]);
+            BalanceSpell = true;
         }
     }
 

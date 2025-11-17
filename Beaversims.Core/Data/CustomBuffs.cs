@@ -129,4 +129,44 @@ namespace Beaversims.Core.Data.CustomBuffs
             );
         }
     }
+
+    /* ----- *
+     * Druid *
+     * ----- */
+
+    // TODO Lycara + inspiration
+    // TODO Gift of the Wild
+
+    internal class BaseMasteryRdruid : StatBuff
+    {
+        public const string name = "Rdruid Base Mastery";
+        public BaseMasteryRdruid(UnitId sourceId)
+            : base(-1, sourceId, name, 1)
+        {
+            SourceType = BuffSourceType.Spec;
+            SourceObjId = (int)SpecName.RestorationDruid;
+            StatMods.Add(
+                new StatMod(
+                    StatName.Mastery,
+                    StatAmountType.Base,
+                    5.8 * Specs.Druid.Resto.RestorationDruid.masteryPr_s)
+            );
+        }
+    }
+    internal class UrsocsSpirit : StatBuff
+    {
+        public const string name = "Ursoc's Spirit";
+        public UrsocsSpirit(UnitId sourceId)
+            : base(-1, sourceId, name, 1)
+        {
+            SourceType = BuffSourceType.Talent;
+            SourceObjId = 103297;
+            StatMods.Add(
+                new StatMod(
+                    StatName.Stamina,
+                    StatAmountType.Multi,
+                    0.04)
+            );
+        }
+    }
 }

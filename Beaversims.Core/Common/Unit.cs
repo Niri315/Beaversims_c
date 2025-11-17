@@ -1,6 +1,7 @@
 ﻿using Beaversims.Core.Parser;
 using Beaversims.Core.Sim;
 using System;
+using System.Net.Security;
 using System.Reflection;
 using System.Xml.Linq;
 
@@ -19,6 +20,9 @@ namespace Beaversims.Core
         public long? MaxHp { get; set; }
         public Coord? Coords { get; set; }
 
+        //Druid
+        public int HarmonyLevel { get; set; } = 0;
+
         public bool IsUnit(Unit otherUnit) => Id == otherUnit.Id;
         public bool HasBuff(int buffId) => Buffs.Any(b => b.Id == buffId);
         public Buff? GetBuff(int buffId) => Buffs.Find(b => b.Id == buffId);
@@ -28,12 +32,12 @@ namespace Beaversims.Core
         protected Buff? FindBuff(int buffId, UnitId sourceId) =>
             Buffs.Find(b => b.Id == buffId && b.SourceId == sourceId);
 
-        public virtual void AddBuff(string buffName, int buffId, Unit sourceUnit, int stacks, double timeStamp, Logger statLogger = null, Logger refStatLogger = null)
+        public virtual void AddBuff(string buffName, int buffId, Unit sourceUnit, int stacks, double timeStamp, BuffEvent evt = null, Logger statLogger = null, Logger refStatLogger = null)
         {
             var buff = new Buff(buffId, sourceUnit.Id, buffName, stacks);
             if (!buff.AllowMultiple)
             {
-                RemoveBuff(buffId, sourceUnit, statLogger);
+                RemoveBuff(buffId, sourceUnit, evt, statLogger);
             }
             if (buff.Duration > 0)
             {
@@ -42,7 +46,7 @@ namespace Beaversims.Core
             Buffs.Add(buff);
         }
 
-        public virtual bool RemoveBuff(int buffId, Unit sourceUnit, Logger statLogger = null, double timeStamp = 0, Logger refStatLogger = null)
+        public virtual bool RemoveBuff(int buffId, Unit sourceUnit, BuffEvent evt = null, Logger statLogger = null, double timeStamp = 0, Logger refStatLogger = null)
         {
             var idx = Buffs.FindIndex(b => b.Id == buffId && b.SourceId == sourceUnit.Id);
             if (idx < 0) return false;
@@ -50,12 +54,12 @@ namespace Beaversims.Core
             return true;
         }
 
-        public virtual void ChangeBuffStack(string buffName, int buffId, Unit sourceUnit, int newStacks, Logger statLogger = null, double timeStamp = 0, Logger refStatLogger = null)
+        public virtual void ChangeBuffStack(string buffName, int buffId, Unit sourceUnit, int newStacks, BuffEvent evt = null, Logger statLogger = null, double timeStamp = 0, Logger refStatLogger = null)
         {
             var buff = FindBuff(buffId, sourceUnit.Id);
             if (buff is null)
             {
-                AddBuff(buffName, buffId, sourceUnit, newStacks, timeStamp, statLogger);
+                AddBuff(buffName, buffId, sourceUnit, newStacks, timeStamp, evt, statLogger);
                 return;
             }
 
@@ -118,9 +122,12 @@ namespace Beaversims.Core
         public double AvengingUseEnd { get; set; } = 0; // Only the active use avenging, not the awakening effect.
         public int ArmamentsBuffCount { get; set; } = 0;
 
-        public double HasteCapCTLossMod(int i)
+
+
+        public double HasteCapCTGLossMod(int i)
         {
-            return 1 - (AltGearSets[i].HasteCapCTLoss / TrueCastTimeTotal);
+            // Loss value is already baked into CTG
+            return (CastTimeGain - AltGearSets[i].HasteCapCTGLoss) / CastTimeGain;
         }
 
         public void SetTotalGearRatings()
@@ -179,7 +186,7 @@ namespace Beaversims.Core
             return false;
         }
 
-        public void ProcessStatBuff(StatBuff buff, Unit sourceUnit)
+        public void ProcessStatBuff(StatBuff buff, Unit sourceUnit, BuffEvent evt = null)
         {
             
             foreach (var mod in buff.StatMods)
@@ -209,6 +216,10 @@ namespace Beaversims.Core
                 // if PuredStats is null its before event parsing. Stats are copied after init and before vantus. Only need to track PuredStats during events.
                 if (RefStats != null && !buff.SimImpurity)
                 {
+                    if (evt is BuffEvent)
+                    {
+                        evt.StoreRefStatChange(mod.StatName, amount * buff.Stacks, mod.AmountType, removal: false);
+                    }
                     var refStat = RefStats.Get(mod.StatName);
                     refStat.ChangeAmount(amount * buff.Stacks, mod.AmountType, removal: false);
 
@@ -216,7 +227,7 @@ namespace Beaversims.Core
             }
         }
 
-        public override void AddBuff(string buffName, int buffId, Unit sourceUnit, int stacks, double timeStamp, Logger statLogger = null, Logger refStatLogger = null)
+        public override void AddBuff(string buffName, int buffId, Unit sourceUnit, int stacks, double timeStamp, BuffEvent evt = null, Logger statLogger = null, Logger refStatLogger = null)
         {
             var sourceId = sourceUnit.Id;
             Buff buff = TryCreateStatBuff(buffId, sourceUnit, stacks, out var created)
@@ -230,13 +241,13 @@ namespace Beaversims.Core
                     statBuff.SimImpurity = false;
                 }
                 
-                ProcessStatBuff(statBuff, sourceUnit);
+                ProcessStatBuff(statBuff, sourceUnit, evt);
                 if (statLogger != null) { Stats.LogStats(statLogger, timeStamp); }
                 if (refStatLogger != null && RefStats != null) { RefStats.LogStats(refStatLogger, timeStamp); }
             }
             if (!buff.AllowMultiple)
             {
-                RemoveBuff(buffId, sourceUnit, statLogger);
+                RemoveBuff(buffId, sourceUnit, evt, statLogger);
             }
             if (buff.Duration > 0)
             {
@@ -245,7 +256,7 @@ namespace Beaversims.Core
             Buffs.Add(buff);
         }
 
-        public override bool RemoveBuff(int buffId, Unit sourceUnit, Logger statLogger = null, double timeStamp = 0, Logger refStatLogger = null)
+        public override bool RemoveBuff(int buffId, Unit sourceUnit, BuffEvent evt = null, Logger statLogger = null, double timeStamp = 0, Logger refStatLogger = null)
         {
             var sourceId = sourceUnit.Id;
             var idx = Buffs.FindIndex(b => b.Id == buffId && b.SourceId == sourceId);
@@ -256,9 +267,14 @@ namespace Beaversims.Core
             {
                 foreach (var mod in statBuff.StatMods)
                 {
+
                     Stats.Get(mod.StatName).ChangeAmount(mod.Amount * buff.Stacks, mod.AmountType, removal: true);
                     if (!statBuff.SimImpurity)
                     {
+                        if (evt is BuffEvent)
+                        {
+                            evt.StoreRefStatChange(mod.StatName, mod.Amount * buff.Stacks, mod.AmountType, removal: true);
+                        }
                         RefStats.Get(mod.StatName).ChangeAmount(mod.Amount * buff.Stacks, mod.AmountType, removal: true);
                        
                     }
@@ -271,13 +287,13 @@ namespace Beaversims.Core
             return true;
         }
 
-        public override void ChangeBuffStack(string buffName, int buffId, Unit sourceUnit, int newStacks, Logger statLogger = null, double timeStamp = 0, Logger refStatLogger = null)
+        public override void ChangeBuffStack(string buffName, int buffId, Unit sourceUnit, int newStacks, BuffEvent evt = null, Logger statLogger = null, double timeStamp = 0, Logger refStatLogger = null)
         {
             var sourceId = sourceUnit.Id;
             var buff = Buffs.Find(b => b.Id == buffId && b.SourceId == sourceId);
             if (buff is null)
             {
-                AddBuff(buffName, buffId, sourceUnit, newStacks, timeStamp, statLogger);
+                AddBuff(buffName, buffId, sourceUnit, newStacks, timeStamp, evt, statLogger);
                 return;
             }
 
@@ -292,10 +308,15 @@ namespace Beaversims.Core
 
                     foreach (var mod in statBuff.StatMods)
                     {
+
                         Stats.Get(mod.StatName).ChangeAmount(mod.Amount * magnitude, mod.AmountType, removal);
                        
                         if (!statBuff.SimImpurity)
                         {
+                            if (evt is BuffEvent)
+                            {
+                                evt.StoreRefStatChange(mod.StatName, mod.Amount * magnitude, mod.AmountType, removal);
+                            }
                             RefStats.Get(mod.StatName).ChangeAmount(mod.Amount * magnitude, mod.AmountType, removal);
                             
                         }

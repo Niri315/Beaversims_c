@@ -61,7 +61,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
             {
                 scaleHP += fol.Casts + hl.Casts;
             }
-            var spenders = HpalUtils.GetSpenderAbilities(abilities);
+            var spenders = RdruidUtils.GetSpenderAbilities(abilities);
             foreach (var spender in spenders)
             {
                 //spender.CIMRatio = (scaleHP / (scaleHP + nonScaleHP));

@@ -21,14 +21,17 @@ namespace Beaversims.CLI
 {
     internal class Program
     {
-        static async Task Main(string[] args) // <-- Make Main async
+        static async Task Main(string[] args)
         {
             //var logLink = "https://www.warcraftlogs.com/reports/PxzAyBCDL7acXRvg?fight=11&type=healing&source=6"; //Salad Nali LS
             //var logLink = "https://www.warcraftlogs.com/reports/PJWrjZv6xTpLYmct?fight=128&type=healing&source=1863";  //Salad Ellesmere Herald
             //var logLink = "https://www.warcraftlogs.com/reports/m4vPb3J71twFXVTA?fight=17&type=damage-done&source=166";  //WTF mastery?
             //var logLink = "https://www.warcraftlogs.com/reports/jknw3D642CpcALgq?fight=54&type=healing&source=22"; // Leech + martyr -> need fi
             //var logLink = "https://www.warcraftlogs.com/reports/vlhzymap2dgxfwkr?fight=34&type=healing&source=24"; //frac nali antenna
-            var logLink = "https://www.warcraftlogs.com/reports/J1Z84KGD2BfyTHrP?fight=11&source=3"; //  
+            var logLink = "https://www.warcraftlogs.com/reports/8DqKYV9vhZmj7QJW?fight=32&type=healing&source=19"; // Erooxdruid Soulhunters
+            //var logLink = "https://www.warcraftlogs.com/reports/aB9HyhkFgKGnjM3R?fight=51&type=casts&source=2"; // dim druid Ns
+            //var logLink = "https://www.warcraftlogs.com/reports/aB9HyhkFgKGnjM3R?fight=30&type=healing&source=2"; // frac druid
+
 
             //var swMode = true;
             SimMode simMode = SimMode.SW;
@@ -41,20 +44,29 @@ namespace Beaversims.CLI
             var logs = await WclClient.GetLogs(reportCode, fightId, userId);
             Results finalResults;
 
-            if (simMode == SimMode.SW)
+            var iterationCount = 0;
+            JsonDocument gearSets = null;
+
+
+            if (simMode == SimMode.TopGear) 
             {
-                finalResults = RunMain.SwMain(logs, userId, reportCode);
+                string gearSetsPath = Path.Combine(Utils.ProjectRoot(), "Shadow", "gearSetsJson.json");
+                string gearsetsJson = System.IO.File.ReadAllText(gearSetsPath);
+                gearSets = JsonDocument.Parse(gearsetsJson);
+                iterationCount = Constants.defaultIterCount;
             }
-            else if (simMode == SimMode.TopGear) 
+            else if (simMode == SimMode.Trinkets)
             {
-                finalResults = RunMain.TgMain(logs, userId, reportCode);
-            }
-            else
-            {
-                finalResults = RunMain.SaMain(logs, userId, reportCode);
-                TestUtils.PrintTopStatAllocs(finalResults);
+                iterationCount = Constants.defaultIterCount;
+                //iterationCount = 10;
             }
 
+            finalResults = RunMain.Run(logs, userId, reportCode, simMode, iterationCount, gearSets);
+            if (simMode == SimMode.StatAlloc)
+            {
+                //finalResults = RunMain.Run(logs, userId, reportCode, simMode, 0);
+                TestUtils.PrintTopStatAllocs(finalResults);
+            }
             //TestUtils.PrintStatWeights(finalResults.swGains);
             TestUtils.PrintAltGearResults(finalResults);
 

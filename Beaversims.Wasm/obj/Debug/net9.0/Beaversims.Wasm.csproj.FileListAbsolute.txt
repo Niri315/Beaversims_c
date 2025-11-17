@@ -1,7 +1,3 @@
-C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\bin\Debug\net9.0\wwwroot\_framework\Beaversims.Core.9t1o6652v7.pdb
-C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\bin\Debug\net9.0\wwwroot\_framework\Beaversims.Core.y1ct7xorf0.wasm
-C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\bin\Debug\net9.0\wwwroot\_framework\Beaversims.Wasm.14vr17g09h.pdb
-C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\bin\Debug\net9.0\wwwroot\_framework\Beaversims.Wasm.7370yl9yxq.wasm
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\bin\Debug\net9.0\wwwroot\_framework\blazor.boot.json
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\bin\Debug\net9.0\wwwroot\_framework\blazor.webassembly.js
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\bin\Debug\net9.0\wwwroot\_framework\dotnet.js
@@ -250,7 +246,6 @@ C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\bin\Debug\net9.0\wwwroot\_f
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\bin\Debug\net9.0\wwwroot\_framework\System.Reflection.Primitives.7pgkoculis.wasm.gz
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\bin\Debug\net9.0\wwwroot\_framework\System.Drawing.Primitives.7o0jesyc4u.wasm.gz
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\bin\Debug\net9.0\wwwroot\_framework\Microsoft.AspNetCore.Authorization.50odlujk1g.wasm.gz
-C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\bin\Debug\net9.0\wwwroot\_framework\Beaversims.Core.9t1o6652v7.pdb.gz
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\bin\Debug\net9.0\wwwroot\_framework\blazor.boot.json.gz
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\bin\Debug\net9.0\wwwroot\_framework\System.Diagnostics.DiagnosticSource.gvnph2n9e4.wasm.gz
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\bin\Debug\net9.0\wwwroot\_framework\System.Resources.Writer.gvjbhc12kg.wasm.gz
@@ -295,7 +290,6 @@ C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\bin\Debug\net9.0\wwwroot\_f
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\bin\Debug\net9.0\wwwroot\_framework\System.Transactions.Local.phzgjy7quh.wasm.gz
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\bin\Debug\net9.0\wwwroot\_framework\System.Formats.Tar.7zjs7f41yn.wasm.gz
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\bin\Debug\net9.0\wwwroot\_framework\System.Text.Encoding.CodePages.lhw70u4w31.wasm.gz
-C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\bin\Debug\net9.0\wwwroot\_framework\Beaversims.Wasm.7370yl9yxq.wasm.gz
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\bin\Debug\net9.0\wwwroot\_framework\System.IO.FileSystem.AccessControl.fjl0mgq7zv.wasm.gz
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\bin\Debug\net9.0\wwwroot\_framework\System.Reflection.Emit.w317rsl2nn.wasm.gz
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\bin\Debug\net9.0\wwwroot\_framework\System.IO.Pipes.4btpte1ft5.wasm.gz
@@ -304,7 +298,6 @@ C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\bin\Debug\net9.0\wwwroot\_f
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\bin\Debug\net9.0\wwwroot\_framework\System.Runtime.CompilerServices.VisualC.x79wb4olzx.wasm.gz
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\bin\Debug\net9.0\wwwroot\_framework\System.Linq.Queryable.1agilqxu5p.wasm.gz
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\bin\Debug\net9.0\wwwroot\_framework\System.Diagnostics.StackTrace.gm0wkwqx3g.wasm.gz
-C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\bin\Debug\net9.0\wwwroot\_framework\Beaversims.Core.y1ct7xorf0.wasm.gz
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\bin\Debug\net9.0\wwwroot\_framework\System.Data.DataSetExtensions.nsw82s8i30.wasm.gz
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\bin\Debug\net9.0\wwwroot\_framework\Microsoft.AspNetCore.Components.Forms.ebm2eah9ku.wasm.gz
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\bin\Debug\net9.0\wwwroot\_framework\System.Drawing.ylisjr29ri.wasm.gz
@@ -320,7 +313,6 @@ C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\bin\Debug\net9.0\wwwroot\_f
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\bin\Debug\net9.0\wwwroot\_framework\System.Text.RegularExpressions.eoveocsnfr.wasm.gz
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\bin\Debug\net9.0\wwwroot\_framework\System.ComponentModel.TypeConverter.7a6bj5gtae.wasm.gz
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\bin\Debug\net9.0\wwwroot\_framework\System.Security.Cryptography.Primitives.kuxf8s3p7e.wasm.gz
-C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\bin\Debug\net9.0\wwwroot\_framework\Beaversims.Wasm.14vr17g09h.pdb.gz
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\bin\Debug\net9.0\wwwroot\_framework\System.Runtime.Numerics.2u83mtb87l.wasm.gz
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\bin\Debug\net9.0\wwwroot\_framework\System.ComponentModel.Primitives.u4kagn3xsz.wasm.gz
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\bin\Debug\net9.0\wwwroot\_framework\Microsoft.Extensions.Configuration.zwhwg8n2jl.wasm.gz
@@ -1027,11 +1019,6 @@ C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\obj\Debug\net9.0\compressed
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\obj\Debug\net9.0\compressed\o6ncwq9en8-tjcz0u77k5.gz
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\obj\Debug\net9.0\compressed\65y10cbq52-tptq2av103.gz
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\obj\Debug\net9.0\compressed\wv1meocu2x-lfu7j35m59.gz
-C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\obj\Debug\net9.0\compressed\grv9o274i7-y1ct7xorf0.gz
-C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\obj\Debug\net9.0\compressed\6youpxb84n-9t1o6652v7.gz
-C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\obj\Debug\net9.0\compressed\fg4c6c1dl8-7370yl9yxq.gz
-C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\obj\Debug\net9.0\compressed\iq45fakafj-14vr17g09h.gz
-C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\obj\Debug\net9.0\compressed\7gl1ws20g9-1nzhboo6nx.gz
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\obj\Debug\net9.0\staticwebassets.build.json
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\obj\Debug\net9.0\staticwebassets.build.json.cache
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\obj\Debug\net9.0\staticwebassets.development.json
@@ -1042,3 +1029,16 @@ C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\obj\Debug\net9.0\Beaversims
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\obj\Debug\net9.0\refint\Beaversims.Wasm.dll
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\obj\Debug\net9.0\Beaversims.Wasm.pdb
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\obj\Debug\net9.0\ref\Beaversims.Wasm.dll
+C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\bin\Debug\net9.0\wwwroot\_framework\Beaversims.Wasm.mx896kyyjr.pdb
+C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\bin\Debug\net9.0\wwwroot\_framework\Beaversims.Wasm.aeymml1uno.wasm
+C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\bin\Debug\net9.0\wwwroot\_framework\Beaversims.Wasm.aeymml1uno.wasm.gz
+C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\bin\Debug\net9.0\wwwroot\_framework\Beaversims.Wasm.mx896kyyjr.pdb.gz
+C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\obj\Debug\net9.0\compressed\fg4c6c1dl8-aeymml1uno.gz
+C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\obj\Debug\net9.0\compressed\iq45fakafj-mx896kyyjr.gz
+C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\bin\Debug\net9.0\wwwroot\_framework\Beaversims.Core.1fdrvtcqp4.pdb
+C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\bin\Debug\net9.0\wwwroot\_framework\Beaversims.Core.9ktg2k70wx.wasm
+C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\bin\Debug\net9.0\wwwroot\_framework\Beaversims.Core.1fdrvtcqp4.pdb.gz
+C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\bin\Debug\net9.0\wwwroot\_framework\Beaversims.Core.9ktg2k70wx.wasm.gz
+C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\obj\Debug\net9.0\compressed\grv9o274i7-9ktg2k70wx.gz
+C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\obj\Debug\net9.0\compressed\6youpxb84n-1fdrvtcqp4.gz
+C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Wasm\obj\Debug\net9.0\compressed\7gl1ws20g9-ad3ym3pfx7.gz

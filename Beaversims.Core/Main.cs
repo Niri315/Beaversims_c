@@ -19,9 +19,9 @@ namespace Beaversims.Core
             return Run(logs, userId, reportCode, simMode: SimMode.SW, iterationCount: 0);
         }
 
-        public static Results TgMain(JsonDocument logs, int userId, string reportCode, int iterationCount = Constants.defaultIterCount)
+        public static Results TgMain(JsonDocument logs, int userId, string reportCode, JsonDocument gearSets, int iterationCount = Constants.defaultIterCount)
         {
-            return Run(logs, userId, reportCode, simMode: SimMode.TopGear, iterationCount);
+            return Run(logs, userId, reportCode, simMode: SimMode.TopGear, iterationCount, gearSets);
         }
 
         public static Results SaMain(JsonDocument logs, int userId, string reportCode)
@@ -30,7 +30,7 @@ namespace Beaversims.Core
         }
 
 
-        private static Results Run(JsonDocument logs, int userId, string reportCode, SimMode simMode, int iterationCount)
+        public static Results Run(JsonDocument logs, int userId, string reportCode, SimMode simMode, int iterationCount = Constants.defaultIterCount, JsonDocument? gearSets= null)
         {
 
   
@@ -54,8 +54,8 @@ namespace Beaversims.Core
             var allUnits = UnitParser.ParseUnits(playerData, combatantEvents, userInfo, userId, fight, simMode);
             var events = EventParser.ParseUserEvents(userEvents, allUnits, fight);
             var user = allUnits.GetUser();
+            ItemSim.CreateGearSets(user, gearSets);
 
-            ItemSim.CreateGearSets(user);
             user.Spec.SpecIteration(events, allUnits, fight, iterationCount);
 
             var results = new Results();

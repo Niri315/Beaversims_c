@@ -17,6 +17,17 @@ namespace Beaversims.Core.Shadow.WclClient
         private const string API_URL = "https://www.warcraftlogs.com/api/v2/client";
         private static string accessToken;
 
+        private static string FormatJson(string json)
+        {
+            using var doc = JsonDocument.Parse(json);
+            return JsonSerializer.Serialize(
+                doc.RootElement,
+                new JsonSerializerOptions
+                {
+                    WriteIndented = true
+                }
+            );
+        }
 
         static async Task<string> ImportLogs(string query)
         {
@@ -88,8 +99,9 @@ namespace Beaversims.Core.Shadow.WclClient
             string query = Queries.StandardSimQuery(reportCode, fightId, userId);
             string jsonResponse = await ImportLogs(query);
 
-            await File.WriteAllTextAsync(path, jsonResponse);
-            return JsonDocument.Parse(jsonResponse);
+            string formatted = FormatJson(jsonResponse);
+            await File.WriteAllTextAsync(path, formatted);
+            return JsonDocument.Parse(formatted);
         }
         public static async Task<JsonDocument> GetFights(string reportCode)
         {

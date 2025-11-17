@@ -67,6 +67,8 @@ namespace Beaversims.Core
         public double ManaCost_p { get; set; } = 0.0;
         public double CastTime { get; set; } = 0.0;
         public double Cd { get; set; } = 0.0;
+        public bool Channeled { get; set; } = false;  // Todo implement sth
+        public bool ZeroHasteCTG { get; set; } = false;
         public double BonusCritIncHeal { get; set; } = 0.0;
         public double BonusCritIncDmg { get; set; } = 0.0;
         public HashSet<StatName> Scalers { get; } = [];
@@ -145,7 +147,7 @@ namespace Beaversims.Core
 
         public double TrueQIM(User user, int i)
         {
-            if (CIMSources.Count == 0) { return CIM * user.HasteCapCTLossMod(i);} // * HCGM
+            if (CIMSources.Count == 0) { return CIM * user.HasteCapCTGLossMod(i);} // * HCGM
             else
             {
                 var abilities = user.Abilities;
@@ -162,7 +164,7 @@ namespace Beaversims.Core
                         hccgm += source.CIMReliance * sourceAbility.CIMDerivedQIM(user);
                     }
                 }
-                return hccgm * user.HasteCapCTLossMod(i); // * HCGM
+                return hccgm * user.HasteCapCTGLossMod(i);
             }
 
         }

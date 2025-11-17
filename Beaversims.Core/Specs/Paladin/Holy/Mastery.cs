@@ -51,7 +51,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
             HashSet<Unit> beacons = [];
             foreach (var unit in allUnits)
             {
-                if (HpalUtils.HasBeacon(unit, user))
+                if (RdruidUtils.HasBeacon(unit, user))
                 {
                     beacons.Add(unit);
                 }
@@ -61,7 +61,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
 
         public static void TrackBeacons(Event evt, HashSet<Unit> beacons, User user)
         {
-            if (evt is BuffEvent buffEvt && HpalUtils.beaconIds.Contains(evt.AbilityId) && evt.SourceUnit == user)
+            if (evt is BuffEvent buffEvt && RdruidUtils.beaconIds.Contains(evt.AbilityId) && evt.SourceUnit == user)
             {
                 if (buffEvt.BuffApplyEvent)
                 {

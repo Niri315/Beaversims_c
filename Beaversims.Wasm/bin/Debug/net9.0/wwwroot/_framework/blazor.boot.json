@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "Beaversims.Wasm",
   "resources": {
-    "hash": "sha256-26c7nhuhiFhwzY1BKP3nz4CpdNlDBlpp8tvpkYf2kIk=",
+    "hash": "sha256-5TQA00Ro/80vDCQFMHJW8H9nlkYIhLf9Jhljj5ZSAHE=",
     "fingerprinting": {
       "Microsoft.AspNetCore.Authorization.50odlujk1g.wasm": "Microsoft.AspNetCore.Authorization.wasm",
       "Microsoft.AspNetCore.Components.nxuc56wpt2.wasm": "Microsoft.AspNetCore.Components.wasm",
@@ -201,10 +201,10 @@
       "icudt_CJK.tjcz0u77k5.dat": "icudt_CJK.dat",
       "icudt_EFIGS.tptq2av103.dat": "icudt_EFIGS.dat",
       "icudt_no_CJK.lfu7j35m59.dat": "icudt_no_CJK.dat",
-      "Beaversims.Core.y1ct7xorf0.wasm": "Beaversims.Core.wasm",
-      "Beaversims.Core.9t1o6652v7.pdb": "Beaversims.Core.pdb",
-      "Beaversims.Wasm.7370yl9yxq.wasm": "Beaversims.Wasm.wasm",
-      "Beaversims.Wasm.14vr17g09h.pdb": "Beaversims.Wasm.pdb"
+      "Beaversims.Core.9ktg2k70wx.wasm": "Beaversims.Core.wasm",
+      "Beaversims.Core.1fdrvtcqp4.pdb": "Beaversims.Core.pdb",
+      "Beaversims.Wasm.aeymml1uno.wasm": "Beaversims.Wasm.wasm",
+      "Beaversims.Wasm.mx896kyyjr.pdb": "Beaversims.Wasm.pdb"
     },
     "jsModuleNative": {
       "dotnet.native.l4ptthxatg.js": "sha256-ddUN4+taa/Qv7Mr8mLpunJO+0Xw3ViOqBvedhe57/hA="
@@ -414,12 +414,12 @@
       "WindowsBase.ahs9krftg4.wasm": "sha256-bgi2FHdT0ABsUP1yKQQ2AP8qfo1V/bS/4cJFE4OUHX8=",
       "mscorlib.k5iaovx9v7.wasm": "sha256-mEFLDERlY1HMNQHzh68xOPawXvI48O1fHW9PbfXugb4=",
       "netstandard.6sr1qvn64m.wasm": "sha256-Gpf+qEqCYaCB6zqI5sNPIurnfpwRtfcWksgf3CW6mHE=",
-      "Beaversims.Core.y1ct7xorf0.wasm": "sha256-ulKfqGxcXSu5xg72OX6pYsrgn0MePWBznd1HkjKnW9I=",
-      "Beaversims.Wasm.7370yl9yxq.wasm": "sha256-4wkc7VmqlT8odnfcLqJi1bKRLJet7wpXKUe1mchkNjE="
+      "Beaversims.Core.9ktg2k70wx.wasm": "sha256-qXuh5L4OW7N+k4OAXzzmWhY9xlQAa/506DQLG3yXgdc=",
+      "Beaversims.Wasm.aeymml1uno.wasm": "sha256-Xs7aAYqgzIX0ZMfHqZdjG0T+Hjwfkh5ysMflZlKeJfs="
     },
     "pdb": {
-      "Beaversims.Core.9t1o6652v7.pdb": "sha256-LY2dUr0SctBIHgDuwL1PNxROPS5L2aFwjO1ZMokT2YI=",
-      "Beaversims.Wasm.14vr17g09h.pdb": "sha256-QfO1HtvX1F0ndtQQXT2aPNrFzHQCOrpp8PRurZnFyjw="
+      "Beaversims.Core.1fdrvtcqp4.pdb": "sha256-UzDNR2eBRbmvrBuSMHYZKnBkOrnAwOT9MUNua+RY4tA=",
+      "Beaversims.Wasm.mx896kyyjr.pdb": "sha256-esv4j/AOZgcFtirDqAa1denx/QXfTQbr/wQNJZR7lcc="
     }
   },
   "cacheBootResources": true,

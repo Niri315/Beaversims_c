@@ -27,3 +27,8 @@ export function el(tag, attrs = {}, ...children) {
     for (const c of children) node.append(c);
     return node;
 }
+
+export function icon(name) {
+    const id = name?.toLowerCase().replace(/\s+/g, "_") || "default";
+    return `/icons/${id}.jpg`;
+}

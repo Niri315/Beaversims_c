@@ -8,6 +8,15 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 
 
+// OBS! TODO
+// Current way of checking haste cap doesnt take trinket effects into account
+// We could reset castTimeCap before the sim iterations and set the avg value.
+// Or we do a total rework and make everything gear dependant.
+// Whatever solution we decide on it should be one that is sparing for computing time
+// giga minmaxing is not worth if sim time blows up.
+// Whatever we do we should incorporate crit cap for rdruid etc.
+
+
 namespace Beaversims.Core.Shared
 {
     internal class CIM
@@ -19,7 +28,7 @@ namespace Beaversims.Core.Shared
             // For this we are not having the GCD Cap affect gain nor true cast time total.
             // Alot easier than having to deal with it here and with CIM.
             // Shouldnt really matter in any case. This way we can keep it universal.
-
+            
             var ability = evt.Ability;
             var haste = (Haste)evt.UserStats.Get(StatName.Haste);
             var gain = Calc.SecondaryGainCalc(haste, castTime, haste.PercentRate);
@@ -27,14 +36,16 @@ namespace Beaversims.Core.Shared
             var trueCastTime = Calc.TrueCastTimeCalc(haste, castTime);
             //trueCastTime = Math.Max(trueCastTime, Constants.castTimeCap);
 
-
+            // TODO doesnt take sim stat incs into account currently...
             for (int i = 0; i < evt.AltEvents.Count; i++)
             {
+
 
                 var trueCastTime_i = Calc.TrueCastTimeCalc((Haste)evt.AltEvents[i].UserStats.Get(StatName.Haste), castTime);
                 if (trueCastTime_i < Constants.castTimeCap)
                 {
-                    user.AltGearSets[i].HasteCapCTLoss += Constants.castTimeCap - trueCastTime_i;
+                    //user.AltGearSets[i].HasteCapCTLoss += Constants.castTimeCap - trueCastTime_i;
+                    user.AltGearSets[i].HasteCapCTGLoss += gain;
                 }
             }
             ability.CTGain += gain;
@@ -81,8 +92,9 @@ namespace Beaversims.Core.Shared
             {
                 ability.CIMSourceRelCheck();
                 ability.MaxCIM = Math.Max((user.TrueCastTimeTotal - user.HasteCapCTLoss) / ability.CdTimeHypo, 1.0);
-                ability.MaxCIM *= ability.ScalingCTGain / ability.CTGain;
-                //Console.WriteLine(ability.MaxCIM);
+                // We need to sort scalingCTgain for shaman for sure..
+                // For druid/paladin doesnt really matter.
+                //ability.MaxCIM *= ability.ScalingCTGain / ability.CTGain;  // This doesnt work...
             }
 
             double remTCTG = user.CastTimeGain;
@@ -140,234 +152,6 @@ namespace Beaversims.Core.Shared
             }
             TestCIMMath(user);
         }
-
-
-        //var tempAbilities = new List<Ability>(abilities);
-        //foreach (var ability in tempAbilities)
-        //{
-        //    if (!ability.HasteScalers.Contains(HST.Cast) || ability.CastTimeGain == 0 || ability.ZeroCIM)
-        //    {
-        //        ability.CIMInitDone = true;
-        //        ability.CIM = 0;
-        //        remTCTG -= ability.CastTimeGain;
-        //    }
-        //}
-        //tempAbilities.RemoveAll(a => a.CIMInitDone);
-        //for (int m = 0; m < 100; m++) {
-        //    Console.WriteLine($"remTCTG: {remTCTG}");
-        //    foreach (var ability in tempAbilities)
-        //    {
-        //        var restCIM = user.CastTimeGain / remTCTG;
-        //        if (ability.MaxCIM < restCIM)
-        //        {
-        //            ability.CIM = ability.MaxCIM;
-        //            Console.WriteLine($"Pre REM : {remTCTG}");
-        //            remTCTG -= (restCIM - ability.MaxCIM) * ability.CastTimeGain;
-        //            remTCTG -= (restCIM - ability.MaxCIM) * ability.CastTimeGain;
-        //            Console.WriteLine($"Ability: {ability.Name}. Removed: {(restCIM - ability.MaxCIM) * ability.CastTimeGain}. CIM {ability.CIM}, MaxCIM: {ability.MaxCIM}. CTG: {ability.CastTimeGain}");
-        //            Console.WriteLine($"Post REM : {remTCTG}");
-        //            ability.CIMInitDone = true;
-        //        }
-
-        //        //else if (ability.RestRelCIM)
-        //        //{
-        //        //    ability.CIM = restCIM * ability.RestRelCIMRatio;
-        //        //    remTCTG -= (restCIM - (restCIM * ability.RestRelCIMRatio)) * ability.CastTimeGain;
-        //        //}
-        //        else
-        //        {
-        //            ability.CIM = restCIM;
-        //        }
-        //        Console.WriteLine($"Rest CIM: {restCIM}");
-        //    }
-        //    tempAbilities.RemoveAll(a => a.CIMInitDone);
-        //    Console.WriteLine($"remTCTG POST: {remTCTG}");
-        //}
-        //foreach (var ability in abilities)
-        //{
-        //    ability.CIM = ability.TCTG * (ability.TrueCastTimeTotal / user.TrueCastTimeTotal);
-        //}
-        //bool anyUpdated;
-        //do
-        //{
-        //    scaleGain = 0;
-        //    nonScaleGain = 0;
-
-        //    foreach (var ability in abilities)
-        //    {
-        //        if (ability.HasteScalers.Contains(HST.Cast) && ability.CastTimeGain > 0 && !ability.ZeroCIM)
-        //        {
-        //            scaleGain += ability.CastTimeGain * ability.CIMRatio;
-        //        }
-        //        else
-        //        {
-        //            nonScaleGain += ability.CastTimeGain;
-        //        }
-        //    }
-
-        //    var totalGain = scaleGain + nonScaleGain;
-        //    var cimRest = 0.0;
-        //    if (scaleGain > 0)
-        //    {
-        //        cimRest = totalGain / scaleGain;
-        //    }
-
-        //    anyUpdated = false;
-
-        //    foreach (var ability in user.Abilities)
-        //    {
-        //        if (ability.MaxCIM < cimRest && !ability.CIMInitDone && ability.HasteScalers.Contains(HST.Cast) && ability.CastTimeGain > 0 && !ability.ZeroCIM)
-        //        {
-        //            ability.CIMInitDone = true;
-        //            anyUpdated = true;
-        //        }
-
-        //        if (ability.CIMInitDone)
-        //        {
-        //            ability.CIMRatio = scaleGain * (ability.MaxCIM - 1) / nonScaleGain;
-        //        }
-        //    }
-        //}
-        //while (anyUpdated);
-
-
-        //scaleGain = 0;
-        //nonScaleGain = 0;
-
-        //foreach (var ability in abilities)
-        //{
-        //    if (ability.HasteScalers.Contains(HST.Cast) && ability.CastTimeGain > 0 && !ability.ZeroCIM)
-        //    {
-
-        //        scaleGain += ability.CastTimeGain * ability.CIMRatio;
-        //    }
-        //    else
-        //    {
-        //        nonScaleGain += ability.CastTimeGain;
-        //    }
-        //}
-
-
-        //if (scaleGain > 0)
-        //{
-        //    foreach (var ability in abilities)
-        //    {
-        //        if (ability.HasteScalers.Contains(HST.Cast) && ability.CastTimeGain > 0 && !ability.ZeroCIM)
-        //        {
-        //            ability.CIM = (scaleGain + (nonScaleGain * ability.CIMRatio)) / (scaleGain);
-        //            ability.CIMInitDone = true;
-        //        }
-        //        else
-        //        {
-        //            ability.CIM = 0;
-        //        }
-
-
-        //    }
-        //}
-
-
-        //public static void SetCIM(User user)
-        //{
-
-        //    var abilities = user.Abilities;
-        //    double scaleGain = 0;
-        //    double nonScaleGain = 0;
-
-        //    foreach (var ability in user.Abilities)
-        //    {
-        //        ability.CIMSourceRelCheck();
-        //        ability.MaxCIM = Math.Max((user.TrueCastTimeTotal - user.HasteCapCTLoss) / ability.CdTimeHypo, 1.0);
-        //    }
-
-        //    bool anyUpdated;
-        //    do
-        //    {
-        //        scaleGain = 0;
-        //        nonScaleGain = 0;
-
-        //        foreach (var ability in abilities)
-        //        {
-        //            if (ability.HasteScalers.Contains(HST.Cast) && ability.CastTimeGain > 0 && !ability.ZeroCIM)
-        //            {
-        //                scaleGain += ability.CastTimeGain * ability.CIMRatio;
-        //            }
-        //            else
-        //            {
-        //                nonScaleGain += ability.CastTimeGain;
-        //            }
-        //        }
-
-        //        var totalGain = scaleGain + nonScaleGain;
-        //        var cimRest = 0.0;
-        //        if (scaleGain > 0)
-        //        {
-        //            cimRest = totalGain / scaleGain;
-        //        }
-
-        //        anyUpdated = false;
-
-        //        foreach (var ability in user.Abilities)
-        //        {
-        //            if (ability.MaxCIM < cimRest && !ability.CIMInitDone && ability.HasteScalers.Contains(HST.Cast) && ability.CastTimeGain > 0 && !ability.ZeroCIM)
-        //            {
-        //                ability.CIMInitDone = true;
-        //                anyUpdated = true;
-        //            }
-
-        //            if (ability.CIMInitDone)
-        //            {
-        //                ability.CIMRatio = scaleGain * (ability.MaxCIM - 1) / nonScaleGain;
-        //            }
-        //            //if (ability.RestRelCIM)
-        //            //{
-        //            //    if (ability.CIMRatio != ability.RestRelCIMRatio - 1)
-        //            //    {
-        //            //        anyUpdated = true;
-        //            //    }
-        //            //    ability.CIMRatio = ability.RestRelCIMRatio - 1;
-        //            //}
-        //        }
-        //    }
-        //    while (anyUpdated);
-
-
-        //    scaleGain = 0;
-        //    nonScaleGain = 0;
-
-        //    foreach (var ability in abilities)
-        //    {
-        //        if (ability.HasteScalers.Contains(HST.Cast) && ability.CastTimeGain > 0 && !ability.ZeroCIM)
-        //        {
-
-        //            scaleGain += ability.CastTimeGain * ability.CIMRatio;
-        //        }
-        //        else
-        //        {
-        //            nonScaleGain += ability.CastTimeGain;
-        //        }
-        //    }
-
-
-        //    if (scaleGain > 0)
-        //    {
-        //        foreach (var ability in abilities)
-        //        {
-        //            if (ability.HasteScalers.Contains(HST.Cast) && ability.CastTimeGain > 0 && !ability.ZeroCIM)
-        //            {
-        //                ability.CIM = (scaleGain + (nonScaleGain * ability.CIMRatio)) / (scaleGain);
-        //                ability.CIMInitDone = true;
-        //            }
-        //            else
-        //            {
-        //                ability.CIM = 0;
-        //            }
-
-
-        //        }
-        //    }
-        //    TestCIMMath(user);
-        //}
     }
 }
 

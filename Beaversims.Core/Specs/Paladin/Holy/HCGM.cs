@@ -105,7 +105,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
             var abilities = user.Abilities;
             var awakeningRatio = sunsAvatar.AwakeningHealRaw / sunsAvatar.Heal.Raw;
             var avengingRatio = 1 - awakeningRatio;
-            HashSet<Ability> spenders = HpalUtils.GetSpenderAbilities(abilities);
+            HashSet<Ability> spenders = RdruidUtils.GetSpenderAbilities(abilities);
             // Don't need to worry about maxHCCGM here.
             sunsAvatar.CIMSources.Add(new CIMSource(sunsAvatar.Name, avengingRatio));
             var totalSpenderCasts = 0;
@@ -123,7 +123,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
         {
             if (divineGuidance.Heal.Raw == 0) return;
             var abilities = user.Abilities;
-            HashSet<Ability> spenders = HpalUtils.GetSpenderAbilities(abilities);
+            HashSet<Ability> spenders = RdruidUtils.GetSpenderAbilities(abilities);
             var totalSpenderCasts = 0;
             foreach (var spender in spenders)
             {
@@ -143,7 +143,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
             var total = lod.Heal.Crit.Count + holyShock.Heal.Crit.Count;
             var lodRatio = lod.Heal.Crit.Count / total;
             var holyShockRatio = 1 - lodRatio;
-            HashSet<Ability> spenders = HpalUtils.GetSpenderAbilities(abilities);
+            HashSet<Ability> spenders = RdruidUtils.GetSpenderAbilities(abilities);
             sunSear.CIMSources.Add(new CIMSource(lod.Name, lodRatio));
             sunSear.CIMSources.Add(new CIMSource(holyShock.Name, holyShockRatio));
         

@@ -1,5 +1,4 @@
-﻿/* --- Top Gear layout --- */
-
+﻿/* ---------- Layout & headings ---------- */
 .tg-wrap {
     max-width: 1200px;
     margin: 16px auto;
@@ -20,7 +19,6 @@
         opacity: .85;
     }
 
-/* Grid of sections */
 .tg-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -39,7 +37,7 @@
     }
 }
 
-/* Section (slot group) */
+/* ---------- Slot box ---------- */
 .tg-slot {
     background: #1b1c21;
     border-radius: 10px;
@@ -57,7 +55,6 @@
         margin: 0 2px 2px;
     }
 
-/* List of items in a section */
 .tg-list {
     display: flex;
     flex-direction: column;
@@ -80,7 +77,7 @@
         background: #0d0d0d;
     }
 
-/* Item card */
+/* ---------- Item card ---------- */
 .tg-item {
     position: relative;
     display: grid;
@@ -105,7 +102,6 @@
         box-shadow: 0 0 0 1px #f8d363 inset;
     }
 
-/* Icon */
 .tg-ico {
     width: 40px;
     height: 40px;
@@ -114,7 +110,6 @@
     overflow: hidden;
 }
 
-/* Text */
 .tg-name {
     font-weight: 600;
 }
@@ -144,7 +139,7 @@
     padding-left: .25rem;
 }
 
-/* Remove button for user-added items */
+/* ---------- Remove / Actions ---------- */
 .tg-remove {
     position: absolute;
     top: 6px;
@@ -167,30 +162,109 @@
         background: #4a4a4a;
     }
 
-/* Footer area (if you add run controls inline) */
-.tg-footer {
+.tg-actions {
     display: flex;
-    gap: 10px;
     align-items: center;
-    margin-top: 12px;
+    gap: 8px;
 }
 
-.tg-run {
-    padding: 10px 14px;
-    border-radius: 9px;
-    border: 0;
-    background: #4c7ef5;
+.tg-edit,
+.tg-copy {
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: 1px solid #444a5a;
+    background: #2f3240;
     color: #fff;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+    .tg-edit:hover,
+    .tg-copy:hover {
+        background: #3a3f51;
+        border-color: #58607a;
+    }
+
+/* ---------- Inline edit panel ---------- */
+.tg-edit-panel {
+    margin-top: 8px;
+    background: #1f2130;
+    border: 1px solid #32384a;
+    border-radius: 8px;
+    padding: 10px;
+    display: grid;
+    gap: 8px;
+    grid-column: 1 / -1; /* span full card width */
+}
+
+.tg-edit-row {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 8px;
+    align-items: center;
+    color: #ddd;
+}
+
+    /* inputs in the edit panel */
+    .tg-edit-row input[type="number"],
+    .tg-edit-row input[type="text"],
+    .tg-edit-row select {
+        height: 34px;
+        border-radius: 6px;
+        border: 1px solid #444;
+        background: #222;
+        color: #ddd;
+        outline: none;
+        padding: 0 .5rem;
+    }
+
+.tg-edit-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+.tg-edit-save,
+.tg-edit-cancel {
+    height: 34px;
+    padding: 0 12px;
+    border-radius: 8px;
+    border: 0;
     font-weight: 700;
     cursor: pointer;
 }
 
-    .tg-run:disabled {
+.tg-edit-save {
+    background: #4c7ef5;
+    color: #fff;
+}
+
+    .tg-edit-save:disabled {
         opacity: .5;
         cursor: not-allowed;
     }
 
-.tg-note {
-    opacity: .8;
-    font-size: .9rem;
+.tg-edit-cancel {
+    background: #3a3a3a;
+    color: #fff;
 }
+
+    .tg-edit-cancel:hover {
+        background: #4a4a4a;
+    }
+
+
+.tg-remove-btn {
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: 1px solid #444a5a;
+    background: #2f3240;
+    color: #fff;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+    .tg-remove-btn:hover {
+        background: #3a3f51;
+        border-color: #58607a;
+    }

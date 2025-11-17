@@ -48,15 +48,22 @@ namespace Beaversims.Core
         public AmountContainer Amount { get; set; }
         public StatTracker? UserStats { get; set; }
         public Dictionary<StatName, double> SimStatEffInc { get; set; } = Utils.InitStatDict();
+        //public List<StatChange> SimStatChanges { get; set; } = [];
         //public Dictionary<StatName, double> SimStatRatingInc { get; set; } = Utils.InitStatDict();
         public double NukeRaw { get; set; } = 0.0;
         //public StatTracker StatDiffs { get; set; } = new();
+        //public void StoreSimStatChange(StatName statName, double amount, StatAmountType type, bool removal)
+        //{
+        //    SimStatChanges.Add(new StatChange(statName, amount, type, removal));
+        //}
         public AltEvent() 
         { 
 
         }
 
     }
+
+
 
     internal class Event
     {
@@ -96,6 +103,10 @@ namespace Beaversims.Core
         public bool AwakenedCast {  get; set; } = false;
         public bool BanCritScaleJudgAC { get; set; } = false;
 
+        //Druid
+        public bool TargetHasRegrowth { get; set; } = false;
+        public int AbundanceStacks { get; set; } = 0;
+
         // TODO implement preEvent option.
         public double? SourceHp_p()//(bool preEvent=false) 
         {
@@ -112,6 +123,56 @@ namespace Beaversims.Core
         public bool IsHealDoneEvent() => this is HealEvent && UserSuperSource;
         public bool IsDmgDoneEvent() => this is DamageEvent && UserSuperSource && TargetUnit is not User;
 
+        //public void CreateAltEvents(User user, Event evt)
+        //{
+        //    foreach (var altGearSet in user.AltGearSets)
+        //    {
+        //        //var statDiffs = Enum.GetValues<StatName>()
+        //        //.ToDictionary(stat => stat, stat => 0.0);
+
+        //        //var altStats = evt.RefStats.Clone();
+
+        //        ////foreach (var altGear in altGearSet)
+        //        ////{
+        //        //foreach (var stat in altGearSet.TotalGearRatings)
+        //        //{
+        //        //    statDiffs[stat.Key] += stat.Value;
+        //        //}
+        //        ////}
+        //        ////foreach (var gear in user.Gear)
+        //        ////{
+        //        //foreach (var stat in user.TotalGearRatings)
+        //        //{
+        //        //    statDiffs[stat.Key] -= stat.Value;
+        //        //}
+        //        ////}
+
+        //        //foreach (var stat in statDiffs)
+        //        //{
+        //        //    bool removal;
+        //        //    var diff = stat.Value;
+        //        //    if (stat.Value < 0.0)
+        //        //    {
+        //        //        removal = true;
+        //        //        diff *= -1;
+        //        //    }
+        //        //    else
+        //        //    {
+        //        //        removal = false;
+        //        //    }
+        //        //    altStats.Get(stat.Key).ChangeAmount(diff, StatAmountType.Rating, removal);
+        //        //}
+        //        //altStats.UpdateAllStats();
+        //        var altEvent = new AltEvent();
+        //        if (evt is TpEvent _tEvt)
+        //        {
+        //            altEvent.Amount = _tEvt.Amount.Clone();
+        //        }
+        //        //altEvent.UserStats = altStats;
+        //        evt.AltEvents.Add(altEvent);
+
+        //    }
+        //}
         public void CreateAltEvents(User user, Event evt)
         {
             // TODO not gonna be correct due to multis, haste rating scaling etc.
@@ -123,20 +184,20 @@ namespace Beaversims.Core
 
                 var altStats = evt.RefStats.Clone();
 
-                //foreach (var altGear in altGearSet)
-                //{
-                foreach (var stat in altGearSet.TotalGearRatings)
+                foreach (var altGear in altGearSet)
                 {
-                    statDiffs[stat.Key] += stat.Value;
+                    foreach (var stat in altGear.Value.Stats)
+                    {
+                        statDiffs[stat.Key] += stat.Value;
+                    }
                 }
-                //}
-                //foreach (var gear in user.Gear)
-                //{
-                foreach (var stat in user.TotalGearRatings)
+                foreach (var gear in user.Gear)
                 {
-                    statDiffs[stat.Key] -= stat.Value;
+                    foreach (var stat in gear.Value.Stats)
+                    {
+                        statDiffs[stat.Key] -= stat.Value;
+                    }
                 }
-                //}
 
                 foreach (var stat in statDiffs)
                 {
@@ -248,10 +309,28 @@ namespace Beaversims.Core
     internal sealed class CastEvent : Event
     {
         public int EmpCastLevel { get; set; }
+        public double PostReductCT { get; set; }
+        public double ScalingReductRatio { get; set; }
+    }
+
+    internal class StatChange
+    {
+        public StatName StatName { get; set; }
+        public double Amount { get; set; }
+        public StatAmountType Type { get; set; }
+        public bool Removal { get; set; }
+        public StatChange(StatName statName, double amount, StatAmountType type, bool removal)
+        {
+            StatName = statName;
+            Amount = amount;
+            Type = type;
+            Removal = removal;
+        }
     }
 
     internal sealed class BuffEvent : Event
     {
+        public List<StatChange> RefStatChanges { get; set; } = [];
         public int BuffStacks { get; set; }
         public bool BuffApplyEvent { get; set; }
         public bool BuffRemoveEvent { get; set; }
@@ -259,6 +338,10 @@ namespace Beaversims.Core
         public bool BuffStackEvent { get; set; }
         public bool BuffIncEvent { get; set; }
         public bool BuffRefreshEvent { get; set; }
+        public void StoreRefStatChange(StatName statName, double amount, StatAmountType type, bool removal)
+        {
+            RefStatChanges.Add(new StatChange(statName, amount, type, removal));
+        }
     }
 
     

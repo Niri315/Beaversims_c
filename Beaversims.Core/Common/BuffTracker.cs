@@ -25,15 +25,15 @@ namespace Beaversims.Core
 
                 if (buffEvent.BuffApplyEvent)
                 {
-                    buffEvent.TargetUnit.AddBuff(buffName, buffId, sourceUnit, buffStacks, timestamp, statLogger, refStatLogger);
+                    buffEvent.TargetUnit.AddBuff(buffName, buffId, sourceUnit, buffStacks, timestamp, buffEvent, statLogger, refStatLogger);
                 }
                 else if (buffEvent.BuffRemoveEvent)
                 {
-                    buffEvent.TargetUnit.RemoveBuff(buffId, sourceUnit, statLogger, timestamp, refStatLogger);
+                    buffEvent.TargetUnit.RemoveBuff(buffId, sourceUnit, buffEvent, statLogger, timestamp, refStatLogger);
                 }
                 else if (buffEvent.BuffStackEvent)
                 {
-                    buffEvent.TargetUnit.ChangeBuffStack(buffName, buffId, sourceUnit, buffStacks, statLogger, timestamp, refStatLogger);
+                    buffEvent.TargetUnit.ChangeBuffStack(buffName, buffId, sourceUnit, buffStacks, buffEvent, statLogger, timestamp, refStatLogger);
                 }
             }
             if (user.HasBuff(Shared.Abilities.BlessingOfSummer.buffId))

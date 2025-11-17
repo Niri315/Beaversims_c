@@ -32,8 +32,8 @@ namespace Beaversims.Core
                 Stats[statName] += rating;
             }
         }
-        public GainItem(string name, int ilvl, ItemSlot itemSlot)
-            : base(ItemDatabase.Items[name].Id, name, ilvl, itemSlot)
+        public GainItem(int id, int ilvl, ItemSlot itemSlot)
+            : base(id, ItemDatabase.Items[id].Name, ilvl, itemSlot)
         {
         //    Gains = Utils.InitGainDict();
         }
@@ -96,12 +96,12 @@ namespace Beaversims.Core.Sim
             }
         }
 
-        public static GainItem CreateItem(string itemName, int ilvl, ItemSlot itemSlot, List<int> bonusIds)
+        public static GainItem CreateItem(int itemId, int ilvl, ItemSlot itemSlot, List<int> bonusIds)
         {
+            var itemData = ItemDatabase.Items[itemId];
+            var itemName = itemData.Name;
+            var gainItem = new GainItem(itemId, ilvl, itemSlot);
 
-            var gainItem = new GainItem(itemName, ilvl, itemSlot);
-
-            var itemData = ItemDatabase.Items[itemName];
             var itemRpp = ScUtils.GetItemRPP(ilvl, itemSlot, itemData);
             //Console.WriteLine($"{itemData.Name} - Ilvl: {ilvl}, Itemclass: {itemData.ItemClass}");
 

@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         try {
             const logs = await fetchLogsRaw(reportCode, fight.id, healer.id);
             const result = await runStatWeights(logs, healer.id, reportCode);
-            const url = `/results.html?data=${encodeToUrl(result)}`;
+            window.open(`/results.html?data=${encodeToUrl(result)}`, "_blank");
             location.href = url;
         } catch (err) {
             console.error(err);

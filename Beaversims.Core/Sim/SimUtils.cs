@@ -13,16 +13,21 @@ namespace Beaversims.Core.Sim
             var vers = (Vers)curStats.Get(StatName.Vers);
             return 1 + (vers.SimTempEff() / vers.PercentRate / 100);
         }
-
-        public static double VersCritMod(StatTracker curStats)
+        public static double CritMod(StatTracker curStats)
         {
             var crit = (Crit)curStats.Get(StatName.Crit);
-            var vers = (Vers)curStats.Get(StatName.Vers);
-            //Console.WriteLine(1 + ((crit.SimTempEff() / crit.PercentRate / 100)));
-            //Console.WriteLine(VersMod(curStats));
-
-            return (1 + ((crit.SimTempEff() / crit.PercentRate / 100) * (crit.IncHeal - 1))) * VersMod(curStats);
+            return (1 + ((crit.SimTempEff() / crit.PercentRate / 100) * (crit.IncHeal - 1)));
         }
+
+        //public static double VersCritMod(StatTracker curStats)
+        //{
+        //    var crit = (Crit)curStats.Get(StatName.Crit);
+        //    var vers = (Vers)curStats.Get(StatName.Vers);
+        //    //Console.WriteLine(1 + ((crit.SimTempEff() / crit.PercentRate / 100)));
+        //    //Console.WriteLine(VersMod(curStats));
+
+        //    return (1 + ((crit.SimTempEff() / crit.PercentRate / 100) * (crit.IncHeal - 1))) * VersMod(curStats);
+        //}
 
         public static List<Event> AvailableUseEvents(List<Event> events, List<double> useTimings, double sharedCd)
         {

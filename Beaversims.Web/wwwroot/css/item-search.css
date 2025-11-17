@@ -1,15 +1,40 @@
-﻿/* item-search.css */
-
-.tg-search {
+﻿.tg-search {
     position: relative;
-    display: flex;
-    gap: .5rem;
-    align-items: center;
-    margin: 1rem 0;
+    max-width: 980px; /* prevent full-bleed on wide screens */
+    margin: 1rem auto; /* centered */
+    color: #ddd;
 }
 
+/* Row layout: search | ilvl | crafted | tertiary | Add */
+.tg-row {
+    display: grid;
+    grid-template-columns: 1fr 6rem 12rem 12rem auto;
+    gap: .5rem;
+    align-items: center;
+}
+
+/* Responsive tweaks */
+@media (max-width: 920px) {
+    .tg-row {
+        grid-template-columns: 1fr 5.5rem 1fr 1fr auto;
+    }
+}
+
+@media (max-width: 640px) {
+    .tg-row {
+        grid-template-columns: 1fr auto; /* stack filters below */
+    }
+
+    #item-ilvl, #item-crafted, #item-tertiary {
+        grid-column: 1 / -1;
+    }
+}
+
+/* Inputs (match site theme) */
 #item-search,
-#item-ilvl {
+#item-ilvl,
+#item-crafted,
+#item-tertiary {
     height: 36px;
     border-radius: 6px;
     border: 1px solid #444;
@@ -19,24 +44,45 @@
 }
 
 #item-search {
-    flex: 1;
     padding: 0 10px;
 }
 
 #item-ilvl {
-    width: 6rem;
+    width: 100%;
     padding: 0 .5rem;
     text-align: center;
     font-variant-numeric: tabular-nums;
 }
 
-/* Dropdown */
+#item-crafted,
+#item-tertiary {
+    padding: 0 .5rem;
+}
 
+/* Add button */
+.tg-add {
+    height: 36px;
+    padding: 0 14px;
+    border-radius: 8px;
+    border: 0;
+    background: #4c7ef5;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+    .tg-add:disabled {
+        opacity: .5;
+        cursor: not-allowed;
+    }
+
+/* Results dropdown */
 .tg-search-results {
     position: absolute;
     top: calc(100% + 6px);
     left: 0;
-    right: 0;
+    right: 0; /* stretch to match row width */
     background: #111;
     border: 1px solid #333;
     border-radius: 8px;
@@ -58,6 +104,11 @@
 
     .tg-search-item:hover {
         background: #1a1a1a;
+    }
+
+    .tg-search-item.is-selected {
+        background: #23252d;
+        border-left: 3px solid #f8d363;
     }
 
     .tg-search-item img {

@@ -288,9 +288,96 @@ namespace Beaversims.Core.Data.StatBuffs
             Duration = 30;
         }
     }
+
+    /* ----- *
+     * Druid *
+     * ----- */
+
+
+    internal class LycarasTeachingsNoForm : StatBuff
+    {
+        public const int id = 378989;
+        public const string name = "LycarasTeachingsNoForm";
+
+        public LycarasTeachingsNoForm(UnitId sourceId, int stacks)
+            : base(id, sourceId, name, stacks)
+        {
+            AllowMultiple = false;
+            SourceType = BuffSourceType.Talent;
+            SourceObjId = 103311;
+            StatMods.Add(
+                new StatMod(
+                    StatName.Haste,
+                    StatAmountType.Base,
+                    3 * Haste.percentRate)
+            );
+        }
+    }
+
+    internal class LycarasTeachingsCat : StatBuff
+    {
+        public const int id = 378990;
+        public const string name = "LycarasTeachingsCat";
+
+        public LycarasTeachingsCat(UnitId sourceId, int stacks)
+            : base(id, sourceId, name, stacks)
+        {
+            AllowMultiple = false;
+            SourceType = BuffSourceType.Talent;
+            SourceObjId = 103311;
+            StatMods.Add(
+                new StatMod(
+                    StatName.Crit,
+                    StatAmountType.Base,
+                    3 * Crit.percentRate)
+            );
+        }
+    }
+
+    internal class LycarasTeachingsBear : StatBuff
+    {
+        public const int id = 378991;
+        public const string name = "LycarasTeachingsBear";
+
+        public LycarasTeachingsBear(UnitId sourceId, int stacks)
+            : base(id, sourceId, name, stacks)
+        {
+            AllowMultiple = false;
+            SourceType = BuffSourceType.Talent;
+            SourceObjId = 103311;
+            StatMods.Add(
+                new StatMod(
+                    StatName.Vers,
+                    StatAmountType.Base,
+                    3 * Vers.percentRate)
+            );
+        }
+    }
+    internal class LycarasTeachingsOwl : StatBuff
+    {
+        public const int id = 378992;
+        public const string name = "LycarasTeachingsOwl";
+
+        public LycarasTeachingsOwl(UnitId sourceId, int stacks)
+            : base(id, sourceId, name, stacks)
+        {
+            AllowMultiple = false;
+            SourceType = BuffSourceType.Talent;
+            SourceObjId = 103311;
+            StatMods.Add(
+                new StatMod(
+                    StatName.Mastery,
+                    StatAmountType.Base,
+                    3 * Mastery.tooltipPercentRate)
+            );
+        }
+    }
+
+
     /* ----------- *
      * Timewalking *
      * ----------- */
+
     internal class FelInfusion : StatBuff 
         // Skull of Gul'Dan
     {
@@ -340,7 +427,7 @@ namespace Beaversims.Core.Data.StatBuffs
     // Elemental Focus Stone
     {
         public const int id = 65008;
-        public const string name = "Alacrity of the Elements";
+        public const string name = "Energy Siphon";
 
 
         public EnergySiphon(UnitId sourceId, int stacks)

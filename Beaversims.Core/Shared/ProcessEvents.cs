@@ -175,15 +175,15 @@ namespace Beaversims.Core.Shared
                     }
                     if (user.SimMode == SimMode.TopGear)
                     {
-                        if (i == 0)
-                        {
-                            //gains[gainType] -= user.Totals[gainType] / fight.TotalTime;
-                        }
-                        else
-                        {
-                            gains[gainType] -= user.AltGearSets[0].Gains[gainType];
+                        //if (i == 0)
+                        //{
+                        //    //gains[gainType] -= user.Totals[gainType] / fight.TotalTime;
+                        //}
+                        //else
+                        //{
+                            //gains[gainType] -= user.AltGearSets[0].Gains[gainType];
                             //gains[gainType] /= fight.TotalTime;
-                        }
+                        //}
                     }
                     if (user.SimMode == SimMode.StatAlloc)
                     {

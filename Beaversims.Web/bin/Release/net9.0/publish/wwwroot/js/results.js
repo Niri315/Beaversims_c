@@ -1,5 +1,6 @@
 ﻿import { initResultOptions } from "/js/shared/result-options.js";
 import { STAT_COLORS } from "/js/stat-weights.js";
+import { icon } from "/js/shared/utils.js";
 
 // ---- decode
 function decodeData() {
@@ -16,73 +17,66 @@ if (!result) {
 console.log(result);
 
 // Map difficulty id → label (fallback to raw if unknown)
-function labelDifficulty(v) {
-    const map = { 1: "LFR", 2: "Normal", 3: "Heroic", 4: "Mythic", 5: "Mythic+" };
-    return map[v] || (typeof v === "string" ? v : String(v ?? "—"));
+function difficultyLabel(v) {
+    const map = { 1: "LFR", 3: "Normal", 4: "Heroic", 5: "Mythic", 10: "Dungeon" };
+    return map?.[v] ?? (v ?? "—");
 }
 
-// mm:ss
-function fmtTimeSec(seconds) {
+function fmtTime(seconds) {
     const s = Math.max(0, Math.round(seconds || 0));
     const m = Math.floor(s / 60);
     const r = s % 60;
     return `${m}:${r.toString().padStart(2, "0")}`;
 }
 
-// nice number
-function fmt(n, d = 1) {
-    return (Number.isFinite(n) ? n : 0).toLocaleString(undefined, {
-        minimumFractionDigits: d, maximumFractionDigits: d
-    });
+function fmtNumber(n) {
+    n = Number(n || 0);
+
+    if (n >= 1_000_000)
+        return (n / 1_000_000).toFixed(2) + " mil";
+
+    if (n >= 1_000)
+        return (n / 1_000).toFixed(1) + " k";
+
+    return Math.round(n).toString();
 }
 
-// Populate the Fight Info header
-function renderFightInfo(res) {
-    const t = Number(res.totalTime || 0); // seconds
+function int(n) {
+    return Math.round(Number(n || 0)).toString();
+}
+
+function renderFightSummary(res) {
+    // icons
+    document.getElementById("fs-spec-icon").src = icon(res.specName);
+    document.getElementById("fs-hero-icon").src = icon(res.heroTlName);
+    document.getElementById("fs-boss-icon").src = icon(res.fightName);
+
+    // names
+    document.getElementById("fs-player-name").textContent = res.playerName || "—";
+    document.getElementById("fs-boss-name").textContent = res.fightName || "—";
+
+    // meters
+    const t = Number(res.totalTime || 0);
+
     const ot = res.originalTotals || {};
+    const hps = ot.Eff ?? ot.Heal ?? 0;
+    const dps = ot.Dmg ?? ot.Damage ?? 0;
+    const rawDtps = ot.Def ?? ot.DamageTaken ?? 0;
+    const dtps = Math.abs(rawDtps);
 
-    // You said HPS/DPS/DTPS can be derived from originalTotals + totalTime.
-    // Use tolerant keys so this never explodes if names vary a bit.
-    const totalHeal = ot.Eff ?? ot.Heal ?? 0;
-    const totalDmg = ot.Dmg ?? ot.Damage ?? 0;
-    const totalDtps = ot.Def ?? ot.DamageTaken ?? 0; // adjust if your core uses a different key
+    document.getElementById("fs-hps").textContent = fmtNumber(hps);
+    document.getElementById("fs-dps").textContent = fmtNumber(dps);
+    document.getElementById("fs-dtps").textContent = fmtNumber(dtps);
 
-    const hps = t ? totalHeal / t : 0;
-    const dps = t ? totalDmg / t : 0;
-    const dtps = t ? totalDtps / t : 0;
-
-    // Icons: set later — leave src empty or placeholder
-    const specIco = document.getElementById("ri-spec-icon");
-    const heroIco = document.getElementById("ri-hero-icon");
-    const fightIco = document.getElementById("ri-fight-icon");
-    if (specIco) specIco.src = "";   // TODO: set when you have real icons
-    if (heroIco) heroIco.src = "";
-    if (fightIco) fightIco.src = "";
-
-    // Names
-    document.getElementById("ri-spec-name").textContent = res.specName || "—";
-    document.getElementById("ri-hero-name").textContent = res.heroTlName || "—";
-    document.getElementById("ri-fight-name").textContent = res.fightName || "—";
-
-    // Difficulty (will be added to results)
-    document.getElementById("ri-diff").textContent = labelDifficulty(res.difficulty);
-
-    // Player name (will be added to results)
-    document.getElementById("ri-player").textContent = res.playerName || "—";
-
-    // Result (kill / wipe)
-    const resultLabel = res.kill === true ? "Kill" : (res.kill === false ? "Wipe" : "—");
-    document.getElementById("ri-result").textContent = resultLabel;
-
-    // Length + per-second metrics
-    document.getElementById("ri-length").textContent = fmtTimeSec(t);
-    document.getElementById("ri-hps").textContent = fmt(hps);
-    document.getElementById("ri-dps").textContent = fmt(dps);
-    document.getElementById("ri-dtps").textContent = fmt(dtps);
+    // boss line: difficulty next to name (chip), below: time · Kill/Wipe
+    document.getElementById("fs-diff").textContent = difficultyLabel(res.difficulty);
+    document.getElementById("fs-time").textContent = fmtTime(t);
+    document.getElementById("fs-outcome").textContent = (res.success === true) ? "Kill" : "Wipe";
 }
+
 
 // Call it once after you have `result`
-renderFightInfo(result);
+renderFightSummary(result);
 
 
 // ---- result options

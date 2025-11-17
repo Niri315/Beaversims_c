@@ -182,7 +182,7 @@ namespace Beaversims.Core.Sim.SpecialEffects
                         AbilityName = Name,
                         SourceUnit = user,
                     };
-                    var amountRaw = Amount * SimUtils.VersCritMod(curAltStats) * Constants.defaultHealIncMod;
+                    var amountRaw = Amount;
                     var amountEff = amountRaw * defaultUhr;
                     newEvent.Amount.Raw = amountRaw;
                     newEvent.Amount.Naraw = amountRaw;

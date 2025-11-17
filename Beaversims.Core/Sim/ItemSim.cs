@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -27,8 +28,11 @@ namespace Beaversims.Core.Sim
         //public List<HasteProcEffect> HasteProcEffects { get; set; } = [];
         public List<OnUseEffect> OnUseEffects { get; set; } = [];
         public List<ProcEffect> ProcEffects { get; set; } = [];
+        public List<TpEvent> ProcEvents { get; set; }
+        public List<Event> AltEventList { get; set; }
         public double ManaGain { get; set; } = 0;
-        public double HasteCapCTLoss { get; set; } = 0;
+        public double HasteCapCTGLoss { get; set; } = 0;
+        public StatTracker StatTracker { get; set; }
 
         public void SetTotalGearRatings()
         {
@@ -223,8 +227,10 @@ namespace Beaversims.Core.Sim
         }
         public static void AddAltAbilityStuff(User user)
         {
+          
             foreach (var ability in user.Abilities)
             {
+              
                 ability.AltHeal.AddRange(
                     Enumerable.Range(0, user.AltGearSets.Count)
                               .Select(_ => new HealDataContainer())
@@ -290,9 +296,9 @@ namespace Beaversims.Core.Sim
                         if (v > 0.60 + 1e-9) continue;
 
                         var gs = new GearSet();
-                        gs.Name = $"{Pct(h)} haste, {Pct(c)} crit, {Pct(m)} mastery, {Pct(v)} vers";
+                        gs.Name = $"{Pct(h)} haste, {Pct(c)} crit, {Pct(m)} mastery, {Pct(v)} vers"; 
 
-                        gs[ItemSlot.Head] = ItemGenerator.CreateItem("Soaring Behemoth's Greathelm", 1, ItemSlot.Head, []);
+                        gs[ItemSlot.Head] = ItemGenerator.CreateItem(221146, 1, ItemSlot.Head, []);  //"Soaring Behemoth's Greathelm"
                         gs[ItemSlot.Head].Stats[StatName.Intellect] = user.TotalGearRatings[StatName.Intellect];
                         gs[ItemSlot.Head].Stats[StatName.Stamina] = user.TotalGearRatings[StatName.Stamina];
 
@@ -338,17 +344,17 @@ namespace Beaversims.Core.Sim
         }
 
 
-        public static void CustomGearSets(User user)
+        public static void TrinketCompare(User user)
         {
-            var helmtest1 = DeepCloneGearset(user.Gear);
-            helmtest1.Name = "717 Leech";
-            helmtest1[ItemSlot.Head] = ItemGenerator.CreateItem("Soaring Behemoth's Greathelm", 717, ItemSlot.Head, [(int)BonusIds.Leech]);
-            user.AltGearSets.Add(helmtest1);
+            //var helmtest1 = DeepCloneGearset(user.Gear);
+            //helmtest1.Name = "717 Leech";
+            //helmtest1[ItemSlot.Head] = ItemGenerator.CreateItem("Soaring Behemoth's Greathelm", 717, ItemSlot.Head, [(int)BonusIds.Leech]);
+            //user.AltGearSets.Add(helmtest1);
 
-            var helmtest = DeepCloneGearset(user.Gear);
-            helmtest.Name = "730 no Leech";
-            helmtest[ItemSlot.Head] = ItemGenerator.CreateItem("Soaring Behemoth's Greathelm", 730, ItemSlot.Head, []);
-            user.AltGearSets.Add(helmtest);
+            //var helmtest = DeepCloneGearset(user.Gear);
+            //helmtest.Name = "730 no Leech";
+            //helmtest[ItemSlot.Head] = ItemGenerator.CreateItem("Soaring Behemoth's Greathelm", 730, ItemSlot.Head, []);
+            //user.AltGearSets.Add(helmtest);
 
             //var altGearSet0 = DeepCloneGearset(user.AltGearSets[0]);
             //altGearSet0.Name = "Wishlist";
@@ -384,25 +390,25 @@ namespace Beaversims.Core.Sim
             //user.AltGearSets.Add(trinketTest2);
 
 
-            //var trinketTest3 = DeepCloneGearset(user.Gear);
-            //trinketTest3.Name = "Elemental Focus Stone";
-            //trinketTest3[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Elemental Focus Stone", 723, ItemSlot.Trinket1, []);
-            //user.AltGearSets.Add(trinketTest3);
+            var trinketTest3 = DeepCloneGearset(user.Gear);
+            trinketTest3.Name = "Elemental Focus Stone";
+            trinketTest3[ItemSlot.Trinket1] = ItemGenerator.CreateItem(156021, 723, ItemSlot.Trinket1, []);
+            user.AltGearSets.Add(trinketTest3);
 
             //var trinketTest4 = DeepCloneGearset(user.Gear);
             //trinketTest4.Name = "Energy Siphon";
             //trinketTest4[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Energy Siphon", 723, ItemSlot.Trinket1, []);
             //user.AltGearSets.Add(trinketTest4);
 
-            //var trinketTest5 = DeepCloneGearset(user.Gear);
-            //trinketTest5.Name = "Eye of the Broodmother";
-            //trinketTest5[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Eye of the Broodmother", 723, ItemSlot.Trinket1, []);
-            //user.AltGearSets.Add(trinketTest5);
+            var trinketTest5 = DeepCloneGearset(user.Gear);
+            trinketTest5.Name = "Eye of the Broodmother";
+            trinketTest5[ItemSlot.Trinket1] = ItemGenerator.CreateItem(156036, 723, ItemSlot.Trinket1, []);
+            user.AltGearSets.Add(trinketTest5);
 
-            //var trinketTest6 = DeepCloneGearset(user.Gear);
-            //trinketTest6.Name = "Flare of the Heavens";
-            //trinketTest6[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Flare of the Heavens", 723, ItemSlot.Trinket1, []);
-            //user.AltGearSets.Add(trinketTest6);
+            var trinketTest6 = DeepCloneGearset(user.Gear);
+            trinketTest6.Name = "Flare of the Heavens";
+            trinketTest6[ItemSlot.Trinket1] = ItemGenerator.CreateItem(156230, 723, ItemSlot.Trinket1, []);
+            user.AltGearSets.Add(trinketTest6);
 
             //var trinketTest7 = DeepCloneGearset(user.Gear);
             //trinketTest7.Name = "Living Flame";
@@ -410,10 +416,10 @@ namespace Beaversims.Core.Sim
             //user.AltGearSets.Add(trinketTest7);
 
 
-            //var trinketTest8 = DeepCloneGearset(user.Gear);
-            //trinketTest8.Name = "Pandora's Plea";
-            //trinketTest8[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Pandora's Plea", 723, ItemSlot.Trinket1, []);
-            //user.AltGearSets.Add(trinketTest8);
+            var trinketTest8 = DeepCloneGearset(user.Gear);
+            trinketTest8.Name = "Pandora's Plea";
+            trinketTest8[ItemSlot.Trinket1] = ItemGenerator.CreateItem(156207, 723, ItemSlot.Trinket1, []);
+            user.AltGearSets.Add(trinketTest8);
 
             //var trinketTest9 = DeepCloneGearset(user.Gear);
             //trinketTest9.Name = "Scale of Fates";
@@ -425,10 +431,10 @@ namespace Beaversims.Core.Sim
             //trinketTest10[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Show of Faith", 723, ItemSlot.Trinket1, []);
             //user.AltGearSets.Add(trinketTest10);
 
-            //var trinketTest11 = DeepCloneGearset(user.Gear);
-            //trinketTest11.Name = "Eye of Blazing Power";
-            //trinketTest11[ItemSlot.Trinket1] = ItemGenerator.CreateItem("Eye of Blazing Power", 723, ItemSlot.Trinket1, []);
-            //user.AltGearSets.Add(trinketTest11);
+            var trinketTest11 = DeepCloneGearset(user.Gear);
+            trinketTest11.Name = "Eye of Blazing Power";
+            trinketTest11[ItemSlot.Trinket1] = ItemGenerator.CreateItem(171645, 723, ItemSlot.Trinket1, []);
+            user.AltGearSets.Add(trinketTest11);
 
             //var trinketTest12 = DeepCloneGearset(user.Gear);
             //trinketTest12.Name = "Necromantic Focus";
@@ -489,6 +495,37 @@ namespace Beaversims.Core.Sim
 
         }
 
+        public static void CreateTGSets(User user, JsonDocument gearSets)
+        {
+            JsonElement root = gearSets.RootElement;
+            JsonElement sets = root.GetProperty("gearSets");
+
+            foreach (JsonElement gearSetEl in sets.EnumerateArray())
+            {
+                var gearSet = new GearSet();
+                gearSet.Id = gearSetEl.GetProperty("id").GetInt32();
+                gearSet.Name = gearSetEl.GetProperty("name").GetString();
+
+                JsonElement slotsEl = gearSetEl.GetProperty("slots");
+
+                foreach (JsonProperty slotEl in slotsEl.EnumerateObject())
+                {
+                    int slot = int.Parse(slotEl.Name);
+
+                    foreach (JsonElement item in slotEl.Value.EnumerateArray())
+                    {
+                        int itemId = item.GetProperty("id").GetInt32();
+                        int ilvl = item.GetProperty("itemLevel").GetInt32();
+                        List<int> bonusIds = item.GetProperty("bonusIDs").EnumerateArray().Select(b => b.GetInt32()).ToList();
+                        ItemSlot itemSlot = (ItemSlot)(slot + 1);
+                        gearSet[itemSlot] = ItemGenerator.CreateItem(itemId, ilvl, itemSlot, bonusIds);
+                        Console.WriteLine($"Slot {slot + 1} -> Item {itemId} ilvl {ilvl}");
+                    }
+                }
+                user.AltGearSets.Add(gearSet);
+            }
+        }
+
         public static void AddRefSet(User user)
         {
             var refSet = DeepCloneGearset(user.Gear);
@@ -496,7 +533,7 @@ namespace Beaversims.Core.Sim
             user.AltGearSets.Add(refSet);
         }
 
-        public static void CreateGearSets(User user)
+        public static void CreateGearSets(User user, JsonDocument gearSets)
         {
             var simMode = user.SimMode;
             user.SetTotalGearRatings();
@@ -508,11 +545,33 @@ namespace Beaversims.Core.Sim
             {
                 StatAllocTest(user);
             }
-            else
+            else if (simMode == SimMode.TopGear)
             {
-                AddRefSet(user);
-                CustomGearSets(user);
+                //AddRefSet(user);
+                CreateTGSets(user, gearSets);
+                //CustomGearSets(user);
             }
+            else if (simMode == SimMode.Trinkets)
+            {
+                TrinketCompare(user);
+            }
+
+            //foreach (var gear in user.Gear.Values)
+            //{
+            //    Console.WriteLine($"{gear.Name}: {gear.Ilvl}, slot: {(int)gear.ItemSlot}");
+            //    foreach (var stat in gear.Stats)
+            //    {
+            //        Console.WriteLine($"{stat.Key}: {stat.Value}");
+            //    }
+            //}
+            //foreach (var gear in user.AltGearSets[1].Values)
+            //{
+            //    Console.WriteLine($"{gear.Name}: {gear.Ilvl}, slot: {(int)gear.ItemSlot}");
+            //    foreach (var stat in gear.Stats)
+            //    {
+            //        Console.WriteLine($"{stat.Key}: {stat.Value}");
+            //    }
+            //}
 
             SetGearSetIds(user);
             AddSpecialEffects(user);
@@ -522,19 +581,19 @@ namespace Beaversims.Core.Sim
                 gearSet.SetTotalGearRatings();
             }
 
-            Console.WriteLine("Original:");
-            foreach (var stat in user.TotalGearRatings)
-            {
-                Console.WriteLine($"{stat.Key} {stat.Value}");
-            }
-            foreach (var gearSet in user.AltGearSets)
-            {
-                Console.WriteLine(gearSet.Name);
-                foreach (var stat in gearSet.TotalGearRatings)
-                {
-                    Console.WriteLine($"{stat.Key} {stat.Value}");
-                }
-            }
+            //Console.WriteLine("Original:");
+            //foreach (var stat in user.TotalGearRatings)
+            //{
+            //    Console.WriteLine($"{stat.Key} {stat.Value}");
+            //}
+            //foreach (var gearSet in user.AltGearSets)
+            //{
+            //    Console.WriteLine(gearSet.Name);
+            //    foreach (var stat in gearSet.TotalGearRatings)
+            //    {
+            //        Console.WriteLine($"{stat.Key} {stat.Value}");
+            //    }
+            //}
 
         }
     }

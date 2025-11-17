@@ -1,4 +1,4 @@
-﻿//top-gear.js
+﻿// top-gear.js
 
 import { renderPicker } from "/js/shared/ui-picker.js";
 import { state, onChange } from "/js/shared/state.js";
@@ -16,24 +16,55 @@ const searchInput = document.getElementById("item-search");
 const ilvlInput = document.getElementById("item-ilvl");
 const resultBox = document.getElementById("item-results");
 
+const TERTIARY_BY_BONUSID = {
+    40: "Avoidance",
+    41: "Leech",
+};
+
+const CRAFTED_BY_BONUSID = {
+    8790: "Crit/Haste",     // Fireflash
+    8791: "Crit/Mastery",   // Peerless
+    8792: "Haste/Vers",     // Feverflare
+    8793: "Haste/Mastery",  // Aurora
+    8794: "Vers/Mastery",   // Harmonious
+    8795: "Crit/Vers",      // Quickblade
+};
+
+function inferCraftedFromBonusIDs(bonusIDs) {
+    if (!Array.isArray(bonusIDs)) return null;
+    for (const id of bonusIDs) {
+        const c = CRAFTED_BY_BONUSID[id];
+        if (c) return c;    // one crafted combo per item
+    }
+    return null;
+}
+
+function inferTertiaryFromBonusIDs(bonusIDs) {
+    if (!Array.isArray(bonusIDs)) return null;
+    for (const id of bonusIDs) {
+        const t = TERTIARY_BY_BONUSID[id];
+        if (t) return t;   // only one tertiary per item
+    }
+    return null;
+}
+
 let ui = null;
 let itemsReady; // single cached preload promise
 
 document.addEventListener("DOMContentLoaded", async () => {
-    // 1) mount Top Gear UI immediately (empty; search works before logs)
+
+
+
     ui = mountTopGearUI(gearMount);
 
-    // 2) preload item DB once (independent of logs)
     itemsReady = prefetchItems();
 
-    // 3) wire global search (works with or without logs)
     let searchTimer;
     function scheduleSearch() {
         clearTimeout(searchTimer);
         searchTimer = setTimeout(() => doSearch(searchInput.value.trim()), 150);
     }
 
-    // Trigger search on both name *and* ilvl changes
     searchInput.addEventListener("input", scheduleSearch);
     ilvlInput.addEventListener("input", scheduleSearch);
 
@@ -41,14 +72,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         resultBox.innerHTML = "";
         if (!q) return;
 
-        await itemsReady; // ensure DB loaded
+        await itemsReady;
         const matches = searchItems(q);
 
-        const ilvlOverride = getIlvlOverride(); // from your field; may be null
+        const ilvlOverride = getIlvlOverride();
         const frag = document.createDocumentFragment();
 
         for (const raw of matches) {
-            // normalize for display + add
             const norm = normalizeSearchItem(raw, ilvlOverride);
             if (!norm) continue;
 
@@ -57,7 +87,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             const row = document.createElement("div");
             row.className = "tg-search-item";
 
-            // Icon (clicking the icon opens wowhead; clicking the row adds the item)
             const iconLink = document.createElement("a");
             iconLink.href = `https://www.wowhead.com/item=${norm.id}`;
             iconLink.target = "_blank";
@@ -68,7 +97,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             img.alt = "";
             iconLink.appendChild(img);
 
-            // Name (wowhead tooltip)
             const name = document.createElement("a");
             name.className = "name";
             name.href = `https://www.wowhead.com/item=${norm.id}`;
@@ -77,21 +105,16 @@ document.addEventListener("DOMContentLoaded", async () => {
             name.setAttribute("data-wowhead", whData);
             name.textContent = norm.name || `Item #${norm.id}`;
 
-            // Meta ilvl
             const meta = document.createElement("span");
             meta.className = "meta";
             meta.textContent = norm.itemLevel ?? "";
 
-            // Assemble
             row.append(iconLink, name, meta);
 
-            // Clicking the row adds the item (but don't add if user clicked the links)
             row.addEventListener("click", (e) => {
-                // If clicked an <a>, let it open Wowhead instead of adding
                 if (e.target.closest("a")) return;
                 ui.addItem(norm);
                 resultBox.innerHTML = "";
-                // keep ilvl field value for rapid multiple adds
             });
 
             frag.appendChild(row);
@@ -99,7 +122,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         resultBox.appendChild(frag);
 
-        // refresh wowhead tooltips for the newly added links
         if (window.$WowheadPower?.refreshLinks) {
             window.$WowheadPower.refreshLinks();
         } else if (window.WH?.Tooltips?.refreshLinks) {
@@ -107,16 +129,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     }
 
-    // 4) render the WCL picker (separate concern)
     await renderPicker(pickerHost);
 
-    // 5) when healer/fight picked, merge baseline into already-mounted UI
     onChange(({ reportCode, fight, healer }) => {
         const ready = !!(reportCode && fight && healer);
         runBtn.disabled = !ready;
         if (!ready) return;
 
-        // Build itemsBySlot from healer.gear and replace baseline
         const itemsBySlot = new Map();
         for (const g of (healer.gear || [])) {
             const slot = Number(g.slot);
@@ -125,16 +144,18 @@ document.addEventListener("DOMContentLoaded", async () => {
                 id: Number(g.id),
                 slot,
                 name: g.name || `Item #${g.id}`,
-                ilvl: g.itemLevel ?? g.ilvl ?? null,
-                icon: iconUrl(g.icon),
+                itemLevel: g.itemLevel ?? g.ilvl ?? null,
+                icon: iconUrl(g.icon?.replace(/\.jpg$/i, "")),
                 badges: buildBadges(g),
+                bonusIDs: Array.isArray(g.bonusIDs) ? g.bonusIDs.slice() : [],
+                tertiary: inferTertiaryFromBonusIDs(g.bonusIDs),
+                craftedStats: inferCraftedFromBonusIDs(g.bonusIDs),
             });
             itemsBySlot.set(slot, list);
         }
-        ui.replaceBaseline(itemsBySlot); // wipes old baseline, injects new, autoselects
+        ui.replaceBaseline(itemsBySlot);
     });
 
-    // 6) run Top Gear
     runBtn.addEventListener("click", async () => {
         const { reportCode, fight, healer } = state;
         if (!ui || !reportCode || !fight || !healer) return;
@@ -143,9 +164,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         runBtn.textContent = "Running Top Gear…";
         try {
             const logsRaw = await fetchLogsRaw(reportCode, fight.id, healer.id);
-            const directive = ui.buildDirective(); // grouped fingers/trinkets + arrays per slot
+            const directive = ui.buildDirective();
+            console.log(directive);
             const result = await runTopGear(logsRaw, healer.id, reportCode, JSON.stringify(directive));
-            location.href = `/results.html?data=${encodeToUrl(result)}`;
+            console.log(result);
+            window.open(`/results.html?data=${encodeToUrl(result)}`, "_blank");
         } catch (err) {
             console.error(err);
             alert("Top Gear failed: " + (err.message || err));
@@ -156,11 +179,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 });
 
-/* ---------------- helpers ---------------- */
 function buildWowheadData({ itemId, ilvl }) {
     const parts = [`item=${itemId}`];
     if (ilvl) parts.push(`ilvl=${ilvl}`);
-    // extend later: bonus, gems, ench
     return parts.join("&");
 }
 
@@ -168,7 +189,6 @@ function getIlvlOverride() {
     const n = parseInt(document.getElementById("item-ilvl")?.value ?? "", 10);
     return Number.isFinite(n) && n > 0 ? n : null;
 }
-
 
 function prefetchItems() {
     if ("requestIdleCallback" in window) {
@@ -183,13 +203,11 @@ function prefetchItems() {
 }
 
 function iconUrl(iconName) {
-    // inputs like "inv_boots_06" → full wowhead/zam url
     return iconName
-        ? `https://wow.zamimg.com/images/wow/icons/large/${String(iconName).toLowerCase()}.jpg`
+        ? `https://wow.zamimg.com/images/wow/icons/large/${String(iconName).toLowerCase().replace(/\.jpg$/i, "")}.jpg`
         : "";
 }
 
-// Convert an entry from equippable-items-full.json into our UI item
 function normalizeSearchItem(item, ilvlOverride) {
     const slot = mapInventoryTypeToSlot(item.inventoryType);
     if (slot == null) return null;
@@ -209,8 +227,7 @@ function normalizeSearchItem(item, ilvlOverride) {
 function buildBadges(g) {
     const out = [];
     if (g.itemLevel ?? g.ilvl) out.push(`★ ${g.itemLevel ?? g.ilvl}`);
-    if (g.permanentEnchant) out.push("Enchant");
-    if (Array.isArray(g.gems) && g.gems.length) out.push(`${g.gems.length}× Gem`);
+    // keep generic "Bonuses" from logs if present; gems/enchant removed
     if (Array.isArray(g.bonusIDs) && g.bonusIDs.length) out.push("Bonuses");
     return out;
 }

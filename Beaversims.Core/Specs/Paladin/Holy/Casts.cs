@@ -93,13 +93,13 @@ namespace Beaversims.Core.Specs.Paladin.Holy
                 var ability = cEvt.Ability;
                 var castTime = ability.CastTime;
 
-                if (castTime > 0)
+                if (castTime > 0 && !ability.ZeroHasteCTG)
                 {
-                    var trueCastTime = ApplyReductEffects(cEvt, user, castTime);
-                    // OBS ! We should only do this with non haste scaling reduct effects.
-                    // Right now there are no scaling reduct effects for paladins so we can run this through all.
-                    var scalingReductRatio = trueCastTime / castTime; 
-                    Shared.CIM.CastTimeGains(cEvt, user, trueCastTime, scalingReductRatio);
+                    var postReductCT = ApplyReductEffects(cEvt, user, castTime);
+                    cEvt.PostReductCT = postReductCT;
+                    var scalingReductRatio = postReductCT / castTime;
+                    cEvt.ScalingReductRatio = scalingReductRatio;
+                    Shared.CIM.CastTimeGains(cEvt, user, postReductCT, scalingReductRatio);
                 }
                 TrackCdTime(cEvt, user);
             }

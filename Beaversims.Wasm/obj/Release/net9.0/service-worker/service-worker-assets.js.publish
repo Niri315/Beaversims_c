@@ -1,13 +1,13 @@
 self.assetsManifest = {
-  "version": "Pg3FtbFi",
+  "version": "5af4cIs8",
   "assets": [
     {
-      "hash": "sha256-4mqcgaVVMj1y5ueF95A9lC1WPUY5We1lva+IjmoXgys=",
-      "url": "_framework/Beaversims.Core.63z1zk7vqi.wasm"
+      "hash": "sha256-g1ywT4dT/lrilfWV1PS3ddYQlonqcHKoaqBpGH79i00=",
+      "url": "_framework/Beaversims.Core.dc0zrz1x9c.wasm"
     },
     {
-      "hash": "sha256-x+AdKJ4pz5Sdwz9hTSgVwXOvHUqAi0TICw6H+gdc99s=",
-      "url": "_framework/Beaversims.Wasm.df5rrg55ir.wasm"
+      "hash": "sha256-p3TMXMF1cDg+zsRhijk7D0lqbDCoNqaMInp4Y3o5sDE=",
+      "url": "_framework/Beaversims.Wasm.3lr48e1gwh.wasm"
     },
     {
       "hash": "sha256-NEvoIlZQyaxEO1UzgpWaX38SKYUhmDi2dOPTO0vuCuw=",
@@ -22,8 +22,8 @@ self.assetsManifest = {
       "url": "_framework/System.Collections.swhnqegenc.wasm"
     },
     {
-      "hash": "sha256-oELEniow2tCpclsX/gfoOmJWnRWgrmby37skNdZFk6k=",
-      "url": "_framework/System.Console.8ajrzwml4q.wasm"
+      "hash": "sha256-cDYVt1bz9mC3AOsXbvjT2Qp7peDkT+FpsgGAi3cg1E4=",
+      "url": "_framework/System.Console.4bo2m3udwe.wasm"
     },
     {
       "hash": "sha256-MN5RZl4jKYLJt6PkZIwHfkq4TITobKdkrvgEou25Ic0=",
@@ -50,8 +50,8 @@ self.assetsManifest = {
       "url": "_framework/System.Net.Primitives.i2i5lejvy5.wasm"
     },
     {
-      "hash": "sha256-ELaPiKuA/SftN1PJ9U/zShM5DiTnIU7KvpywLMDy8oM=",
-      "url": "_framework/System.Private.CoreLib.ggqcdvnb59.wasm"
+      "hash": "sha256-gsizO5JDdH7S59kytz/q16JyERD564GZrqVv052Axlg=",
+      "url": "_framework/System.Private.CoreLib.yrll6c683p.wasm"
     },
     {
       "hash": "sha256-/MuC02z0ICgaYfwjX3msAw/3cUoNNDQiefD/h6n059g=",
@@ -66,8 +66,8 @@ self.assetsManifest = {
       "url": "_framework/System.Runtime.InteropServices.JavaScript.ptvo7oirfc.wasm"
     },
     {
-      "hash": "sha256-YM/S2KInQ3elhENnzHrkYtcsPl4ggqBwzpqn0Ept9ug=",
-      "url": "_framework/System.Runtime.sh2kzd1e1z.wasm"
+      "hash": "sha256-3+TZ00xzpdEi2WQrJRJF4o+6/0MwODZNCy731QDaJbk=",
+      "url": "_framework/System.Runtime.b5iwlr0do2.wasm"
     },
     {
       "hash": "sha256-AGysEdzm9MyzT4ANJfQGuW7AilXgvzUZ9mFo/mUdqc0=",
@@ -90,7 +90,7 @@ self.assetsManifest = {
       "url": "_framework/System.Web.HttpUtility.ed9o3z7c7y.wasm"
     },
     {
-      "hash": "sha256-r0KtxUy4Qwbmb+nqS5mP5MmIDvAON421/+Zfb0g+YhI=",
+      "hash": "sha256-EqJL2QTqTah3LBKzo0Ei2//ORam4OuJkhCf9n94qcg0=",
       "url": "_framework/blazor.boot.json"
     },
     {

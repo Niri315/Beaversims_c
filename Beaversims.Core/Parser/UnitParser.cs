@@ -1,4 +1,5 @@
 ﻿using Beaversims.Core.Common;
+using Beaversims.Core.Specs.Druid.Resto;
 using Beaversims.Core.Specs.Paladin.Holy;
 using Beaversims.Core.Specs.Paladin.Holy.Abilities;
 using System;
@@ -57,6 +58,10 @@ namespace Beaversims.Core.Parser
                         return new HolyLightsmith();
                     case HolyHeraldOfTheSun.idTalent:
                         return new HolyHeraldOfTheSun();
+                    case RestoKeeperOfTheGrove.idTalent:
+                        return new RestoKeeperOfTheGrove();
+                    case RestoWildstalker.idTalent:
+                        return new RestoWildstalker();
                 }
             }
             return new DummySpec();
@@ -140,7 +145,7 @@ namespace Beaversims.Core.Parser
                             {
                                 bonusIds = new List<int>();
                             }
-                            var gainItem = Sim.ItemGenerator.CreateItem(itemName, ilvl, itemSlot, bonusIds);
+                            var gainItem = Sim.ItemGenerator.CreateItem(itemId, ilvl, itemSlot, bonusIds);
                             user.Gear[itemSlot] = gainItem;
                         }
 

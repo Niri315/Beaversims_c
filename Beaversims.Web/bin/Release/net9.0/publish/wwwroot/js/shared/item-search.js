@@ -13,10 +13,11 @@ export async function loadItems() {
     return loaded;
 }
 
-export function searchItems(query, ilvlMin = 0) {
+export function searchItems(query) {
     const q = String(query || "").toLowerCase();
     if (!q) return [];
+
     return allItems
-        .filter(it => it.name?.toLowerCase().includes(q) && (!ilvlMin || (it.itemLevel ?? 0) >= ilvlMin))
+        .filter(it => it.name?.toLowerCase().includes(q))
         .slice(0, 50);
 }

@@ -504,6 +504,7 @@ namespace Beaversims.Core.Parser
             var startLogTime = userEvents[0].GetProperty("timestamp").GetInt32();
             var user = allUnits.GetUser();
             var miaAbilityLogger = new Logger("Uncategorized Abilities", fight, user.Id.TypeId);
+
             foreach (var logEvent in userEvents.EnumerateArray())
             {
                 if (SkipEvent(logEvent))
@@ -522,9 +523,13 @@ namespace Beaversims.Core.Parser
                     ParseCoords(logEvent, evt);
                     SetAbilityData(evt, user);
                     TrackHp(logEvent, evt);
+
                     events.Add(evt);
                 }
             }
+
+
+
             //Reverse loop
             for (int i = events.Count - 1; i >= 0; i--)
             {
@@ -533,7 +538,7 @@ namespace Beaversims.Core.Parser
                 //SetCoords(evt, user);
 
             }
-            Utils.AddHeartbeatEvents(events);
+
             EraseData(allUnits);
             return events;
         }

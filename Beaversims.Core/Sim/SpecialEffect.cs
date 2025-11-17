@@ -77,6 +77,7 @@ namespace Beaversims.Core
             {
                 //Console.WriteLine($"{evt.Timestamp}: {evt.AltEvents[id].UserStats.Get(statName).Eff}");
                 evt.AltEvents[i].UserStats.Get(statName).ChangeAmount(amount, StatAmountType.Rating, false);
+                //evt.AltEvents[i].UserStats.Get(statName).ChangeAmount(amount, StatAmountType.Rating, false);
                 //Console.WriteLine($"Post: {evt.AltEvents[id].UserStats.Get(statName).Eff}");
             }
         }

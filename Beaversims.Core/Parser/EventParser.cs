@@ -5,7 +5,17 @@ using System.Text.Json;
 namespace Beaversims.Core.Parser
 {
     internal static class EventParser
+
     {
+
+        public static readonly Dictionary<int, string> nameChanges = new()
+        {
+            // todo fill -  verdant embrace?
+            { 376788, Specs.Evoker.Pres.Abilities.DreamBreathEcho.name},
+            { 367364, Specs.Evoker.Pres.Abilities.ReversionEcho.name},
+            { 367231, Specs.Evoker.Pres.Abilities.SpiritbloomEcho.name},
+        };
+
         private static readonly HashSet<int> bannedAbilityIds = new()
         {
             443330, // Engulf. There are 2 different casts... Unsure which is the "real" one, if an issue occurs its the other one.
@@ -138,7 +148,23 @@ namespace Beaversims.Core.Parser
                 abilityData = logEvent.GetProperty("extraAbility");  // Ability that does the healing is under extraAbility for healabsorb events.
             }
 
-            var abilityName = abilityData.GetProperty("name").GetString();
+            var abilityId = abilityData.GetProperty("guid").GetInt32();
+            string abilityName;
+            if (nameChanges.ContainsKey(abilityId))
+            {
+                abilityName = nameChanges[abilityId];
+            }
+            else
+            {
+                abilityName = abilityData.GetProperty("name").GetString();
+            }
+
+
+            //if (abilityName == Specs.Druid.Resto.Abilities.RejuvenationGermination.name)
+            //{
+            //    abilityName = Specs.Druid.Resto.Abilities.Rejuvenation.name;
+            //    abilityId = Specs.Druid.Resto.Abilities.Rejuvenation.buffId;
+            //}
 
             if (evt is CastEvent || evt is TpEvent)
             {
@@ -148,6 +174,10 @@ namespace Beaversims.Core.Parser
 
                     if (ability != null)
                     {
+                        if (ability.GCD)
+                        {
+                            ability.CastTime = Constants.GCD;
+                        }
                         user.Abilities.Add(ability);
                     }
 
@@ -172,7 +202,7 @@ namespace Beaversims.Core.Parser
 
             evt.Ability = ability;
             evt.AbilityName = abilityName;
-            evt.AbilityId = abilityData.GetProperty("guid").GetInt32();
+            evt.AbilityId = abilityId;
 
         }
 
@@ -366,6 +396,11 @@ namespace Beaversims.Core.Parser
                         ability.Damage.Hit.Dmg += tpEvent.Amount.Eff;
                         ability.Damage.Hit.Count += 1;
                     }
+                    if (tpEvent.Tick)
+                    {
+                        ability.Damage.Tick.Dmg += tpEvent.Amount.Eff;
+                        ability.Damage.Tick.Count += 1;
+                    }
                     if (tpEvent.SourceUnit is User)
                     {
                         ability.Damage.NonSummon.Dmg += tpEvent.Amount.Naeff;
@@ -538,7 +573,7 @@ namespace Beaversims.Core.Parser
                 //SetCoords(evt, user);
 
             }
-
+            Utils.AddHeartbeatEvents(events);
             EraseData(allUnits);
             return events;
         }

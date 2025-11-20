@@ -373,6 +373,84 @@ namespace Beaversims.Core.Data.StatBuffs
         }
     }
 
+    /* ------ *
+     * Evoker *
+     * ------ */
+
+
+    internal class ExhilaratingBurst : StatBuff
+    {
+        public const int id = 377102;
+        public const string name = "Exhilarating Burst";
+
+        public ExhilaratingBurst(UnitId sourceId, int stacks)
+            : base(id, sourceId, name, stacks)
+        {
+            AllowMultiple = false;
+            SourceType = BuffSourceType.Talent;
+            SourceObjId = 115550;
+            StatMods.Add(
+                new StatMod(
+                    StatName.Crit,
+                    StatAmountType.CritIncHeal,
+                    0.3)
+            );
+        }
+    }
+
+    internal class TemporalBurst : StatBuff
+    {
+        public const int id = 431698;
+        public const string name = "Temporal Burst";
+
+        public TemporalBurst(UnitId sourceId, int stacks)
+            : base(id, sourceId, name, stacks)
+        {
+            AllowMultiple = false;
+            StatMods.Add(
+                new StatMod(
+                    StatName.Haste,
+                    StatAmountType.Base,
+                    1 * Haste.percentRate)
+            );
+        }
+    }
+
+    internal class Primacy : StatBuff
+    {
+        public const int id = 431654;
+        public const string name = "Primacy";
+
+        public Primacy(UnitId sourceId, int stacks)
+            : base(id, sourceId, name, stacks)
+        {
+            AllowMultiple = false;
+            StatMods.Add(
+                new StatMod(
+                    StatName.Haste,
+                    StatAmountType.Base,
+                    3 * Haste.percentRate)
+            );
+        }
+    }
+
+    internal class TimeConvergence : StatBuff
+    {
+        public const int id = 431991;
+        public const string name = "Time Convergence";
+
+        public TimeConvergence(UnitId sourceId, int stacks)
+            : base(id, sourceId, name, stacks)
+        {
+            AllowMultiple = false;
+            StatMods.Add(
+                new StatMod(
+                    StatName.Intellect,
+                    StatAmountType.Multi,
+                    0.05)
+            );
+        }
+    }
 
     /* ----------- *
      * Timewalking *

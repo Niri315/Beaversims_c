@@ -32,7 +32,11 @@ namespace Beaversims.CLI
             //var logLink = "https://www.warcraftlogs.com/reports/aB9HyhkFgKGnjM3R?fight=51&type=casts&source=2"; // dim druid Ns
             //var logLink = "https://www.warcraftlogs.com/reports/aB9HyhkFgKGnjM3R?fight=30&type=healing&source=2"; // frac druid
             //var logLink = "https://www.warcraftlogs.com/reports/tDhM4LRkB8yamrVF?fight=13&type=damage-done&source=143"; // embrace the dream
-            var logLink = "https://www.warcraftlogs.com/reports/87JLGncYpP9Mwgd3?fight=20&type=damage-done&source=15"; // dream of cenarius
+            //var logLink = "https://www.warcraftlogs.com/reports/87JLGncYpP9Mwgd3?fight=20&type=damage-done&source=15"; // dream of cenarius
+            //var logLink = "https://www.warcraftlogs.com/reports/XBHvP9xVrpjDZn13?fight=14&type=casts&translate=true&source=3"; // evoker chrono
+            //var logLink = "https://www.warcraftlogs.com/reports/cAWLyDhNpKxBJF1P?fight=64&type=healing&source=22"; // evoker flameshaper
+            //var logLink = "https://www.warcraftlogs.com/reports/FcWt4wLRP6GQJzAh?fight=2&source=6&type=healing"; // 0 heal evoker
+            var logLink = "https://www.warcraftlogs.com/reports/FKBhzCRYpQrj3tNb?fight=1&type=healing&source=8"; //  
 
             //var swMode = true;
             SimMode simMode = SimMode.SW;
@@ -59,7 +63,7 @@ namespace Beaversims.CLI
             else if (simMode == SimMode.Trinkets)
             {
                 iterationCount = Constants.defaultIterCount;
-                //iterationCount = 10;
+                iterationCount = 2000;
             }
 
             finalResults = RunMain.Run(logs, userId, reportCode, simMode, iterationCount, gearSets);

@@ -54,6 +54,13 @@ namespace Beaversims.Core
             var allUnits = UnitParser.ParseUnits(playerData, combatantEvents, userInfo, userId, fight, simMode);
             var events = EventParser.ParseUserEvents(userEvents, allUnits, fight);
             var user = allUnits.GetUser();
+            foreach (var ability in user.Abilities)
+            {
+                if (ability.GCD)
+                {
+                    ability.CastTime = Constants.GCD;
+                }
+            }
             ItemSim.CreateGearSets(user, gearSets);
 
             user.Spec.SpecIteration(events, allUnits, fight, iterationCount);

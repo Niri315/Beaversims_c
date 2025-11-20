@@ -60,7 +60,7 @@ namespace Beaversims.Core
 
             return sb.ToString();
         }
-        public static void CleanUp(UnitRepo allUnits)
+        public static void CleanUp(UnitRepo allUnits, List<Event> events)
         {
             var user = allUnits.GetUser();
             user.Stats = null;
@@ -71,6 +71,7 @@ namespace Beaversims.Core
                 unit.MaxHp = null;
                 unit.Coords = null;
             }
+            events.RemoveAll(e => e is BuffEvent);
         }
         public static GainType ReverseGainType(GainType gainType) =>
             gainType switch
@@ -176,5 +177,11 @@ namespace Beaversims.Core
                 _ => heroName.ToString()
             };
         }
+
+        //public static void TrackInstaTick(Event evt)
+        //{
+
+        //}
+
     }
 }

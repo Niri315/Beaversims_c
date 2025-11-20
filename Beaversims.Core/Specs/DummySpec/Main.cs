@@ -28,7 +28,7 @@ namespace Beaversims.Core.Specs.DummySpec
                 }
 
             }
-            Utils.CleanUp(allUnits); // To avoid accidental usage.
+            Utils.CleanUp(allUnits, events); // To avoid accidental usage.
 
             for (int i = 0; i < user.AltGearSets.Count; i++)
             {

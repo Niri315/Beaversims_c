@@ -295,6 +295,9 @@ namespace Beaversims.Core.Specs.Paladin.Holy
             var consec = user.Abilities.Get(Abilities.Consecration.name);
             var lod = (Abilities.LightOfDawn)user.Abilities.Get(Abilities.LightOfDawn.name);
 
+            var lfb = user.Abilities.Get(Shared.Abilities.LightforgedBlessing.name);
+            lfb.HasteScalers.UnionWith([HST.Cast]);
+            lfb.CIMSources.Add(new CIMSource(Specs.Paladin.Holy.Abilities.ShieldOfTheRighteous.name, 1.0));
 
             AcHCCGMSource(ac, judg, cs);
             RemoveJudgCastScaling(user, fight, judg);

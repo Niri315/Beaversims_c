@@ -27,7 +27,9 @@ namespace Beaversims.Core
         Lightsmith,
         HeraldOfTheSun,
         KeeperOfTheGrove,
-        Wildstalker
+        Wildstalker,
+        Chronowarden,
+        Flameshaper
     }
 
     public enum ScalingClass

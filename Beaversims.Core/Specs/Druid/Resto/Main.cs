@@ -41,9 +41,11 @@ namespace Beaversims.Core.Specs.Druid.Resto
 
         public static void RegrowthCritGains(TpEvent evt, User user, int i)
         {
+            // Todo doesnt take sim effects fully in account.
             if (evt.AbilityName == Abilities.Regrowth.name)
             {
-                var crit = (Crit)evt.UserStats.Get(StatName.Crit);
+                //var crit = (Crit)evt.UserStats.Get(StatName.Crit);
+                var crit = (Crit)evt.AltEvents[i].UserStats.Get(StatName.Crit);
                 var critChance = crit.TrueEff() / (crit.PercentRate * 100);
                 if (evt.Tick && user.HasTalent(Talents.StrategicInfusion.id))
                 {
@@ -87,6 +89,8 @@ namespace Beaversims.Core.Specs.Druid.Resto
             var prepullRefStats = user.RefStats.Clone();
             SpecInit(user);
             MasteryTracker.InitHarmonyBuffs(allUnits, user);
+
+            var nextRejuvInstaTick = false;
       
             var statLogger = new Logger("StatTracker", fight, user.Id.TypeId);
             var refStatLogger = new Logger("Ref Stat Tracker", fight, user.Id.TypeId);
@@ -102,6 +106,7 @@ namespace Beaversims.Core.Specs.Druid.Resto
                 TrackAbundance(evt, user);
                 TrackHotw(evt, user);
                 HCGM.GatherData(evt, user);
+                nextRejuvInstaTick = HCGM.SetInstaTick(evt, nextRejuvInstaTick);
 
                 if (evt is TpEvent tEvt)
                 {
@@ -118,9 +123,9 @@ namespace Beaversims.Core.Specs.Druid.Resto
 
                 }
             }
-            Utils.CleanUp(allUnits); // To avoid accidental usage.
-            Shared.CIM.SetCIM(user);
+            Utils.CleanUp(allUnits, events); // To avoid accidental usage + remove events we no longer need.
             HCGM.ModifyHCGM(user, fight);
+            Shared.CIM.SetCIM(user);
             Utils.RemoveImpurities(events, user);
 
 

@@ -1,5 +1,6 @@
 ﻿using Beaversims.Core.Common;
 using Beaversims.Core.Specs.Druid.Resto;
+using Beaversims.Core.Specs.Evoker.Pres;
 using Beaversims.Core.Specs.Paladin.Holy;
 using Beaversims.Core.Specs.Paladin.Holy.Abilities;
 using System;
@@ -52,6 +53,7 @@ namespace Beaversims.Core.Parser
             foreach (var talentElement in userInfo.GetProperty("talentTree").EnumerateArray())
             {
                 var talentId = talentElement.GetProperty("id").GetInt32();
+
                 switch (talentId)
                 {
                     case HolyLightsmith.idTalent:
@@ -62,6 +64,10 @@ namespace Beaversims.Core.Parser
                         return new RestoKeeperOfTheGrove();
                     case RestoWildstalker.idTalent:
                         return new RestoWildstalker();
+                    case PresFlameshaper.idTalent:
+                        return new PresFlameshaper();
+                    case PresChronowarden.idTalent:
+                        return new PresChronowarden();
                 }
             }
             return new DummySpec();

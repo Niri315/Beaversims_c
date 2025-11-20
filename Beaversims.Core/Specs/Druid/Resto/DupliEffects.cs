@@ -18,6 +18,9 @@ namespace Beaversims.Core.Specs.Druid.Resto
                 && evt.SourceUnit is User 
                 && (evt.TargetUnit is User || evt.TargetUnit.HasBuff(Abilities.SymbioticRelationship.targetBuffId))
                 && evt.Ability.ClassAbility
+                && evt.Ability.CanDupli
+                && !evt.AbsorbAbility
+                && evt.AbilityName != Abilities.SymbioticRelationship.name
                 )
             {
                 return true;
@@ -41,7 +44,6 @@ namespace Beaversims.Core.Specs.Druid.Resto
                 {
                     coef = Talents.SymbioticRelationship.outCoef;
                 }
-                Console.WriteLine(evt.TargetUnit.Name);
 
                 symRel.Heal.Hypo += evt.Amount.Raw * coef;
                 evt.IsSymbRelEvent = true;

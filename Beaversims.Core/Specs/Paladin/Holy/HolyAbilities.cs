@@ -771,6 +771,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
         public SelflessHealer()
         {
             Name = name;
+            SimDupliAbility = true;
         }
     }
 

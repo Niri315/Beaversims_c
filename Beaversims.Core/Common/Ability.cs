@@ -54,6 +54,7 @@ namespace Beaversims.Core
     {
         public DmgData Crit { get; set; }  = new();
         public DmgData Hit { get; set; }  = new();
+        public DmgData Tick { get; set; } = new();
         public DmgData Nsnsna { get; set; } = new();
         public DmgData NonSummon { get; set; } = new();
 
@@ -69,7 +70,9 @@ namespace Beaversims.Core
         public double CastTime { get; set; } = 0.0;
         public double Cd { get; set; } = 0.0;
         public bool Channeled { get; set; } = false;  // Todo implement sth
+        public bool Spender {  get; set; } = false;
         public bool ZeroHasteCTG { get; set; } = false;
+        public bool InstaTick { get; set; } = false;  // need setup in spec main
         public double BonusCritIncHeal { get; set; } = 0.0;
         public double BonusCritIncDmg { get; set; } = 0.0;
         public HashSet<StatName> Scalers { get; } = [];
@@ -80,7 +83,7 @@ namespace Beaversims.Core
         public virtual bool ClassAbility { get; set; } = true;
         public bool Direct {  get; set; } = false;
         public bool Spell {  get; set; } = false;
-        public bool Gcd { get; set; } = false;  // unused currently. Could implement so gcd = true -> cast time = 1.5.
+        public bool GCD { get; set; } = false;
         public bool ForceTick { get; set; } = false; // For forcing tick in parser. Concecration etc.
         public bool ReverseEffect { get; set; } = false;  // For easily running certain reverse effects like AC as autoscalers. 
         public double Duration { get; set; } = 0.0;
@@ -91,6 +94,7 @@ namespace Beaversims.Core
         public double CTGain { get; set; } = 0.0;
         public double ScalingCTGain { get; set; } = 0.0;
         public bool ZeroCIM { get; set; } = false;
+        public bool OneHardCIM { get; set; } = false;
         public double CIM { get; set; } = 1.0;
         public bool CIMInitDone { get; set; } = false;
         public bool RestRelCIM { get; set; } = false;
@@ -122,8 +126,9 @@ namespace Beaversims.Core
         // Paladin
         public int IolCount { get; set; } = 0;
 
-
-        public double CIMDerivedQIM(User user)
+        // Evoker
+        
+        public virtual double CIMDerivedQIM(User user)
         {
             if (CIMSources.Count == 0) { return CIM; }
             else
@@ -146,7 +151,7 @@ namespace Beaversims.Core
             }
         }
 
-        public double TrueQIM(User user, int i)
+        public virtual double TrueQIM(User user, int i)
         {
             if (CIMSources.Count == 0) { return CIM * user.HasteCapCTGLossMod(i);} // * HCGM
             else
@@ -220,9 +225,11 @@ namespace Beaversims.Core
         {
             if (CIMSources.Count > 0)
             {
+                Console.WriteLine($"{Name} CIM sources:");
                 var tot = 0.0;
                 foreach (var source in CIMSources)
                 {
+                    Console.WriteLine($"\t{source.Name} - {source.CIMReliance}");
                     tot += source.CIMReliance;
                 }
                 const double tolerance = 1e-9;

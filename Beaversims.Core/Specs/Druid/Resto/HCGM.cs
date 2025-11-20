@@ -12,7 +12,26 @@ namespace Beaversims.Core.Specs.Druid.Resto
 {
     internal class HCGM
     {
-        
+
+        public static bool SetInstaTick(Event evt, bool nextRejuvInsta)
+        {
+            if (evt is BuffEvent bEvt)
+            {
+                if (bEvt.BuffApplyEvent || bEvt.BuffRefreshEvent)
+                {
+                    if (evt.AbilityId == Abilities.Rejuvenation.buffId || evt.AbilityId == Abilities.RejuvenationGermination.buffId)
+                    {
+                        return true;
+                    }
+                }
+            }
+            if (evt.IsHealDoneEvent() && nextRejuvInsta && (evt.AbilityName == Abilities.Rejuvenation.name || evt.AbilityName == Abilities.RejuvenationGermination.name))
+            {
+                evt.NonScInstaTick = true;
+                return false;
+            }
+            return nextRejuvInsta;
+        }
 
         public static void GatherData(Event evt, User user)
         {

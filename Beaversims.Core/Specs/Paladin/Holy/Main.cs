@@ -109,7 +109,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
                     }
                 }
             }
-            Utils.CleanUp(allUnits); // To avoid accidental usage.
+            Utils.CleanUp(allUnits, events); // To avoid accidental usage.
             MasteryTracker.CleanUpCoords(allUnits);
 
             HCGM.ModifyCIMSources(user, fight);

@@ -23,6 +23,11 @@ namespace Beaversims.Core
         //Druid
         public int HarmonyLevel { get; set; } = 0;
 
+        //Evoker
+        public Dictionary<Ability, double> ReversionTracker { get; set; } = [];
+        //public double? RevBuffEnd { get; set; } = null;
+        //public double? RevEchoBuffEnd {  get; set; } = null;
+
         public bool IsUnit(Unit otherUnit) => Id == otherUnit.Id;
         public bool HasBuff(int buffId) => Buffs.Any(b => b.Id == buffId);
         public Buff? GetBuff(int buffId) => Buffs.Find(b => b.Id == buffId);
@@ -83,6 +88,8 @@ namespace Beaversims.Core
         public int TalentRank(int id) => Talents.TryGetValue(id, out var talent) ? talent.Rank : 0;
         public bool HasTalent(int id) => Talents.ContainsKey(id);
 
+
+
         public Player(string name, UnitId id, Role role) : base(name, id)
         {
             Role = role;
@@ -122,7 +129,17 @@ namespace Beaversims.Core
         public double AvengingUseEnd { get; set; } = 0; // Only the active use avenging, not the awakening effect.
         public int ArmamentsBuffCount { get; set; } = 0;
 
-
+        // Evoker
+        private int _lifebindCount = 0;
+        public int LifebindCount
+        {
+            get => _lifebindCount;
+            set => _lifebindCount = Math.Max(0, value);
+        }
+        public int LeapingFlamesLevel { get; set; } = 0;
+        public List<string> StasisStore { get; set; } = [];
+        public int MasteryTest1 { get; set; } = 0;
+        public int MasteryTest2 { get; set; } = 0;
 
         public double HasteCapCTGLossMod(int i)
         {
@@ -153,7 +170,19 @@ namespace Beaversims.Core
             {
                 var buff = (StatBuff)Activator.CreateInstance(type, Id)!;
                 ProcessStatBuff(buff, this);
-                Buffs.Add(buff);
+                bool inactive = true;
+                foreach (var mod in buff.StatMods)
+                {
+                    if (mod.Amount > 0)
+                    {
+                        inactive = false; break;
+                    }
+                }
+                if (!inactive)
+                {
+                    Buffs.Add(buff);
+                }
+              
             }
         }
 
@@ -193,7 +222,7 @@ namespace Beaversims.Core
             {
                 var amount = mod.Amount;
 
-                if(buff.SourceType == BuffSourceType.Talent)
+                if (buff.SourceType == BuffSourceType.Talent)
                 {
                     amount *= TalentRank(buff.SourceObjId);
                 }
@@ -209,6 +238,13 @@ namespace Beaversims.Core
                         continue;
                     }
                    
+                }
+                else if (buff.SourceType == BuffSourceType.Spec)
+                {
+                    if ((int)Spec.SpecName != buff.SourceObjId)
+                    {
+                        amount = 0;
+                    }
                 }
                 mod.Amount = amount;
                 var stat = Stats.Get(mod.StatName);

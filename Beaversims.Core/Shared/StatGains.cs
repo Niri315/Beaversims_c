@@ -22,6 +22,19 @@ namespace Beaversims.Core.Shared
 
             var gainPerPrimRaw = altEvent.Amount.Raw / stat.TrueEff();
             var gainRaw = gainPerPrimRaw * (altStat.TrueEff() - stat.TrueEff());
+            //if (i == 0 && evt.Timestamp > 5 && evt.Timestamp < 10)
+            //{
+            //    Console.WriteLine("----------");
+            //    Console.WriteLine($"gainPerPrimRaw - {gainPerPrimRaw}");
+            //    Console.WriteLine($"stat.Multi - {stat.Multi}");
+            //    Console.WriteLine($"stat.Rating - {stat.Rating}");
+            //    Console.WriteLine($" stat.TrueEff() - {stat.TrueEff()}");
+            //    Console.WriteLine($"altStat.TrueEff() - {altStat.TrueEff()}");
+            //    Console.WriteLine($"stat diff: {altStat.TrueEff() - stat.TrueEff()}");
+            //    Console.WriteLine($" Gain raw - {gainRaw}");
+            //    Console.WriteLine($" altEvent.Amount.Raw - {altEvent.Amount.Raw}");
+            //}
+          
             if (antiGain)
             {
                 gainRaw *= -1;
@@ -32,7 +45,6 @@ namespace Beaversims.Core.Shared
                 altEvent.NukeRaw += gainRaw;
             }
             altEvent.Amount.UpdateAltGainsFromEvtData(evt, gainRaw, i);
-
         }
 
       
@@ -54,6 +66,10 @@ namespace Beaversims.Core.Shared
             {
                 altEvent.NukeRaw += gainRaw;
             }
+            //if (gainRaw is double.NaN)
+            //{
+            //    Console.WriteLine(evt.AbilityName);
+            //}
             altEvent.Amount.UpdateAltGainsFromEvtData(evt, gainRaw, i);
 
         }
@@ -197,7 +213,8 @@ namespace Beaversims.Core.Shared
             var isCrit = evt.Crit;
             double critInc;
             if (ability.ReverseEffect) { critInc = crit.IncDmg + ability.BonusCritIncDmg; }
-            else { critInc = crit.IncHeal + ability.BonusCritIncHeal; }
+             else { critInc = crit.IncHeal + ability.BonusCritIncHeal; }
+
             CritAltAmount(evt, crit, i, isCrit, critInc, antiGain: antiGain);
 
 
@@ -213,7 +230,7 @@ namespace Beaversims.Core.Shared
             return false;
         }
 
-        private static bool IsTickScaler(TpEvent tpEvent) => tpEvent.Tick && tpEvent.Ability.HasteScalers.Contains(HST.Tick);
+        private static bool IsTickScaler(TpEvent tpEvent) => tpEvent.Tick && tpEvent.Ability.HasteScalers.Contains(HST.Tick) && !tpEvent.NonScInstaTick;
         private static bool IsAutoScaler(TpEvent tpEvent) => tpEvent.Ability.HasteScalers.Contains(HST.Auto);
 
 
@@ -326,11 +343,26 @@ namespace Beaversims.Core.Shared
             var statName = StatName.Crit;
             var crit = (Crit)evt.UserStats.Get(statName);
             double critInc;
+            double sourceHitRaw;
+            double sourceCritRaw;
+            double sourceAmountRaw;
 
-            if (ability.ReverseEffect) { critInc = crit.IncHeal + sourceAbility.BonusCritIncHeal; }
-            else { critInc = crit.IncDmg + sourceAbility.BonusCritIncDmg; }
+            if (ability.ReverseEffect) 
+            {
+                critInc = crit.IncHeal + sourceAbility.BonusCritIncHeal;
+                sourceHitRaw = sourceAbility.Heal.Hit.Raw;
+                sourceCritRaw = sourceAbility.Heal.Crit.Raw;
+                sourceAmountRaw = sourceAbility.Heal.Raw;
+            }
+            else 
+            { 
+                critInc = crit.IncDmg + sourceAbility.BonusCritIncDmg;
+                sourceHitRaw = sourceAbility.Damage.Hit.Dmg;
+                sourceCritRaw = sourceAbility.Damage.Crit.Dmg;
+                sourceAmountRaw = sourceAbility.Damage.Dmg;
+            }
 
-            var estNonCritAmount = evt.Amount.Eff * ((sourceAbility.Damage.Hit.Dmg + (sourceAbility.Damage.Crit.Dmg / critInc)) / sourceAbility.Damage.Dmg);
+            var estNonCritAmount = evt.Amount.Eff * ((sourceHitRaw + (sourceCritRaw / critInc)) / sourceAmountRaw);
 
 
             CritAltAmount(evt, crit, i, false, critInc, userAbilityUhr:false, estNonCritValue:estNonCritAmount, antiGain: antiGain);
@@ -345,11 +377,27 @@ namespace Beaversims.Core.Shared
             var statName = StatName.Crit;
             var crit = (Crit)evt.UserStats.Get(statName);
             double critInc;
+            double sourceHitRaw;
+            double sourceCritRaw;
+            double sourceAmountRaw;
 
-            if (ability.ReverseEffect) { critInc = crit.IncDmg + sourceAbility.BonusCritIncDmg; }
-            else { critInc = crit.IncHeal + sourceAbility.BonusCritIncHeal; }
 
-            var estNonCritAmount = evt.Amount.Raw * ((sourceAbility.Heal.Hit.Raw + (sourceAbility.Heal.Crit.Raw / critInc))/ sourceAbility.Heal.Raw);;
+            if (ability.ReverseEffect) 
+            { 
+                critInc = crit.IncDmg + sourceAbility.BonusCritIncDmg;
+                sourceHitRaw = sourceAbility.Damage.Hit.Dmg;
+                sourceCritRaw = sourceAbility.Damage.Crit.Dmg;
+                sourceAmountRaw = sourceAbility.Damage.Dmg;
+            }
+            else 
+            { 
+                critInc = crit.IncHeal + sourceAbility.BonusCritIncHeal;
+                sourceHitRaw = sourceAbility.Heal.Hit.Raw;
+                sourceCritRaw = sourceAbility.Heal.Crit.Raw;
+                sourceAmountRaw = sourceAbility.Heal.Raw;
+            }
+
+            var estNonCritAmount = evt.Amount.Raw * ((sourceHitRaw + (sourceCritRaw / critInc)) / sourceAmountRaw);
 
    
 
@@ -358,7 +406,7 @@ namespace Beaversims.Core.Shared
         }
         public static void AutoStatGains(TpEvent evt, User user, int i)
         {
-            if (!evt.IsHealDoneEvent() || !evt.IsDmgDoneEvent())
+            if (evt.IsHealDoneEvent() || evt.IsDmgDoneEvent())
             {
                 var ability = evt.Ability;
                 if (ability.ScalesWith(StatName.Intellect))
@@ -373,7 +421,7 @@ namespace Beaversims.Core.Shared
                 {
                     VersGains(evt, user, i);
                 }
-                if (ability.ScalesWith(StatName.Crit))
+                if (ability.ScalesWith(StatName.Crit) && !evt.Ability.DerivedCritScaler)
                 {
                     if (evt.IsDmgDoneEvent())
                     {

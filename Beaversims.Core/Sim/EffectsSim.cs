@@ -60,7 +60,7 @@ namespace Beaversims.Core.Sim
             {
                 return null;
             }
-            Utils.AddHeartbeatEvents(events);
+            //Utils.AddHeartbeatEvents(events);
             var gearSet = user.AltGearSets[i];
             List<TpEvent> procEvents = [];
             var usePosEvents = new List<Event>(events);  // To find use timings
@@ -82,7 +82,7 @@ namespace Beaversims.Core.Sim
             {
                 List<Event> tempEvents = new List<Event>(events);
                 gearSet.ResetProcEffects();
-                StatTracker curAltStats = events[0].AltEvents[gearSet.Id].UserStats;
+                StatTracker curAltStats = tempEvents[0].AltEvents[gearSet.Id].UserStats;
                 for (int e = 0; e < tempEvents.Count; e++)
                 {
                     var evt = tempEvents[e];

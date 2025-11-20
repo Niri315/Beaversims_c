@@ -98,8 +98,8 @@ namespace Beaversims.Core.Shared.Abilities
             Name = name;
             CastTime = Constants.GCD;
             Scalers.UnionWith([SN.Haste]);
-            HasteScalers.UnionWith([HST.Cast]);
-            CIMSources.Add(new CIMSource(Specs.Paladin.Holy.Abilities.ShieldOfTheRighteous.name, 1.0));
+            //HasteScalers.UnionWith([HST.Cast]); // Adding in hpal
+            //CIMSources.Add(new CIMSource(Specs.Paladin.Holy.Abilities.ShieldOfTheRighteous.name, 1.0));
             SuppStamScaler = true;
             ClassAbility = true;
         }
@@ -133,6 +133,22 @@ namespace Beaversims.Core.Shared.Abilities
             ClassAbility = true;
         }
     }
+    /* ------ *
+     * Evoker *
+     * ------ */
+
+    internal class TimeDilation : SharedAbility
+    {
+        public const string name = "Time Dilation";
+        public TimeDilation()
+        {
+            Name = name;
+            LeechSource = false;
+            CanDupli = false;
+            ClassAbility = true;
+        }
+    }
+
     /* ------- *
      * Racials *
      * ------- */

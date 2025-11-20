@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 namespace Beaversims.Core.Specs.Druid.Resto
 {
     internal class CastProcessor
+        // Obs ! 
     {
         private static double ApplyReductEffects(CastEvent evt, User user, double castTime)
         {
@@ -33,8 +34,12 @@ namespace Beaversims.Core.Specs.Druid.Resto
         {
             if (evt is CastEvent cEvt && evt.SourceUnit is User)
             {
+
+                //Console.WriteLine($"{evt.Timestamp}: {evt.Ability.Name}");
+
                 var ability = cEvt.Ability;
                 var castTime = ability.CastTime;
+                //Console.WriteLine($"{evt.Timestamp}: {evt.Ability.Name} - Cast time: {castTime}");
 
                 if (castTime > 0 && !ability.ZeroHasteCTG)
                 {

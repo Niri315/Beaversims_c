@@ -95,6 +95,7 @@ namespace Beaversims.Core
         public string? HealAbsorbAbilityName { get; set; }
         public bool SimImpurity { get; set; } = false;
         public virtual bool SimEvent { get; set; } = false;
+        public bool NonScInstaTick { get; set; } = false; // need setup in spec main
 
 
         //Paladin
@@ -108,6 +109,11 @@ namespace Beaversims.Core
         public int AbundanceStacks { get; set; } = 0;
         public bool IsSymbRelEvent { get; set; } = false;
         public bool UserHasHotw {  get; set; } = false;
+
+        // Evoker
+        public bool LifebindEvent { get; set; } = false;
+        public int LifebindCount { get; set; } = 0; 
+
 
         // TODO implement preEvent option.
         public double? SourceHp_p()//(bool preEvent=false) 
@@ -177,8 +183,6 @@ namespace Beaversims.Core
         //}
         public void CreateAltEvents(User user, Event evt)
         {
-            // TODO not gonna be correct due to multis, haste rating scaling etc.
-            // Remake it correct and store diff data in alt gearsets so we dont do all this each event.
             foreach (var altGearSet in user.AltGearSets)
             {
                 var statDiffs = Enum.GetValues<StatName>()
@@ -293,7 +297,8 @@ namespace Beaversims.Core
     {
 
 
-        public double masteryEffectiveness { get; set; }
+        public double MasteryEffectiveness { get; set; }
+        public bool MasteryActive { get; set; } = false;
 
     }
 

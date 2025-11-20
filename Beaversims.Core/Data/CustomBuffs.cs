@@ -134,7 +134,6 @@ namespace Beaversims.Core.Data.CustomBuffs
      * Druid *
      * ----- */
 
-    // TODO Lycara + inspiration
     // TODO Gift of the Wild
 
     internal class BaseMasteryRdruid : StatBuff
@@ -153,6 +152,7 @@ namespace Beaversims.Core.Data.CustomBuffs
             );
         }
     }
+
     internal class UrsocsSpirit : StatBuff
     {
         public const string name = "Ursoc's Spirit";
@@ -166,6 +166,61 @@ namespace Beaversims.Core.Data.CustomBuffs
                     StatName.Stamina,
                     StatAmountType.Multi,
                     0.04)
+            );
+        }
+    }
+
+    /* ------ *
+     * Evoker *
+     * ------ */
+
+
+    internal class BaseMasteryPres : StatBuff
+    {
+        public const string name = "Pres Base Mastery";
+        public BaseMasteryPres(UnitId sourceId)
+            : base(-1, sourceId, name, 1)
+        {
+            SourceType = BuffSourceType.Spec;
+            SourceObjId = (int)SpecName.PreservationEvoker;
+            StatMods.Add(
+                new StatMod(
+                    StatName.Mastery,
+                    StatAmountType.Base,
+                    16.2 * Specs.Evoker.Pres.PreservationEvoker.masteryPr_s)
+            );
+        }
+    }
+    internal class DraconicLegacy : StatBuff
+    {
+        public const string name = "Draconic Legacy";
+        public DraconicLegacy(UnitId sourceId)
+            : base(-1, sourceId, name, 1)
+        {
+            SourceType = BuffSourceType.Talent;
+            SourceObjId = 115609;
+            StatMods.Add(
+                new StatMod(
+                    StatName.Stamina,
+                    StatAmountType.Multi,
+                    0.06)
+            );
+        }
+    }
+
+    internal class RegenerativeMagic : StatBuff
+    {
+        public const string name = "Regenerative Magic";
+        public RegenerativeMagic(UnitId sourceId)
+            : base(-1, sourceId, name, 1)
+        {
+            SourceType = BuffSourceType.Talent;
+            SourceObjId = 115668;
+            StatMods.Add(
+                new StatMod(
+                    StatName.Leech,
+                    StatAmountType.Base,
+                    2 * Leech.percentRate)
             );
         }
     }

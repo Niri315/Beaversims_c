@@ -53,7 +53,7 @@ namespace Beaversims.Core.Shared
             user.CastTimeGain += gain;
             ability.TrueCastTimeTotal += trueCastTime;
             user.TrueCastTimeTotal += trueCastTime;
-
+            //Console.WriteLine($"{evt.AbilityName}: Cast time: {castTime}, CTG: {gain}");
             if (trueCastTime < Constants.castTimeCap)
             {
                 user.HasteCapCTLoss += Constants.castTimeCap - trueCastTime;
@@ -90,8 +90,20 @@ namespace Beaversims.Core.Shared
 
             foreach (var ability in abilities)
             {
+                //if (ability.Heal.Raw > 0 ||ability.Damage.Dmg > 0)
+                //{
+
+                //}
                 ability.CIMSourceRelCheck();
-                ability.MaxCIM = Math.Max((user.TrueCastTimeTotal - user.HasteCapCTLoss) / ability.CdTimeHypo, 1.0);
+                if (ability.OneHardCIM)
+                {
+                    ability.MaxCIM = 1.0;
+                }
+                else
+                {
+                    ability.MaxCIM = Math.Max((user.TrueCastTimeTotal - user.HasteCapCTLoss) / ability.CdTimeHypo, 1.0);
+                }
+
                 // We need to sort scalingCTgain for shaman for sure..
                 // For druid/paladin doesnt really matter.
                 //ability.MaxCIM *= ability.ScalingCTGain / ability.CTGain;  // This doesnt work...
@@ -149,6 +161,10 @@ namespace Beaversims.Core.Shared
                     }
                 }
                 if (!anyChange) break;
+            }
+            foreach (var ability in user.Abilities)
+            {
+                Console.WriteLine($"{ability.Name}: CIM: {ability.CIM}, True QIM: {ability.TrueQIM(user, 0)}, Rest rel Ratio: {ability.RestRelCIMRatio}, CTG: {ability.CTGain}");
             }
             TestCIMMath(user);
         }

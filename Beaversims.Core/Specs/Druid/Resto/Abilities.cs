@@ -12,10 +12,11 @@ using System.Threading.Tasks;
 High Prio:
     
     Dungeon/ <20 raid CIM
-    Hotw cast inc.
 
     Midnight:
 
+    Apex Talents
+    
     Gift of the Wild
     Intensity (crit inc)
 
@@ -172,6 +173,7 @@ namespace Beaversims.Core.Specs.Druid.Resto.Abilities
         public DreamOfCenarius()
         {
             Name = name;
+            SimDupliAbility = true;
         }
     }
 
@@ -509,23 +511,30 @@ namespace Beaversims.Core.Specs.Druid.Resto.Abilities
     internal class Rejuvenation : RestoAbility
     {
         public const string name = "Rejuvenation";
+        public const int buffId = 774;
         public Rejuvenation()
         {
             Name = name;
-            BuffId = 774;
+            BuffId = buffId;
             CastTime = Constants.GCD;
+            InstaTick = true;
             Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Vers, SN.Haste, SN.Mastery]);
             HasteScalers.UnionWith([HST.Tick, HST.Cast]);
         }
     }
     internal class RejuvenationGermination : RestoAbility
     {
+        // Not using this as CIM source, just aggregate all relevant data to normal rejuv CIM.
         public const string name = "Rejuvenation (Germination)";
+        public const int buffId = 155777;
         public RejuvenationGermination()
         {
             Name = name;
-            BuffId = 155777;
-            CastTime = Constants.GCD;
+            BuffId = buffId;
+            // The logs contain cast events both for Rejuv and Germination for the same cast.
+            CastTime  = Constants.GCD;
+            ZeroHasteCTG = true;
+            InstaTick = true;
             Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Vers, SN.Haste, SN.Mastery]);
             HasteScalers.UnionWith([HST.Tick, HST.Cast]);
         }
@@ -667,6 +676,7 @@ namespace Beaversims.Core.Specs.Druid.Resto.Abilities
         {
             Name = name;
             CastTime = 1.5;
+            SimDupliAbility = true;
         }
     }
 
@@ -702,7 +712,6 @@ namespace Beaversims.Core.Specs.Druid.Resto.Abilities
         {
             Name = name;
             CastTime = 5;
-            Channeled = true;
             Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Vers, SN.Haste, SN.Mastery]);
             HasteScalers.UnionWith([HST.Tick]);
         }

@@ -87,20 +87,19 @@ namespace Beaversims.Core.Specs.Druid.Resto
                     var nourish = (Abilities.Nourish)evt.Ability;
                     harmonyMult *= nourish.HarmonyCoef;
                 }
-                hEvt.masteryEffectiveness = harmonyMult;
+                hEvt.MasteryEffectiveness = harmonyMult;
             }
         }
 
         public static double MasteryGainCalc(Mastery mastery, double amount, double masteryEffectiveness)
-    => (((amount / ((mastery.TrueEff() * masteryEffectiveness) / (mastery.PercentRate * 100) + 1)) * masteryEffectiveness) / (mastery.PercentRate * 100)) * (1 - (mastery.Bracket * 0.1)) * mastery.Multi;
+    => (((amount / ((mastery.TrueEff() * masteryEffectiveness) / (mastery.PercentRate * 100) + 1)) * masteryEffectiveness) / (mastery.PercentRate * 100));
 
 
         public static void MasteryAltAmount(HealEvent evt, Mastery stat, int i, double masteryEffectiveness, bool antiGain = false)
         {
 
             var altEvent = evt.AltEvents[i];
-            var gainPerRatingRaw = MasteryGainCalc(stat, altEvent.Amount.Raw, masteryEffectiveness);
-            var gainPerEffstatRaw = stat.RemoveDryMult(gainPerRatingRaw);
+            var gainPerEffstatRaw = MasteryGainCalc(stat, altEvent.Amount.Raw, masteryEffectiveness);
             var altStat = altEvent.UserStats.Get(stat.Name);
             var gainRaw = gainPerEffstatRaw * (altStat.TrueEff() - stat.TrueEff());
             if (antiGain) { gainRaw *= -1; }
@@ -112,7 +111,7 @@ namespace Beaversims.Core.Specs.Druid.Resto
         {
             var statName = StatName.Mastery;
             var stat = (Mastery)evt.UserStats.Get(statName);
-            MasteryAltAmount(evt, stat, i, evt.masteryEffectiveness, antiGain:antiGain);
+            MasteryAltAmount(evt, stat, i, evt.MasteryEffectiveness, antiGain:antiGain);
             
         }
     }

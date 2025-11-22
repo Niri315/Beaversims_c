@@ -8,6 +8,8 @@ namespace Beaversims.Core
 {
     internal class Constants
     {
+        public const bool TEST_MODE = true;
+
         public const double GCD = 1.5;
         public const double castTimeCap = GCD / 2;
         public const double BlEffectRating = 30 * Haste.percentRate;
@@ -17,5 +19,6 @@ namespace Beaversims.Core
         public const bool deactivateSims = false; // For testing.
 
         public const double defaultHealIncMod = 1.08;  // PFA replace (heal taken mod included)
+
     }
 }

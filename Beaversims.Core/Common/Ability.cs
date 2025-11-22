@@ -100,6 +100,7 @@ namespace Beaversims.Core
         public bool RestRelCIM { get; set; } = false;
         public double RestRelCIMRatio {  get; set; } = 1.0;
         public double CIMRatio { get; set; } = 1.0;
+        public bool MaxCIMPreSet { get; set; } = false;
         public double MaxCIM { get; set; } = 1.0;
         public double HealHCGM { get; set; } = 1.0;
         public double DmgHCGM { get; set; } = 1.0;
@@ -125,6 +126,7 @@ namespace Beaversims.Core
 
         // Paladin
         public int IolCount { get; set; } = 0;
+        public List<GainDict> Gains = []; // Just using this to log ability gains for SW right now.
 
         // Evoker
         

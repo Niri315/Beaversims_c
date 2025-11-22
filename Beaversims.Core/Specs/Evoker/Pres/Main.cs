@@ -32,6 +32,20 @@ namespace Beaversims.Core.Specs.Evoker.Pres
                 revEcho.Duration *= 1 + tm.Coef;
                 Console.WriteLine($"Rev Duration: {rev.Duration} revEcho dur: {revEcho.Duration}");
             }
+            if (user.HasTalent(Talents.DoubleTime.id))
+            {
+                var db = (Abilities.PresAbility)user.Abilities.Get(Abilities.DreamBreath.name);
+                var dbEcho = (Abilities.PresAbility)user.Abilities.Get(Abilities.DreamBreathEcho.name);
+                foreach (var ability in user.Abilities) 
+                    {
+                    Console.WriteLine($"{ability.Name}");
+                    }
+                var fb = (Abilities.PresAbility)user.Abilities.Get(Abilities.FireBreath.name);
+                //var fb = (Abilities.PresAbility)user.Abilities.Get(Abilities.FireBreath.name);
+                db.CritExtendAbility = true;
+                dbEcho.CritExtendAbility = true;
+                fb.CritExtendAbility = true;
+            }
         }
 
         public static void SpecMain(List<Event> events, UnitRepo allUnits, Fight fight, int iterationCount)
@@ -122,7 +136,7 @@ namespace Beaversims.Core.Specs.Evoker.Pres
                         }
                     }
                 }
-                FullAllocs.FullAllocCalcs(altEventList, user);
+                FullAllocs.FullAllocCalcs(tpEvents, user, i);
 
                 DupliEffects.AltEnkindle(tpEvents, user, i);
                 DupliEffects.AltLifebind(tpEvents, user, i);
@@ -133,10 +147,8 @@ namespace Beaversims.Core.Specs.Evoker.Pres
                 Shared.DupliEffects.AltSummerSource(tpEvents, user, i);
                 Shared.DupliEffects.AltLeechSource(tpEvents, user, i);
 
-                foreach (TpEvent evt in tpEvents)
-                {
-                    Shared.ProcessEvents.StoreTotals(evt, user, i);
-                }
+                Shared.ProcessEvents.StoreTotals(tpEvents, user, i, fight);
+              
             });
         }
     }

@@ -36,7 +36,7 @@ namespace Beaversims.CLI
             //var logLink = "https://www.warcraftlogs.com/reports/XBHvP9xVrpjDZn13?fight=14&type=casts&translate=true&source=3"; // evoker chrono
             //var logLink = "https://www.warcraftlogs.com/reports/cAWLyDhNpKxBJF1P?fight=64&type=healing&source=22"; // evoker flameshaper
             //var logLink = "https://www.warcraftlogs.com/reports/FcWt4wLRP6GQJzAh?fight=2&source=6&type=healing"; // 0 heal evoker
-            var logLink = "https://www.warcraftlogs.com/reports/FKBhzCRYpQrj3tNb?fight=1&type=healing&source=8"; //  
+            var logLink = "https://www.warcraftlogs.com/reports/bBWMANk9yjdTPR76?fight=10&type=summary&source=22"; //  
 
             //var swMode = true;
             SimMode simMode = SimMode.SW;

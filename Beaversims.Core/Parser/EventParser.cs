@@ -348,6 +348,10 @@ namespace Beaversims.Core.Parser
                     ability.Heal.Eff += tpEvent.Amount.Eff;
                     ability.Heal.Raw += tpEvent.Amount.Raw;
                     ability.Heal.Count += 1;
+                    if (ability.Name == "Lifebind")
+                    {
+                        Console.WriteLine(evt.AbilityId);
+                    }
 
 
                     if (tpEvent.SourceUnit == user)

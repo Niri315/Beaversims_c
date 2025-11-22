@@ -94,11 +94,14 @@ namespace Beaversims.Core.Shared
                 //{
 
                 //}
+                
                 ability.CIMSourceRelCheck();
+                if (ability.MaxCIMPreSet) continue;
                 if (ability.OneHardCIM)
                 {
                     ability.MaxCIM = 1.0;
                 }
+           
                 else
                 {
                     ability.MaxCIM = Math.Max((user.TrueCastTimeTotal - user.HasteCapCTLoss) / ability.CdTimeHypo, 1.0);
@@ -164,7 +167,7 @@ namespace Beaversims.Core.Shared
             }
             foreach (var ability in user.Abilities)
             {
-                Console.WriteLine($"{ability.Name}: CIM: {ability.CIM}, True QIM: {ability.TrueQIM(user, 0)}, Rest rel Ratio: {ability.RestRelCIMRatio}, CTG: {ability.CTGain}");
+                Console.WriteLine($"{ability.Name}: CIM: {ability.CIM}, True QIM: {ability.TrueQIM(user, 0)}, Rest rel Ratio: {ability.RestRelCIMRatio}, CTG: {ability.CTGain}, Total CT: {ability.TrueCastTimeTotal}");
             }
             TestCIMMath(user);
         }

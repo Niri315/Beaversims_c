@@ -24,7 +24,7 @@ namespace Beaversims.Core
         public int HarmonyLevel { get; set; } = 0;
 
         //Evoker
-        public Dictionary<Ability, double> ReversionTracker { get; set; } = [];
+        public Dictionary<Ability, double[]> ReversionTracker { get; set; } = [];
         //public double? RevBuffEnd { get; set; } = null;
         //public double? RevEchoBuffEnd {  get; set; } = null;
 

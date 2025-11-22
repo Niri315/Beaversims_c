@@ -67,53 +67,106 @@ namespace Beaversims.Core.Shared
         }
 
 
-        public static void StoreTotals(TpEvent evt, User user, int i)
+        public static void StoreTotals(List<TpEvent> tpEvents, User user, int i, Fight fight)
         {
+            var logging = Constants.TEST_MODE;
+            Logger statLogger = new Logger($"{user.AltGearSets[i].Name} - Stat Tracker", fight, user.Id.TypeId);
+            double lastLogTime = double.NegativeInfinity; // ensures first event always logs
 
-            AmountContainer amounts;
 
-            if (evt.SimEvent)
-            {
-                amounts = evt.Amount;
-            }
-            else
-            {
-                amounts = evt.AltEvents[i].Amount;
-            }
 
-            var gainType = GainType.Eff;
-            double amount;
-            if (evt.IsDamageTakenEvent())
+
+            foreach (TpEvent evt in tpEvents)
             {
-                gainType = GainType.Def;
+                if (logging && evt.Timestamp >= lastLogTime + 5.0)
+                {
+                    evt.AltEvents[i].UserStats.LogStats(statLogger, evt.Timestamp);
+                    lastLogTime = evt.Timestamp;
+                }
+                
+                AmountContainer amounts;
+
+
+                if (evt.SimEvent)
+                {
+                    amounts = evt.Amount;
+                }
+                else
+                {
+                    amounts = evt.AltEvents[i].Amount;
+                }
+
+                var gainType = GainType.Eff;
+                double amount;
+                if (evt.IsDamageTakenEvent())
+                {
+                    gainType = GainType.Def;
+                    amount = amounts.Eff;
+                    user.AltGearSets[i].Gains[gainType] -= amount;
+
+                    if (logging)
+                    {
+                        // Skipping logging DEF for now... The abilities are not in user.Abilities. 
+
+                        //Console.WriteLine(i);
+                        //Console.WriteLine(gainType);
+                        //Console.WriteLine(evt.Ability.Gains.Count);
+                        //Console.WriteLine(evt.Ability.Name);
+                        //evt.Ability.Gains[i][gainType] -= amount - evt.Amount.Eff;
+                    }
+
+                    continue;
+                }
+                else if (evt.IsDmgDoneEvent())
+                {
+                    gainType = GainType.Dmg;
+                }
+
+                else if (evt.IsHealDoneEvent())
+                {
+                    gainType = GainType.Eff;
+                }
+                else if (evt.Ability.SuppStamScaler && evt.TargetUnit is User && evt is HealEvent)
+                {
+                    gainType = GainType.SupEff;
+                }
+                else if (evt.Ability.SuppStamScaler && evt.TargetUnit is not User && evt is DamageEvent)
+                {
+                    gainType = GainType.SupDmg;
+                }
+                else
+                {
+                    continue;
+                }
                 amount = amounts.Eff;
-                user.AltGearSets[i].Gains[gainType] -= amount;
-                return;
+                user.AltGearSets[i].Gains[gainType] += amount;
+                if (logging)
+                {
+                    evt.Ability.Gains[i][gainType] += amount - evt.Amount.Eff;
+                }
+
             }
-            else if (evt.IsDmgDoneEvent())
+            if (logging)
             {
-                gainType = GainType.Dmg;
+                Logger abilityLogger = new Logger($"{user.AltGearSets[i].Name} - Ability Gains", fight, user.Id.TypeId);
+                foreach (var ability in user.Abilities)
+                {
+                    abilityLogger.Log("-----------");
+                    abilityLogger.Log(ability.Name);
+                    foreach (var gainType in ability.Gains[i])
+                    {
+                        if (gainType.Value == 0)
+                        {
+                            continue;
+                        }
+                        abilityLogger.Log($"\t{gainType.Key}: {gainType.Value}");
+
+                    }
+
+                }
+
             }
 
-            else if (evt.IsHealDoneEvent())
-            {
-                gainType = GainType.Eff;
-            }
-            else if (evt.Ability.SuppStamScaler && evt.TargetUnit is User && evt is HealEvent)
-            {
-                gainType = GainType.SupEff;
-            }
-            else if (evt.Ability.SuppStamScaler && evt.TargetUnit is not User && evt is DamageEvent)
-            {
-                gainType = GainType.SupDmg;
-            }
-            else
-            {
-            return;
-            }
-            amount = amounts.Eff;
-            user.AltGearSets[i].Gains[gainType] += amount;
-            
         }
 
         public static void OriginalTotals(TpEvent evt, User user)
@@ -212,28 +265,7 @@ namespace Beaversims.Core.Shared
                 _ => "Unknown Gain"
             };
 
-        public static void LogAbilityGains(User user, Logger logger, AbilityGainMatrix abilityGains)
-        {
 
-            foreach (var ability in abilityGains)
-            {
-                logger.Log(ability.Key);
-
-                foreach (var stat in ability.Value)
-                {
-                    logger.Log($"\t{stat.Key}");
-
-                    foreach (var gainType in stat.Value)
-                    {
-                        var gainType_n = TranslateGainType(gainType.Key);
-                        logger.Log($"\t\t{gainType_n}: {gainType.Value}");
-                    }
-
-                }
-                logger.Log("-------------------");
-
-            }
-        }
 
    
 
@@ -246,7 +278,6 @@ namespace Beaversims.Core.Shared
             results.altGearSets = user.AltGearSets;
             results.OriginalTotals = user.OriginalTotals;
 
-            LogAbilityGains(user, abilityGainLogger, abilityGains);
 
         }
     }

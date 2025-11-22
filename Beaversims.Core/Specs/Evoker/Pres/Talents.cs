@@ -94,6 +94,16 @@ namespace Beaversims.Core.Specs.Evoker.Pres.Talents
         }
     }
 
+    internal class DoubleTime : Talent
+    {
+        public const int id = 117529;
+
+        public DoubleTime(int rank) : base(id, rank)
+        {
+
+        }
+    }
+
 }
 
 

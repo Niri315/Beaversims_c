@@ -240,6 +240,13 @@ namespace Beaversims.Core.Sim
                     Enumerable.Range(0, user.AltGearSets.Count)
                               .Select(_ => new DmgDataContainer())
                 );
+                if (Constants.TEST_MODE)
+                {
+                    ability.Gains.AddRange(
+                    Enumerable.Range(0, user.AltGearSets.Count)
+                              .Select(_ => Utils.InitGainDict())
+                              );
+                }
 
             }
         }
@@ -275,10 +282,15 @@ namespace Beaversims.Core.Sim
             }
             Console.WriteLine($"SEC MAX {secStatMax} ");
             //double[] grid = { 0.00, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7 };
-            double[] grid = {0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6};
+            double[] grid = { 0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 };
             double[] hasteGrid = grid;
             double[] critGrid = grid;
             double[] masteryGrid = grid;
+
+            //double[] grid = { 0.00, 0.10, 0.20, 0.30, 0.4, 0.5, 0.6 };
+            //double[] hasteGrid = grid;
+            //double[] critGrid = {0.10, 0.20, 0.30, 0.4, 0.5, 0.6 };
+            //double[] masteryGrid = { 0.10, 0.20, 0.30, 0.4, 0.5, 0.6 };
 
             foreach (var h in hasteGrid)
             {

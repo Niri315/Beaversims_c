@@ -15,11 +15,13 @@ namespace Beaversims.Core.Specs.Evoker.Pres
         // Not tracking lifebind buff count for now. Should do this for bugtesting.
         public static bool IsLifebindEvt(HealEvent evt, User user)
         {
+           
             var lifebindBuff = user.GetBuff(Abilities.Lifebind.buffId);
+            
             if (lifebindBuff is Buff
-                && evt.LifebindCount > 1
+                && evt.LifebindCount > 0
                 && lifebindBuff.SourceId == user.Id 
-                && evt.IsHealDoneEvent() 
+                && evt.IsHealDoneEvent()
                 && evt.TargetUnit.HasBuff(Abilities.Lifebind.buffId)
                 && evt.Ability.CanDupli
                 && !evt.AbsorbAbility
@@ -39,12 +41,12 @@ namespace Beaversims.Core.Specs.Evoker.Pres
         {
             if (IsLifebindEvt(evt, user))
             {
-
+      
                 var lifebind = (Abilities.Lifebind)user.Abilities.Get(Abilities.Lifebind.name);
                 var count = 0;
                 if (evt.TargetUnit is User)
                 {
-                    count = evt.LifebindCount - 1;
+                    count = evt.LifebindCount;
                 }
                 else
                 {
@@ -70,7 +72,7 @@ namespace Beaversims.Core.Specs.Evoker.Pres
                     var count = 0;
                     if (evt.TargetUnit is User)
                     {
-                        count = evt.LifebindCount - 1;
+                        count = evt.LifebindCount;
                     }
                     else
                     {

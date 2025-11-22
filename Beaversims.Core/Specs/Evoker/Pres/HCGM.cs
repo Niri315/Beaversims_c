@@ -9,6 +9,11 @@ using System.Threading.Tasks;
 
 namespace Beaversims.Core.Specs.Evoker.Pres
 {
+    // TODO
+    // Might be better to just hard set spenders to 1 CIM as well as 1 QIM.
+    // A lot simpler and I dont think we're getting much if any accuracy out of over complicating it...
+
+
     // Stasis spells we care about for CIM.
     //Echo.name,
     //Reversion.name,
@@ -27,6 +32,10 @@ namespace Beaversims.Core.Specs.Evoker.Pres
         {
             if (evt is BuffEvent bEvt)
             {
+                //if (evt.AbilityName == "Lifebind")
+                //{
+                //    Console.WriteLine(evt.Timestamp.ToString());
+                //}
                 if ((bEvt.BuffApplyEvent || bEvt.BuffRefreshEvent) && (evt.AbilityName == Abilities.Reversion.name || evt.AbilityName == Abilities.ReversionEcho.name) && evt.SourceUnit is User)
                 {
                     var _ability = (Abilities.PresAbility)user.Abilities.Get(evt.AbilityName);
@@ -36,6 +45,8 @@ namespace Beaversims.Core.Specs.Evoker.Pres
                 {
                     if (bEvt.BuffApplyEvent)
                     {
+                        //Console.WriteLine(evt.Timestamp);
+                        //Console.WriteLine(evt.AbilityName);
                         user.LifebindCount++;
                     }
                     else if (bEvt.BuffRemoveEvent)
@@ -87,6 +98,7 @@ namespace Beaversims.Core.Specs.Evoker.Pres
                 }
             }
             evt.LifebindCount = user.LifebindCount;
+         
         }
 
 
@@ -221,28 +233,37 @@ namespace Beaversims.Core.Specs.Evoker.Pres
                 revRatio *= ebRatio;
                 hcEchoRatioSpenderSubRatio *= ebRatio;
                 taEchoRatioSpenderSubRatio *= ebRatio;
-
-                spender.CIMSources.Add(new CIMSource(essenceRegenDummy.Name, essenceRegenRatio));
-                spender.CIMSources.Add(new CIMSource(stasis.Name, stasisRatio));
-                spender.CIMSources.Add(new CIMSource(lfcfSource.Name, lfcfRatio));
-                spender.CIMSources.Add(new CIMSource(rev.Name, revRatio));
-                spender.CIMSources.Add(new CIMSource(ta.Name, taEchoRatioSpenderSubRatio));
-
                 // TODO Echo fix recursive issue
                 // Unsure what best solution is.
                 // Using 1.0 CIM for now instead of echo CIM
                 // Maybe its fine like this.
 
-                if (spender.Name == Echo.name)
-                {
-                    spender.CIMSources.Add(new CIMSource(essenceRegenDummy.Name, hcEchoRatioSpenderSubRatio));
-                }
-                else
-                {
-                    spender.CIMSources.Add(new CIMSource(echo.Name, hcEchoRatioSpenderSubRatio));
-                }
+                //TEST
+                //spender.CIMSources.Add(new CIMSource(essenceRegenDummy.Name, essenceRegenRatio));
+                //spender.CIMSources.Add(new CIMSource(stasis.Name, stasisRatio));
+                //spender.CIMSources.Add(new CIMSource(lfcfSource.Name, lfcfRatio));
+                //spender.CIMSources.Add(new CIMSource(rev.Name, revRatio));
+                //spender.CIMSources.Add(new CIMSource(ta.Name, taEchoRatioSpenderSubRatio));
+
+                //TEST INSERT
+                //spender.OneHardCIM = true;
+                ////spender.ZeroCIM = true;
+                //spender.MaxCIMPreSet = true;
+                //spender.MaxCIM = 1.5;
 
 
+
+
+                //if (spender.Name == Echo.name)
+                //{
+                //    spender.CIMSources.Add(new CIMSource(essenceRegenDummy.Name, hcEchoRatioSpenderSubRatio));
+                //}
+                //else
+                //{
+                //    spender.CIMSources.Add(new CIMSource(echo.Name, hcEchoRatioSpenderSubRatio));
+                //}
+
+                //TEST END
 
                 Console.WriteLine($"{spender.Name} - Essence burst casts: {spender.EssenceBurstCount} non eb casts: {spender.Casts - spender.EssenceBurstCount}");
             }

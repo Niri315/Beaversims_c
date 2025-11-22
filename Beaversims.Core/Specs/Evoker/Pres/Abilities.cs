@@ -16,7 +16,7 @@ High Prio:
     Lifeforce mender
     Twin Flame
     Draconic Instincts
-    Full Alloc crit
+    Remove stasis cast times.
 
 Mid Prio:
     
@@ -52,7 +52,16 @@ namespace Beaversims.Core.Specs.Evoker.Pres.Abilities
         public int StasisCount { get; set; } = 0;
         public double ExtendedDur {  get; set; } = 0;
         public double TotalDur { get; set; } = 0;
-        
+        public int CritCount_ö { get; set; } = 0;
+        public int TotalCount_ö { get; set; } = 0;
+        public bool CritExtendAbility { get; set; } = false;
+        public double CritExtendExtraHeal { get; set; } = 0;
+        public double ExtHPC_e {  get; set; } = 0;
+        public double ExtHPH_e {  get; set; } = 0;
+        public int LastEmpLEvel { get; set; } = 0;
+        public bool EmpAbility {  get; set; } = false;
+        public string? EchoVersion { get; set; }
+
     }
     internal class EssenceRegenDummy : PresAbility
     {
@@ -181,6 +190,9 @@ namespace Beaversims.Core.Specs.Evoker.Pres.Abilities
         {
             Name = name;
             CastTime = Constants.GCD;
+            EmpAbility = true;
+            BuffId = 355941;
+            EchoVersion = DreamBreathEcho.name;
             Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Haste, SN.Mastery, SN.Vers]);
             HasteScalers.UnionWith([HST.Tick]);
         }
@@ -193,6 +205,8 @@ namespace Beaversims.Core.Specs.Evoker.Pres.Abilities
         public DreamBreathEcho()
         {
             Name = name;
+            EmpAbility = true;
+            BuffId = 376788;
             Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Haste, SN.Mastery, SN.Vers]);
             HasteScalers.UnionWith([HST.Tick, HST.Cast]);
             EchoEffect = true;
@@ -279,6 +293,8 @@ namespace Beaversims.Core.Specs.Evoker.Pres.Abilities
         {
             Name = name;
             CastTime = Constants.GCD;
+            BuffId = 357209;
+            EmpAbility = true;
             Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Haste, SN.Vers]);
             HasteScalers.UnionWith([HST.Auto]);
         }
@@ -327,6 +343,7 @@ namespace Beaversims.Core.Specs.Evoker.Pres.Abilities
         {
             Name = name;
             // CIM cast haste scaler based on echo generation, on top of normal dupli calc.
+            BuffId = buffId;
             Scalers.UnionWith([SN.Haste]);
             HasteScalers.UnionWith([HST.Cast]);
             SimDupliAbility = true;
@@ -427,6 +444,9 @@ namespace Beaversims.Core.Specs.Evoker.Pres.Abilities
             Name = name;
             GCD = true;
             Duration = 12;
+            BuffId = 366155;
+            CritExtendAbility = true;
+            EchoVersion = ReversionEcho.name;
             Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Haste, SN.Mastery, SN.Vers]);
             HasteScalers.UnionWith([HST.Tick, HST.Cast]);
             OneHardCIM = true; // Gonna be used alongside TA almost all the time. Having matching CIM makes sense practically.
@@ -442,6 +462,8 @@ namespace Beaversims.Core.Specs.Evoker.Pres.Abilities
             Name = name;
             //GCD = true;
             Duration = 12;
+            BuffId = 367364;
+            CritExtendAbility = true;
             Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Haste, SN.Mastery, SN.Vers]);
             HasteScalers.UnionWith([HST.Tick, HST.Cast]);
             EchoEffect = true;
@@ -485,6 +507,8 @@ namespace Beaversims.Core.Specs.Evoker.Pres.Abilities
         {
             Name = name;
             CastTime = Constants.GCD;
+            EchoVersion = SpiritbloomEcho.name;
+            EmpAbility = true;
             Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Mastery, SN.Vers]);
         }
     }
@@ -495,6 +519,7 @@ namespace Beaversims.Core.Specs.Evoker.Pres.Abilities
         public SpiritbloomEcho()
         {
             Name = name;
+            EmpAbility = true;
             Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Mastery, SN.Haste, SN.Vers]);
             HasteScalers.UnionWith([HST.Cast]);
             EchoEffect = true;

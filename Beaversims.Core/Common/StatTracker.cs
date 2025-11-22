@@ -47,7 +47,7 @@ namespace Beaversims.Core
                 statLogger.Log($"\t Rating: {Math.Round(stat.Rating)}");
                 var multiFactor = Math.Round((stat.Multi - 1) * 100, 2);
                 statLogger.Log($"\t Multiplicative Factor: {multiFactor}%");
-
+                statLogger.Log($"\t Eff: {stat.TrueEff()}");
 
                 if (stat is NonPrimaryStat npStat) 
                 {
@@ -56,6 +56,7 @@ namespace Beaversims.Core
                     statLogger.Log($"\t DR Bracket: {npStat.Bracket}");
                     statLogger.Log($"\t Base: {basePercent}%");
                     statLogger.Log($"\t Effective Percent: {effPercent}%");
+
                     if (stat is Crit crit)
                     {
                         statLogger.Log($"\t Crit Inc Heal: {Math.Round(crit.IncHeal, 2)}");

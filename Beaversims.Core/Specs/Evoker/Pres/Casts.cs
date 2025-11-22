@@ -26,6 +26,7 @@ namespace Beaversims.Core.Specs.Evoker.Pres
                 }
                 castTime += (evt.EmpCastLevel - 1) * ctPerEmpLevel;
             }
+
             if (user.HasBuff(Talents.AncientFlame.buffId) && Talents.AncientFlame.affectedSpells.Contains(evt.AbilityName))
             {
                 castTime *= 1 - Talents.AncientFlame.coef;

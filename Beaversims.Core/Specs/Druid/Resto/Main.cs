@@ -172,10 +172,9 @@ namespace Beaversims.Core.Specs.Druid.Resto
                 Shared.DupliEffects.AltSummerSource(tpEvents, user, i);
                 Shared.DupliEffects.AltLeechSource(tpEvents, user, i);
 
-                foreach (TpEvent evt in tpEvents)
-                {
-                    Shared.ProcessEvents.StoreTotals(evt, user, i);
-                }
+
+                Shared.ProcessEvents.StoreTotals(tpEvents, user, i, fight);
+                
             });
         }
     }

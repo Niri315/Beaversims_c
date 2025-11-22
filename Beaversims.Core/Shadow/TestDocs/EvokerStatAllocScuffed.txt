@@ -1,0 +1,6 @@
+Top GearSets by Category:
+eff:              55% haste, 25% crit, 10% mastery, 10% vers (8685339,859)
+dmg:              50% haste, 30% crit, 0% mastery, 20% vers (864086,780)
+eff + dmg:        55% haste, 25% crit, 10% mastery, 10% vers (9543250,906)
+eff + def:        50% haste, 10% crit, 5% mastery, 35% vers (7198552,180)
+eff + dmg + def:  50% haste, 20% crit, 0% mastery, 30% vers (8060146,752)

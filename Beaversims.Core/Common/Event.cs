@@ -109,9 +109,11 @@ namespace Beaversims.Core
         public bool TargetHasRegrowth { get; set; } = false;
         public bool TargetHasGerms { get; set; } = false;
         public bool TargetHasRejuv { get; set; } = false;
+        public bool TargetHasQIMBuff { get; set; } = false;
         public int AbundanceStacks { get; set; } = 0;
         public bool IsSymbRelEvent { get; set; } = false;
         public bool UserHasHotw {  get; set; } = false;
+        public List<Specs.Druid.Resto.Abilities.RestoAbility> QIMBuffSources { get; set; } = [];
 
         // Evoker
         public bool LifebindEvent { get; set; } = false;
@@ -127,7 +129,7 @@ namespace Beaversims.Core
         public double? TargetHp_p()//(bool preEvent = false)
         {
             if (TargetHp == null) return 1.0;  // Default to assuming percent is 100 if it cant be found.
-            return (double?)TargetHp / TargetMaxHp;
+            return (double)TargetHp / TargetMaxHp;
         }
 
         public bool IsDamageTakenEvent() => TargetUnit is User && this is DamageEvent;
@@ -303,6 +305,7 @@ namespace Beaversims.Core
         public double MasteryEffectiveness { get; set; }
         public double NonQIMBuffMasteryEffectivness { get; set; }
         public bool MasteryActive { get; set; } = false;
+        public double MasteryEffWOQIM {  get; set; }
     
 
     }

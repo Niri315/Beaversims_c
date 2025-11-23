@@ -89,7 +89,7 @@ namespace Beaversims.Core.Specs.Evoker.Pres
                 {
 
                     var altEvent = evt.AltEvents[i];
-                    var gainRaw = altEvent.Amount.Raw * lifebind.AltHypoTrueRawR(i) - altEvent.Amount.Raw;
+                    var gainRaw = altEvent.Amount.Raw * lifebind.AltHypoTrueRawR(i) - (altEvent.Amount.Raw + altEvent.NukeRaw);
                     altEvent.Amount.UpdateAltGainsFromEvtData(evt, gainRaw, i);
 
                 } 
@@ -160,14 +160,14 @@ namespace Beaversims.Core.Specs.Evoker.Pres
                     var altEvent = evt.AltEvents[i];
                     if (evt.IsHealDoneEvent())
                     {
-                        var gainRaw = altEvent.Amount.Raw * enkindle.AltHypoTrueRawR(i) - altEvent.Amount.Raw;
+                        var gainRaw = altEvent.Amount.Raw * enkindle.AltHypoTrueRawR(i) - (altEvent.Amount.Raw + altEvent.NukeRaw);
                         Console.WriteLine($"altEvent.Amount.Raw {altEvent.Amount.Raw} enkindle.AltHypoTrueRawR(i) {enkindle.AltHypoTrueRawR(i)}");
                         altEvent.Amount.UpdateAltGainsFromEvtData(evt, gainRaw, i);
 
                     }
                     else if (evt.IsDmgDoneEvent())
                     {
-                        var gainDmg = altEvent.Amount.Raw * enkindle.AltHypoTrueDmgR(i) - altEvent.Amount.Raw;
+                        var gainDmg = altEvent.Amount.Raw * enkindle.AltHypoTrueDmgR(i) - (altEvent.Amount.Raw + altEvent.NukeRaw);
                         altEvent.Amount.UpdateAltGainsFromEvtData(evt, gainDmg, i);
                     }
 

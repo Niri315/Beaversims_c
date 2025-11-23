@@ -77,35 +77,6 @@ namespace Beaversims.Core.Shared
             }
         }
 
-        public static void SummerGains(TpEvent evt, User user, StatName statName, double gainRaw, Ability ability, bool summerActive, bool absorbAbility, Unit sourceUnit, GainType gainType)
-        {
-            //if (IsSummerEvent(user, ability, summerActive, sourceUnit, absorbAbility))
-            //{
-            //    var summer = (Abilities.BlessingOfSummer)user.Abilities.Get(Abilities.BlessingOfSummer.name);
-            //    double trueHypoCoefRaw = 0;
-            //    double trueHypoCoef = 0;
-            //    if (gainType == GainType.Eff || gainType == GainType.MsEff || gainType == GainType.BalEff || gainType == GainType.SupEff)
-            //    {
-            //        trueHypoCoefRaw = summer.HypoTrueDmgR();
-            //        trueHypoCoef = trueHypoCoefRaw;
-            //    }
-            //    else if (gainType == GainType.Dmg || gainType == GainType.MsDmg || gainType == GainType.BalDmg || gainType == GainType.SupDmg)
-            //    {
-            //        trueHypoCoefRaw = summer.HypoTrueRawR();
-            //        trueHypoCoef = summer.HypoTrueUr();
-
-            //    }
-            //    var sourceGainHypo = summer.Coef * gainRaw;
-            //    var sourceGainRaw = sourceGainHypo * trueHypoCoefRaw;
-            //    var sourceGain = sourceGainHypo * trueHypoCoef;
-
-            //    gainType = Utils.ReverseGainType(gainType);
-
-            //    evt.Gains[statName][gainType] += sourceGain;
-            //    var gainNsnsnaraw = summer.RawToNsnsnarawConvert(sourceGainRaw);
-            //    LeechSourceGains(evt, user, statName, gainNsnsnaraw, gainType);
-            //}
-        }
 
 
         public static void SharedHypo(TpEvent evt, User user)

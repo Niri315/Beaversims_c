@@ -29,7 +29,9 @@ namespace Beaversims.Core
         KeeperOfTheGrove,
         Wildstalker,
         Chronowarden,
-        Flameshaper
+        Flameshaper,
+        Farseer,
+        Totemic
     }
 
     public enum ScalingClass

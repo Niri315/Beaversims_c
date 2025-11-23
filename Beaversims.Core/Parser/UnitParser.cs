@@ -3,6 +3,7 @@ using Beaversims.Core.Specs.Druid.Resto;
 using Beaversims.Core.Specs.Evoker.Pres;
 using Beaversims.Core.Specs.Paladin.Holy;
 using Beaversims.Core.Specs.Paladin.Holy.Abilities;
+using Beaversims.Core.Specs.Shaman.Resto;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -68,6 +69,10 @@ namespace Beaversims.Core.Parser
                         return new PresFlameshaper();
                     case PresChronowarden.idTalent:
                         return new PresChronowarden();
+                    case RestoFarseer.idTalent:
+                        return new RestoFarseer();
+                    case RestoTotemic.idTalent:
+                        return new RestoTotemic();
                 }
             }
             return new DummySpec();

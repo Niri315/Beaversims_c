@@ -56,22 +56,8 @@ namespace Beaversims.Core.Specs.Paladin.Holy
             }
 
         }
-        public static void BeaconGains(TpEvent evt, User user, StatName statName, double gainRaw, GainType gainType)
-        {
-            if (IsBeaconEvent((HealEvent)evt, user))
-            {
-                var beaconOfLight = (Abilities.BeaconOfLight)user.Abilities.Get(Abilities.BeaconOfLight.name);
-                var hypoGain = gainRaw * BeaconFormula(evt, user);
-                var dupliGainRaw = hypoGain * beaconOfLight.HypoTrueRawR();
-                var dupliGainEff = hypoGain * beaconOfLight.HypoTrueUhr();
-                evt.Gains[statName][gainType] += dupliGainEff;
-
-                var dupliGainNsnsnaraw = beaconOfLight.RawToNsnsnarawConvert(dupliGainRaw);
-                Shared.DupliEffects.SummerGains(evt, user, statName, gainRaw, beaconOfLight, evt.SummerActive, false, evt.SourceUnit, gainType);
-
-                Shared.DupliEffects.LeechSourceGains(evt, user, statName, dupliGainNsnsnaraw, gainType);
-            }
-        }
+     
+        
         public static void altBeacon(List<TpEvent> events, User user, int i)
         {
             var beaconOfLight = (Abilities.BeaconOfLight)user.Abilities.Get(Abilities.BeaconOfLight.name);
@@ -157,7 +143,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
                     {
                      
                         var altEvent = evt.AltEvents[i];
-                        var gainRaw = altEvent.Amount.Raw * selfless_a.AltHypoTrueRawR(i) - altEvent.Amount.Raw;
+                        var gainRaw = altEvent.Amount.Raw * selfless_a.AltHypoTrueRawR(i) - (altEvent.Amount.Raw + altEvent.NukeRaw);
                         altEvent.Amount.UpdateAltGainsFromEvtData(evt, gainRaw, i);
                         
                     }

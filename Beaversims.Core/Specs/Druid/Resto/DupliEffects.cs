@@ -85,7 +85,7 @@ namespace Beaversims.Core.Specs.Druid.Resto
                     {
 
                         var altEvent = evt.AltEvents[i];
-                        var gainRaw = altEvent.Amount.Raw * symRel.AltHypoTrueRawR(i) - altEvent.Amount.Raw;
+                        var gainRaw = altEvent.Amount.Raw * symRel.AltHypoTrueRawR(i) - (altEvent.Amount.Raw + altEvent.NukeRaw);
                         altEvent.Amount.UpdateAltGainsFromEvtData(evt, gainRaw, i);
 
                     }
@@ -155,7 +155,7 @@ namespace Beaversims.Core.Specs.Druid.Resto
                     {
 
                         var altEvent = evt.AltEvents[i];
-                        var gainRaw = altEvent.Amount.Raw * doc.AltHypoTrueRawR(i) - altEvent.Amount.Raw;
+                        var gainRaw = altEvent.Amount.Raw * doc.AltHypoTrueRawR(i) - (altEvent.Amount.Raw + altEvent.NukeRaw);
                         altEvent.Amount.UpdateAltGainsFromEvtData(evt, gainRaw, i);
 
                     }

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 
 namespace Beaversims.Core.Specs.Druid.Resto
@@ -15,6 +16,30 @@ namespace Beaversims.Core.Specs.Druid.Resto
     internal class Main
 
     {
+
+
+        public static void HasteDepMasteryGains(HealEvent evt, User user, int i)
+        {
+            if (evt.MasteryEffectiveness > 0)
+            {
+                var mastery = (Mastery)evt.UserStats.Get(StatName.Mastery);
+                var haste = (Haste)evt.UserStats.Get(StatName.Haste);
+                var altEvent = evt.AltEvents[i];
+                var pureAmount = altEvent.Amount.Raw / (1 + (mastery.TrueEff() * evt.MasteryEffectiveness / (mastery.PercentRate * 100)));
+                var masteryAmountVal = altEvent.Amount.Raw - pureAmount;
+                var testAmount = pureAmount * (1 + ((mastery.TrueEff() * evt.MasteryEffWOQIM) / (mastery.PercentRate * 100)));
+                var QIMRelAmount = altEvent.Amount.Raw - testAmount;
+                foreach (var qimAbility in evt.QIMBuffSources)
+                {
+                    // Ignoring value already present in haste stat gains.
+                    if (!evt.QIMBuffSources.Contains(evt.Ability))
+                    {
+                        Shared.StatGains.SecondaryAltAmount(evt, haste, i, amount: QIMRelAmount, mod: qimAbility.TrueQIM(user, i));
+                    }
+                }
+            }
+        }
+
         public static void TrackHotw(Event evt, User user)
         {
             if (user.HasBuff(Abilities.HeartOfTheWild.buffId))
@@ -23,19 +48,30 @@ namespace Beaversims.Core.Specs.Druid.Resto
 
             }
         }
-        public static void TrackCIMBuffs(Event evt)
+        public static void TrackCIMBuffs(Event evt, User user)
         {
             if (evt.TargetUnit.HasBuff(Abilities.Regrowth.buffId))
             {
+                var regrowth = (Abilities.Regrowth)user.Abilities.Get(Abilities.Regrowth.name);
+                evt.QIMBuffSources.Add(regrowth);
                 evt.TargetHasRegrowth = true;
+               
             }
             if (evt.TargetUnit.HasBuff(Abilities.Rejuvenation.buffId))
             {
+                var rejuv = (Abilities.Rejuvenation)user.Abilities.Get(Abilities.Rejuvenation.name);
+                evt.QIMBuffSources.Add(rejuv);
                 evt.TargetHasRejuv = true;
             }
             if (evt.TargetUnit.HasBuff(Abilities.RejuvenationGermination.buffId))
             {
+                var germ = (Abilities.RejuvenationGermination)user.Abilities.Get(Abilities.RejuvenationGermination.name);
+                evt.QIMBuffSources.Add(germ);
                 evt.TargetHasGerms = true;
+            }
+            if (evt.TargetHasRegrowth || evt.TargetHasRejuv || evt.TargetHasGerms)
+            {
+                evt.TargetHasQIMBuff = true;
             }
         }
         public static void TrackAbundance(Event evt, User user)
@@ -85,6 +121,10 @@ namespace Beaversims.Core.Specs.Druid.Resto
         {
             // Lycara doesnt show up as init buff. If assumption is wrong, it will be corrected as soon as form is changed.
             user.AddBuff(Data.StatBuffs.LycarasTeachingsNoForm.name, Data.StatBuffs.LycarasTeachingsNoForm.id, user, 1, 0.0);
+            user.CIMDepMastIncScalers =  user.Abilities
+                .OfType<Abilities.RestoAbility>()
+                .Where(a => a.CIMDepMastIncScaler && a.Casts > 0)
+                .ToList();
         }
 
         public static void SpecMain(List<Event> events, UnitRepo allUnits, Fight fight, int iterationCount)
@@ -110,7 +150,7 @@ namespace Beaversims.Core.Specs.Druid.Resto
                 evt.CreateAltEvents(user, evt);
                 CastProcessor.ProcessCast(evt, user);
                 MasteryTracker.SetMasteryEff(evt, user);
-                TrackCIMBuffs(evt);
+                TrackCIMBuffs(evt, user);
                 TrackAbundance(evt, user);
                 TrackHotw(evt, user);
                 HCGM.GatherData(evt, user);
@@ -169,6 +209,7 @@ namespace Beaversims.Core.Specs.Druid.Resto
                             // OBS ! Mastery gains must be LAST
                             // We use part of gainRaw from it for full allocs.
                             MasteryTracker.MasteryGains((HealEvent)evt, user, i);
+                            HasteDepMasteryGains(hEvt, user, i);
                         }
                     }
                 }

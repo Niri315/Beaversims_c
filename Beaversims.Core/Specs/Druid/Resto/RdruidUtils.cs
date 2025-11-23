@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Beaversims.Core.Specs.Druid.Resto
 {
-    internal static class RdruidUtils
+    internal static class RshamUtils
     {
 
     }

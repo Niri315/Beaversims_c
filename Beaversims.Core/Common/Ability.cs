@@ -90,6 +90,7 @@ namespace Beaversims.Core
         public bool ReverseEffect { get; set; } = false;  // For easily running certain reverse effects like AC as autoscalers. 
         public double Duration { get; set; } = 0.0;
         public int Casts { get; set; } = 0;
+        public bool IncludePetCasts { get; set; } = false;
         public double CdTimeHypo { get; set; } = 0.0;
         public double CdEnd {  get; set; } = 0.0;
         public double TrueCastTimeTotal { get; set; } = 0.0;

@@ -24,6 +24,7 @@ namespace Beaversims.Core
         public int HarmonyLevel { get; set; } = 0;
         public int QIMIncHarmonyCount { get; set; } = 0;
 
+
         //Evoker
 
         public Dictionary<Ability, double[]> ReversionTracker { get; set; } = [];
@@ -130,6 +131,9 @@ namespace Beaversims.Core
         public int AwakeningCount { get; set; } = 0;
         public double AvengingUseEnd { get; set; } = 0; // Only the active use avenging, not the awakening effect.
         public int ArmamentsBuffCount { get; set; } = 0;
+
+        // Druid
+        public List<Specs.Druid.Resto.Abilities.RestoAbility> CIMDepMastIncScalers = [];
 
         // Evoker
         public int MaxEmpLevel { get; set; } = 3;

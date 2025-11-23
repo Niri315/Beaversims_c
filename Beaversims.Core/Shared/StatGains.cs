@@ -234,7 +234,7 @@ namespace Beaversims.Core.Shared
 
         private static bool IsCastScaler(TpEvent tpEvent, Ability ability)
         {
-            if (ability.HasteScalers.Contains(HST.Cast) && tpEvent.SourceUnit is User)
+            if (ability.HasteScalers.Contains(HST.Cast) && (tpEvent.SourceUnit is User || ability.IncludePetCasts))
             {
                 return true;
             }

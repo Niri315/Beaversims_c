@@ -1,4 +1,5 @@
 ﻿using Beaversims.Core.Common;
+using Beaversims.Core.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -110,9 +111,11 @@ namespace Beaversims.Core.Specs.Druid.Resto
                 }
                 hEvt.MasteryEffectiveness = harmonyMult;
                 hEvt.NonQIMBuffMasteryEffectivness = NonQIMharmonyMult;
+                hEvt.MasteryEffWOQIM = Math.Max(GetHarmonyMult(targetUnit.HarmonyLevel - 1), 0);
+
                 //Console.WriteLine($"{harmonyMult} VS {NonQIMharmonyMult}");
 
-                var buffList = new List<string>();
+                //var buffList = new List<string>();
                 //foreach (var buff in evt.TargetUnit.Buffs)
                 //{
                 //    if (harmonyBuffIds.Contains(buff.Id))
@@ -140,21 +143,9 @@ namespace Beaversims.Core.Specs.Druid.Resto
             var altHaste = altEvent.UserStats.Get(haste.Name);
             var gainRaw = MasteryGainCalc(mastery, altEvent.Amount.Raw, evt.MasteryEffectiveness) * (altMastery.TrueEff() - mastery.TrueEff());
 
-            if (evt.MasteryEffectiveness > 0 && !QIMIncBuffs.Contains(evt.AbilityName))
-            {
-                var rejuv = user.Abilities.Get(Abilities.Rejuvenation.name);
-                var germ = user.Abilities.Get(Abilities.RejuvenationGermination.name);
-                var regrowth = user.Abilities.Get(Abilities.Regrowth.name);
 
-                var rejuvQIM = rejuv.TrueQIM(user, i);
-                var regrowthQIM = germ.TrueQIM(user, i);
-
-                var QIM = (rejuvQIM + regrowthQIM) / 2;  // Wrong todo - qickfix
-                var pureAmount = altEvent.Amount.Raw / (1 + (mastery.TrueEff() * evt.MasteryEffectiveness * (mastery.PercentRate * 100)));
-                var masteryAmountVal = altEvent.Amount.Raw - pureAmount;
-                var QIMDepAmount = masteryAmountVal * (evt.MasteryEffectiveness - evt.NonQIMBuffMasteryEffectivness) / evt.MasteryEffectiveness;
-                Shared.StatGains.SecondaryAltAmount(evt, haste, i, amount:QIMDepAmount, mod:QIM);
-            }
+            // Gain from getting more mastery buffs from cast value of haste.
+          
           
             if (antiGain)
             {

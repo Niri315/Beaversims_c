@@ -24,6 +24,8 @@ namespace Beaversims.Core.Parser
         private static readonly HashSet<string> empoweredAbilities = new()
         {
             // TODO get the strings from ability classes instead
+            // TODO if they are instant casts with tip the scales there is no empoweredend event.
+            // In which case we would need this cast event and set the emp level to max.
             "Dream Breath",
             "Fire Breath",
             "Spiritbloom"
@@ -63,11 +65,14 @@ namespace Beaversims.Core.Parser
                 return true;
             if (logEvent.TryGetProperty("fake", out var fake) && fake.GetBoolean())
                 return true;
+
+            // EDIT - Letting both go through, not counting emp casts as cast++, and removing normal cast events in spec iter after parsing.
+
             // Empowered casts have both a cast and empowerend event. Skip cast and use empowerend only.
-            if (logEvent.TryGetProperty("ability", out var ability) &&
-                empoweredAbilities.Contains(ability.GetProperty("name").GetString()!) &&
-                logEvent.GetProperty("type").GetString() == "cast")
-                return true;
+            //if (logEvent.TryGetProperty("ability", out var ability) &&
+            //    empoweredAbilities.Contains(ability.GetProperty("name").GetString()!) &&
+            //    logEvent.GetProperty("type").GetString() == "cast")
+            //    return true;
             return false;
         }
         
@@ -332,10 +337,11 @@ namespace Beaversims.Core.Parser
         public static void SetAbilityData(Event evt, User user)
         {
             var ability = evt.Ability;
-            if (evt is CastEvent)
+            if (evt is CastEvent cEvt)
             {
-
-                if (evt.SourceUnit == user)
+                // Emp casts are made into cast events, dont wanna double check casts.
+                // Will remove normal casts from evokers in spec iter.
+                if (evt.SourceUnit == user && cEvt.EmpCastLevel == 0)
                 {
                     ability.Casts++;
                     user.Casts++;
@@ -348,10 +354,7 @@ namespace Beaversims.Core.Parser
                     ability.Heal.Eff += tpEvent.Amount.Eff;
                     ability.Heal.Raw += tpEvent.Amount.Raw;
                     ability.Heal.Count += 1;
-                    if (ability.Name == "Lifebind")
-                    {
-                        Console.WriteLine(evt.AbilityId);
-                    }
+  
 
 
                     if (tpEvent.SourceUnit == user)
@@ -577,7 +580,7 @@ namespace Beaversims.Core.Parser
                 //SetCoords(evt, user);
 
             }
-            Utils.AddHeartbeatEvents(events);
+            Utils.AddHeartbeatEvents(events, user);
             EraseData(allUnits);
             return events;
         }

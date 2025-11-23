@@ -75,15 +75,7 @@ namespace Beaversims.Core.Specs.Evoker.Pres
                         user.StasisStore.Add(evt.AbilityName);
                     }
                 }
-                if (evt.AbilityId == Abilities.Stasis.releaseCastId)
-                {
-                    foreach (var ability in user.StasisStore)
-                    {
-                        var _ability = (Abilities.PresAbility)user.Abilities.Get(ability);
-                        _ability.StasisCount++;
-                        user.StasisStore = [];
-                    }
-                }
+
 
                 if (evt.AbilityName == Abilities.FireBreath.name && user.HasTalent(Talents.LeapingFlames.id))
                 {
@@ -246,7 +238,7 @@ namespace Beaversims.Core.Specs.Evoker.Pres
                 //spender.CIMSources.Add(new CIMSource(ta.Name, taEchoRatioSpenderSubRatio));
 
                 //TEST INSERT
-                //spender.OneHardCIM = true;
+                spender.OneHardCIM = true;
                 ////spender.ZeroCIM = true;
                 //spender.MaxCIMPreSet = true;
                 //spender.MaxCIM = 1.5;

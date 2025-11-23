@@ -6,26 +6,49 @@ import { HEALING_SPECS, HERO_TALENTS, CLASS_COLORS} from "/js/shared/constants.j
 const ALLOC_BY_SPEC = {
     hpal: {
         Lightsmith: {
+            heal: { haste: 30, crit: 50, mastery: 0, vers: 20 },
             damage: { haste: 50, crit: 30, mastery: 0, vers: 20},
-            heal: { haste: 30, crit: 50, mastery: 0, vers: 20},
             total: { haste: 30, crit: 50, mastery: 0, vers: 20},
             heal_dr: { haste: 20, crit: 40, mastery: 0, vers: 40},
             total_dr: { haste: 30, crit: 40, mastery: 0, vers: 30},
         },
 
         "Herald of the Sun": {
-            damage: { haste: 0, crit: 30, mastery: 50, vers: 20, score: 0 },
             heal: { haste: 30, crit: 50, mastery: 0, vers: 20, score: 0 },
+            damage: { haste: 0, crit: 30, mastery: 50, vers: 20, score: 0 },
             total: { haste: 30, crit: 50, mastery: 0, vers: 20, score: 0 },
             heal_dr: { haste: 25, crit: 35, mastery: 0, vers: 40, score: 0 },
             total_dr: { haste: 30, crit: 40, mastery: 0, vers: 30, score: 0 },
         },
     },
+    pres: {
+        Chronowarden: {
+            heal: { haste: 30, crit: 40, mastery: 20, vers: 10 },
+            damage: { haste: 40, crit: 40, mastery: 0, vers: 20 },
+            total: { haste: 30, crit: 40, mastery: 20, vers: 10 },
+            heal_dr: { haste: 20, crit: 40, mastery: 20, vers: 20 },
+            total_dr: { haste: 30, crit: 40, mastery: 10, vers: 20 },
+        },
+
+        "Flameshaper": {
+            heal: { haste: 40, crit: 30, mastery: 20, vers: 10, score: 0 },
+            damage: { haste: 40, crit: 10, mastery: 0, vers: 50, score: 0 },
+            total: { haste: 40, crit: 30, mastery: 20, vers: 10, score: 0 },
+            heal_dr: { haste: 40, crit: 20, mastery: 10, vers: 30, score: 0 },
+            total_dr: { haste: 40, crit: 20, mastery: 10, vers: 30, score: 0 },
+        },
+    },
 };
 
 function getAlloc(specId, heroName, selection) {
-    const key = selection.metric + (selection.includeDR ? "_dr" : "");
-    return ALLOC_BY_SPEC[specId][heroName][key];
+    const specData = ALLOC_BY_SPEC[specId]?.[heroName];
+    if (!specData) return null;
+    const baseKey = selection.metric;
+    const drKey = baseKey + "_dr";
+    if (selection.includeDR && specData[drKey]) {
+        return specData[drKey];
+    }
+    return specData[baseKey] || null;
 }
 
 document.addEventListener("DOMContentLoaded", () => {

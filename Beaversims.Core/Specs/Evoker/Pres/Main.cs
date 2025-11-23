@@ -2,6 +2,7 @@
 using Beaversims.Core.Common;
 using Beaversims.Core.Shared;
 using Beaversims.Core.Sim;
+using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,80 @@ namespace Beaversims.Core.Specs.Evoker.Pres
     internal class Main
 
     {
+        //public static void LfmPrimGains(TpEvent evt, User user, int i)
+        //{
+        //    if (evt.AbilityName == Abilities.FireBreath.name) return; // TODO implement fb
+        //    // Todo test how it functions with Time in Need
+        //    if (Talents.LifeforceMender.abilities.Contains(evt.AbilityName)) 
+        //    {
+
+        //        var ability = evt.Ability;
+        //        double spc;
+        //        if (evt.IsHealDoneEvent())
+        //        {
+        //            spc = ability.SpcHeal;
+        //        }
+        //        else if (evt.IsDmgDoneEvent())
+        //        {
+        //            spc = ability.SpcDmg;
+        //        }
+        //        else
+        //        {
+        //            return;
+        //        }
+            
+        //        if (user.HasTalent(Talents.LifeforceMender.id))
+        //        {
+        //            var lfm = (Talents.LifeforceMender)user.Talents[Talents.LifeforceMender.id];
+        //            var expHpVal = lfm.Coef * evt.SourceMaxHp;
+        //            var expSpVal = spc * evt.UserStats.Get(StatName.Intellect).TrueEff();
+        //            var x = evt.Amount.Raw / (expHpVal + expSpVal);
+        //            Console.WriteLine(evt.AbilityName);
+        //            Console.WriteLine($"{expHpVal} {expSpVal} {evt.SourceMaxHp} {lfm.Coef} {evt.UserStats.Get(StatName.Intellect).TrueEff()}");
+        //            Console.WriteLine(evt.Amount.Raw);
+        //            Console.WriteLine(x);
+
+        //        }
+        //    }
+        //}
+
+        public static void StatGainMathTest()
+        {
+            var evt = new HealEvent();
+            evt.Amount.Raw = 10000;
+            var altEvt = new AltEvent();
+            altEvt.Amount = new AmountContainer();
+            altEvt.Amount.Raw = evt.Amount.Raw;
+            evt.AltEvents.Add(altEvt);
+            evt.Ability = new Ability();
+            var altStats = new StatTracker();
+            altEvt.UserStats = altStats;
+
+            altStats.InitMastery(Specs.Paladin.Holy.HolyPaladin.masteryPr_s);
+            altStats.Get(StatName.Intellect).Rating = 100000;
+            altStats.Get(StatName.Vers).Rating = 780;
+            altStats.Get(StatName.Mastery).Rating = 14000;
+            altStats.UpdateAllStats();
+        
+            var intOri = new Intellect();
+            intOri.Rating = 150000;
+            intOri.FullUpdate();
+            var oriVers = new Vers();
+            oriVers.Rating = 7800;
+            oriVers.FullUpdate();
+            var oriMastery = new Mastery(Specs.Evoker.Pres.PreservationEvoker.masteryPr_s);
+            oriMastery.Rating = 1400;
+            oriMastery.FullUpdate();
+
+
+            evt.MasteryActive = true;
+            StatGains.PrimaryAltAmount(evt, intOri, 0);
+            StatGains.SecondaryAltAmount(evt, oriVers, 0);
+            StatGains.SecondaryAltAmount(evt, oriMastery, 0);
+            Console.WriteLine($"Final Test Amount: {altEvt.Amount.Raw}");
+
+        }
+
         private static void SpecInit(User user)
         {
      
@@ -46,6 +121,10 @@ namespace Beaversims.Core.Specs.Evoker.Pres
                 dbEcho.CritExtendAbility = true;
                 fb.CritExtendAbility = true;
             }
+            if (user.HasTalent(Talents.FontOfMagic.id))
+            {
+                user.MaxEmpLevel += Talents.FontOfMagic.levelInc;
+            }
         }
 
         public static void SpecMain(List<Event> events, UnitRepo allUnits, Fight fight, int iterationCount)
@@ -54,7 +133,7 @@ namespace Beaversims.Core.Specs.Evoker.Pres
             var user = allUnits.GetUser();
             var prepullRefStats = user.RefStats.Clone();
             SpecInit(user);
-      
+            StatGainMathTest();
             var statLogger = new Logger("StatTracker", fight, user.Id.TypeId);
             var refStatLogger = new Logger("Ref Stat Tracker", fight, user.Id.TypeId);
 
@@ -70,14 +149,15 @@ namespace Beaversims.Core.Specs.Evoker.Pres
                 }
             }
 
-      
+
 
             foreach (Event evt in events)
             {
                 // Loop for tracking buffs and collecting data.
                 BuffTracker.TrackBuffs(evt, allUnits, statLogger, refStatLogger);
-                evt.CreateAltEvents(user, evt);
                 CastProcessor.ProcessCast(evt, user);
+                if (evt.RemoveMe) continue;
+                evt.CreateAltEvents(user, evt);
                 MasteryTracker.SetMasteryEff(evt, user);
                 HCGM.GatherData(evt, user);
                 FullAllocs.TrackReversions(evt, user);
@@ -92,7 +172,7 @@ namespace Beaversims.Core.Specs.Evoker.Pres
                     }
                 }
             }
-
+            events.RemoveAll(e => e.RemoveMe);
 
             //var testEvt = events[100];
             //Console.WriteLine("--------");
@@ -127,6 +207,7 @@ namespace Beaversims.Core.Specs.Evoker.Pres
                     // Loop for setting gains.
                     var altEvent = evt.AltEvents[i];
                     evt.AltEvents[i].Amount = evt.Amount.Clone();
+                    //LfmPrimGains(evt, user, i);
                     StatGains.AutoStatGains(evt, user, i);
                     if (evt.IsHealDoneEvent() && evt is HealEvent hEvt)
                     {

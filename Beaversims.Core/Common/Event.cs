@@ -96,6 +96,7 @@ namespace Beaversims.Core
         public bool SimImpurity { get; set; } = false;
         public virtual bool SimEvent { get; set; } = false;
         public bool NonScInstaTick { get; set; } = false; // need setup in spec main
+        public bool RemoveMe { get; set; } = false;
 
 
         //Paladin
@@ -106,6 +107,8 @@ namespace Beaversims.Core
 
         //Druid
         public bool TargetHasRegrowth { get; set; } = false;
+        public bool TargetHasGerms { get; set; } = false;
+        public bool TargetHasRejuv { get; set; } = false;
         public int AbundanceStacks { get; set; } = 0;
         public bool IsSymbRelEvent { get; set; } = false;
         public bool UserHasHotw {  get; set; } = false;
@@ -298,7 +301,9 @@ namespace Beaversims.Core
 
 
         public double MasteryEffectiveness { get; set; }
+        public double NonQIMBuffMasteryEffectivness { get; set; }
         public bool MasteryActive { get; set; } = false;
+    
 
     }
 

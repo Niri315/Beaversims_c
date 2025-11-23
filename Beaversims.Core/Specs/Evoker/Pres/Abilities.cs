@@ -11,12 +11,9 @@ using System.Threading.Tasks;
 
 High Prio:
 
-    Grace Period
     Apex Talents
-    Lifeforce mender
     Twin Flame
     Draconic Instincts
-    Remove stasis cast times.
 
 Mid Prio:
     
@@ -25,7 +22,8 @@ Mid Prio:
     Time of Need
     Titans gift
     Titanic Precision
-    
+    Lifeforce mender
+    Grace Period
     
 Low Prio:
 
@@ -259,7 +257,7 @@ namespace Beaversims.Core.Specs.Evoker.Pres.Abilities
         public Engulf()
         {
             Name = name;
-            GCD = true;
+            CastTime = Constants.GCD / 2;
         }
     }
 
@@ -375,6 +373,8 @@ namespace Beaversims.Core.Specs.Evoker.Pres.Abilities
 
             Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Haste, SN.Mastery, SN.Vers]);
             HasteScalers.UnionWith([HST.Cast]);
+            SpcHeal = 4.8930;
+            SpcDmg = 2.9;
             EbProcChance = 0.3;
         }
     }
@@ -549,6 +549,17 @@ namespace Beaversims.Core.Specs.Evoker.Pres.Abilities
             Name = name;
         }
     }
+
+    internal class StasisRelease : PresAbility
+    {
+        public const string name = "Stasis (Release)";
+
+        public StasisRelease()
+        {
+            Name = name;
+            GCD = true;
+        }
+    }
     internal class TailSwipe : PresAbility
     {
         public const string name = "Tail Swipe";
@@ -583,7 +594,16 @@ namespace Beaversims.Core.Specs.Evoker.Pres.Abilities
             GCD = true;
         }
     }
-
+    internal class TipTheScales : PresAbility
+    {
+        // Haste doesn't affect amount at all, tooltip is lying.
+        public const string name = "Tip the Scales";
+        public const int buffId = 370553;
+        public TipTheScales()
+        {
+            Name = name;
+        }
+    }
     internal class Unravel : PresAbility
     {
         public const string name = "Unravel";

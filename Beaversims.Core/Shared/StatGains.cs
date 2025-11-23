@@ -49,11 +49,16 @@ namespace Beaversims.Core.Shared
 
       
 
-        public static void SecondaryAltAmount(TpEvent evt, SecondaryStat stat, int i, double mod = 1, bool antiGain = false)
+        public static void SecondaryAltAmount(TpEvent evt, SecondaryStat stat, int i, double? amount=null, double mod = 1, bool antiGain = false)
         {
 
             var altEvent = evt.AltEvents[i];
-            var gainPerRatingRaw = Calc.SecondaryGainCalc(stat, altEvent.Amount.Raw, stat.PercentRate);
+            if (amount == null)
+            {
+                amount = altEvent.Amount.Raw;
+            }
+
+            var gainPerRatingRaw = Calc.SecondaryGainCalc(stat, amount.Value, stat.PercentRate);
             var gainPerEffstatRaw = stat.RemoveDryMult(gainPerRatingRaw);
             var altStat = altEvent.UserStats.Get(stat.Name);
             var gainRaw = gainPerEffstatRaw * (altStat.TrueEff() - stat.TrueEff()) * mod;
@@ -66,6 +71,12 @@ namespace Beaversims.Core.Shared
             {
                 altEvent.NukeRaw += gainRaw;
             }
+            //if (i == 4 && (altStat.TrueEff() - stat.TrueEff() != 0 ))
+            //{
+            //    Console.WriteLine("----");
+            //    Console.WriteLine($"altEvent.Amount.Raw: {altEvent.Amount.Raw}, stat.PercentRate: {stat.PercentRate}, (altStat.TrueEff(): {altStat.TrueEff()}, stat.TrueEff(): {stat.TrueEff()}");
+            //    Console.WriteLine($"gainRaw: {gainRaw}");
+            //}
             //if (gainRaw is double.NaN)
             //{
             //    Console.WriteLine(evt.AbilityName);

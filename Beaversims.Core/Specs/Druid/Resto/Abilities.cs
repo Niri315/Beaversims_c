@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 High Prio:
     
     Dungeon/ <20 raid CIM
+    mastery + haste interaction
 
     Midnight:
 
@@ -59,6 +60,7 @@ namespace Beaversims.Core.Specs.Druid.Resto.Abilities
         public int SotfCount { get; set; } = 0;
         public int EotdCount { get; set; } = 0;
         public bool BalanceSpell {  get; set; } = false;
+        public bool CIMDepMastIncScaler { get; set; } = false;
     }
 
     internal class AessinasRenewal : RestoAbility
@@ -503,6 +505,7 @@ namespace Beaversims.Core.Specs.Druid.Resto.Abilities
             Name = name;
             BuffId = buffId;
             CastTime = 1.5;
+            CIMDepMastIncScaler = true;
             Scalers.UnionWith([SN.Intellect, SN.Vers, SN.Haste, SN.Mastery]);   //Crit separate to check for cap.
             HasteScalers.UnionWith([HST.Tick, HST.Cast]);
         }
@@ -518,6 +521,7 @@ namespace Beaversims.Core.Specs.Druid.Resto.Abilities
             BuffId = buffId;
             CastTime = Constants.GCD;
             InstaTick = true;
+            CIMDepMastIncScaler = true;
             Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Vers, SN.Haste, SN.Mastery]);
             HasteScalers.UnionWith([HST.Tick, HST.Cast]);
         }
@@ -535,6 +539,7 @@ namespace Beaversims.Core.Specs.Druid.Resto.Abilities
             CastTime  = Constants.GCD;
             ZeroHasteCTG = true;
             InstaTick = true;
+            CIMDepMastIncScaler = true;
             Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Vers, SN.Haste, SN.Mastery]);
             HasteScalers.UnionWith([HST.Tick, HST.Cast]);
         }

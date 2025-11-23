@@ -22,8 +22,10 @@ namespace Beaversims.Core
 
         //Druid
         public int HarmonyLevel { get; set; } = 0;
+        public int QIMIncHarmonyCount { get; set; } = 0;
 
         //Evoker
+
         public Dictionary<Ability, double[]> ReversionTracker { get; set; } = [];
         //public double? RevBuffEnd { get; set; } = null;
         //public double? RevEchoBuffEnd {  get; set; } = null;
@@ -130,6 +132,7 @@ namespace Beaversims.Core
         public int ArmamentsBuffCount { get; set; } = 0;
 
         // Evoker
+        public int MaxEmpLevel { get; set; } = 3;
         private int _lifebindCount = 0;
         public int LifebindCount
         {
@@ -138,6 +141,7 @@ namespace Beaversims.Core
         }
         public int LeapingFlamesLevel { get; set; } = 0;
         public List<string> StasisStore { get; set; } = [];
+        public double LastStasisRelease { get; set; } = -99;
         public int MasteryTest1 { get; set; } = 0;
         public int MasteryTest2 { get; set; } = 0;
 

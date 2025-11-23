@@ -37,26 +37,25 @@ namespace Beaversims.Core.Data.CustomBuffs
         }
     }
 
-
-    /* ------- *
-     * Paladin *
-     * ------- */
-    internal class BaseMasteryHpal : StatBuff
+    internal class BaseMastery : StatBuff
     {
-        public const string name = "Hpal Base Mastery";
-        public BaseMasteryHpal(UnitId sourceId)
+        public const string name = "Base Mastery";
+        public BaseMastery(UnitId sourceId)
             : base(-1, sourceId, name, 1)
         {
-            SourceType = BuffSourceType.Spec;
-            SourceObjId = (int)SpecName.HolyPaladin;
             StatMods.Add(
                 new StatMod(
                     StatName.Mastery,
                     StatAmountType.Base,
-                    12 * Specs.Paladin.Holy.HolyPaladin.masteryPr_s)
+                    8 * Mastery.tooltipPercentRate)
             );
         }
     }
+
+    /* ------- *
+     * Paladin *
+     * ------- */
+
     internal class SanctifiedPlates : StatBuff
     {
         public const string name = "Sanctified Plates";
@@ -136,22 +135,6 @@ namespace Beaversims.Core.Data.CustomBuffs
 
     // TODO Gift of the Wild
 
-    internal class BaseMasteryRdruid : StatBuff
-    {
-        public const string name = "Rdruid Base Mastery";
-        public BaseMasteryRdruid(UnitId sourceId)
-            : base(-1, sourceId, name, 1)
-        {
-            SourceType = BuffSourceType.Spec;
-            SourceObjId = (int)SpecName.RestorationDruid;
-            StatMods.Add(
-                new StatMod(
-                    StatName.Mastery,
-                    StatAmountType.Base,
-                    5.8 * Specs.Druid.Resto.RestorationDruid.masteryPr_s)
-            );
-        }
-    }
 
     internal class UrsocsSpirit : StatBuff
     {
@@ -174,23 +157,6 @@ namespace Beaversims.Core.Data.CustomBuffs
      * Evoker *
      * ------ */
 
-
-    internal class BaseMasteryPres : StatBuff
-    {
-        public const string name = "Pres Base Mastery";
-        public BaseMasteryPres(UnitId sourceId)
-            : base(-1, sourceId, name, 1)
-        {
-            SourceType = BuffSourceType.Spec;
-            SourceObjId = (int)SpecName.PreservationEvoker;
-            StatMods.Add(
-                new StatMod(
-                    StatName.Mastery,
-                    StatAmountType.Base,
-                    16.2 * Specs.Evoker.Pres.PreservationEvoker.masteryPr_s)
-            );
-        }
-    }
     internal class DraconicLegacy : StatBuff
     {
         public const string name = "Draconic Legacy";

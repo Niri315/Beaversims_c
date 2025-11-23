@@ -103,6 +103,27 @@ namespace Beaversims.Core.Specs.Evoker.Pres.Talents
 
         }
     }
+    internal class FontOfMagic : Talent
+    {
+        public const int id = 115556;
+        public const int levelInc = 1;
+
+        public FontOfMagic(int rank) : base(id, rank)
+        {
+
+        }
+    }
+    internal class LifeforceMender : Talent
+    {
+        public const int id = 115538;
+        public static readonly HashSet<string> abilities = [Abilities.LivingFlame.name, Abilities.FireBreath.name];
+        public double Coef { get; set;}
+
+        public LifeforceMender(int rank) : base(id, rank)
+        {
+            Coef = rank * 0.01;
+        }
+    }
 
 }
 

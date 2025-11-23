@@ -7,11 +7,15 @@ using System.Threading.Tasks;
 
 namespace Beaversims.Core.Specs.Druid.Resto
 { 
+    // TODO need a reset function in case of death for buffs.
+
     internal static class MasteryTracker
         // Midnight removal : Grove tending, spring blossoms, cultivation, cenward.
-    {   // Rejuv, Rejuv, LB, LB, Regrowth, grove tending, wild growth, spring blossoms, tranq, cultivation, cenward, symbiotic blooms, Reactive Resin,
+    {   // Rejuv, Germ, LB, LB, Regrowth, grove tending, wild growth, spring blossoms, tranq, cultivation, cenward, symbiotic blooms, Reactive Resin,
         public static readonly List<int> harmonyBuffIds = [774, 155777, 33763, 188550, 8936, 383193, 48438, 207386, 157982, 102352, 200389, 439530, 468152];
-
+        // Rejuv, Germ, Regrowth
+        public static readonly List<int> QIMIncBuffIds = [774, 155777, 8936];
+        public static readonly List<string> QIMIncBuffs = [Abilities.Rejuvenation.name, Abilities.RejuvenationGermination.name, Abilities.Regrowth.name];
         public static readonly List<double> table = [
             1.0,
             0.7,
@@ -51,6 +55,7 @@ namespace Beaversims.Core.Specs.Druid.Resto
 
         public static void InitHarmonyBuffs(UnitRepo allUnits, User user)
         {
+           
             foreach (var unit in allUnits)
             {
                 foreach (var buff in unit.Buffs)
@@ -58,36 +63,68 @@ namespace Beaversims.Core.Specs.Druid.Resto
                     if (harmonyBuffIds.Contains(buff.Id) && buff.SourceId == user.Id)
                     {
                         unit.HarmonyLevel += BuffHarmonyLevel(user, buff.Name);
+                        if (QIMIncBuffIds.Contains(buff.Id))
+                        {
+                            unit.QIMIncHarmonyCount += BuffHarmonyLevel(user, buff.Name);
+                        }
                     }
                 }
             }
         }
-
+        //public int QIMHypoIncLevel { get; set; } = 0;
         public static void SetMasteryEff(Event evt, User user)
         {
+
             if (evt is BuffEvent bEvt && evt.SourceUnit is User && harmonyBuffIds.Contains(evt.AbilityId))
             {
                 if (bEvt.BuffApplyEvent)
                 {
                     evt.TargetUnit.HarmonyLevel += BuffHarmonyLevel(user, evt.AbilityName);
+                    if (QIMIncBuffIds.Contains(evt.AbilityId))
+                    {
+                        evt.TargetUnit.QIMIncHarmonyCount += BuffHarmonyLevel(user, evt.AbilityName);
+                    }
                 }
                 else if (bEvt.BuffRemoveEvent)
                 {
                     evt.TargetUnit.HarmonyLevel -= BuffHarmonyLevel(user, evt.AbilityName);
+                    if (QIMIncBuffIds.Contains(evt.AbilityId))
+                    {
+                        evt.TargetUnit.QIMIncHarmonyCount -= BuffHarmonyLevel(user, evt.AbilityName);
+                    }
                 }
             }
 
             if (evt.IsHealDoneEvent() && evt.Ability.ScalesWith(StatName.Mastery))
             {
+                var targetUnit = evt.TargetUnit;
                 var hEvt = (HealEvent)evt;
 
-                double harmonyMult = GetHarmonyMult(evt.TargetUnit.HarmonyLevel);
+                double harmonyMult = GetHarmonyMult(targetUnit.HarmonyLevel);
+                double NonQIMharmonyMult = GetHarmonyMult(targetUnit.HarmonyLevel - targetUnit.QIMIncHarmonyCount);
                 if (evt.AbilityName == Abilities.Nourish.name)
                 {
                     var nourish = (Abilities.Nourish)evt.Ability;
                     harmonyMult *= nourish.HarmonyCoef;
+                    NonQIMharmonyMult *= nourish.HarmonyCoef;
                 }
                 hEvt.MasteryEffectiveness = harmonyMult;
+                hEvt.NonQIMBuffMasteryEffectivness = NonQIMharmonyMult;
+                //Console.WriteLine($"{harmonyMult} VS {NonQIMharmonyMult}");
+
+                var buffList = new List<string>();
+                //foreach (var buff in evt.TargetUnit.Buffs)
+                //{
+                //    if (harmonyBuffIds.Contains(buff.Id))
+                //    {
+                //        buffList.Add(buff.Name);
+                //    }
+                //}
+                //Console.WriteLine("---------");
+                //Console.WriteLine($"");
+                //Console.WriteLine(string.Join(", ", buffList));
+                //Console.WriteLine($" {Utils.ReadableTime(evt.Timestamp)} - {evt.AbilityName}, MasteryEffectiveness: {hEvt.MasteryEffectiveness}, buff Count: {buffList.Count}");
+                //Console.WriteLine($"Target: {evt.TargetUnit.Name}");
             }
         }
 
@@ -95,23 +132,54 @@ namespace Beaversims.Core.Specs.Druid.Resto
     => (((amount / ((mastery.TrueEff() * masteryEffectiveness) / (mastery.PercentRate * 100) + 1)) * masteryEffectiveness) / (mastery.PercentRate * 100));
 
 
-        public static void MasteryAltAmount(HealEvent evt, Mastery stat, int i, double masteryEffectiveness, bool antiGain = false)
+        public static void MasteryAltAmount(HealEvent evt, Mastery mastery, Haste haste, int i, User user, bool antiGain = false)
         {
-
+ 
             var altEvent = evt.AltEvents[i];
-            var gainPerEffstatRaw = MasteryGainCalc(stat, altEvent.Amount.Raw, masteryEffectiveness);
-            var altStat = altEvent.UserStats.Get(stat.Name);
-            var gainRaw = gainPerEffstatRaw * (altStat.TrueEff() - stat.TrueEff());
-            if (antiGain) { gainRaw *= -1; }
+            var altMastery = altEvent.UserStats.Get(mastery.Name);
+            var altHaste = altEvent.UserStats.Get(haste.Name);
+            var gainRaw = MasteryGainCalc(mastery, altEvent.Amount.Raw, evt.MasteryEffectiveness) * (altMastery.TrueEff() - mastery.TrueEff());
+
+            if (evt.MasteryEffectiveness > 0 && !QIMIncBuffs.Contains(evt.AbilityName))
+            {
+                var rejuv = user.Abilities.Get(Abilities.Rejuvenation.name);
+                var germ = user.Abilities.Get(Abilities.RejuvenationGermination.name);
+                var regrowth = user.Abilities.Get(Abilities.Regrowth.name);
+
+                var rejuvQIM = rejuv.TrueQIM(user, i);
+                var regrowthQIM = germ.TrueQIM(user, i);
+
+                var QIM = (rejuvQIM + regrowthQIM) / 2;  // Wrong todo - qickfix
+                var pureAmount = altEvent.Amount.Raw / (1 + (mastery.TrueEff() * evt.MasteryEffectiveness * (mastery.PercentRate * 100)));
+                var masteryAmountVal = altEvent.Amount.Raw - pureAmount;
+                var QIMDepAmount = masteryAmountVal * (evt.MasteryEffectiveness - evt.NonQIMBuffMasteryEffectivness) / evt.MasteryEffectiveness;
+                Shared.StatGains.SecondaryAltAmount(evt, haste, i, amount:QIMDepAmount, mod:QIM);
+            }
+          
+            if (antiGain)
+            {
+                gainRaw *= -1;
+            }
+
+
+            if (evt.Ability.SimDupliAbility)
+            {
+                altEvent.NukeRaw += gainRaw;
+            }
+
+
             altEvent.Amount.UpdateAltGainsFromEvtData(evt, gainRaw, i);
+
+
 
         }
 
         public static void MasteryGains(HealEvent evt, User user, int i, bool antiGain = false)
         {
             var statName = StatName.Mastery;
-            var stat = (Mastery)evt.UserStats.Get(statName);
-            MasteryAltAmount(evt, stat, i, evt.MasteryEffectiveness, antiGain:antiGain);
+            var mastery = (Mastery)evt.UserStats.Get(statName);
+            var haste = (Haste)evt.UserStats.Get(StatName.Haste);
+            MasteryAltAmount(evt, mastery, haste, i, user, antiGain:antiGain);
             
         }
     }

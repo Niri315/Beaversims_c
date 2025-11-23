@@ -65,6 +65,8 @@ namespace Beaversims.Core
     {
         public string Name { get; set; } = "Unnamed Ability";
         public int BuffId { get; set; }
+        public double SpcHeal{ get; set; }
+        public double SpcDmg { get; set; }
         public double Cooldown { get; set; } = 0.0;
         public double ManaCost_p { get; set; } = 0.0;
         public double CastTime { get; set; } = 0.0;

@@ -120,7 +120,7 @@ namespace Beaversims.Core
         public static bool IsSecondaryStat(StatName statName) => statName == StatName.Crit || statName == StatName.Haste || statName == StatName.Vers || statName == StatName.Mastery;
         public static bool IsTertiaryStat(StatName statName) => statName == StatName.Avoidance || statName == StatName.Leech;  // + speed
 
-        public static void AddHeartbeatEvents(List<Event> events)
+        public static void AddHeartbeatEvents(List<Event> events, User user)
         {
             // From looking at logs it looks like there are heartbeats every 2 or 2.5 seconds.
             double interval = 2.5;
@@ -129,7 +129,7 @@ namespace Beaversims.Core
 
             for (double t = min; t <= max; t += interval)
             {
-                events.Add(new Event { Timestamp = t, Heartbeat = true });
+                events.Add(new Event { Timestamp = t, Heartbeat = true, SourceUnit = user, TargetUnit = user });
             }
 
             events.Sort((a, b) => a.Timestamp.CompareTo(b.Timestamp));

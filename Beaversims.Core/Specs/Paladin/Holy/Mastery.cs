@@ -144,6 +144,10 @@ namespace Beaversims.Core.Specs.Paladin.Holy
             var altStat = altEvent.UserStats.Get(stat.Name);
             var gainRaw = gainPerEffstatRaw * (altStat.TrueEff() - stat.TrueEff());
             if (antiGain) { gainRaw *= -1; }
+            if (evt.Ability.SimDupliAbility)
+            {
+                altEvent.NukeRaw += gainRaw;
+            }
             altEvent.Amount.UpdateAltGainsFromEvtData(evt, gainRaw, i);
 
         }

@@ -4,12 +4,15 @@
 Intellect
 	 Rating: 150648
 	 Multiplicative Factor: 5%
+	 Eff: 150648
 Stamina
 	 Rating: 874055
 	 Multiplicative Factor: 11,3%
+	 Eff: 874055
 Crit
 	 Rating: 9635
 	 Multiplicative Factor: 0%
+	 Eff: 13135
 	 DR Bracket: 0
 	 Base: 5%
 	 Effective Percent: 18,76%
@@ -18,30 +21,35 @@ Crit
 Haste
 	 Rating: 18766
 	 Multiplicative Factor: 0%
+	 Eff: 18766
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 28,43%
 Vers
 	 Rating: 3231
 	 Multiplicative Factor: 0%
+	 Eff: 5571
 	 DR Bracket: 0
 	 Base: 3%
 	 Effective Percent: 7,14%
 Leech
 	 Rating: 4284
 	 Multiplicative Factor: 0%
+	 Eff: 6323,99025
 	 DR Bracket: 0
 	 Base: 2%
 	 Effective Percent: 6,2%
 Avoidance
 	 Rating: 1618
 	 Multiplicative Factor: 0%
+	 Eff: 1618
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 2,97%
 Mastery
 	 Rating: 32419
 	 Multiplicative Factor: 0%
+	 Eff: 38535,2
 	 DR Bracket: 2
 	 Base: 19,8%
 	 Effective Percent: 99,09%
@@ -51,12 +59,15 @@ Mastery
 Intellect
 	 Rating: 150648
 	 Multiplicative Factor: 5%
+	 Eff: 150648
 Stamina
 	 Rating: 874055
 	 Multiplicative Factor: 11,3%
+	 Eff: 874055
 Crit
 	 Rating: 9635
 	 Multiplicative Factor: 0%
+	 Eff: 13135
 	 DR Bracket: 0
 	 Base: 5%
 	 Effective Percent: 18,76%
@@ -65,30 +76,35 @@ Crit
 Haste
 	 Rating: 18766
 	 Multiplicative Factor: 0%
+	 Eff: 18766
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 28,43%
 Vers
 	 Rating: 3231
 	 Multiplicative Factor: 0%
+	 Eff: 5571
 	 DR Bracket: 0
 	 Base: 3%
 	 Effective Percent: 7,14%
 Leech
 	 Rating: 4284
 	 Multiplicative Factor: 0%
+	 Eff: 6323,99025
 	 DR Bracket: 0
 	 Base: 2%
 	 Effective Percent: 6,2%
 Avoidance
 	 Rating: 1618
 	 Multiplicative Factor: 0%
+	 Eff: 1618
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 2,97%
 Mastery
 	 Rating: 32419
 	 Multiplicative Factor: 0%
+	 Eff: 38535,2
 	 DR Bracket: 2
 	 Base: 19,8%
 	 Effective Percent: 99,09%
@@ -98,12 +114,15 @@ Mastery
 Intellect
 	 Rating: 150648
 	 Multiplicative Factor: 5%
+	 Eff: 150648
 Stamina
 	 Rating: 874055
 	 Multiplicative Factor: 11,3%
+	 Eff: 874055
 Crit
 	 Rating: 9635
 	 Multiplicative Factor: 0%
+	 Eff: 13135
 	 DR Bracket: 0
 	 Base: 5%
 	 Effective Percent: 18,76%
@@ -112,30 +131,35 @@ Crit
 Haste
 	 Rating: 18766
 	 Multiplicative Factor: 0%
+	 Eff: 18766
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 28,43%
 Vers
 	 Rating: 3231
 	 Multiplicative Factor: 0%
+	 Eff: 5571
 	 DR Bracket: 0
 	 Base: 3%
 	 Effective Percent: 7,14%
 Leech
 	 Rating: 4284
 	 Multiplicative Factor: 0%
+	 Eff: 6323,99025
 	 DR Bracket: 0
 	 Base: 2%
 	 Effective Percent: 6,2%
 Avoidance
 	 Rating: 1618
 	 Multiplicative Factor: 0%
+	 Eff: 1618
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 2,97%
 Mastery
 	 Rating: 32419
 	 Multiplicative Factor: 0%
+	 Eff: 38535,2
 	 DR Bracket: 2
 	 Base: 19,8%
 	 Effective Percent: 99,09%
@@ -145,12 +169,15 @@ Mastery
 Intellect
 	 Rating: 150648
 	 Multiplicative Factor: 5%
+	 Eff: 150648
 Stamina
 	 Rating: 874055
 	 Multiplicative Factor: 11,3%
+	 Eff: 874055
 Crit
 	 Rating: 9635
 	 Multiplicative Factor: 0%
+	 Eff: 13135
 	 DR Bracket: 0
 	 Base: 5%
 	 Effective Percent: 18,76%
@@ -159,30 +186,35 @@ Crit
 Haste
 	 Rating: 18766
 	 Multiplicative Factor: 0%
+	 Eff: 18766
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 28,43%
 Vers
 	 Rating: 3231
 	 Multiplicative Factor: 0%
+	 Eff: 5571
 	 DR Bracket: 0
 	 Base: 3%
 	 Effective Percent: 7,14%
 Leech
 	 Rating: 4284
 	 Multiplicative Factor: 0%
+	 Eff: 6323,99025
 	 DR Bracket: 0
 	 Base: 2%
 	 Effective Percent: 6,2%
 Avoidance
 	 Rating: 1618
 	 Multiplicative Factor: 0%
+	 Eff: 1618
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 2,97%
 Mastery
 	 Rating: 32419
 	 Multiplicative Factor: 0%
+	 Eff: 38535,2
 	 DR Bracket: 2
 	 Base: 19,8%
 	 Effective Percent: 99,09%
@@ -192,12 +224,15 @@ Mastery
 Intellect
 	 Rating: 150648
 	 Multiplicative Factor: 5%
+	 Eff: 150648
 Stamina
 	 Rating: 874055
 	 Multiplicative Factor: 11,3%
+	 Eff: 874055
 Crit
 	 Rating: 9635
 	 Multiplicative Factor: 0%
+	 Eff: 13135
 	 DR Bracket: 0
 	 Base: 5%
 	 Effective Percent: 18,76%
@@ -206,30 +241,35 @@ Crit
 Haste
 	 Rating: 18766
 	 Multiplicative Factor: 0%
+	 Eff: 18766
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 28,43%
 Vers
 	 Rating: 3231
 	 Multiplicative Factor: 0%
+	 Eff: 5571
 	 DR Bracket: 0
 	 Base: 3%
 	 Effective Percent: 7,14%
 Leech
 	 Rating: 4284
 	 Multiplicative Factor: 0%
+	 Eff: 6323,99025
 	 DR Bracket: 0
 	 Base: 2%
 	 Effective Percent: 6,2%
 Avoidance
 	 Rating: 1618
 	 Multiplicative Factor: 0%
+	 Eff: 1618
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 2,97%
 Mastery
 	 Rating: 32419
 	 Multiplicative Factor: 0%
+	 Eff: 38535,2
 	 DR Bracket: 2
 	 Base: 19,8%
 	 Effective Percent: 99,09%
@@ -239,12 +279,15 @@ Mastery
 Intellect
 	 Rating: 150648
 	 Multiplicative Factor: 5%
+	 Eff: 150648
 Stamina
 	 Rating: 874055
 	 Multiplicative Factor: 11,3%
+	 Eff: 874055
 Crit
 	 Rating: 9635
 	 Multiplicative Factor: 0%
+	 Eff: 13135
 	 DR Bracket: 0
 	 Base: 5%
 	 Effective Percent: 18,76%
@@ -253,30 +296,35 @@ Crit
 Haste
 	 Rating: 18766
 	 Multiplicative Factor: 0%
+	 Eff: 18766
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 28,43%
 Vers
 	 Rating: 3231
 	 Multiplicative Factor: 0%
+	 Eff: 5571
 	 DR Bracket: 0
 	 Base: 3%
 	 Effective Percent: 7,14%
 Leech
 	 Rating: 4284
 	 Multiplicative Factor: 0%
+	 Eff: 6323,99025
 	 DR Bracket: 0
 	 Base: 2%
 	 Effective Percent: 6,2%
 Avoidance
 	 Rating: 1618
 	 Multiplicative Factor: 0%
+	 Eff: 1618
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 2,97%
 Mastery
 	 Rating: 32419
 	 Multiplicative Factor: 0%
+	 Eff: 38535,2
 	 DR Bracket: 2
 	 Base: 19,8%
 	 Effective Percent: 99,09%
@@ -286,12 +334,15 @@ Mastery
 Intellect
 	 Rating: 150648
 	 Multiplicative Factor: 5%
+	 Eff: 150648
 Stamina
 	 Rating: 874055
 	 Multiplicative Factor: 11,3%
+	 Eff: 874055
 Crit
 	 Rating: 9635
 	 Multiplicative Factor: 0%
+	 Eff: 13135
 	 DR Bracket: 0
 	 Base: 5%
 	 Effective Percent: 18,76%
@@ -300,30 +351,35 @@ Crit
 Haste
 	 Rating: 18766
 	 Multiplicative Factor: 0%
+	 Eff: 18766
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 28,43%
 Vers
 	 Rating: 3231
 	 Multiplicative Factor: 0%
+	 Eff: 5571
 	 DR Bracket: 0
 	 Base: 3%
 	 Effective Percent: 7,14%
 Leech
 	 Rating: 4284
 	 Multiplicative Factor: 0%
+	 Eff: 6323,99025
 	 DR Bracket: 0
 	 Base: 2%
 	 Effective Percent: 6,2%
 Avoidance
 	 Rating: 1618
 	 Multiplicative Factor: 0%
+	 Eff: 1618
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 2,97%
 Mastery
 	 Rating: 32419
 	 Multiplicative Factor: 0%
+	 Eff: 38535,2
 	 DR Bracket: 2
 	 Base: 19,8%
 	 Effective Percent: 99,09%
@@ -333,12 +389,15 @@ Mastery
 Intellect
 	 Rating: 150648
 	 Multiplicative Factor: 5%
+	 Eff: 150648
 Stamina
 	 Rating: 917758
 	 Multiplicative Factor: 16,87%
+	 Eff: 917757,7499999999
 Crit
 	 Rating: 9635
 	 Multiplicative Factor: 0%
+	 Eff: 13135
 	 DR Bracket: 0
 	 Base: 5%
 	 Effective Percent: 18,76%
@@ -347,30 +406,35 @@ Crit
 Haste
 	 Rating: 18766
 	 Multiplicative Factor: 0%
+	 Eff: 18766
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 28,43%
 Vers
 	 Rating: 3231
 	 Multiplicative Factor: 0%
+	 Eff: 5571
 	 DR Bracket: 0
 	 Base: 3%
 	 Effective Percent: 7,14%
 Leech
 	 Rating: 4284
 	 Multiplicative Factor: 0%
+	 Eff: 6323,99025
 	 DR Bracket: 0
 	 Base: 2%
 	 Effective Percent: 6,2%
 Avoidance
 	 Rating: 1618
 	 Multiplicative Factor: 0%
+	 Eff: 1618
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 2,97%
 Mastery
 	 Rating: 32419
 	 Multiplicative Factor: 0%
+	 Eff: 38535,2
 	 DR Bracket: 2
 	 Base: 19,8%
 	 Effective Percent: 99,09%
@@ -380,12 +444,15 @@ Mastery
 Intellect
 	 Rating: 150648
 	 Multiplicative Factor: 5%
+	 Eff: 150648
 Stamina
 	 Rating: 874055
 	 Multiplicative Factor: 11,3%
+	 Eff: 874054,9999999999
 Crit
 	 Rating: 9635
 	 Multiplicative Factor: 0%
+	 Eff: 13135
 	 DR Bracket: 0
 	 Base: 5%
 	 Effective Percent: 18,76%
@@ -394,30 +461,35 @@ Crit
 Haste
 	 Rating: 18766
 	 Multiplicative Factor: 0%
+	 Eff: 18766
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 28,43%
 Vers
 	 Rating: 3231
 	 Multiplicative Factor: 0%
+	 Eff: 5571
 	 DR Bracket: 0
 	 Base: 3%
 	 Effective Percent: 7,14%
 Leech
 	 Rating: 4284
 	 Multiplicative Factor: 0%
+	 Eff: 6323,99025
 	 DR Bracket: 0
 	 Base: 2%
 	 Effective Percent: 6,2%
 Avoidance
 	 Rating: 1618
 	 Multiplicative Factor: 0%
+	 Eff: 1618
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 2,97%
 Mastery
 	 Rating: 32419
 	 Multiplicative Factor: 0%
+	 Eff: 38535,2
 	 DR Bracket: 2
 	 Base: 19,8%
 	 Effective Percent: 99,09%
@@ -427,12 +499,15 @@ Mastery
 Intellect
 	 Rating: 150648
 	 Multiplicative Factor: 5%
+	 Eff: 150648
 Stamina
 	 Rating: 874055
 	 Multiplicative Factor: 11,3%
+	 Eff: 874054,9999999999
 Crit
 	 Rating: 9635
 	 Multiplicative Factor: 0%
+	 Eff: 13135
 	 DR Bracket: 0
 	 Base: 5%
 	 Effective Percent: 18,76%
@@ -441,30 +516,35 @@ Crit
 Haste
 	 Rating: 18766
 	 Multiplicative Factor: 0%
+	 Eff: 18766
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 28,43%
 Vers
 	 Rating: 3231
 	 Multiplicative Factor: 0%
+	 Eff: 5571
 	 DR Bracket: 0
 	 Base: 3%
 	 Effective Percent: 7,14%
 Leech
 	 Rating: 4284
 	 Multiplicative Factor: 0%
+	 Eff: 6323,99025
 	 DR Bracket: 0
 	 Base: 2%
 	 Effective Percent: 6,2%
 Avoidance
 	 Rating: 1618
 	 Multiplicative Factor: 0%
+	 Eff: 1618
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 2,97%
 Mastery
 	 Rating: 32419
 	 Multiplicative Factor: 0%
+	 Eff: 38535,2
 	 DR Bracket: 2
 	 Base: 19,8%
 	 Effective Percent: 99,09%
@@ -474,12 +554,15 @@ Mastery
 Intellect
 	 Rating: 150648
 	 Multiplicative Factor: 5%
+	 Eff: 150648
 Stamina
 	 Rating: 874055
 	 Multiplicative Factor: 11,3%
+	 Eff: 874054,9999999999
 Crit
 	 Rating: 9635
 	 Multiplicative Factor: 0%
+	 Eff: 13135
 	 DR Bracket: 0
 	 Base: 5%
 	 Effective Percent: 18,76%
@@ -488,30 +571,35 @@ Crit
 Haste
 	 Rating: 18766
 	 Multiplicative Factor: 0%
+	 Eff: 18766
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 28,43%
 Vers
 	 Rating: 3231
 	 Multiplicative Factor: 0%
+	 Eff: 5571
 	 DR Bracket: 0
 	 Base: 3%
 	 Effective Percent: 7,14%
 Leech
 	 Rating: 4284
 	 Multiplicative Factor: 0%
+	 Eff: 6323,99025
 	 DR Bracket: 0
 	 Base: 2%
 	 Effective Percent: 6,2%
 Avoidance
 	 Rating: 1618
 	 Multiplicative Factor: 0%
+	 Eff: 1618
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 2,97%
 Mastery
 	 Rating: 32419
 	 Multiplicative Factor: 0%
+	 Eff: 38535,2
 	 DR Bracket: 2
 	 Base: 19,8%
 	 Effective Percent: 99,09%
@@ -521,12 +609,15 @@ Mastery
 Intellect
 	 Rating: 150648
 	 Multiplicative Factor: 5%
+	 Eff: 150648
 Stamina
 	 Rating: 874055
 	 Multiplicative Factor: 11,3%
+	 Eff: 874054,9999999999
 Crit
 	 Rating: 9635
 	 Multiplicative Factor: 0%
+	 Eff: 13135
 	 DR Bracket: 0
 	 Base: 5%
 	 Effective Percent: 18,76%
@@ -535,30 +626,35 @@ Crit
 Haste
 	 Rating: 18766
 	 Multiplicative Factor: 0%
+	 Eff: 18766
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 28,43%
 Vers
 	 Rating: 3231
 	 Multiplicative Factor: 0%
+	 Eff: 5571
 	 DR Bracket: 0
 	 Base: 3%
 	 Effective Percent: 7,14%
 Leech
 	 Rating: 4284
 	 Multiplicative Factor: 0%
+	 Eff: 6323,99025
 	 DR Bracket: 0
 	 Base: 2%
 	 Effective Percent: 6,2%
 Avoidance
 	 Rating: 1618
 	 Multiplicative Factor: 0%
+	 Eff: 1618
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 2,97%
 Mastery
 	 Rating: 32419
 	 Multiplicative Factor: 0%
+	 Eff: 38535,2
 	 DR Bracket: 2
 	 Base: 19,8%
 	 Effective Percent: 99,09%
@@ -568,12 +664,15 @@ Mastery
 Intellect
 	 Rating: 150648
 	 Multiplicative Factor: 5%
+	 Eff: 150648
 Stamina
 	 Rating: 874055
 	 Multiplicative Factor: 11,3%
+	 Eff: 874054,9999999999
 Crit
 	 Rating: 9635
 	 Multiplicative Factor: 0%
+	 Eff: 13135
 	 DR Bracket: 0
 	 Base: 5%
 	 Effective Percent: 18,76%
@@ -582,30 +681,35 @@ Crit
 Haste
 	 Rating: 18766
 	 Multiplicative Factor: 0%
+	 Eff: 18766
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 28,43%
 Vers
 	 Rating: 3231
 	 Multiplicative Factor: 0%
+	 Eff: 5571
 	 DR Bracket: 0
 	 Base: 3%
 	 Effective Percent: 7,14%
 Leech
 	 Rating: 4284
 	 Multiplicative Factor: 0%
+	 Eff: 6323,99025
 	 DR Bracket: 0
 	 Base: 2%
 	 Effective Percent: 6,2%
 Avoidance
 	 Rating: 1618
 	 Multiplicative Factor: 0%
+	 Eff: 1618
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 2,97%
 Mastery
 	 Rating: 32419
 	 Multiplicative Factor: 0%
+	 Eff: 38535,2
 	 DR Bracket: 2
 	 Base: 19,8%
 	 Effective Percent: 99,09%
@@ -615,12 +719,15 @@ Mastery
 Intellect
 	 Rating: 150648
 	 Multiplicative Factor: 5%
+	 Eff: 150648
 Stamina
 	 Rating: 874055
 	 Multiplicative Factor: 11,3%
+	 Eff: 874054,9999999999
 Crit
 	 Rating: 9635
 	 Multiplicative Factor: 0%
+	 Eff: 13135
 	 DR Bracket: 0
 	 Base: 5%
 	 Effective Percent: 18,76%
@@ -629,30 +736,35 @@ Crit
 Haste
 	 Rating: 18766
 	 Multiplicative Factor: 0%
+	 Eff: 18766
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 28,43%
 Vers
 	 Rating: 3231
 	 Multiplicative Factor: 0%
+	 Eff: 5571
 	 DR Bracket: 0
 	 Base: 3%
 	 Effective Percent: 7,14%
 Leech
 	 Rating: 4284
 	 Multiplicative Factor: 0%
+	 Eff: 6323,99025
 	 DR Bracket: 0
 	 Base: 2%
 	 Effective Percent: 6,2%
 Avoidance
 	 Rating: 1618
 	 Multiplicative Factor: 0%
+	 Eff: 1618
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 2,97%
 Mastery
 	 Rating: 32419
 	 Multiplicative Factor: 0%
+	 Eff: 38535,2
 	 DR Bracket: 2
 	 Base: 19,8%
 	 Effective Percent: 99,09%
@@ -662,12 +774,15 @@ Mastery
 Intellect
 	 Rating: 150648
 	 Multiplicative Factor: 5%
+	 Eff: 150648
 Stamina
 	 Rating: 874055
 	 Multiplicative Factor: 11,3%
+	 Eff: 874054,9999999999
 Crit
 	 Rating: 9635
 	 Multiplicative Factor: 0%
+	 Eff: 13135
 	 DR Bracket: 0
 	 Base: 5%
 	 Effective Percent: 18,76%
@@ -676,30 +791,35 @@ Crit
 Haste
 	 Rating: 18766
 	 Multiplicative Factor: 0%
+	 Eff: 18766
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 28,43%
 Vers
 	 Rating: 3231
 	 Multiplicative Factor: 0%
+	 Eff: 5571
 	 DR Bracket: 0
 	 Base: 3%
 	 Effective Percent: 7,14%
 Leech
 	 Rating: 4284
 	 Multiplicative Factor: 0%
+	 Eff: 6323,99025
 	 DR Bracket: 0
 	 Base: 2%
 	 Effective Percent: 6,2%
 Avoidance
 	 Rating: 1618
 	 Multiplicative Factor: 0%
+	 Eff: 1618
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 2,97%
 Mastery
 	 Rating: 32419
 	 Multiplicative Factor: 0%
+	 Eff: 38535,2
 	 DR Bracket: 2
 	 Base: 19,8%
 	 Effective Percent: 99,09%
@@ -709,12 +829,15 @@ Mastery
 Intellect
 	 Rating: 150648
 	 Multiplicative Factor: 5%
+	 Eff: 150648
 Stamina
 	 Rating: 874055
 	 Multiplicative Factor: 11,3%
+	 Eff: 874054,9999999999
 Crit
 	 Rating: 9635
 	 Multiplicative Factor: 0%
+	 Eff: 13135
 	 DR Bracket: 0
 	 Base: 5%
 	 Effective Percent: 18,76%
@@ -723,30 +846,35 @@ Crit
 Haste
 	 Rating: 18766
 	 Multiplicative Factor: 0%
+	 Eff: 18766
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 28,43%
 Vers
 	 Rating: 3231
 	 Multiplicative Factor: 0%
+	 Eff: 5571
 	 DR Bracket: 0
 	 Base: 3%
 	 Effective Percent: 7,14%
 Leech
 	 Rating: 4284
 	 Multiplicative Factor: 0%
+	 Eff: 6323,99025
 	 DR Bracket: 0
 	 Base: 2%
 	 Effective Percent: 6,2%
 Avoidance
 	 Rating: 1618
 	 Multiplicative Factor: 0%
+	 Eff: 1618
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 2,97%
 Mastery
 	 Rating: 32419
 	 Multiplicative Factor: 0%
+	 Eff: 38535,2
 	 DR Bracket: 2
 	 Base: 19,8%
 	 Effective Percent: 99,09%
@@ -756,12 +884,15 @@ Mastery
 Intellect
 	 Rating: 150648
 	 Multiplicative Factor: 5%
+	 Eff: 150648
 Stamina
 	 Rating: 874055
 	 Multiplicative Factor: 11,3%
+	 Eff: 874054,9999999999
 Crit
 	 Rating: 9635
 	 Multiplicative Factor: 0%
+	 Eff: 13135
 	 DR Bracket: 0
 	 Base: 5%
 	 Effective Percent: 18,76%
@@ -770,30 +901,35 @@ Crit
 Haste
 	 Rating: 18766
 	 Multiplicative Factor: 0%
+	 Eff: 18766
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 28,43%
 Vers
 	 Rating: 3231
 	 Multiplicative Factor: 0%
+	 Eff: 5571
 	 DR Bracket: 0
 	 Base: 3%
 	 Effective Percent: 7,14%
 Leech
 	 Rating: 4284
 	 Multiplicative Factor: 0%
+	 Eff: 6323,99025
 	 DR Bracket: 0
 	 Base: 2%
 	 Effective Percent: 6,2%
 Avoidance
 	 Rating: 1618
 	 Multiplicative Factor: 0%
+	 Eff: 1618
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 2,97%
 Mastery
 	 Rating: 32419
 	 Multiplicative Factor: 0%
+	 Eff: 38535,2
 	 DR Bracket: 2
 	 Base: 19,8%
 	 Effective Percent: 99,09%
@@ -803,12 +939,15 @@ Mastery
 Intellect
 	 Rating: 150648
 	 Multiplicative Factor: 5%
+	 Eff: 150648
 Stamina
 	 Rating: 874055
 	 Multiplicative Factor: 11,3%
+	 Eff: 874054,9999999999
 Crit
 	 Rating: 9635
 	 Multiplicative Factor: 0%
+	 Eff: 13135
 	 DR Bracket: 0
 	 Base: 5%
 	 Effective Percent: 18,76%
@@ -817,30 +956,35 @@ Crit
 Haste
 	 Rating: 18766
 	 Multiplicative Factor: 0%
+	 Eff: 18766
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 28,43%
 Vers
 	 Rating: 3231
 	 Multiplicative Factor: 0%
+	 Eff: 5571
 	 DR Bracket: 0
 	 Base: 3%
 	 Effective Percent: 7,14%
 Leech
 	 Rating: 4284
 	 Multiplicative Factor: 0%
+	 Eff: 6323,99025
 	 DR Bracket: 0
 	 Base: 2%
 	 Effective Percent: 6,2%
 Avoidance
 	 Rating: 1618
 	 Multiplicative Factor: 0%
+	 Eff: 1618
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 2,97%
 Mastery
 	 Rating: 32419
 	 Multiplicative Factor: 0%
+	 Eff: 38535,2
 	 DR Bracket: 2
 	 Base: 19,8%
 	 Effective Percent: 99,09%
@@ -850,12 +994,15 @@ Mastery
 Intellect
 	 Rating: 150648
 	 Multiplicative Factor: 5%
+	 Eff: 150648
 Stamina
 	 Rating: 874055
 	 Multiplicative Factor: 11,3%
+	 Eff: 874054,9999999999
 Crit
 	 Rating: 9635
 	 Multiplicative Factor: 0%
+	 Eff: 13135
 	 DR Bracket: 0
 	 Base: 5%
 	 Effective Percent: 18,76%
@@ -864,30 +1011,35 @@ Crit
 Haste
 	 Rating: 18766
 	 Multiplicative Factor: 0%
+	 Eff: 18766
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 28,43%
 Vers
 	 Rating: 3231
 	 Multiplicative Factor: 0%
+	 Eff: 5571
 	 DR Bracket: 0
 	 Base: 3%
 	 Effective Percent: 7,14%
 Leech
 	 Rating: 4284
 	 Multiplicative Factor: 0%
+	 Eff: 6323,99025
 	 DR Bracket: 0
 	 Base: 2%
 	 Effective Percent: 6,2%
 Avoidance
 	 Rating: 1618
 	 Multiplicative Factor: 0%
+	 Eff: 1618
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 2,97%
 Mastery
 	 Rating: 32419
 	 Multiplicative Factor: 0%
+	 Eff: 39935,2
 	 DR Bracket: 2
 	 Base: 23,4%
 	 Effective Percent: 102,69%
@@ -897,12 +1049,15 @@ Mastery
 Intellect
 	 Rating: 150648
 	 Multiplicative Factor: 5%
+	 Eff: 150648
 Stamina
 	 Rating: 874055
 	 Multiplicative Factor: 11,3%
+	 Eff: 874054,9999999999
 Crit
 	 Rating: 9635
 	 Multiplicative Factor: 0%
+	 Eff: 13135
 	 DR Bracket: 0
 	 Base: 5%
 	 Effective Percent: 18,76%
@@ -911,30 +1066,35 @@ Crit
 Haste
 	 Rating: 18766
 	 Multiplicative Factor: 0%
+	 Eff: 18766
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 28,43%
 Vers
 	 Rating: 3231
 	 Multiplicative Factor: 0%
+	 Eff: 7911
 	 DR Bracket: 0
 	 Base: 6%
 	 Effective Percent: 10,14%
 Leech
 	 Rating: 4284
 	 Multiplicative Factor: 0%
+	 Eff: 6323,99025
 	 DR Bracket: 0
 	 Base: 2%
 	 Effective Percent: 6,2%
 Avoidance
 	 Rating: 1618
 	 Multiplicative Factor: 0%
+	 Eff: 1618
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 2,97%
 Mastery
 	 Rating: 32419
 	 Multiplicative Factor: 0%
+	 Eff: 38535,2
 	 DR Bracket: 2
 	 Base: 19,8%
 	 Effective Percent: 99,09%
@@ -944,12 +1104,15 @@ Mastery
 Intellect
 	 Rating: 150648
 	 Multiplicative Factor: 5%
+	 Eff: 150648
 Stamina
 	 Rating: 874055
 	 Multiplicative Factor: 11,3%
+	 Eff: 874054,9999999999
 Crit
 	 Rating: 9635
 	 Multiplicative Factor: 0%
+	 Eff: 13135
 	 DR Bracket: 0
 	 Base: 5%
 	 Effective Percent: 18,76%
@@ -958,30 +1121,35 @@ Crit
 Haste
 	 Rating: 18766
 	 Multiplicative Factor: 0%
+	 Eff: 18766
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 28,43%
 Vers
 	 Rating: 3231
 	 Multiplicative Factor: 0%
+	 Eff: 5571
 	 DR Bracket: 0
 	 Base: 3%
 	 Effective Percent: 7,14%
 Leech
 	 Rating: 4284
 	 Multiplicative Factor: 0%
+	 Eff: 6323,99025
 	 DR Bracket: 0
 	 Base: 2%
 	 Effective Percent: 6,2%
 Avoidance
 	 Rating: 1618
 	 Multiplicative Factor: 0%
+	 Eff: 1618
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 2,97%
 Mastery
 	 Rating: 35742
 	 Multiplicative Factor: 0%
+	 Eff: 41119,4
 	 DR Bracket: 3
 	 Base: 19,8%
 	 Effective Percent: 105,74%
@@ -991,12 +1159,15 @@ Mastery
 Intellect
 	 Rating: 150648
 	 Multiplicative Factor: 5%
+	 Eff: 150648
 Stamina
 	 Rating: 917758
 	 Multiplicative Factor: 16,87%
+	 Eff: 917757,7499999999
 Crit
 	 Rating: 9635
 	 Multiplicative Factor: 0%
+	 Eff: 13135
 	 DR Bracket: 0
 	 Base: 5%
 	 Effective Percent: 18,76%
@@ -1005,30 +1176,35 @@ Crit
 Haste
 	 Rating: 18766
 	 Multiplicative Factor: 0%
+	 Eff: 18766
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 28,43%
 Vers
 	 Rating: 3231
 	 Multiplicative Factor: 0%
+	 Eff: 5571
 	 DR Bracket: 0
 	 Base: 3%
 	 Effective Percent: 7,14%
 Leech
 	 Rating: 4284
 	 Multiplicative Factor: 0%
+	 Eff: 6323,99025
 	 DR Bracket: 0
 	 Base: 2%
 	 Effective Percent: 6,2%
 Avoidance
 	 Rating: 1618
 	 Multiplicative Factor: 0%
+	 Eff: 1618
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 2,97%
 Mastery
 	 Rating: 35742
 	 Multiplicative Factor: 0%
+	 Eff: 41119,4
 	 DR Bracket: 3
 	 Base: 19,8%
 	 Effective Percent: 105,74%
@@ -1038,12 +1214,15 @@ Mastery
 Intellect
 	 Rating: 150648
 	 Multiplicative Factor: 5%
+	 Eff: 150648
 Stamina
 	 Rating: 874055
 	 Multiplicative Factor: 11,3%
+	 Eff: 874054,9999999999
 Crit
 	 Rating: 9635
 	 Multiplicative Factor: 0%
+	 Eff: 13135
 	 DR Bracket: 0
 	 Base: 5%
 	 Effective Percent: 18,76%
@@ -1052,30 +1231,35 @@ Crit
 Haste
 	 Rating: 18766
 	 Multiplicative Factor: 0%
+	 Eff: 18766
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 28,43%
 Vers
 	 Rating: 3231
 	 Multiplicative Factor: 0%
+	 Eff: 5571
 	 DR Bracket: 0
 	 Base: 3%
 	 Effective Percent: 7,14%
 Leech
 	 Rating: 4284
 	 Multiplicative Factor: 0%
+	 Eff: 6323,99025
 	 DR Bracket: 0
 	 Base: 2%
 	 Effective Percent: 6,2%
 Avoidance
 	 Rating: 1618
 	 Multiplicative Factor: 0%
+	 Eff: 1618
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 2,97%
 Mastery
 	 Rating: 35742
 	 Multiplicative Factor: 0%
+	 Eff: 41119,4
 	 DR Bracket: 3
 	 Base: 19,8%
 	 Effective Percent: 105,74%
@@ -1085,12 +1269,15 @@ Mastery
 Intellect
 	 Rating: 150648
 	 Multiplicative Factor: 5%
+	 Eff: 150648
 Stamina
 	 Rating: 874055
 	 Multiplicative Factor: 11,3%
+	 Eff: 874054,9999999999
 Crit
 	 Rating: 9635
 	 Multiplicative Factor: 0%
+	 Eff: 13135
 	 DR Bracket: 0
 	 Base: 5%
 	 Effective Percent: 18,76%
@@ -1099,30 +1286,35 @@ Crit
 Haste
 	 Rating: 18766
 	 Multiplicative Factor: 0%
+	 Eff: 18766
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 28,43%
 Vers
 	 Rating: 3231
 	 Multiplicative Factor: 0%
+	 Eff: 5571
 	 DR Bracket: 0
 	 Base: 3%
 	 Effective Percent: 7,14%
 Leech
 	 Rating: 4284
 	 Multiplicative Factor: 0%
+	 Eff: 6323,99025
 	 DR Bracket: 0
 	 Base: 2%
 	 Effective Percent: 6,2%
 Avoidance
 	 Rating: 1618
 	 Multiplicative Factor: 0%
+	 Eff: 1618
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 2,97%
 Mastery
 	 Rating: 35742
 	 Multiplicative Factor: 0%
+	 Eff: 41119,4
 	 DR Bracket: 3
 	 Base: 19,8%
 	 Effective Percent: 105,74%
@@ -1132,12 +1324,15 @@ Mastery
 Intellect
 	 Rating: 150648
 	 Multiplicative Factor: 5%
+	 Eff: 150648
 Stamina
 	 Rating: 874055
 	 Multiplicative Factor: 11,3%
+	 Eff: 874054,9999999999
 Crit
 	 Rating: 9635
 	 Multiplicative Factor: 0%
+	 Eff: 13135
 	 DR Bracket: 0
 	 Base: 5%
 	 Effective Percent: 18,76%
@@ -1146,30 +1341,35 @@ Crit
 Haste
 	 Rating: 18766
 	 Multiplicative Factor: 0%
+	 Eff: 18766
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 28,43%
 Vers
 	 Rating: 3231
 	 Multiplicative Factor: 0%
+	 Eff: 5571
 	 DR Bracket: 0
 	 Base: 3%
 	 Effective Percent: 7,14%
 Leech
 	 Rating: 4284
 	 Multiplicative Factor: 0%
+	 Eff: 6323,99025
 	 DR Bracket: 0
 	 Base: 2%
 	 Effective Percent: 6,2%
 Avoidance
 	 Rating: 1618
 	 Multiplicative Factor: 0%
+	 Eff: 1618
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 2,97%
 Mastery
 	 Rating: 35742
 	 Multiplicative Factor: 0%
+	 Eff: 41119,4
 	 DR Bracket: 3
 	 Base: 19,8%
 	 Effective Percent: 105,74%
@@ -1179,12 +1379,15 @@ Mastery
 Intellect
 	 Rating: 150648
 	 Multiplicative Factor: 5%
+	 Eff: 150648
 Stamina
 	 Rating: 874055
 	 Multiplicative Factor: 11,3%
+	 Eff: 874054,9999999999
 Crit
 	 Rating: 9635
 	 Multiplicative Factor: 0%
+	 Eff: 13135
 	 DR Bracket: 0
 	 Base: 5%
 	 Effective Percent: 18,76%
@@ -1193,30 +1396,35 @@ Crit
 Haste
 	 Rating: 18766
 	 Multiplicative Factor: 0%
+	 Eff: 18766
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 28,43%
 Vers
 	 Rating: 3231
 	 Multiplicative Factor: 0%
+	 Eff: 5571
 	 DR Bracket: 0
 	 Base: 3%
 	 Effective Percent: 7,14%
 Leech
 	 Rating: 4284
 	 Multiplicative Factor: 0%
+	 Eff: 6323,99025
 	 DR Bracket: 0
 	 Base: 2%
 	 Effective Percent: 6,2%
 Avoidance
 	 Rating: 1618
 	 Multiplicative Factor: 0%
+	 Eff: 1618
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 2,97%
 Mastery
 	 Rating: 35742
 	 Multiplicative Factor: 0%
+	 Eff: 41119,4
 	 DR Bracket: 3
 	 Base: 19,8%
 	 Effective Percent: 105,74%
@@ -1226,12 +1434,15 @@ Mastery
 Intellect
 	 Rating: 150648
 	 Multiplicative Factor: 5%
+	 Eff: 150648
 Stamina
 	 Rating: 874055
 	 Multiplicative Factor: 11,3%
+	 Eff: 874054,9999999999
 Crit
 	 Rating: 9635
 	 Multiplicative Factor: 0%
+	 Eff: 13135
 	 DR Bracket: 0
 	 Base: 5%
 	 Effective Percent: 18,76%
@@ -1240,30 +1451,35 @@ Crit
 Haste
 	 Rating: 18766
 	 Multiplicative Factor: 0%
+	 Eff: 18766
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 28,43%
 Vers
 	 Rating: 3231
 	 Multiplicative Factor: 0%
+	 Eff: 5571
 	 DR Bracket: 0
 	 Base: 3%
 	 Effective Percent: 7,14%
 Leech
 	 Rating: 4284
 	 Multiplicative Factor: 0%
+	 Eff: 6323,99025
 	 DR Bracket: 0
 	 Base: 2%
 	 Effective Percent: 6,2%
 Avoidance
 	 Rating: 1618
 	 Multiplicative Factor: 0%
+	 Eff: 1618
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 2,97%
 Mastery
 	 Rating: 35742
 	 Multiplicative Factor: 0%
+	 Eff: 41119,4
 	 DR Bracket: 3
 	 Base: 19,8%
 	 Effective Percent: 105,74%
@@ -1273,12 +1489,15 @@ Mastery
 Intellect
 	 Rating: 150648
 	 Multiplicative Factor: 5%
+	 Eff: 150648
 Stamina
 	 Rating: 874055
 	 Multiplicative Factor: 11,3%
+	 Eff: 874054,9999999999
 Crit
 	 Rating: 9635
 	 Multiplicative Factor: 0%
+	 Eff: 13135
 	 DR Bracket: 0
 	 Base: 5%
 	 Effective Percent: 18,76%
@@ -1287,30 +1506,35 @@ Crit
 Haste
 	 Rating: 18766
 	 Multiplicative Factor: 0%
+	 Eff: 18766
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 28,43%
 Vers
 	 Rating: 3231
 	 Multiplicative Factor: 0%
+	 Eff: 5571
 	 DR Bracket: 0
 	 Base: 3%
 	 Effective Percent: 7,14%
 Leech
 	 Rating: 4284
 	 Multiplicative Factor: 0%
+	 Eff: 6323,99025
 	 DR Bracket: 0
 	 Base: 2%
 	 Effective Percent: 6,2%
 Avoidance
 	 Rating: 1618
 	 Multiplicative Factor: 0%
+	 Eff: 1618
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 2,97%
 Mastery
 	 Rating: 35742
 	 Multiplicative Factor: 0%
+	 Eff: 41119,4
 	 DR Bracket: 3
 	 Base: 19,8%
 	 Effective Percent: 105,74%
@@ -1320,12 +1544,15 @@ Mastery
 Intellect
 	 Rating: 150648
 	 Multiplicative Factor: 5%
+	 Eff: 150648
 Stamina
 	 Rating: 917758
 	 Multiplicative Factor: 16,87%
+	 Eff: 917757,7499999999
 Crit
 	 Rating: 9635
 	 Multiplicative Factor: 0%
+	 Eff: 13135
 	 DR Bracket: 0
 	 Base: 5%
 	 Effective Percent: 18,76%
@@ -1334,30 +1561,35 @@ Crit
 Haste
 	 Rating: 18766
 	 Multiplicative Factor: 0%
+	 Eff: 18766
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 28,43%
 Vers
 	 Rating: 3231
 	 Multiplicative Factor: 0%
+	 Eff: 5571
 	 DR Bracket: 0
 	 Base: 3%
 	 Effective Percent: 7,14%
 Leech
 	 Rating: 4284
 	 Multiplicative Factor: 0%
+	 Eff: 6323,99025
 	 DR Bracket: 0
 	 Base: 2%
 	 Effective Percent: 6,2%
 Avoidance
 	 Rating: 1618
 	 Multiplicative Factor: 0%
+	 Eff: 1618
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 2,97%
 Mastery
 	 Rating: 35742
 	 Multiplicative Factor: 0%
+	 Eff: 41119,4
 	 DR Bracket: 3
 	 Base: 19,8%
 	 Effective Percent: 105,74%
@@ -1367,12 +1599,15 @@ Mastery
 Intellect
 	 Rating: 150648
 	 Multiplicative Factor: 5%
+	 Eff: 150648
 Stamina
 	 Rating: 874055
 	 Multiplicative Factor: 11,3%
+	 Eff: 874054,9999999999
 Crit
 	 Rating: 9635
 	 Multiplicative Factor: 0%
+	 Eff: 13135
 	 DR Bracket: 0
 	 Base: 5%
 	 Effective Percent: 18,76%
@@ -1381,30 +1616,35 @@ Crit
 Haste
 	 Rating: 18766
 	 Multiplicative Factor: 0%
+	 Eff: 18766
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 28,43%
 Vers
 	 Rating: 3231
 	 Multiplicative Factor: 0%
+	 Eff: 5571
 	 DR Bracket: 0
 	 Base: 3%
 	 Effective Percent: 7,14%
 Leech
 	 Rating: 4284
 	 Multiplicative Factor: 0%
+	 Eff: 6323,99025
 	 DR Bracket: 0
 	 Base: 2%
 	 Effective Percent: 6,2%
 Avoidance
 	 Rating: 1618
 	 Multiplicative Factor: 0%
+	 Eff: 1618
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 2,97%
 Mastery
 	 Rating: 35742
 	 Multiplicative Factor: 0%
+	 Eff: 41119,4
 	 DR Bracket: 3
 	 Base: 19,8%
 	 Effective Percent: 105,74%
@@ -1414,12 +1654,15 @@ Mastery
 Intellect
 	 Rating: 150648
 	 Multiplicative Factor: 5%
+	 Eff: 150648
 Stamina
 	 Rating: 874055
 	 Multiplicative Factor: 11,3%
+	 Eff: 874054,9999999999
 Crit
 	 Rating: 9635
 	 Multiplicative Factor: 0%
+	 Eff: 13135
 	 DR Bracket: 0
 	 Base: 5%
 	 Effective Percent: 18,76%
@@ -1428,30 +1671,35 @@ Crit
 Haste
 	 Rating: 18766
 	 Multiplicative Factor: 0%
+	 Eff: 44195,8
 	 DR Bracket: 0
 	 Base: 30%
 	 Effective Percent: 66,96%
 Vers
 	 Rating: 3231
 	 Multiplicative Factor: 0%
+	 Eff: 5571
 	 DR Bracket: 0
 	 Base: 3%
 	 Effective Percent: 7,14%
 Leech
 	 Rating: 4284
 	 Multiplicative Factor: 0%
+	 Eff: 6323,99025
 	 DR Bracket: 0
 	 Base: 2%
 	 Effective Percent: 6,2%
 Avoidance
 	 Rating: 1618
 	 Multiplicative Factor: 0%
+	 Eff: 1618
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 2,97%
 Mastery
 	 Rating: 35742
 	 Multiplicative Factor: 0%
+	 Eff: 41119,4
 	 DR Bracket: 3
 	 Base: 19,8%
 	 Effective Percent: 105,74%
@@ -1461,12 +1709,15 @@ Mastery
 Intellect
 	 Rating: 150648
 	 Multiplicative Factor: 5%
+	 Eff: 150648
 Stamina
 	 Rating: 874055
 	 Multiplicative Factor: 11,3%
+	 Eff: 874054,9999999999
 Crit
 	 Rating: 9635
 	 Multiplicative Factor: 0%
+	 Eff: 13135
 	 DR Bracket: 0
 	 Base: 5%
 	 Effective Percent: 18,76%
@@ -1475,30 +1726,35 @@ Crit
 Haste
 	 Rating: 18766
 	 Multiplicative Factor: 0%
+	 Eff: 44195,8
 	 DR Bracket: 0
 	 Base: 30%
 	 Effective Percent: 66,96%
 Vers
 	 Rating: 3231
 	 Multiplicative Factor: 0%
+	 Eff: 5571
 	 DR Bracket: 0
 	 Base: 3%
 	 Effective Percent: 7,14%
 Leech
 	 Rating: 4284
 	 Multiplicative Factor: 0%
+	 Eff: 6323,99025
 	 DR Bracket: 0
 	 Base: 2%
 	 Effective Percent: 6,2%
 Avoidance
 	 Rating: 1618
 	 Multiplicative Factor: 0%
+	 Eff: 1618
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 2,97%
 Mastery
 	 Rating: 35742
 	 Multiplicative Factor: 0%
+	 Eff: 41119,4
 	 DR Bracket: 3
 	 Base: 19,8%
 	 Effective Percent: 105,74%
@@ -1508,12 +1764,15 @@ Mastery
 Intellect
 	 Rating: 150648
 	 Multiplicative Factor: 5%
+	 Eff: 150648
 Stamina
 	 Rating: 874055
 	 Multiplicative Factor: 11,3%
+	 Eff: 874054,9999999999
 Crit
 	 Rating: 9635
 	 Multiplicative Factor: 0%
+	 Eff: 13135
 	 DR Bracket: 0
 	 Base: 5%
 	 Effective Percent: 18,76%
@@ -1522,30 +1781,35 @@ Crit
 Haste
 	 Rating: 18766
 	 Multiplicative Factor: 0%
+	 Eff: 18766
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 28,43%
 Vers
 	 Rating: 3231
 	 Multiplicative Factor: 0%
+	 Eff: 5571
 	 DR Bracket: 0
 	 Base: 3%
 	 Effective Percent: 7,14%
 Leech
 	 Rating: 4284
 	 Multiplicative Factor: 0%
+	 Eff: 6323,99025
 	 DR Bracket: 0
 	 Base: 2%
 	 Effective Percent: 6,2%
 Avoidance
 	 Rating: 1618
 	 Multiplicative Factor: 0%
+	 Eff: 1618
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 2,97%
 Mastery
 	 Rating: 35742
 	 Multiplicative Factor: 0%
+	 Eff: 41119,4
 	 DR Bracket: 3
 	 Base: 19,8%
 	 Effective Percent: 105,74%
@@ -1555,12 +1819,15 @@ Mastery
 Intellect
 	 Rating: 150648
 	 Multiplicative Factor: 5%
+	 Eff: 150648
 Stamina
 	 Rating: 874055
 	 Multiplicative Factor: 11,3%
+	 Eff: 874054,9999999999
 Crit
 	 Rating: 9635
 	 Multiplicative Factor: 0%
+	 Eff: 13135
 	 DR Bracket: 0
 	 Base: 5%
 	 Effective Percent: 18,76%
@@ -1569,30 +1836,35 @@ Crit
 Haste
 	 Rating: 18766
 	 Multiplicative Factor: 0%
+	 Eff: 18766
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 28,43%
 Vers
 	 Rating: 3231
 	 Multiplicative Factor: 0%
+	 Eff: 5571
 	 DR Bracket: 0
 	 Base: 3%
 	 Effective Percent: 7,14%
 Leech
 	 Rating: 4284
 	 Multiplicative Factor: 0%
+	 Eff: 6323,99025
 	 DR Bracket: 0
 	 Base: 2%
 	 Effective Percent: 6,2%
 Avoidance
 	 Rating: 1618
 	 Multiplicative Factor: 0%
+	 Eff: 1618
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 2,97%
 Mastery
 	 Rating: 35742
 	 Multiplicative Factor: 0%
+	 Eff: 41119,4
 	 DR Bracket: 3
 	 Base: 19,8%
 	 Effective Percent: 105,74%
@@ -1602,12 +1874,15 @@ Mastery
 Intellect
 	 Rating: 150648
 	 Multiplicative Factor: 5%
+	 Eff: 150648
 Stamina
 	 Rating: 874055
 	 Multiplicative Factor: 11,3%
+	 Eff: 874054,9999999999
 Crit
 	 Rating: 9635
 	 Multiplicative Factor: 0%
+	 Eff: 13135
 	 DR Bracket: 0
 	 Base: 5%
 	 Effective Percent: 18,76%
@@ -1616,30 +1891,35 @@ Crit
 Haste
 	 Rating: 18766
 	 Multiplicative Factor: 0%
+	 Eff: 18766
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 28,43%
 Vers
 	 Rating: 3231
 	 Multiplicative Factor: 0%
+	 Eff: 5571
 	 DR Bracket: 0
 	 Base: 3%
 	 Effective Percent: 7,14%
 Leech
 	 Rating: 4284
 	 Multiplicative Factor: 0%
+	 Eff: 6323,99025
 	 DR Bracket: 0
 	 Base: 2%
 	 Effective Percent: 6,2%
 Avoidance
 	 Rating: 1618
 	 Multiplicative Factor: 0%
+	 Eff: 1618
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 2,97%
 Mastery
 	 Rating: 35742
 	 Multiplicative Factor: 0%
+	 Eff: 41119,4
 	 DR Bracket: 3
 	 Base: 19,8%
 	 Effective Percent: 105,74%
@@ -1649,12 +1929,15 @@ Mastery
 Intellect
 	 Rating: 150648
 	 Multiplicative Factor: 5%
+	 Eff: 150648
 Stamina
 	 Rating: 874055
 	 Multiplicative Factor: 11,3%
+	 Eff: 874054,9999999999
 Crit
 	 Rating: 9635
 	 Multiplicative Factor: 0%
+	 Eff: 13135
 	 DR Bracket: 0
 	 Base: 5%
 	 Effective Percent: 18,76%
@@ -1663,30 +1946,35 @@ Crit
 Haste
 	 Rating: 18766
 	 Multiplicative Factor: 0%
+	 Eff: 18766
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 28,43%
 Vers
 	 Rating: 3231
 	 Multiplicative Factor: 0%
+	 Eff: 5571
 	 DR Bracket: 0
 	 Base: 3%
 	 Effective Percent: 7,14%
 Leech
 	 Rating: 4284
 	 Multiplicative Factor: 0%
+	 Eff: 6323,99025
 	 DR Bracket: 0
 	 Base: 2%
 	 Effective Percent: 6,2%
 Avoidance
 	 Rating: 1618
 	 Multiplicative Factor: 0%
+	 Eff: 1618
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 2,97%
 Mastery
 	 Rating: 35742
 	 Multiplicative Factor: 0%
+	 Eff: 41119,4
 	 DR Bracket: 3
 	 Base: 19,8%
 	 Effective Percent: 105,74%
@@ -1696,12 +1984,15 @@ Mastery
 Intellect
 	 Rating: 150648
 	 Multiplicative Factor: 5%
+	 Eff: 150648
 Stamina
 	 Rating: 874055
 	 Multiplicative Factor: 11,3%
+	 Eff: 874054,9999999999
 Crit
 	 Rating: 9635
 	 Multiplicative Factor: 0%
+	 Eff: 13135
 	 DR Bracket: 0
 	 Base: 5%
 	 Effective Percent: 18,76%
@@ -1710,30 +2001,35 @@ Crit
 Haste
 	 Rating: 18766
 	 Multiplicative Factor: 0%
+	 Eff: 18766
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 28,43%
 Vers
 	 Rating: 3231
 	 Multiplicative Factor: 0%
+	 Eff: 5571
 	 DR Bracket: 0
 	 Base: 3%
 	 Effective Percent: 7,14%
 Leech
 	 Rating: 4284
 	 Multiplicative Factor: 0%
+	 Eff: 6323,99025
 	 DR Bracket: 0
 	 Base: 2%
 	 Effective Percent: 6,2%
 Avoidance
 	 Rating: 1618
 	 Multiplicative Factor: 0%
+	 Eff: 1618
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 2,97%
 Mastery
 	 Rating: 35742
 	 Multiplicative Factor: 0%
+	 Eff: 41119,4
 	 DR Bracket: 3
 	 Base: 19,8%
 	 Effective Percent: 105,74%
@@ -1743,12 +2039,15 @@ Mastery
 Intellect
 	 Rating: 150648
 	 Multiplicative Factor: 5%
+	 Eff: 150648
 Stamina
 	 Rating: 874055
 	 Multiplicative Factor: 11,3%
+	 Eff: 874054,9999999999
 Crit
 	 Rating: 9635
 	 Multiplicative Factor: 0%
+	 Eff: 13135
 	 DR Bracket: 0
 	 Base: 5%
 	 Effective Percent: 18,76%
@@ -1757,30 +2056,35 @@ Crit
 Haste
 	 Rating: 18766
 	 Multiplicative Factor: 0%
+	 Eff: 18766
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 28,43%
 Vers
 	 Rating: 3231
 	 Multiplicative Factor: 0%
+	 Eff: 5571
 	 DR Bracket: 0
 	 Base: 3%
 	 Effective Percent: 7,14%
 Leech
 	 Rating: 4284
 	 Multiplicative Factor: 0%
+	 Eff: 6323,99025
 	 DR Bracket: 0
 	 Base: 2%
 	 Effective Percent: 6,2%
 Avoidance
 	 Rating: 1618
 	 Multiplicative Factor: 0%
+	 Eff: 1618
 	 DR Bracket: 0
 	 Base: 0%
 	 Effective Percent: 2,97%
 Mastery
 	 Rating: 35742
 	 Multiplicative Factor: 0%
+	 Eff: 41119,4
 	 DR Bracket: 3
 	 Base: 19,8%
 	 Effective Percent: 105,74%

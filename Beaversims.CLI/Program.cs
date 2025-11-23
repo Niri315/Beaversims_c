@@ -28,7 +28,7 @@ namespace Beaversims.CLI
             //var logLink = "https://www.warcraftlogs.com/reports/m4vPb3J71twFXVTA?fight=17&type=damage-done&source=166";  //WTF mastery?
             //var logLink = "https://www.warcraftlogs.com/reports/jknw3D642CpcALgq?fight=54&type=healing&source=22"; // Leech + martyr -> need fi
             //var logLink = "https://www.warcraftlogs.com/reports/vlhzymap2dgxfwkr?fight=34&type=healing&source=24"; //frac nali antenna
-            //var logLink = "https://www.warcraftlogs.com/reports/8DqKYV9vhZmj7QJW?fight=32&type=healing&source=19"; // Erooxdruid Soulhunters
+            var logLink = "https://www.warcraftlogs.com/reports/8DqKYV9vhZmj7QJW?fight=32&type=healing&source=19"; // Erooxdruid Soulhunters
             //var logLink = "https://www.warcraftlogs.com/reports/aB9HyhkFgKGnjM3R?fight=51&type=casts&source=2"; // dim druid Ns
             //var logLink = "https://www.warcraftlogs.com/reports/aB9HyhkFgKGnjM3R?fight=30&type=healing&source=2"; // frac druid
             //var logLink = "https://www.warcraftlogs.com/reports/tDhM4LRkB8yamrVF?fight=13&type=damage-done&source=143"; // embrace the dream
@@ -36,7 +36,8 @@ namespace Beaversims.CLI
             //var logLink = "https://www.warcraftlogs.com/reports/XBHvP9xVrpjDZn13?fight=14&type=casts&translate=true&source=3"; // evoker chrono
             //var logLink = "https://www.warcraftlogs.com/reports/cAWLyDhNpKxBJF1P?fight=64&type=healing&source=22"; // evoker flameshaper
             //var logLink = "https://www.warcraftlogs.com/reports/FcWt4wLRP6GQJzAh?fight=2&source=6&type=healing"; // 0 heal evoker
-            var logLink = "https://www.warcraftlogs.com/reports/bBWMANk9yjdTPR76?fight=10&type=summary&source=22"; //  
+            //var logLink = "https://www.warcraftlogs.com/reports/bBWMANk9yjdTPR76?fight=10&type=summary&source=22"; //  stat alloc source
+            //var logLink = "https://www.warcraftlogs.com/reports/486mWjYJLGnXRBaP?fight=19&type=healing&source=9"; //  
 
             //var swMode = true;
             SimMode simMode = SimMode.SW;

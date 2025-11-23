@@ -5,7 +5,7 @@
     //{ id: "rdruid", label: "Restoration Druid" },
     //{ id: "rsham", label: "Restoration Shaman" },
     //{ id: "mistw", label: "Mistweaver Monk" },
-    //{ id: "pres", label: "Preservation Evoker" },
+    { id: "pres", label: "Preservation Evoker" },
 ];
 
 export const HERO_TALENTS = {
@@ -15,7 +15,7 @@ export const HERO_TALENTS = {
     //rdruid: ["Keeper of the Grove", "Elune's Chosen"],
     //rsham: ["Totemic", "Farseer"],
     //mistw: ["Shado-Pan", "Conduit of the Celestials"],
-    //pres: ["Chronowarden", "Flameshaper"],
+    pres: ["Chronowarden", "Flameshaper"],
 };
 
 export const CLASS_COLORS = {

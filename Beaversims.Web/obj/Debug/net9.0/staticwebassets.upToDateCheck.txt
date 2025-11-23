@@ -40,8 +40,8 @@ wwwroot\js\shared\utils.js
 wwwroot\js\shared\wasm.js
 wwwroot\js\shared\wcl.js
 wwwroot\js\site.js
-wwwroot\js\stat-alloc.js
 wwwroot\js\stat-weights.js
+wwwroot\js\top-gear.js
 wwwroot\results.html
 wwwroot\stat-alloc.html
 wwwroot\stat-weights.html
@@ -102,7 +102,7 @@ wwwroot\wasm\_framework\System.Text.Json.o0pm8i14pb.wasm
 wwwroot\wasm\_framework\System.Text.RegularExpressions.6mjwm4rkh4.wasm
 wwwroot\wasm\_framework\System.Threading.Tasks.Parallel.ju1ohc1on9.wasm
 wwwroot\wasm\_framework\System.Web.HttpUtility.ed9o3z7c7y.wasm
-wwwroot\js\top-gear.js
+wwwroot\js\stat-alloc.js
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Web\wwwroot\wasm\_framework\Beaversims.Core.2xz5e0q16k.wasm
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Web\wwwroot\wasm\_framework\Beaversims.Core.53ykfvt24c.wasm
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Web\wwwroot\wasm\_framework\Beaversims.Core.55pevwd6l2.wasm
@@ -186,11 +186,11 @@ C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Web\wwwroot\js\shared\utils.js
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Web\wwwroot\js\shared\wasm.js
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Web\wwwroot\js\shared\wcl.js
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Web\wwwroot\js\site.js
-C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Web\wwwroot\js\stat-alloc.js
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Web\wwwroot\js\stat-weights.js
+C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Web\wwwroot\js\top-gear.js
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Web\wwwroot\results.html
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Web\wwwroot\stat-alloc.html
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Web\wwwroot\stat-weights.html
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Web\wwwroot\top-gear.html
 C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Web\wwwroot\trinket-overview.html
-C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Web\wwwroot\js\top-gear.js
+C:\Users\Ludde\Projects\Beaversims_c\Beaversims.Web\wwwroot\js\stat-alloc.js

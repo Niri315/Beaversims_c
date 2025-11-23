@@ -23,11 +23,19 @@ namespace Beaversims.Core.Specs.Druid.Resto
 
             }
         }
-        public static void TrackRegrowth(Event evt)
+        public static void TrackCIMBuffs(Event evt)
         {
             if (evt.TargetUnit.HasBuff(Abilities.Regrowth.buffId))
             {
                 evt.TargetHasRegrowth = true;
+            }
+            if (evt.TargetUnit.HasBuff(Abilities.Rejuvenation.buffId))
+            {
+                evt.TargetHasRejuv = true;
+            }
+            if (evt.TargetUnit.HasBuff(Abilities.RejuvenationGermination.buffId))
+            {
+                evt.TargetHasGerms = true;
             }
         }
         public static void TrackAbundance(Event evt, User user)
@@ -102,7 +110,7 @@ namespace Beaversims.Core.Specs.Druid.Resto
                 evt.CreateAltEvents(user, evt);
                 CastProcessor.ProcessCast(evt, user);
                 MasteryTracker.SetMasteryEff(evt, user);
-                TrackRegrowth(evt);
+                TrackCIMBuffs(evt);
                 TrackAbundance(evt, user);
                 TrackHotw(evt, user);
                 HCGM.GatherData(evt, user);
@@ -158,6 +166,8 @@ namespace Beaversims.Core.Specs.Druid.Resto
                         RegrowthCritGains(evt, user, i);
                         if (evt.Ability.ScalesWith(StatName.Mastery))
                         {
+                            // OBS ! Mastery gains must be LAST
+                            // We use part of gainRaw from it for full allocs.
                             MasteryTracker.MasteryGains((HealEvent)evt, user, i);
                         }
                     }

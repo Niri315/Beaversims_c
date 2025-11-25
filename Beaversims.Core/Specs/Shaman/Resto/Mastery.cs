@@ -12,13 +12,21 @@ namespace Beaversims.Core.Specs.Shaman.Resto
     {  
         public static void SetMasteryEff(HealEvent evt, User user)
         {
+            if (!evt.IsHealDoneEvent()) return;
             var hp_p = evt.TargetHp_p();
             if (hp_p == null)
             {
 
                 hp_p = 1;
             }
-            evt.MasteryEffectiveness = 1 - hp_p.Value;
+            var masteryEffectiveness = 1 - hp_p.Value;
+            if (user.HasTalent(Talents.ImprovedEarthlivingWeapon.id) && evt.AbilityName == Talents.ImprovedEarthlivingWeapon.ability)
+            {
+                masteryEffectiveness *= 1 + Talents.ImprovedEarthlivingWeapon.coef;
+            }
+
+            evt.MasteryEffectiveness = masteryEffectiveness;
+            
         }
 
         public static double MasteryGainCalc(Mastery mastery, double amount, double masteryEffectiveness)

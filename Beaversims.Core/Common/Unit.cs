@@ -1,4 +1,5 @@
-﻿using Beaversims.Core.Parser;
+﻿using Beaversims.Core.Common;
+using Beaversims.Core.Parser;
 using Beaversims.Core.Sim;
 using System;
 using System.Net.Security;
@@ -115,7 +116,7 @@ namespace Beaversims.Core
         //public List<SpecialEffect> AllEffects {  get; } = new();
         public StatTracker? RefStats { get; set; }
         // If user doesnt have permanent leech for fight, revert to calculate leech value by leech data from other sims.
-        public bool HasPermaLeech {  get; set; } = false;
+        //public bool HasPermaLeech {  get; set; } = false;
         public List<GearSet> AltGearSets { get; set; } = [];
         // Don't need alt versions of this, math works out with calculating it based on original log data.
         //public double HCGM { get; set; } = 1;
@@ -123,6 +124,8 @@ namespace Beaversims.Core
         public double TrueCastTimeTotal { get; set; } = 0;
         public double HasteCapCTLoss { get; set; } = 0;
         public int Casts {  get; set; } = 0;
+        public HashSet<DupliEffect> DupliEffects { get; set; } = [];
+        public HashSet<DupliEffect> SharedDupliEffects { get; set; } = [];
 
 
         // Paladin
@@ -148,6 +151,35 @@ namespace Beaversims.Core
         public double LastStasisRelease { get; set; } = -99;
         public int MasteryTest1 { get; set; } = 0;
         public int MasteryTest2 { get; set; } = 0;
+
+        public void StoreDupliHypos(TpEvent evt, User user)
+        {
+            foreach (var dupliEffect in DupliEffects)
+            {
+                dupliEffect.StoreHypo(evt, user);
+            }
+        }
+        public void ApplyDupliAlts(List<TpEvent> tpEvents, User user, int i)
+        {
+            foreach (var dupliEffect in DupliEffects)
+            {
+                dupliEffect.ApplyAlt(tpEvents, user, i);
+            }
+        }
+        public void StoreSharedDupliHypos(TpEvent evt, User user)
+        {
+            foreach (var dupliEffect in SharedDupliEffects)
+            {
+                dupliEffect.StoreHypo(evt, user);
+            }
+        }
+        public void ApplyShareDupliAlts(List<TpEvent> tpEvents, User user, int i)
+        {
+            foreach (var dupliEffect in SharedDupliEffects)
+            {
+                dupliEffect.ApplyAlt(tpEvents, user, i);
+            }
+        }
 
         public double HasteCapCTGLossMod(int i)
         {

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading.Tasks;   
 using System.Xml.Linq;
 
 /*
@@ -14,6 +14,29 @@ using System.Xml.Linq;
 High Prio:
     
     Ascendance (different ability IDS for same name ability)
+    Stat Buffs:
+        Instinctive Imbuements
+        Spiritual Awakening
+        Elemental Attunement
+        Ancestral Influence
+
+    Lively Totems // Could just remove pet cast bool if totemic (?)
+        
+    Earthliving CIM (Some Auto some riptide, CAST CIM from healing wave/chain heal, some CIM 0 from other non scaling effects)
+
+    Cast Times
+        Nature's Swiftness
+	        nature spell -> GCD
+        Ancestral Swiftness
+	        heal/dmg spell -> GCD
+        Ascendance 
+	        Healing Wave + Chain Heal -> GCD
+        Unleash Life
+	        Healing Wave + Chain Heal -> 30% reduct
+        Windspeaker
+	        Healing Wave + Chain Heal + Lava Burst -> 10% reduct
+        Whirling Elements
+	        Healing spell -> 40% reduct
 
 Mid Prio:
 
@@ -29,6 +52,17 @@ namespace Beaversims.Core.Specs.Shaman.Resto.Abilities
     {
 
     }
+    internal class Ascendance : HpalAbility
+    {
+        public const string name = "Ascendance";
+        public const int _buffId = 114052;
+        public Ascendance()
+        {
+            Name = name;
+            BuffId = _buffId;
+            GCD = true;
+        }
+    }
     internal class AcidRain : HpalAbility
     {
         public const string name = "Acid Rain";
@@ -37,6 +71,18 @@ namespace Beaversims.Core.Specs.Shaman.Resto.Abilities
             Name = name;
             Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Haste, SN.Vers]);
             HasteScalers.UnionWith([HST.Auto]);
+        }
+    }
+
+    internal class AncestralAwakening : HpalAbility
+    {
+        public const string name = "Ancestral Awakening";
+
+        public AncestralAwakening()
+        {
+            Name = name;
+            SimDupliAbility = true;
+            DupliEffectType = DupliEffectType.Heal;
         }
     }
 
@@ -74,6 +120,28 @@ namespace Beaversims.Core.Specs.Shaman.Resto.Abilities
             HasteScalers.UnionWith([HST.Cast]);
         }
     }
+    //internal class Cloudburst : HpalAbility
+    //{
+    //    public const string name = "Cloudburst";
+    //    public const int _buffId = 157504;
+    //    public Cloudburst()
+    //    {
+    //        Name = name;
+    //        BuffId = _buffId;
+    //        SimDupliAbility = true;
+    //        DeCoef1 =
+    //    }
+    //}
+
+    //internal class CloudburstTotem : HpalAbility
+    //{
+    //    public const string name = "Cloudburst Totem";
+    //    public CloudburstTotem()
+    //    {
+    //        Name = name;
+    //        GCD = true;
+    //    }
+    //}
 
     internal class Downpour : HpalAbility
     {
@@ -265,6 +333,28 @@ namespace Beaversims.Core.Specs.Shaman.Resto.Abilities
             GCD = true;
         }
     }
+
+    internal class HealingTide : HpalAbility
+    {
+        public const string name = "Healing Tide";
+        public HealingTide()
+        {
+            Name = name;
+            Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Haste, SN.Mastery, SN.Vers]);
+            HasteScalers.UnionWith([HST.Auto]);
+        }
+    }
+
+    internal class HealingTideTotem : HpalAbility
+    {
+        public const string name = "Healing Tide Totem";
+        public HealingTideTotem()
+        {
+            Name = name;
+            GCD = true;
+        }
+    }
+
     internal class HealingWave : HpalAbility
     {
         public const string name = "Healing Wave";
@@ -285,6 +375,17 @@ namespace Beaversims.Core.Specs.Shaman.Resto.Abilities
         {
             Name = name;
             CastTime = 1.7;
+        }
+    }
+
+    internal class Hydrobubble : HpalAbility
+    {
+        public const string name = "Hydrobubble";
+        public Hydrobubble()
+        {
+            Name = name;
+            CastTime = 2;
+            Scalers.UnionWith([SN.Intellect, SN.Vers]);
         }
     }
 
@@ -390,6 +491,40 @@ namespace Beaversims.Core.Specs.Shaman.Resto.Abilities
         }
     }
 
+    //internal class RestorativeMistsDupliEffect : HpalAbility
+    //{
+    //    public const string name = "Restorative Mists (Duplication Effect)";
+    //    public const int _id = 114083;
+
+    //    public RestorativeMistsDupliEffect()
+    //    {
+    //        Name = name;
+    //        SimDupliAbility = true;
+    //        DeCoef1 = 0.7;
+    //        Id = _id;
+    //    }
+    //}
+    //internal class RestorativeMistsUseEffect : HpalAbility
+    //{
+    //    public const string name = "Restorative Mists (Use Effect)";
+    //    public const int _id = 294020;
+    //    public RestorativeMistsUseEffect()
+    //    {
+    //        Name = name;
+    //        Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Mastery, SN.Vers]);
+    //        Id = _id;
+    //    }
+    //}
+    internal class RestorativeMists : HpalAbility
+    {
+        public const string name = "Restorative Mists";
+        public RestorativeMists()
+        {
+            Name = name;
+            Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Mastery, SN.Vers]);
+        }
+    }
+
     internal class Riptide : HpalAbility
     {
         public const string name = "Riptide";
@@ -417,6 +552,16 @@ namespace Beaversims.Core.Specs.Shaman.Resto.Abilities
         {
             Name = name;
             GCD = true;
+        }
+    }
+
+    internal class SpoutingSpirits : HpalAbility
+    {
+        public const string name = "Spouting Spirits";
+        public SpoutingSpirits()
+        {
+            Name = name;
+            Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Mastery, SN.Vers]);
         }
     }
 
@@ -475,6 +620,17 @@ namespace Beaversims.Core.Specs.Shaman.Resto.Abilities
         {
             Name = name;
             GCD = true;
+        }
+    }
+    internal class WhisperingWaves : HpalAbility
+    {
+        public const string name = "Whispering Waves";
+        public const double coef = 0.15;
+        public WhisperingWaves()
+        {
+            Name = name;
+            SimDupliAbility = true;
+            DupliEffectType = DupliEffectType.Heal;
         }
     }
     internal class WindBarrier : HpalAbility

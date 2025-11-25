@@ -48,14 +48,12 @@ namespace Beaversims.Core
         public AmountContainer Amount { get; set; }
         public StatTracker? UserStats { get; set; }
         public Dictionary<StatName, double> SimStatEffInc { get; set; } = Utils.InitStatDict();
-        //public List<StatChange> SimStatChanges { get; set; } = [];
-        //public Dictionary<StatName, double> SimStatRatingInc { get; set; } = Utils.InitStatDict();
-        public double NukeRaw { get; set; } = 0.0;
-        //public StatTracker StatDiffs { get; set; } = new();
-        //public void StoreSimStatChange(StatName statName, double amount, StatAmountType type, bool removal)
-        //{
-        //    SimStatChanges.Add(new StatChange(statName, amount, type, removal));
-        //}
+
+        // TODO - Might have made a misstake with this... Its 100% neccessary for leech dupli effect (although now Im wondering if its incorrect)
+        // But for other dupli effects it seems to negate any stat change completely...
+        // Wondering if NukeRaw works and is needed for leech but is not needed for other dupli effects?
+        public double NukeRaw { get; set; } = 0.0;  
+
         public AltEvent() 
         { 
 
@@ -97,6 +95,7 @@ namespace Beaversims.Core
         public virtual bool SimEvent { get; set; } = false;
         public bool NonScInstaTick { get; set; } = false; // need setup in spec main
         public bool RemoveMe { get; set; } = false;
+        public HashSet<DupliEffect> ActiveDupliEffects { get; set; } = [];
 
 
         //Paladin
@@ -117,10 +116,11 @@ namespace Beaversims.Core
 
         // Evoker
         public bool LifebindEvent { get; set; } = false;
-        public int LifebindCount { get; set; } = 0; 
+        public int LifebindCount { get; set; } = 0;
 
 
-        // TODO implement preEvent option.
+
+
         public double? SourceHp_p()//(bool preEvent=false) 
         {
             if (SourceHp == null) return 1.0;  // Default to assuming percent is 100 if it cant be found.
@@ -275,6 +275,11 @@ namespace Beaversims.Core
             if (Amount.Raw == 0) return 0;
             return value * (Amount.Eff / Amount.Raw);
         }
+        public double RawToNaeffConvert(double value)
+        {
+            if (Amount.Raw == 0) return 0;
+            return value * (Amount.Naeff / Amount.Raw);
+        }
         public double AltRawToNarawConvert(double value, int i)
         {
             if (AltEvents[i].Amount.Raw == 0) return 0;
@@ -290,6 +295,7 @@ namespace Beaversims.Core
             if (AltEvents[i].Amount.Raw == 0) return 0;
             return value * (AltEvents[i].Amount.Eff / AltEvents[i].Amount.Raw);
         }
+
 
     }
 

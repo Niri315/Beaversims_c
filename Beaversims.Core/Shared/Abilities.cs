@@ -27,12 +27,17 @@ namespace Beaversims.Core.Shared.Abilities
     internal class Leech : SharedAbility
     {
         public const string name = "Leech";
+        public override double HypoTrueRawR()
+        {
+            return base.HypoTrueRawR();
+        }
         public Leech() 
         { 
             Name = name;
             LeechSource = false;
             CanDupli = false;
             SimDupliAbility = true;
+            DupliEffectType = DupliEffectType.Heal;
         }
     }
 
@@ -60,7 +65,7 @@ namespace Beaversims.Core.Shared.Abilities
         {
             Name = name;
             SimDupliAbility = true;
-            ClassAbility = true;
+            DupliEffectType = DupliEffectType.Reverse;
         }
     }
 

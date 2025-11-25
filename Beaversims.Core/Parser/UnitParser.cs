@@ -3,6 +3,7 @@ using Beaversims.Core.Specs.Druid.Resto;
 using Beaversims.Core.Specs.Evoker.Pres;
 using Beaversims.Core.Specs.Paladin.Holy;
 using Beaversims.Core.Specs.Paladin.Holy.Abilities;
+using Beaversims.Core.Specs.Priest.Holy;
 using Beaversims.Core.Specs.Shaman.Resto;
 using System;
 using System.Collections;
@@ -73,6 +74,10 @@ namespace Beaversims.Core.Parser
                         return new RestoFarseer();
                     case RestoTotemic.idTalent:
                         return new RestoTotemic();
+                    case HolyArchon.idTalent:
+                        return new HolyArchon();
+                    case HolyOracle.idTalent:
+                        return new HolyOracle();
                 }
             }
             return new DummySpec();
@@ -108,10 +113,10 @@ namespace Beaversims.Core.Parser
             var stats = user.Stats;
             var leechRating = userInfo.GetProperty("leech").GetInt32();
 
-            if (leechRating > stats.Get(StatName.Leech).Rating)
-            {
-                user.HasPermaLeech = true;
-            }
+            //if (leechRating > stats.Get(StatName.Leech).Rating)
+            //{
+            //    user.HasPermaLeech = true;
+            //}
             stats.Get(StatName.Intellect).Rating = userInfo.GetProperty("intellect").GetInt32();
             stats.Get(StatName.Stamina).Rating = userInfo.GetProperty("stamina").GetInt32();
             stats.Get(StatName.Crit).Rating = userInfo.GetProperty("critSpell").GetInt32();

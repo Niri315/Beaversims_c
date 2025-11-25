@@ -159,7 +159,7 @@ namespace Beaversims.Core.Specs.Druid.Resto
                 if (evt is TpEvent tEvt)
                 {
                     ProcessEvents.OriginalTotals(tEvt, user);
-                    Shared.DupliEffects.SharedHypo(tEvt, user);
+                    user.StoreSharedDupliHypos(tEvt, user);
                     if (evt is HealEvent hEvt)
                     {
                         DupliEffects.SymbRelHypo(hEvt, user);
@@ -219,9 +219,8 @@ namespace Beaversims.Core.Specs.Druid.Resto
 
                 // Only summer and leech will react to this.
                 tpEvents = altGearSet.AltEventList.OfType<TpEvent>().ToList(); // Updating here to include non proc sim events
-                Shared.ProcessEvents.AddProcEvents(tpEvents, altGearSet.ProcEvents, iterationCount, user); 
-                Shared.DupliEffects.AltSummerSource(tpEvents, user, i);
-                Shared.DupliEffects.AltLeechSource(tpEvents, user, i);
+                Shared.ProcessEvents.AddProcEvents(tpEvents, altGearSet.ProcEvents, iterationCount, user);
+                user.ApplyShareDupliAlts(tpEvents, user, i);
 
 
                 Shared.ProcessEvents.StoreTotals(tpEvents, user, i, fight);

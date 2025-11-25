@@ -452,6 +452,30 @@ namespace Beaversims.Core.Data.StatBuffs
         }
     }
 
+    /* ------ *
+     * Shaman *
+     * ------ */
+
+    internal class Preeminence : StatBuff
+    {
+        public const int id = 114052;
+        public const string name = "Preeminence (Ascendance)";
+
+        public Preeminence(UnitId sourceId, int stacks)
+            : base(id, sourceId, name, stacks)
+        {
+            AllowMultiple = false;
+            SourceType = BuffSourceType.Talent;
+            SourceObjId = 127675;
+            StatMods.Add(
+                new StatMod(
+                    StatName.Haste,
+                    StatAmountType.Base,
+                    25 * Haste.percentRate)
+            );
+        }
+    }
+
     /* ----------- *
      * Timewalking *
      * ----------- */

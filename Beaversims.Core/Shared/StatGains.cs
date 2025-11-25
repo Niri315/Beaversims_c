@@ -334,7 +334,7 @@ namespace Beaversims.Core.Shared
             }
         }
 
-        public static void LeechGains_adv(TpEvent evt, User user)
+        public static void LeechGains_adv(TpEvent evt, User user, int i)
         {
             //if (Shared.DupliEffects.IsLeechSourceEvent(evt))
             //{
@@ -460,9 +460,12 @@ namespace Beaversims.Core.Shared
             VersDefGains(evt, i);
             AvoidanceGains(evt, i);
             SuppStamGains(evt, i);
-            if (user.HasPermaLeech)
+            if (user.Abilities.Get(Shared.Abilities.Leech.name).Heal.Raw > 0)
             {
                 LeechGains_simple(evt, i);
+            }
+            {
+                LeechGains_adv(evt, user, i);
             }
         }
     }

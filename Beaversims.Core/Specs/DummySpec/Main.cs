@@ -24,7 +24,7 @@ namespace Beaversims.Core.Specs.DummySpec
   
                 if (evt is TpEvent tEvt)
                 {
-                    Shared.DupliEffects.SharedHypo(tEvt, user);
+                    //Shared.DupliEffects.SharedHypo(tEvt, user);
                 }
 
             }

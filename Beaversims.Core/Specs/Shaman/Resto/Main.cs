@@ -18,13 +18,19 @@ namespace Beaversims.Core.Specs.Shaman.Resto
     {
         private static void SpecInit(User user)
         {
-
+            //user.DupliEffects.Add(new DupliEffects.RestorativeMists(user.Abilities.Get(Abilities.RestorativeMistsDupliEffect.name)));
+            user.DupliEffects.Add(new DupliEffects.WhisperingWaves(user.Abilities.Get(Abilities.WhisperingWaves.name)));
+            var aa_tl_id = Talents.AncestralAwakening.id;
+            if (user.HasTalent(aa_tl_id)) 
+            {
+                var aa_tl = (Talents.AncestralAwakening)user.Talents[aa_tl_id];
+                var aa_ability = (user.Abilities.Get(Abilities.AncestralAwakening.name));
+                user.DupliEffects.Add(new DupliEffects.AncestralAwakening(aa_ability, aa_tl.Coef));
+            }
         }
 
         public static void SpecMain(List<Event> events, UnitRepo allUnits, Fight fight, int iterationCount)
         {
-
-
             var user = allUnits.GetUser();
             var prepullRefStats = user.RefStats.Clone();
             SpecInit(user);
@@ -38,14 +44,12 @@ namespace Beaversims.Core.Specs.Shaman.Resto
                 BuffTracker.TrackBuffs(evt, allUnits, statLogger, refStatLogger);
                 evt.CreateAltEvents(user, evt);
                 CastProcessor.ProcessCast(evt, user);
-             
-
-
-
+                        
                 if (evt is TpEvent tEvt)
                 {
                     ProcessEvents.OriginalTotals(tEvt, user);
-                    Shared.DupliEffects.SharedHypo(tEvt, user);
+                    user.StoreSharedDupliHypos(tEvt, user);
+                    user.StoreDupliHypos(tEvt, user);
                     if (evt is HealEvent hEvt)
                     {
                         MasteryTracker.SetMasteryEff(hEvt, user);
@@ -53,7 +57,6 @@ namespace Beaversims.Core.Specs.Shaman.Resto
                     if (evt is DamageEvent dEvt)
                     {
                     }
-
                 }
             }
             Utils.CleanUp(allUnits, events); // To avoid accidental usage + remove events we no longer need.
@@ -61,14 +64,9 @@ namespace Beaversims.Core.Specs.Shaman.Resto
             Shared.CIM.SetCIM(user);
             Utils.RemoveImpurities(events, user);
 
-
-
-
             var degree = Environment.ProcessorCount;
             Parallel.For(0, user.AltGearSets.Count, new ParallelOptions { MaxDegreeOfParallelism = degree }, i =>
             {
-
-
                 var altGearSet = user.AltGearSets[i];
                 var altEventList = new List<Event>(events);
                 altGearSet.AltEventList = altEventList;
@@ -91,13 +89,16 @@ namespace Beaversims.Core.Specs.Shaman.Resto
                     }
                 }
 
+                // Im scared of Ancestral Awakening dupli since we are altering it in full alloc...
+                // Not seeing any weird results now but with larger changes in top gear im not sure
+                // Need a proper review on how we are dealing with NukeRaw, until then keep dupli alts before full allocs.
+                user.ApplyDupliAlts(tpEvents, user, i);
+                FullAllocs.FullAllocGains(tpEvents, user, i);
 
                 // Only summer and leech will react to this.
                 tpEvents = altGearSet.AltEventList.OfType<TpEvent>().ToList(); // Updating here to include non proc sim events
-                Shared.ProcessEvents.AddProcEvents(tpEvents, altGearSet.ProcEvents, iterationCount, user); 
-                Shared.DupliEffects.AltSummerSource(tpEvents, user, i);
-                Shared.DupliEffects.AltLeechSource(tpEvents, user, i);
-
+                Shared.ProcessEvents.AddProcEvents(tpEvents, altGearSet.ProcEvents, iterationCount, user);
+                user.ApplyShareDupliAlts(tpEvents, user, i);
 
                 Shared.ProcessEvents.StoreTotals(tpEvents, user, i, fight);
                 

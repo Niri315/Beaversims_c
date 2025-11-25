@@ -9,12 +9,9 @@ using System.Threading.Tasks;
 namespace Beaversims.Core.Specs.Shaman.Resto
 {
     internal class CastProcessor
-        // Obs ! 
     {
         private static double ApplyReductEffects(CastEvent evt, User user, double castTime)
         {
-         
-            
             return castTime;
         }
 

@@ -81,7 +81,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
                 {
 
                     var altEvent = evt.AltEvents[i];
-                    var gainRaw = altEvent.Amount.Raw * beaconOfLight.AltHypoTrueRawR(i) - (altEvent.Amount.Raw + altEvent.NukeRaw);
+                    var gainRaw = altEvent.Amount.Raw * beaconOfLight.AltHypoIncRawR(i) - (altEvent.Amount.Raw + altEvent.NukeRaw);
                     altEvent.Amount.UpdateAltGainsFromEvtData(evt, gainRaw, i);
                     
                 }
@@ -143,7 +143,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
                     {
                      
                         var altEvent = evt.AltEvents[i];
-                        var gainRaw = altEvent.Amount.Raw * selfless_a.AltHypoTrueRawR(i) - (altEvent.Amount.Raw + altEvent.NukeRaw);
+                        var gainRaw = altEvent.Amount.Raw * selfless_a.AltHypoIncRawR(i) - (altEvent.Amount.Raw + altEvent.NukeRaw);
                         altEvent.Amount.UpdateAltGainsFromEvtData(evt, gainRaw, i);
                         
                     }

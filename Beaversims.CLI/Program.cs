@@ -23,7 +23,7 @@ namespace Beaversims.CLI
     {
         static async Task Main(string[] args)
         {
-            //var logLink = "https://www.warcraftlogs.com/reports/PxzAyBCDL7acXRvg?fight=11&type=healing&source=6"; //Salad Nali LS
+            var logLink = "https://www.warcraftlogs.com/reports/PxzAyBCDL7acXRvg?fight=11&type=healing&source=6"; //Salad Nali LS
             //var logLink = "https://www.warcraftlogs.com/reports/PJWrjZv6xTpLYmct?fight=128&type=healing&source=1863";  //Salad Ellesmere Herald
             //var logLink = "https://www.warcraftlogs.com/reports/m4vPb3J71twFXVTA?fight=17&type=damage-done&source=166";  //WTF mastery?
             //var logLink = "https://www.warcraftlogs.com/reports/jknw3D642CpcALgq?fight=54&type=healing&source=22"; // Leech + martyr -> need fi
@@ -37,7 +37,9 @@ namespace Beaversims.CLI
             //var logLink = "https://www.warcraftlogs.com/reports/cAWLyDhNpKxBJF1P?fight=64&type=healing&source=22"; // evoker flameshaper
             //var logLink = "https://www.warcraftlogs.com/reports/FcWt4wLRP6GQJzAh?fight=2&source=6&type=healing"; // 0 heal evoker
             //var logLink = "https://www.warcraftlogs.com/reports/bBWMANk9yjdTPR76?fight=10&type=summary&source=22"; //  stat alloc source
-            var logLink = "https://www.warcraftlogs.com/reports/LZWxmFpnKg81v4D2?fight=6&type=healing&source=7"; //  
+            //var logLink = "https://www.warcraftlogs.com/reports/LZWxmFpnKg81v4D2?fight=6&type=healing&source=7"; //  Seteth
+            //var logLink = "https://www.warcraftlogs.com/reports/HqRJWQ3y16F9ZwPL?fight=16&type=healing&source=16"; //  ancestral awakening'
+            //var logLink = "https://www.warcraftlogs.com/reports/rfyXTLpA1zRqxNhV?fight=15&type=healing&source=124"; //  ancestral awakening
 
             //var swMode = true;
             SimMode simMode = SimMode.SW;

@@ -1,10 +1,12 @@
 -----------
+Ascendance
+-----------
 Acid Rain
 -----------
 Capacitor Totem
 -----------
 Chain Heal
-	Eff: 383,7639832397004
+	Eff: 383,7639832397518
 -----------
 Chain Lightning
 -----------
@@ -13,14 +15,14 @@ Downpour
 Earth Elemental
 -----------
 Earth Shield
-	Eff: 81,65683417635746
+	Eff: 81,65683417635879
 -----------
 Earthbind Totem
 -----------
 Earthgrab Totem
 -----------
 Earthliving Weapon
-	Eff: 1370,0438208344942
+	Eff: 2932,505101539531
 -----------
 Far Sight
 -----------
@@ -42,16 +44,24 @@ Healing Rain
 	Eff: 30,099700670612492
 -----------
 Healing Surge
-	Eff: 1805,008889148727
+	Eff: 1805,008889142849
 -----------
 Healing Stream
 -----------
 Healing Stream Totem
 -----------
+Healing Tide
+	Eff: 576,7425993404814
+-----------
+Healing Tide Totem
+-----------
 Healing Wave
-	Eff: 1529,9689470033497
+	Eff: 1529,9689469953516
 -----------
 Hex
+-----------
+Hydrobubble
+	Eff: -1,821626938180998E-08
 -----------
 Lava Burst
 -----------
@@ -74,12 +84,18 @@ Purify Spirit
 -----------
 Reactive Warding
 -----------
+Restorative Mists
+	Eff: 2775,5437188658957
+-----------
 Riptide
-	Eff: 2142,5397143863493
+	Eff: 2142,5397143858345
 -----------
 Skyfury
 -----------
 Spirit Link Totem
+-----------
+Spouting Spirits
+	Eff: 60,77934504419008
 -----------
 Surging Totem
 -----------
@@ -93,12 +109,15 @@ Water Shield
 -----------
 Water Walking
 -----------
+Whispering Waves
+	Eff: 1079,8995639321765
+-----------
 Wind Barrier
 -----------
 Wind Rush Totem
 -----------
 Leech
-	Eff: 106,84915772446982
+	Eff: 221,07533216432284
 -----------
 Blessing of Summer
 -----------
@@ -112,20 +131,17 @@ Loom'ithar's Living Silk
 -----------
 Nose For Trouble
 -----------
-Whispering Waves
------------
 Authority of Fiery Resolve
 -----------
 Shattered Soul's Embrace
 -----------
 Ethereal Reconstitution
-	Eff: 4,11603908550106E-10
+	Eff: 4,610860038951716E-10
 -----------
 Ethereal Guard
+	Eff: -1,1641532182693481E-10
 -----------
 Cloudburst
------------
-Hydrobubble
 -----------
 Lightforged Blessing
 	SupEff: 1,7462298274040222E-10
@@ -134,13 +150,7 @@ Astral Shift
 -----------
 Spiritwalker's Grace
 -----------
-Healing Tide Totem
------------
 Tempered Potion
------------
-Healing Tide
------------
-Restorative Mists
 -----------
 Ancestral Swiftness
 -----------
@@ -148,15 +158,11 @@ Recall Cloudburst Totem
 -----------
 Spirit Link
 -----------
-Spouting Spirits
------------
 Ancestral Protection Totem
 -----------
 Melee
 -----------
 Arcane Restoration
------------
-Ascendance
 -----------
 Healthstone
 	Eff: 4,656612873077393E-10

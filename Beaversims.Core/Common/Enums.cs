@@ -12,6 +12,12 @@ namespace Beaversims.Core
     { 
 
     }
+    public enum DupliEffectType
+    {
+        Damage,
+        Heal,
+        Reverse
+    }
     public enum SpecName
     {
         DisciplinePriest,
@@ -31,7 +37,9 @@ namespace Beaversims.Core
         Chronowarden,
         Flameshaper,
         Farseer,
-        Totemic
+        Totemic,
+        Archon,
+        Oracle
     }
 
     public enum ScalingClass

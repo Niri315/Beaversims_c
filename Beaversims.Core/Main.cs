@@ -61,6 +61,13 @@ namespace Beaversims.Core
                     ability.CastTime = Constants.GCD;
                 }
             }
+ 
+            var summer_de = new Shared.DupliEffects.Summer((Shared.Abilities.BlessingOfSummer)user.Abilities.Get(Shared.Abilities.BlessingOfSummer.name));
+            var leech_de = new Shared.DupliEffects.Leech(user.Abilities.Get(Shared.Abilities.Leech.name));
+          
+            user.SharedDupliEffects.Add(summer_de);
+            user.SharedDupliEffects.Add(leech_de);
+
             ItemSim.CreateGearSets(user, gearSets);
 
             user.Spec.SpecIteration(events, allUnits, fight, iterationCount);

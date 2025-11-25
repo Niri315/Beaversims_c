@@ -79,6 +79,8 @@ namespace Beaversims.Core.Specs.Paladin.Holy
             var statLogger = new Logger("StatTracker", fight, user.Id.TypeId);
             var refStatLogger = new Logger("Ref Stat Tracker", fight, user.Id.TypeId);
 
+
+
             foreach (Event evt in events)
             {
                 // Loop for tracking buffs and collecting data.
@@ -101,7 +103,9 @@ namespace Beaversims.Core.Specs.Paladin.Holy
                 {
                     ProcessEvents.OriginalTotals(tEvt, user);
                     HCGM.TrackACSource(tEvt, user);
-                    Shared.DupliEffects.SharedHypo(tEvt, user);
+                    user.StoreSharedDupliHypos(tEvt, user);
+                    //Shared.DupliEffects.SummerHypo(tEvt, user);
+                    //Shared.DupliEffects.SharedHypo(tEvt, user);
                     if (tEvt.IsHealDoneEvent() && evt is HealEvent hEvt)
                     {
                         DupliEffects.SelflessHypo(hEvt, user);
@@ -164,9 +168,8 @@ namespace Beaversims.Core.Specs.Paladin.Holy
 
                 // Only summer and leech will react to this.
                 tpEvents = altGearSet.AltEventList.OfType<TpEvent>().ToList(); // Updating here to include non proc sim events
-                Shared.ProcessEvents.AddProcEvents(tpEvents, altGearSet.ProcEvents, iterationCount, user); 
-                Shared.DupliEffects.AltSummerSource(tpEvents, user, i);
-                Shared.DupliEffects.AltLeechSource(tpEvents, user, i);
+                Shared.ProcessEvents.AddProcEvents(tpEvents, altGearSet.ProcEvents, iterationCount, user);
+                user.ApplyShareDupliAlts(tpEvents, user, i);
 
 
                 Shared.ProcessEvents.StoreTotals(tpEvents, user, i, fight);

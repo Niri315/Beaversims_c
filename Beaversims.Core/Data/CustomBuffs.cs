@@ -190,4 +190,45 @@ namespace Beaversims.Core.Data.CustomBuffs
             );
         }
     }
+
+    /* ------ *
+     * Shaman *
+     * ------ */
+
+    internal class BrimmingWithLife : StatBuff
+    {
+        public const string name = "Brimming with Life";
+
+        public BrimmingWithLife(UnitId sourceId)
+            : base(-1, sourceId, name, 1)
+        {
+            AllowMultiple = false;
+            SourceType = BuffSourceType.Talent;
+            SourceObjId = 127855;
+            StatMods.Add(
+                new StatMod(
+                    StatName.Stamina,
+                    StatAmountType.Multi,
+                    0.05)
+            );
+        }
+    }
+    internal class WhiteWater : StatBuff
+    {
+        public const string name = "White Water";
+
+        public WhiteWater(UnitId sourceId)
+            : base(-1, sourceId, name, 1)
+        {
+            AllowMultiple = false;
+            SourceType = BuffSourceType.Talent;
+            SourceObjId = 101920;
+            StatMods.Add(
+                new StatMod(
+                    StatName.Crit,
+                    StatAmountType.CritIncHeal,
+                    0.15)
+            );
+        }
+    }
 }

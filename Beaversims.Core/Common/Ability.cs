@@ -65,6 +65,17 @@ namespace Beaversims.Core
     {
         public string Name { get; set; } = "Unnamed Ability";
         public int BuffId { get; set; }
+        public int Id { get; set; }
+
+        // Bools for dupli effects
+        public DupliEffectType DupliEffectType { get; set; }
+        //public bool DamageEffect { get; set; } = false;
+        //public bool HealEffect { get; set; } = false;
+
+
+
+        public bool ReverseEffect { get; set; } = false;  // for easily running certain reverse effects like AC as autoscalers. 
+
         public double SpcHeal{ get; set; }
         public double SpcDmg { get; set; }
         public double Cooldown { get; set; } = 0.0;
@@ -87,7 +98,7 @@ namespace Beaversims.Core
         public bool Spell {  get; set; } = false;
         public bool GCD { get; set; } = false;
         public bool ForceTick { get; set; } = false; // For forcing tick in parser. Concecration etc.
-        public bool ReverseEffect { get; set; } = false;  // For easily running certain reverse effects like AC as autoscalers. 
+     
         public double Duration { get; set; } = 0.0;
         public int Casts { get; set; } = 0;
         public bool IncludePetCasts { get; set; } = false;
@@ -112,6 +123,10 @@ namespace Beaversims.Core
         public double HasteAutoModDmg { get; set; } = 1.0;
         public HashSet<CIMSource> CIMSources { get; set; } = [];
         public HashSet<HCGMSource> HCGMSources { get; set; } = [];
+
+        //public double DeCoef1 { get; set; } = 0.0;
+        //public double DeCoef2 { get; set; } = 0.0;
+        //public double DeCoef3 { get; set; } = 0.0;
 
         public bool IgnoreDr {  get; set; } = false;
         public bool LeechSource { get; set; } = true;
@@ -310,14 +325,15 @@ namespace Beaversims.Core
             if (Heal.Raw == 0) { return 0; }
             return Heal.Eff / Heal.Raw;
         }
-        public virtual double HypoTrueUhr()
-        {
-            if (Heal.Hypo == 0) { return 0; }
-            return Heal.Eff / Heal.Hypo;
-        }
+        //public virtual double HypoTrueUhr()
+        //{
+        //    if (Heal.Hypo == 0) { return 0; }
+        //    return Heal.Eff / Heal.Hypo;
+        //}
         public virtual double HypoTrueRawR()
         {
             if (Heal.Hypo == 0) { return 0; }
+
             return Heal.Raw / Heal.Hypo;
         }
      
@@ -326,7 +342,7 @@ namespace Beaversims.Core
             if (Damage.Hypo == 0) { return 0; }
             return Damage.Dmg / Damage.Hypo;
         }
-        public virtual double AltHypoTrueDmgR(int i)
+        public virtual double AltHypoIncDmgR(int i)
         {
             // if (AltDamage[i].Hypo == 0) { return 1; }
             // Should do this for normal hypo trues as well (?)
@@ -335,17 +351,26 @@ namespace Beaversims.Core
             if (Damage.Dmg == 0) { return 0; }
             return HypoTrueDmgR() * AltDamage[i].Hypo / Damage.Dmg;
         }
-        public virtual double AltHypoTrueUr(int i)
-        {
-            if (AltHeal[i].Hypo == 0) { return 1; }
-            if (Heal.Eff == 0) { return 0; }
-            return HypoTrueUhr() * AltHeal[i].Hypo / Heal.Eff;
-        }
-        public virtual double AltHypoTrueRawR(int i)
+        //public virtual double AltHypoTrueUr(int i)
+        //{
+        //    if (AltHeal[i].Hypo == 0) { return 1; }
+        //    if (Heal.Eff == 0) { return 0; }
+        //    return HypoTrueUhr() * AltHeal[i].Hypo / Heal.Eff;
+        //}
+
+     
+
+        public virtual double AltHypoIncRawR(int i)
         {
             if (AltHeal[i].Hypo == 0) { return 1; }
             if (Heal.Raw == 0) { return 0; }
-            return HypoTrueRawR() * AltHeal[i].Hypo / Heal.Raw;
+            if (Heal.Hypo == 0) { return 0; }
+            //if (i == 3)
+            //    Console.WriteLine($"[AltHypoTrueRaw()] - HypoTrueRawR(): {HypoTrueRawR()}, AltHeal[i].Hypo: {AltHeal[i].Hypo}, Heal.Raw: {Heal.Raw}");
+            //if (i == 3)
+            //    Console.WriteLine($"[HypoTrueRawR()] - Heal.Raw: {Heal.Raw}, Heal.Hypo: {Heal.Hypo}");
+            //return HypoTrueRawR() * AltHeal[i].Hypo / Heal.Raw;
+            return AltHeal[i].Hypo / Heal.Hypo;
         }
         public double RawToNsnsnarawConvert(double amount)
         {

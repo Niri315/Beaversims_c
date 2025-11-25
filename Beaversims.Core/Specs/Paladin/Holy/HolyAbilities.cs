@@ -119,23 +119,23 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
 
         public HealData PolHeal { get; } = new();
 
-        public override double HypoTrueUhr()
-        {
-            if (Heal.Hypo == 0) { return 0;}
-            return (Heal.Eff - PolHeal.Eff) / Heal.Hypo;
-        }
+        //public override double HypoTrueUhr()
+        //{
+        //    if (Heal.Hypo == 0) { return 0;}
+        //    return (Heal.Eff - PolHeal.Eff) / Heal.Hypo;
+        //}
         public override double HypoTrueRawR()
         {
             if (Heal.Hypo == 0) { return 0; }
             return (Heal.Raw - PolHeal.Raw) / Heal.Hypo;
         }
 
-        public override double AltHypoTrueUr(int i)
-        {
-            if (Heal.Eff == 0) { return 0; }
-            return HypoTrueUhr() * AltHeal[i].Hypo / (Heal.Eff - PolHeal.Eff);
-        }
-        public override double AltHypoTrueRawR(int i)
+        //public override double AltHypoTrueUr(int i)
+        //{
+        //    if (Heal.Eff == 0) { return 0; }
+        //    return HypoTrueUhr() * AltHeal[i].Hypo / (Heal.Eff - PolHeal.Eff);
+        //}
+        public override double AltHypoIncRawR(int i)
         {
             if (Heal.Raw == 0) { return 0; }
             return HypoTrueRawR() * AltHeal[i].Hypo / (Heal.Raw - PolHeal.Raw);

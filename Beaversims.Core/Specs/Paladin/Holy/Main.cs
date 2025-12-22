@@ -56,9 +56,29 @@ namespace Beaversims.Core.Specs.Paladin.Holy
                 var awestruck = (Talents.Awestruck)user.Talents[Talents.Awestruck.id];
                 awestruck.SetCritInc(user);
             }
-            DupliEffects.SetBeaconCoef(user);
+            SetBeaconCoef(user);
+            user.DupliEffects.Add(new DupliEffects.BeaconOfLight((Abilities.BeaconOfLight)user.Abilities.Get(Abilities.BeaconOfLight.name)));
+            if (user.HasTalent(Talents.SelflessHealer.id))
+            {
+                user.DupliEffects.Add(new DupliEffects.SelflessHealer((Abilities.SelflessHealer)user.Abilities.Get(Abilities.SelflessHealer.name), (Talents.SelflessHealer)user.Talents[Talents.SelflessHealer.id]));
+            }
+         
         }
+        public static void SetBeaconCoef(User user)
+        {
+            var beaconOfLight = (Abilities.BeaconOfLight)user.Abilities.Get(Abilities.BeaconOfLight.name);
+            if (user.HasTalent(Talents.CommandingLight.id))
+            {
+                var commandingLight = (Talents.CommandingLight)user.Talents[Talents.CommandingLight.id];
+                beaconOfLight.Coef += commandingLight.Coef;
 
+            }
+            if (user.HasTalent(Talents.BeaconOfFaith.id))
+            {
+                var beaconOfFaith = (Talents.BeaconOfFaith)user.Talents[Talents.BeaconOfFaith.id];
+                beaconOfLight.Coef *= 1 - beaconOfFaith.Coef;
+            }
+        }
         public static void SpecMain(List<Event> events, UnitRepo allUnits, Fight fight, int iterationCount)
         {
 
@@ -91,7 +111,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
 
                 MasteryTracker.TrackBeacons(evt, beacons, user);
                 MasteryTracker.SetMasteryEff(evt, beacons, user);
-                DupliEffects.AddBeaconPolHeal(evt);
+                //DupliEffects.AddBeaconPolHeal(evt);
                 Awakening.TrackAwakening(evt, user);
                 judg.TrackGJCritChance(evt, user);
                 HCGM.TrackIoL(evt, user);
@@ -104,12 +124,13 @@ namespace Beaversims.Core.Specs.Paladin.Holy
                     ProcessEvents.OriginalTotals(tEvt, user);
                     HCGM.TrackACSource(tEvt, user);
                     user.StoreSharedDupliHypos(tEvt, user);
+                    user.StoreDupliHypos(tEvt, user);
                     //Shared.DupliEffects.SummerHypo(tEvt, user);
                     //Shared.DupliEffects.SharedHypo(tEvt, user);
                     if (tEvt.IsHealDoneEvent() && evt is HealEvent hEvt)
                     {
-                        DupliEffects.SelflessHypo(hEvt, user);
-                        DupliEffects.BeaconHypo(hEvt, user);
+                        //DupliEffects.SelflessHypo(hEvt, user);
+                        //DupliEffects.BeaconHypo(hEvt, user);
                     }
                 }
             }
@@ -163,8 +184,10 @@ namespace Beaversims.Core.Specs.Paladin.Holy
                     }
                 }
                 FullAllocs.FullAllocGains(tpEvents, user, i);
-                DupliEffects.altSelfless(tpEvents, user, i);
-                DupliEffects.altBeacon(tpEvents, user, i);
+                //DupliEffects.altSelfless(tpEvents, user, i);
+                //DupliEffects.altBeacon(tpEvents, user, i);
+
+                user.ApplyDupliAlts(tpEvents, user, i);
 
                 // Only summer and leech will react to this.
                 tpEvents = altGearSet.AltEventList.OfType<TpEvent>().ToList(); // Updating here to include non proc sim events

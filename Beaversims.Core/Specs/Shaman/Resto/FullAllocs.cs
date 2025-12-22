@@ -20,12 +20,29 @@ namespace Beaversims.Core.Specs.Shaman.Resto
 
             var healingWave = user.Abilities.Get(Abilities.HealingWave.name);
             var riptide = user.Abilities.Get(Abilities.Riptide.name);
-            var healPerExe = aa.Heal.Raw / aa.Heal.Count;
+         
+
+
+            aa.AltHeal[i].Raw = 0;
+            aa.AltHeal[i].Eff = 0;
+
+            foreach (var evt in tpEvents)
+            {
+                var altEvent = evt.AltEvents[i];
+                if (evt.AbilityName == aa.Name)
+                {
+                    aa.AltHeal[i].Raw += altEvent.Amount.Raw;
+                    aa.AltHeal[i].Eff += altEvent.Amount.Eff;
+                }
+            }
+
+            var healPerExe = aa.AltHeal[i].Raw / aa.Heal.Count;
             var sourceCount = healingWave.Casts + riptide.Casts;  // No pets, only from user.
 
             var gainPerCritPerCast = procChanceDiff * healPerExe / Crit.percentRate / 100;
 
             var gainPerAaEvt = gainPerCritPerCast * sourceCount / aa.Heal.Count;
+
 
             foreach (var evt in tpEvents)
             {
@@ -42,7 +59,7 @@ namespace Beaversims.Core.Specs.Shaman.Resto
             }
             Console.WriteLine($"gainPerCritPerCast {gainPerCritPerCast}, gainPerAaEvt: {gainPerAaEvt}");
             
-            Console.WriteLine($"Count: {aa.Heal.Count}, total heal: {aa.Heal.Raw}");
+            Console.WriteLine($"Count: {aa.Heal.Count}, total heal: {aa.AltHeal[i].Raw}");
             Console.WriteLine($"casts - healingWave: {healingWave.Casts}, riptide: {riptide.Casts}");
 
         }

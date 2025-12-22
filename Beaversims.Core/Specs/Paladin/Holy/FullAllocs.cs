@@ -45,6 +45,14 @@ namespace Beaversims.Core.Specs.Paladin.Holy
             var gainPerWepDmg = ((wepDmg / ((cs.Damage.Crit.Count) + judg.Damage.Crit.Count)) / 100) / Crit.percentRate;
 
             var posHaaEvtCount = 0;
+            haa.AltHeal[i].Raw = 0;
+            haa.AltHeal[i].Eff = 0;
+            lesserWep.AltHeal[i].Raw = 0;
+            lesserWep.AltHeal[i].Eff = 0;
+            lesserWep.AltDamage[i].Dmg = 0;
+            lesserBulwark.AltHeal[i].Raw = 0;
+            lesserBulwark.AltHeal[i].Eff = 0;
+
             foreach (var evt in events)
             {
                 if (IsPosHaaEvent(evt))
@@ -128,7 +136,11 @@ namespace Beaversims.Core.Specs.Paladin.Holy
 
             var holyshock = (Abilities.HolyShock)user.Abilities.Get(Abilities.HolyShock.name);
             var lod = (Abilities.LightOfDawn)user.Abilities.Get(Abilities.LightOfDawn.name);
-            var gainPerTriggerRaw = sunsear.Heal.Raw / (holyshock.Heal.Crit.Count + lod.Heal.Crit.Count) / 100 / Crit.percentRate;
+            //var gainPerTriggerRaw = sunsear.Heal.Raw / (holyshock.Heal.Crit.Count + lod.Heal.Crit.Count) / 100 / Crit.percentRate;
+
+            sunsear.AltHeal[i].Raw = 0;
+            sunsear.AltHeal[i].Eff = 0;
+
             foreach (var evt in events)
             {
                 var altEvent = evt.AltEvents[i];

@@ -75,6 +75,7 @@ namespace Beaversims.Core
             abilities.Add(new Shared.Abilities.BlessingOfSummer());
             abilities.Add(new Shared.Abilities.HolyBulwark());
             abilities.Add(new Shared.Abilities.ZeroCIMDummy());
+            abilities.Add(new Shared.Abilities.LightforgedBlessing());
 
 
         }

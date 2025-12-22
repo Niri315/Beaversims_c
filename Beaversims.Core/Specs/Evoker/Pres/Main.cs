@@ -125,6 +125,18 @@ namespace Beaversims.Core.Specs.Evoker.Pres
             {
                 user.MaxEmpLevel += Talents.FontOfMagic.levelInc;
             }
+            var lifebind = (Abilities.Lifebind)user.Abilities.Get(Abilities.Lifebind.name);
+            if (lifebind.Heal.Raw > 0)
+            {
+                user.DupliEffects.Add(new DupliEffects.Lifebind((Abilities.Lifebind)user.Abilities.Get(Abilities.Lifebind.name)));
+
+            }
+
+            if (user.HasTalent(Talents.Enkindle.id))
+            {
+                user.DupliEffects.Add(new DupliEffects.Enkindle((Abilities.Enkindle)user.Abilities.Get(Abilities.Enkindle.name)));
+
+            }
         }
 
         public static void SpecMain(List<Event> events, UnitRepo allUnits, Fight fight, int iterationCount)
@@ -165,10 +177,11 @@ namespace Beaversims.Core.Specs.Evoker.Pres
                 {
                     ProcessEvents.OriginalTotals(tEvt, user);
                     user.StoreSharedDupliHypos(tEvt, user);
-                    DupliEffects.EnkindleHypo(tEvt, user);
+                    user.StoreDupliHypos(tEvt, user);
+                    //DupliEffects.EnkindleHypo(tEvt, user);
                     if (evt is HealEvent hEvt)
                     {
-                        DupliEffects.LifebindHypo(hEvt, user);
+                        //DupliEffects.LifebindHypo(hEvt, user);
                     }
                 }
             }
@@ -218,9 +231,9 @@ namespace Beaversims.Core.Specs.Evoker.Pres
                     }
                 }
                 FullAllocs.FullAllocCalcs(tpEvents, user, i);
-
-                DupliEffects.AltEnkindle(tpEvents, user, i);
-                DupliEffects.AltLifebind(tpEvents, user, i);
+                user.ApplyDupliAlts(tpEvents, user, i);
+                //DupliEffects.AltEnkindle(tpEvents, user, i);
+                //DupliEffects.AltLifebind(tpEvents, user, i);
 
                 // Only summer and leech will react to this.
                 tpEvents = altGearSet.AltEventList.OfType<TpEvent>().ToList(); // Updating here to include non proc sim events

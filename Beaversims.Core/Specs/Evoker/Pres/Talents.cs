@@ -124,7 +124,6 @@ namespace Beaversims.Core.Specs.Evoker.Pres.Talents
             Coef = rank * 0.01;
         }
     }
-
 }
 
 

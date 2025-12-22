@@ -108,44 +108,21 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
     }
 
     internal class BeaconOfLight : HpalAbility
-        //todo PoL effect
     {
         public const string name = "Beacon of Light";
 
-        public const int polId = 53653; // Heal from pillar of light passive light/faith effect.
         public const int dupliId = 53652; // Heal 
         public const int buffId = 53563;
         public double Coef { get; set; } = 0.2;
 
-        public HealData PolHeal { get; } = new();
 
-        //public override double HypoTrueUhr()
-        //{
-        //    if (Heal.Hypo == 0) { return 0;}
-        //    return (Heal.Eff - PolHeal.Eff) / Heal.Hypo;
-        //}
-        public override double HypoTrueRawR()
-        {
-            if (Heal.Hypo == 0) { return 0; }
-            return (Heal.Raw - PolHeal.Raw) / Heal.Hypo;
-        }
-
-        //public override double AltHypoTrueUr(int i)
-        //{
-        //    if (Heal.Eff == 0) { return 0; }
-        //    return HypoTrueUhr() * AltHeal[i].Hypo / (Heal.Eff - PolHeal.Eff);
-        //}
-        public override double AltHypoIncRawR(int i)
-        {
-            if (Heal.Raw == 0) { return 0; }
-            return HypoTrueRawR() * AltHeal[i].Hypo / (Heal.Raw - PolHeal.Raw);
-        }
         public BeaconOfLight()
         {
             Name = name;
             ManaCost_p = 0.005;
             CastTime = Constants.GCD;
             SimDupliAbility = true;
+            DupliEffectType = DupliEffectType.Heal;
         }
     }
 
@@ -652,6 +629,19 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
 
         }
     }
+    internal class PillarOfLightsPassive : HpalAbility
+    {
+        // Name changes done
+        public const string name = "Pillar of Lights (Passive)";
+        public const int bolId = 53653;  // Registered as Beacon of Light healing
+        public const int boaId = 156910;// Registered as Beacon of Faith healing
+
+        public PillarOfLightsPassive()
+        {
+            Name = name;
+            Scalers.UnionWith([SN.Intellect, SN.Vers]);
+        }
+    }
 
     internal class PillarOfLights : HpalAbility
     // Ability name is different from talent name. They will probably fix it someday, keep an eye out.
@@ -772,6 +762,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
         {
             Name = name;
             SimDupliAbility = true;
+            DupliEffectType = DupliEffectType.Heal;
         }
     }
 

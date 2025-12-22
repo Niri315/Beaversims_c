@@ -104,7 +104,7 @@ Swiftmend
 Swipe
 -----------
 Symbiotic Relationship
-	Eff: 7,271410966540316
+	Eff: 6,051614223465322
 -----------
 Thrash
 -----------
@@ -130,13 +130,16 @@ Ysera's Gift
 	Eff: 95,06504656080506
 -----------
 Leech
-	Eff: 0,11489403737891735
+	Eff: 0,16619435150846584
 -----------
 Blessing of Summer
 -----------
 Holy Bulwark
 -----------
 ZeroCIMDummy
+-----------
+Lightforged Blessing
+	SupEff: 1,0919999999168795
 -----------
 Spring Blossoms
 -----------
@@ -159,9 +162,6 @@ Earthen Wall
 Elemental Focusing Lens
 -----------
 Voidglass Barrier
------------
-Lightforged Blessing
-	SupEff: 1,0919999999168795
 -----------
 Innervate
 -----------

@@ -125,6 +125,17 @@ namespace Beaversims.Core.Specs.Druid.Resto
                 .OfType<Abilities.RestoAbility>()
                 .Where(a => a.CIMDepMastIncScaler && a.Casts > 0)
                 .ToList();
+            if (user.HasTalent(Talents.SymbioticRelationship.id)) 
+            {
+                user.DupliEffects.Add(new DupliEffects.SymbRel((Abilities.SymbioticRelationship)user.Abilities.Get(Abilities.SymbioticRelationship.name)));
+            }
+            var doc = user.Abilities.Get(Abilities.DreamOfCenarius.name);
+            if (doc.Heal.Raw > 0)
+            {
+                user.DupliEffects.Add(new DupliEffects.DoC(doc));
+
+            }
+
         }
 
         public static void SpecMain(List<Event> events, UnitRepo allUnits, Fight fight, int iterationCount)
@@ -160,13 +171,14 @@ namespace Beaversims.Core.Specs.Druid.Resto
                 {
                     ProcessEvents.OriginalTotals(tEvt, user);
                     user.StoreSharedDupliHypos(tEvt, user);
+                    user.StoreDupliHypos(tEvt, user);
                     if (evt is HealEvent hEvt)
                     {
-                        DupliEffects.SymbRelHypo(hEvt, user);
+                        //DupliEffects.SymbRelHypo(hEvt, user);
                     }
                     if (evt is DamageEvent dEvt)
                     {
-                        DupliEffects.DocHypo(dEvt, user);
+                        //DupliEffects.DocHypo(dEvt, user);
                     }
 
                 }
@@ -213,9 +225,9 @@ namespace Beaversims.Core.Specs.Druid.Resto
                         }
                     }
                 }
-                DupliEffects.AltDoc(tpEvents, user, i);
-                DupliEffects.AltSymbRel(tpEvents, user, i);
-
+                //DupliEffects.AltDoc(tpEvents, user, i);
+                //DupliEffects.AltSymbRel(tpEvents, user, i);
+                user.ApplyDupliAlts(tpEvents, user, i);
 
                 // Only summer and leech will react to this.
                 tpEvents = altGearSet.AltEventList.OfType<TpEvent>().ToList(); // Updating here to include non proc sim events

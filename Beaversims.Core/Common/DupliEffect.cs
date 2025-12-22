@@ -10,6 +10,7 @@ namespace Beaversims.Core
     internal abstract class DupliEffect
     {
         public Ability DupliAbility { get; set; }
+        public Talent? Talent { get; set; }
         public abstract bool IsProcEvt(TpEvent evt, User user);
         public abstract double HypoFormula(TpEvent evt, User user);
 
@@ -23,12 +24,13 @@ namespace Beaversims.Core
 
         public void StoreHypo(TpEvent evt, User user)
         {
+
             if (CanProc(evt, user) && IsProcEvt(evt, user))
             {
                 evt.ActiveDupliEffects.Add(this);
                 var amount = evt.Amount.Raw * HypoFormula(evt, user);
-
-                if (DupliAbility.DupliEffectType == DupliEffectType.Reverse)
+                var det = DupliAbility.DupliEffectType;
+                if (det == DupliEffectType.Reverse)
                 {
                     if (evt.IsDmgDoneEvent())
                     {
@@ -39,13 +41,24 @@ namespace Beaversims.Core
                         DupliAbility.Damage.Hypo += amount;
                     }
                 }
-                else
+                else if (det == DupliEffectType.Both)
                 {
-                    if (DupliAbility.DupliEffectType == DupliEffectType.Heal)
+                    if (evt.IsDmgDoneEvent())
+                    {
+                        DupliAbility.Damage.Hypo += amount;
+                    }
+                    if (evt.IsHealDoneEvent())
                     {
                         DupliAbility.Heal.Hypo += amount;
                     }
-                    if (DupliAbility.DupliEffectType == DupliEffectType.Damage)
+                }
+                else
+                {
+                    if (det == DupliEffectType.Heal)
+                    {
+                        DupliAbility.Heal.Hypo += amount;
+                    }
+                    if (det == DupliEffectType.Damage)
                     {
                         DupliAbility.Damage.Hypo += amount;
                     }
@@ -57,13 +70,20 @@ namespace Beaversims.Core
         {
             DupliAbility.AltDamage[i].Dmg = 0;
             DupliAbility.AltHeal[i].Raw = 0;
+            if (DupliAbility.DupliEffectType == DupliEffectType.None)
+            {
+                throw new InvalidOperationException($"DupliEffectType not set for {DupliAbility.Name}.");
+            }
+            var det = DupliAbility.DupliEffectType;
+
+
             foreach (var evt in tpEvents)
             {
                 if (evt.ActiveDupliEffects.Contains(this))
                 {
                     var altEvent = evt.AltEvents[i];
                     var amount = altEvent.Amount.Raw * HypoFormula(evt, user);
-                    if (DupliAbility.DupliEffectType == DupliEffectType.Reverse)
+                    if (det == DupliEffectType.Reverse)
                     {
                         if (evt.IsDmgDoneEvent())
                         {
@@ -74,13 +94,24 @@ namespace Beaversims.Core
                             DupliAbility.AltDamage[i].Hypo += amount;
                         }
                     }
-                    else
+                    else if (det == DupliEffectType.Both)
                     {
-                        if (DupliAbility.DupliEffectType == DupliEffectType.Heal)
+                        if (evt.IsDmgDoneEvent())
+                        {
+                            DupliAbility.AltDamage[i].Hypo += amount;
+                        }
+                        if (evt.IsHealDoneEvent())
                         {
                             DupliAbility.AltHeal[i].Hypo += amount;
                         }
-                        if (DupliAbility.DupliEffectType == DupliEffectType.Damage)
+                    }
+                    else
+                    {
+                        if (det == DupliEffectType.Heal)
+                        {
+                            DupliAbility.AltHeal[i].Hypo += amount;
+                        }
+                        if (det == DupliEffectType.Damage)
                         {
                             DupliAbility.AltDamage[i].Hypo += amount;
                         }
@@ -144,9 +175,10 @@ namespace Beaversims.Core
             Console.WriteLine($"DupliAbility.AltHeal[i].Raw: {DupliAbility.AltHeal[i].Raw}, True Raw: {DupliAbility.Heal.Raw}");
         }
 
-        public DupliEffect(Ability ability)
+        public DupliEffect(Ability ability, Talent? talent=null)
         {
             DupliAbility = ability;
+            Talent = talent;
         }
     }
 }

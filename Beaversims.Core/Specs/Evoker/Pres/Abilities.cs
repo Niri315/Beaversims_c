@@ -270,6 +270,7 @@ namespace Beaversims.Core.Specs.Evoker.Pres.Abilities
         {
             Name = name;
             SimDupliAbility = true;
+            DupliEffectType = DupliEffectType.Both;
         }
     }
 
@@ -345,6 +346,7 @@ namespace Beaversims.Core.Specs.Evoker.Pres.Abilities
             Scalers.UnionWith([SN.Haste]);
             HasteScalers.UnionWith([HST.Cast]);
             SimDupliAbility = true;
+            DupliEffectType = DupliEffectType.Heal;
         }
     }
     internal class LifeGiversFlame : PresAbility

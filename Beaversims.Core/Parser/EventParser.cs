@@ -14,6 +14,8 @@ namespace Beaversims.Core.Parser
             { 376788, Specs.Evoker.Pres.Abilities.DreamBreathEcho.name},
             { 367364, Specs.Evoker.Pres.Abilities.ReversionEcho.name},
             { 367231, Specs.Evoker.Pres.Abilities.SpiritbloomEcho.name},
+            { Specs.Paladin.Holy.Abilities.PillarOfLightsPassive.boaId, Specs.Paladin.Holy.Abilities.PillarOfLightsPassive.name},
+            { Specs.Paladin.Holy.Abilities.PillarOfLightsPassive.bolId, Specs.Paladin.Holy.Abilities.PillarOfLightsPassive.name},
             //{ Specs.Shaman.Resto.Abilities.RestorativeMistsDupliEffect._id, Specs.Shaman.Resto.Abilities.RestorativeMistsDupliEffect.name},
             //{ Specs.Shaman.Resto.Abilities.RestorativeMistsUseEffect._id, Specs.Shaman.Resto.Abilities.RestorativeMistsUseEffect.name},
         };

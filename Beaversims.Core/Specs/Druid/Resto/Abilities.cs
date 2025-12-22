@@ -176,6 +176,7 @@ namespace Beaversims.Core.Specs.Druid.Resto.Abilities
         {
             Name = name;
             SimDupliAbility = true;
+            DupliEffectType = DupliEffectType.Reverse;
         }
     }
 
@@ -682,6 +683,7 @@ namespace Beaversims.Core.Specs.Druid.Resto.Abilities
             Name = name;
             CastTime = 1.5;
             SimDupliAbility = true;
+            DupliEffectType = DupliEffectType.Heal;
         }
     }
 

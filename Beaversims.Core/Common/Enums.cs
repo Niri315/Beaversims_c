@@ -14,9 +14,11 @@ namespace Beaversims.Core
     }
     public enum DupliEffectType
     {
+        None,
         Damage,
         Heal,
-        Reverse
+        Reverse,
+        Both
     }
     public enum SpecName
     {

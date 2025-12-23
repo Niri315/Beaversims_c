@@ -51,11 +51,10 @@ namespace Beaversims.Core.Specs.Paladin.Holy
             var cs = (CrusaderStrike)abilities.Get(CrusaderStrike.name);
             var fol = (FlashOfLight)abilities.Get(FlashOfLight.name);
             var hl = (HolyLight)abilities.Get(HolyLight.name);
-            var how = (HammerOfWrath)abilities.Get(HammerOfWrath.name);
 
             double scaleHP;
             double nonScaleHP;
-            scaleHP = how.Casts + cs.Casts + holyShock.HolyPowerScaleCount + judg.Casts + judg.IolCount;  // judg.IolCount only scales to a certain degree. todo
+            scaleHP = cs.Casts + holyShock.HolyPowerScaleCount + judg.Casts + judg.IolCount;  // judg.IolCount only scales to a certain degree. todo
             nonScaleHP = holyShock.HolyPowerNonScaleCount; 
             if (user.HasTalent(Talents.TowerOfRadiance.id))
             {

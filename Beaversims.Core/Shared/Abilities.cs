@@ -109,6 +109,17 @@ namespace Beaversims.Core.Shared.Abilities
             ClassAbility = true;
         }
     }
+    internal class GlisteningRadiance : SharedAbility
+    {
+        public const string name = "Glistening Radiance";
+        public const int buffId = 432496;  // NOT the id of the buff that hold the absorb.
+        public GlisteningRadiance()
+        {
+            Name = name;
+            SuppStamScaler = true;
+        }
+    }
+
     /* ------- *
      * Warlock *
      * ------- */

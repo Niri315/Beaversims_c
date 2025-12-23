@@ -167,11 +167,43 @@ namespace Beaversims.Core.Specs.Paladin.Holy
                 altEvent.Amount.UpdateAltGainsFromEvtData(evt, gainRaw, i);
             }
         }
+        public static void EmpLodGains(List<TpEvent> events, User user, int i)
+        {
+            if (!user.HasTalent(Talents.EmpyreanLegacy.id)) { return; }
+
+            var abilities = user.Abilities;
+            var judg = (Abilities.Judgment)abilities.Get(Abilities.Judgment.name);
+            var lod = (Abilities.LightOfDawn)abilities.Get(Abilities.LightOfDawn.name);
+
+            var pureLodhpc = lod.Heal.Raw / (lod.Casts + (lod.EmpCasts * Talents.EmpyreanLegacy.coef));
+            var empValRaw = pureLodhpc * lod.EmpCasts * Talents.EmpyreanLegacy.coef;
+            if (empValRaw == 0) { return; }
+
+
+
+            var correctingCoef = judg.Damage.Count / lod.Heal.Count;
+
+            Console.WriteLine($"correctingCoef {correctingCoef}, empValRaw {empValRaw}, lod.Heal.Raw {lod.Heal.Raw}, % {empValRaw / lod.Heal.Raw}");
+
+            foreach (var evt in events)
+            {
+                var crit = evt.UserStats.Get(StatName.Crit);
+                var altCrit = evt.AltEvents[i].UserStats.Get(StatName.Crit);
+                var altEvent = evt.AltEvents[i];
+                var gainRaw = 0.0;
+                if (evt.AbilityName == lod.Name)
+                {
+                    gainRaw = (altCrit.TrueEff() - crit.TrueEff()) * correctingCoef * empValRaw / judg.Damage.Crit.Count / 100 / Crit.percentRate;
+                }
+                altEvent.Amount.UpdateAltGainsFromEvtData(evt, gainRaw, i);
+            }
+        }
 
         public static void FullAllocGains(List<TpEvent> tpEvents, User user, int i)
         {
             HaaGains(tpEvents, user, i);
             SunSearGains(tpEvents, user, i);
+            EmpLodGains(tpEvents, user, i);
         }
     }
 }

@@ -196,7 +196,6 @@ namespace Beaversims.Core.Specs.Paladin.Holy
         {
             if (!user.HasTalent(Talents.EmpyreanLegacy.id)) { return; }
             var pureLodhpc = lod.Heal.Raw / (lod.Casts + (lod.EmpCasts * Talents.EmpyreanLegacy.coef));
-            //lod.HCGM *= pureLodhpc * lod.Casts / lod.Heal.Raw;
             var qim = pureLodhpc * lod.Casts / lod.Heal.Raw;
             lod.CIMSources.Add(new CIMSource(lod.Name, qim));
             lod.CIMSources.Add(new CIMSource(Shared.Abilities.ZeroCIMDummy.name, 1 - qim));
@@ -206,6 +205,8 @@ namespace Beaversims.Core.Specs.Paladin.Holy
         public static void HolyShockCIM(User user, HolyShock holyShock)
         {
             // Note Second sunrise: Procs from all Holy Shocks EXCEPT for the 4/5 from divine toll, and the 2 extra from rising sunlight.
+
+            // [Ringing of the Heavens] - shouldnt require any implementation assuming divine toll is logged as a cast.
 
             var divineToll = (DivineToll)user.Abilities.Get(DivineToll.name);
             var aw = (AvengingWrath)user.Abilities.Get(AvengingWrath.name);

@@ -62,7 +62,17 @@ namespace Beaversims.Core.Specs.Paladin.Holy
             {
                 user.DupliEffects.Add(new DupliEffects.SelflessHealer((Abilities.SelflessHealer)user.Abilities.Get(Abilities.SelflessHealer.name), (Talents.SelflessHealer)user.Talents[Talents.SelflessHealer.id]));
             }
-         
+            var lib = (Abilities.Liberation)user.Abilities.Get(Abilities.Liberation.name);
+            if (lib.Damage.Dmg > 0)
+            {
+                user.DupliEffects.Add(new DupliEffects.Liberation(lib));
+            }
+            var veneration = (Abilities.Veneration)user.Abilities.Get(Abilities.Veneration.name);
+            if (veneration.Heal.Raw > 0)
+            {
+                user.DupliEffects.Add(new DupliEffects.Veneration(veneration));
+            }
+
         }
         public static void SetBeaconCoef(User user)
         {
@@ -77,6 +87,13 @@ namespace Beaversims.Core.Specs.Paladin.Holy
             {
                 var beaconOfFaith = (Talents.BeaconOfFaith)user.Talents[Talents.BeaconOfFaith.id];
                 beaconOfLight.Coef *= 1 - beaconOfFaith.Coef;
+            }
+            if (user.HasTalent(Talents.DivineFavor.id))
+            {
+                var df_t = (Talents.DivineFavor)user.Talents[Talents.DivineFavor.id];
+                var hl = (Abilities.HolyLight)user.Abilities.Get(Abilities.HolyLight.name);
+                hl.ManaCost_p *= 1 - df_t.ManaCoef;
+                hl.CastTime *= 1 - df_t.CtCoef;
             }
         }
         public static void SpecMain(List<Event> events, UnitRepo allUnits, Fight fight, int iterationCount)

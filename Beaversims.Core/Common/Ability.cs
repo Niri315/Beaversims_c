@@ -92,6 +92,7 @@ namespace Beaversims.Core
         public bool SuppStamScaler { get; set; } = false;
         public bool DerivedCritScaler { get; set; } = false;
         public string SourceAbility {  get; set; } = string.Empty;
+        public HashSet<string> SourceAbilities { get; set; } = [];
         public HashSet<HasteScalerType> HasteScalers { get; } = [];
         public virtual bool ClassAbility { get; set; } = true;
         public bool Direct {  get; set; } = false;
@@ -99,6 +100,7 @@ namespace Beaversims.Core
         public bool GCD { get; set; } = false;
         public bool ForceTick { get; set; } = false; // For forcing tick in parser. Concecration etc.
      
+        public double Coef {  get; set; } = 0.0;
         public double Duration { get; set; } = 0.0;
         public int Casts { get; set; } = 0;
         public bool IncludePetCasts { get; set; } = false;

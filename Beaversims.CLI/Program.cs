@@ -28,7 +28,7 @@ namespace Beaversims.CLI
             //var logLink = "https://www.warcraftlogs.com/reports/m4vPb3J71twFXVTA?fight=17&type=damage-done&source=166";  //WTF mastery?
             //var logLink = "https://www.warcraftlogs.com/reports/jknw3D642CpcALgq?fight=54&type=healing&source=22"; // Leech + martyr -> need fi
             //var logLink = "https://www.warcraftlogs.com/reports/vlhzymap2dgxfwkr?fight=34&type=healing&source=24"; //frac nali antenna
-            var logLink = "https://www.warcraftlogs.com/reports/8DqKYV9vhZmj7QJW?fight=32&type=healing&source=19"; // Erooxdruid Soulhunters
+            //var logLink = "https://www.warcraftlogs.com/reports/8DqKYV9vhZmj7QJW?fight=32&type=healing&source=19"; // Erooxdruid Soulhunters
             //var logLink = "https://www.warcraftlogs.com/reports/aB9HyhkFgKGnjM3R?fight=51&type=casts&source=2"; // dim druid Ns
             //var logLink = "https://www.warcraftlogs.com/reports/aB9HyhkFgKGnjM3R?fight=30&type=healing&source=2"; // frac druid
             //var logLink = "https://www.warcraftlogs.com/reports/tDhM4LRkB8yamrVF?fight=13&type=damage-done&source=143"; // embrace the dream
@@ -42,6 +42,7 @@ namespace Beaversims.CLI
             //var logLink = "https://www.warcraftlogs.com/reports/rfyXTLpA1zRqxNhV?fight=15&type=healing&source=124"; //  ancestral awakening
             //var logLink = "https://www.warcraftlogs.com/reports/tLWgY37r4PGAX9m1?fight=11&type=summary&source=222"; // beacon of faith + pol
             //var logLink = "https://www.warcraftlogs.com/reports/AZN3YFaBt4prDyz1?fight=11&type=healing&source=3"; // enkindle
+            var logLink = "https://www.warcraftlogs.com/reports/QMkHwKWZ8b9xjDyv?fight=262&type=damage-done&source=1374"; // veneration
 
             SimMode simMode = SimMode.SW;
             var totalTime = Stopwatch.StartNew();

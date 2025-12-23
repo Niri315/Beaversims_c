@@ -203,6 +203,28 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Talents
 
         }
     }
+
+    internal class UnendingLight : Talent
+    {
+        public const int id = 102558; // TODO Might be incorrect for midnight.
+        public const string ability = Abilities.LightOfDawn.name;
+        public const double coef = 0.2;
+        public UnendingLight(int rank) : base(id, rank)
+        {
+
+        }
+    }
+    internal class DivineFavor : Talent
+    {
+        public const int id = 102551;
+        public double CtCoef {get; set;}
+        public double ManaCoef { get; set;}
+        public DivineFavor(int rank) : base(id, rank)
+        {
+            CtCoef = 0.15 * rank;
+            ManaCoef = 0.1 * rank;
+        }
+    }
 }
 
 

@@ -17,7 +17,9 @@ namespace Beaversims.Core
         private bool CanProc(TpEvent evt, User user)
         {
             if (evt.Ability.CanDupli &&
-               evt.AbilityName != DupliAbility.Name)
+               evt.AbilityName != DupliAbility.Name && 
+               (DupliAbility.Heal.Raw > 0 || DupliAbility.Damage.Dmg > 0) && 
+               evt.UserSuperSource)
                 return true;
             return false;
         }
@@ -142,35 +144,22 @@ namespace Beaversims.Core
                 {
                     var altEvent = evt.AltEvents[i];
                     double altHypoIncCoef = 0;
-                    double hypoTrueCoef = 0;
 
                     if (evt.IsDmgDoneEvent())
                     {
                         altHypoIncCoef = DupliAbility.AltHypoIncDmgR(i);
-                        hypoTrueCoef = DupliAbility.HypoTrueDmgR();
 
                     }
                     else if (evt.IsHealDoneEvent())
                     {
                         altHypoIncCoef = DupliAbility.AltHypoIncRawR(i);
-                        hypoTrueCoef = DupliAbility.HypoTrueRawR();
-
-                        //test
-                        //hypoTrueCoef = (DupliAbility.Heal.Raw / DupliAbility.Heal.Hypo) * (DupliAbility.AltHeal[i].Raw / DupliAbility.Heal.Raw);
-                        //altHypoIncCoef = DupliAbility.AltHeal[i].Hypo / DupliAbility.Heal.Hypo;
-                        //Console.WriteLine($"hypoTrueCoef: {hypoTrueCoef}");
                     }
-
-                    //var gainRaw = altEvent.Amount.Raw * altHypoIncCoef - (altEvent.Amount.Raw); // + altEvent.NukeRaw); // OBS ! NEED REVIEW
-
-
-                    //var gainRaw = hypoTrueCoef * (altEvent.Amount.Raw * altHypoIncCoef - (altEvent.Amount.Raw));
-                    var gainRaw = hypoTrueCoef * altEvent.Amount.Raw * (altHypoIncCoef - 1);
-
+                    var gainRaw = altEvent.Amount.Raw * (altHypoIncCoef - 1); 
                     altEvent.Amount.UpdateAltGainsFromEvtData(evt, gainRaw, i);
 
                 }
             }
+
             Console.WriteLine($"{DupliAbility.Name} Dupli Effect - Hypo Raw: {DupliAbility.Heal.Hypo}, True Raw: {DupliAbility.Heal.Raw}");
             Console.WriteLine($"DupliAbility.AltHeal[i].Raw: {DupliAbility.AltHeal[i].Raw}, True Raw: {DupliAbility.Heal.Raw}");
         }

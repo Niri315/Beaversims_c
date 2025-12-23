@@ -8,7 +8,7 @@ namespace Beaversims.Core.Parser
 
     {
 
-        public static readonly Dictionary<int, string> nameChanges = new()
+        public static readonly Dictionary<int, string> nameChangesIds = new()
         {
             // todo fill -  verdant embrace?
             { 376788, Specs.Evoker.Pres.Abilities.DreamBreathEcho.name},
@@ -16,8 +16,13 @@ namespace Beaversims.Core.Parser
             { 367231, Specs.Evoker.Pres.Abilities.SpiritbloomEcho.name},
             { Specs.Paladin.Holy.Abilities.PillarOfLightsPassive.boaId, Specs.Paladin.Holy.Abilities.PillarOfLightsPassive.name},
             { Specs.Paladin.Holy.Abilities.PillarOfLightsPassive.bolId, Specs.Paladin.Holy.Abilities.PillarOfLightsPassive.name},
+     
             //{ Specs.Shaman.Resto.Abilities.RestorativeMistsDupliEffect._id, Specs.Shaman.Resto.Abilities.RestorativeMistsDupliEffect.name},
             //{ Specs.Shaman.Resto.Abilities.RestorativeMistsUseEffect._id, Specs.Shaman.Resto.Abilities.RestorativeMistsUseEffect.name},
+        };
+        public static readonly Dictionary<string, string> nameChangesStrings = new()
+        {
+            { "Hammer of Wrath", Specs.Paladin.Holy.Abilities.Judgment.name},
         };
 
         private static readonly HashSet<int> bannedAbilityIds = new()
@@ -158,14 +163,14 @@ namespace Beaversims.Core.Parser
             }
 
             var abilityId = abilityData.GetProperty("guid").GetInt32();
-            string abilityName;
-            if (nameChanges.ContainsKey(abilityId))
+            string abilityName = abilityData.GetProperty("name").GetString();
+            if (nameChangesIds.ContainsKey(abilityId))
             {
-                abilityName = nameChanges[abilityId];
+                abilityName = nameChangesIds[abilityId];
             }
-            else
+            else if (nameChangesStrings.ContainsKey(abilityName))
             {
-                abilityName = abilityData.GetProperty("name").GetString();
+                abilityName = nameChangesStrings[abilityName];
             }
 
 

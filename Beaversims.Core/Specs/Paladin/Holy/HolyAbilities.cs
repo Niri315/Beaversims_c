@@ -7,25 +7,37 @@ using System.Threading.Tasks;
 
 
 /* TODO List
- // REMOVED FOR MIDNIGHT SKIP - Awakening - Extract build in gains from haste and get remaining value.
 Infusion of Light - Remove haste value from iol increases due to low true HCCGM from holy shock.
 Truth Prevails - dupli effect
 Tempered in Battle - dupli effect only
-Blessing of An'she
+Veneration full alloc crit
+
+Guided Prayer
+
+[Seraphic Barrier]
+[Divine Overload]
+
+CS AW cd tracking
 
 
-HASTE:
-For herald its most likely a +-=0 scenario with the most significant inaccurasies lying in
-undervalue for awakening, and overvalue for iol.
+CANT TEST BEFORE MIDNIGHT:
 
-For Lightsmith, its probably an undervalue due to 
+Doublecheck talent ids: Divine Favor, Unending Light
+DupliEffects: Liberation
+
+CANT DO BEFORE MIDNIGHT:
+
+[Seek Deliverance]
+
 */
 
 namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
 {
+
     internal abstract class HpalAbility : Ability
     {
     }
+
 
     internal class AJustReward : HpalAbility
     {
@@ -179,6 +191,16 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
             CastTime = Constants.GCD;
         }
     }
+    internal class BroughtToLight : HpalAbility
+    {
+        public const string name = "Brought to Light";
+        public BroughtToLight()
+        {
+            Name = name;
+            //Spell = true;
+            Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Mastery, SN.Vers]);
+        }
+    }
 
     internal class Cleanse : HpalAbility
     {
@@ -218,6 +240,9 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
             CastTime = Constants.GCD;
         }
     }
+
+
+    
 
     internal class CrusaderStrike : HpalAbility
     {
@@ -406,20 +431,22 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
         }
     }
 
-    internal class HammerOfWrath : HpalAbility
-    {        // Todo track HoW for HCGM, important for veneration.
-        public const string name = "Hammer of Wrath";
-        public HammerOfWrath()
-        {
-            Name = name;
-            ManaCost_p = 0.006;
-            CastTime = Constants.GCD;
-            Cd = 19;
-            Direct = true;
-            Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Haste, SN.Vers]);
-            HasteScalers.UnionWith([HST.Cast]);
-        }
-    }
+    // OBS! Namechanging HoW -> Judgment in parser.
+
+    //internal class HammerOfWrath : HpalAbility
+    //{        // Todo track HoW for HCGM, important for veneration.
+    //    public const string name = "Hammer of Wrath";
+    //    public HammerOfWrath()
+    //    {
+    //        Name = name;
+    //        ManaCost_p = 0.006;
+    //        CastTime = Constants.GCD;
+    //        Cd = 19;
+    //        Direct = true;
+    //        Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Haste, SN.Vers]);
+    //        HasteScalers.UnionWith([HST.Cast]);
+    //    }
+    //}
 
     internal class HolyLight : HpalAbility
     {
@@ -549,6 +576,20 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
             HasteScalers.UnionWith([HST.Auto]);
         }
     }
+    internal class Liberation : HpalAbility
+    {
+        public const string name = "Liberation";
+
+        public Liberation()
+        {
+            Name = name;
+            SimDupliAbility = true;
+            DupliEffectType = DupliEffectType.Reverse;
+            SourceAbilities.UnionWith([LightOfDawn.name, WordOfGlory.name]);
+            Coef = 0.2;
+        }
+    }
+
 
     internal class LightOfDawn : HpalAbility
     {
@@ -847,7 +888,6 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
         public TyrsDeliverance()
         {
             Name = name;
-            CastTime = 2;
             Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Haste, SN.Mastery, SN.Vers]);
             HasteScalers.UnionWith([HST.Auto]);
         }
@@ -860,12 +900,16 @@ namespace Beaversims.Core.Specs.Paladin.Holy.Abilities
         public Veneration()
         {
             Name = name;
-            ReverseEffect = true;
-            Direct = true;
-            Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Haste, SN.Mastery, SN.Vers]);
-            HasteScalers.UnionWith([HST.Cast]);
-            CIMSources.Add(new CIMSource(HammerOfWrath.name, 1.0));
-            HCGMSources.Add(new HCGMSource(HammerOfWrath.name, 1.0));
+            SimDupliAbility = true;
+            DupliEffectType = DupliEffectType.Reverse;
+            Coef = 0.08;
+            SourceAbility = Judgment.name;
+            //ReverseEffect = true;
+            //Direct = true;
+            //Scalers.UnionWith([SN.Intellect, SN.Crit, SN.Haste, SN.Mastery, SN.Vers]);
+            //HasteScalers.UnionWith([HST.Cast]);
+            //CIMSources.Add(new CIMSource(Judgment.name, 1.0));
+            //HCGMSources.Add(new HCGMSource(Judgment.name, 1.0));
 
         }
     }

@@ -128,6 +128,10 @@ namespace Beaversims.Core.Specs.Paladin.Holy
                         }
                     }
                 }
+                if (evt.AbilityName == Talents.UnendingLight.ability && user.HasTalent(Talents.UnendingLight.id))
+                {
+                    masteryEff *= 1 + Talents.UnendingLight.coef;
+                }
                 healEvt.MasteryEffectiveness = masteryEff;
     
             }

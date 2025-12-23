@@ -64,4 +64,57 @@ namespace Beaversims.Core.Specs.Paladin.Holy.DupliEffects
 
         }
     }
+
+    internal class Liberation : DupliEffect
+    {
+
+        public override bool IsProcEvt(TpEvent evt, User user)
+        {
+
+            if (DupliAbility.SourceAbilities.Contains(evt.AbilityName))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public override double HypoFormula(TpEvent evt, User user)
+        {
+
+
+            return DupliAbility.Coef;
+
+        }
+        public Liberation(Abilities.Liberation ability) : base(ability)
+        {
+
+        }
+    }
+    internal class Veneration : DupliEffect
+    {
+
+        public override bool IsProcEvt(TpEvent evt, User user)
+        {
+        
+            if (DupliAbility.SourceAbility == evt.AbilityName)
+            {
+        
+                return true;
+               
+            }
+            return false;
+        }
+
+        public override double HypoFormula(TpEvent evt, User user)
+        {
+
+
+            return DupliAbility.Coef;
+
+        }
+        public Veneration(Abilities.Veneration ability) : base(ability)
+        {
+
+        }
+    }
 }

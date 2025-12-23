@@ -23,6 +23,8 @@ Blessing of Protection
 -----------
 Blinding Light
 -----------
+Brought to Light
+-----------
 Cleanse
 -----------
 Consecration
@@ -55,8 +57,6 @@ Hammer and Anvil
 -----------
 Hammer of Justice
 -----------
-Hammer of Wrath
------------
 Holy Light
 -----------
 Holy Prism
@@ -76,6 +76,8 @@ Lay on Hands
 -----------
 Lesser Weapon
 -----------
+Liberation
+-----------
 Light of Dawn
 -----------
 Light of the Martyr
@@ -83,6 +85,8 @@ Light of the Martyr
 Merciful Auras
 -----------
 Overflowing Light
+-----------
+Pillar of Lights (Passive)
 -----------
 Pillar of Lights
 -----------
@@ -131,6 +135,9 @@ Holy Bulwark
 -----------
 ZeroCIMDummy
 -----------
+Lightforged Blessing
+	Eff: 8,149072527885437E-10
+-----------
 Light's Judgment
 -----------
 Lightbearer
@@ -144,9 +151,6 @@ Ethereal Reconstitution
 Loom'ithar's Living Silk
 -----------
 Ethereal Guard
------------
-Lightforged Blessing
-	Eff: 8,149072527885437E-10
 -----------
 Arcane Restoration
 -----------

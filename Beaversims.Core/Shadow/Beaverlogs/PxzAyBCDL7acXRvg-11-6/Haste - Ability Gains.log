@@ -13,7 +13,7 @@ Barrier of Faith
 Beacon of Faith
 -----------
 Beacon of Light
-	Eff: 3275,704512640874
+	Eff: 2395,3697303771273
 -----------
 Beacon of Virtue
 -----------
@@ -24,6 +24,8 @@ Blessing of Freedom
 Blessing of Protection
 -----------
 Blinding Light
+-----------
+Brought to Light
 -----------
 Cleanse
 -----------
@@ -63,8 +65,6 @@ Hammer and Anvil
 -----------
 Hammer of Justice
 -----------
-Hammer of Wrath
------------
 Holy Light
 -----------
 Holy Prism
@@ -90,6 +90,8 @@ Lesser Weapon
 	Eff: 470,8422118515798
 	Dmg: 930,1212342296203
 -----------
+Liberation
+-----------
 Light of Dawn
 	Eff: 2207,3531987360766
 -----------
@@ -98,6 +100,8 @@ Light of the Martyr
 Merciful Auras
 -----------
 Overflowing Light
+-----------
+Pillar of Lights (Passive)
 -----------
 Pillar of Lights
 -----------
@@ -147,16 +151,19 @@ Word of Glory
 	Eff: 2652,7982122946996
 -----------
 Leech
-	Eff: 895,6248509650413
+	Eff: 870,9461483896321
 -----------
 Blessing of Summer
 	Eff: 229,23622235671337
-	Dmg: 795,6152720782338
+	Dmg: 755,1602157803063
 -----------
 Holy Bulwark
 	Eff: 914,755917004356
 -----------
 ZeroCIMDummy
+-----------
+Lightforged Blessing
+	Eff: 301,52041652451385
 -----------
 Light's Judgment
 -----------
@@ -174,9 +181,6 @@ Loom'ithar's Living Silk
 -----------
 Ethereal Guard
 	Eff: 1971,7793682939237
------------
-Lightforged Blessing
-	Eff: 301,52041652451385
 -----------
 Arcane Restoration
 -----------

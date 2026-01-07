@@ -76,6 +76,8 @@ namespace Beaversims.Core.Sim
             return activeEvents;
         }
 
+
+
         public static List<double> UseTimingsCalc(List<Event> events, double duration, double cd, int i)
         {
             if (events == null || events.Count == 0)

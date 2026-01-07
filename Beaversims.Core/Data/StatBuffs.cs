@@ -258,24 +258,24 @@ namespace Beaversims.Core.Data.StatBuffs
             );
         }
     }
-    internal class SolarGrace : StatBuff
-    {
-        public const int id = 439841;
-        public const string name = "Solar Grace";
+    //internal class SolarGrace : StatBuff
+    //{
+    //    public const int id = 439841;
+    //    public const string name = "Solar Grace";
 
-        public SolarGrace(UnitId sourceId, int stacks)
-            : base(id, sourceId, name, stacks)
-        {
-            SourceType = BuffSourceType.Talent;
-            SourceObjId = 117691;
-            StatMods.Add(
-                new StatMod(
-                    StatName.Haste,
-                    StatAmountType.Base,
-                    2 * Haste.percentRate)
-            );
-        }
-    }
+    //    public SolarGrace(UnitId sourceId, int stacks)
+    //        : base(id, sourceId, name, stacks)
+    //    {
+    //        SourceType = BuffSourceType.Talent;
+    //        SourceObjId = 117691;
+    //        StatMods.Add(
+    //            new StatMod(
+    //                StatName.Haste,
+    //                StatAmountType.Base,
+    //                2 * Haste.percentRate)
+    //        );
+    //    }
+    //}
     internal class BlessingOfAutumn : StatBuff
     {
         public const int id = 388010;
@@ -700,6 +700,34 @@ namespace Beaversims.Core.Data.StatBuffs
                     StatName.Mastery,
                     StatAmountType.Rating,
                     scData: new ScalingData(-7, 0.0471))
+            );
+        }
+    }
+
+    /* -------- *
+     * Midnight *
+     * -------- */
+
+    // Todo correct all coefs
+    
+    internal class GiftOfLight : StatBuff
+    {
+        public const int id = 1259228;
+        public const string name = "Gift of Light";
+
+
+        public GiftOfLight(UnitId sourceId, int stacks)
+            : base(id, sourceId, name, stacks)
+        {
+            SimImpurity = true;
+            Duration = 10;
+            SourceType = BuffSourceType.Item;
+            SourceObjId = 251788;
+            StatMods.Add(
+                new StatMod(
+                    StatName.Mastery,
+                    StatAmountType.Rating,
+                    scData: new ScalingData(-7, 1.56234))
             );
         }
     }

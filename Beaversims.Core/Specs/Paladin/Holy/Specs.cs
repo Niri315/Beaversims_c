@@ -19,30 +19,6 @@ namespace Beaversims.Core.Specs.Paladin.Holy
         protected override string SpecTalentNamespace => "Beaversims.Core.Specs.Paladin.Holy.Talents";
         public override SpecName SpecName => SpecName.HolyPaladin;
 
-
-
-        //public override void DupliGainsHeal(TpEvent evt, User user, StatName statName, double gainRaw, GainType gainType = GainType.Eff)
-        //{
-        //    DupliEffects.BeaconGains(evt, user, statName, gainRaw, gainType);
-        //    var gainNaraw = evt.RawToNarawConvert(gainRaw);
-        //    if (Shared.DupliEffects.IsLeechSourceEvent(evt))
-        //    {
-        //        Shared.DupliEffects.LeechSourceGains(evt, user, statName, gainNaraw, gainType);
-
-        //    }
-
-        //    Shared.DupliEffects.SummerGains(evt, user, statName, gainRaw, evt.Ability, evt.SummerActive, evt.AbsorbAbility, evt.SourceUnit, gainType);
-        //}
-        //public override void DupliGainsDmg(TpEvent evt, User user, StatName statName, double gain, GainType gainType = GainType.Dmg)
-        //{
-        //    var gainNaeff = evt.EffToNaeffConvert(gain);
-        //    if (Shared.DupliEffects.IsLeechSourceEvent(evt))
-        //    {
-        //        Shared.DupliEffects.LeechSourceGains(evt, user, statName, gainNaeff, gainType);
-        //    }
-        //    Shared.DupliEffects.SummerGains(evt, user, statName, gain, evt.Ability, evt.SummerActive, evt.AbsorbAbility, evt.SourceUnit, gainType);
-
-        //}
         public override void SpecIteration(List<Event> events, UnitRepo allUnits, Fight fight, int iterationCount)
         {
             Main.SpecMain(events, allUnits, fight, iterationCount);

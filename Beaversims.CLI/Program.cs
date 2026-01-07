@@ -44,7 +44,7 @@ namespace Beaversims.CLI
             //var logLink = "https://www.warcraftlogs.com/reports/AZN3YFaBt4prDyz1?fight=11&type=healing&source=3"; // enkindle
             var logLink = "https://www.warcraftlogs.com/reports/QMkHwKWZ8b9xjDyv?fight=262&type=damage-done&source=1374"; // veneration
 
-            SimMode simMode = SimMode.SW;
+            SimMode simMode = SimMode.Trinkets;
             var totalTime = Stopwatch.StartNew();
             var linkElements = WclClient.ParseLogLink(logLink);
 

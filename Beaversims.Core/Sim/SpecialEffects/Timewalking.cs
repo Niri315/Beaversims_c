@@ -177,8 +177,10 @@ namespace Beaversims.Core.Sim.SpecialEffects
                     var newEvent = new SimHealEvent
                     {
                         Timestamp = evt.Timestamp + 0.1,
+                        SimProcSource = true,
+                        SimEvent = true,
                         Proc = true,
-                        Ability = new Shared.Abilities.BlazeOfLife{SimImpurity = false},
+                        Ability = new Shared.Abilities.BlazeOfLife { SimImpurity = false },
                         AbilityName = Name,
                         SourceUnit = user,
                     };

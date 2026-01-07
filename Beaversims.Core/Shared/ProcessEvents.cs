@@ -140,10 +140,12 @@ namespace Beaversims.Core.Shared
                 }
                 amount = amounts.Eff;
                 user.AltGearSets[i].Gains[gainType] += amount;
-                if (logging)
-                {
-                    evt.Ability.Gains[i][gainType] += amount - evt.Amount.Eff;
-                }
+
+                // TODO Bug cba rn
+                //if (logging)
+                //{
+                //    evt.Ability.Gains[i][gainType] += amount - evt.Amount.Eff;
+                //}
 
             }
             if (logging)

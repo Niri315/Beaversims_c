@@ -167,6 +167,7 @@ namespace Beaversims.Core.Sim
                 {
                     var effect = SpecialEffectFactory.CreateFromName(gear.Name, gear.Ilvl, gear.ItemSlot);
                     if (effect == null) continue;
+                    Console.WriteLine(effect.Name);
 
 
                     //effect.Ilvl = gear.Ilvl;
@@ -447,6 +448,17 @@ namespace Beaversims.Core.Sim
             trinketTest11.Name = "Eye of Blazing Power";
             trinketTest11[ItemSlot.Trinket1] = ItemGenerator.CreateItem(171645, 723, ItemSlot.Trinket1, []);
             user.AltGearSets.Add(trinketTest11);
+
+            var trinketTest111 = DeepCloneGearset(user.Gear);
+            trinketTest111.Name = "Gift of Light";
+            trinketTest111[ItemSlot.Trinket1] = ItemGenerator.CreateItem(251788, 723, ItemSlot.Trinket1, []);
+            user.AltGearSets.Add(trinketTest111);
+
+            var trinketTest112 = DeepCloneGearset(user.Gear);
+            trinketTest112.Name = "Consecrated Chalice";
+            trinketTest112[ItemSlot.Trinket1] = ItemGenerator.CreateItem(251789, 723, ItemSlot.Trinket1, []);
+            user.AltGearSets.Add(trinketTest112);
+
 
             //var trinketTest12 = DeepCloneGearset(user.Gear);
             //trinketTest12.Name = "Necromantic Focus";

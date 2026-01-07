@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Beaversims.Core.Specs.Paladin.Holy
 {
-    internal static class RdruidUtils
+    internal static class HpalUtils
     {
         public static readonly HashSet<int> beaconIds = [Abilities.BeaconOfLight.buffId, Abilities.BeaconOfVirtue.buffId, Abilities.BeaconOfFaith.buffId];
 

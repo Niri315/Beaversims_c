@@ -151,6 +151,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
                     }
                 }
             }
+
             Utils.CleanUp(allUnits, events); // To avoid accidental usage.
             MasteryTracker.CleanUpCoords(allUnits);
 

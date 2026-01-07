@@ -67,6 +67,7 @@ namespace Beaversims.Core
     {
         public double Timestamp { get; set; }
         public bool Heartbeat { get; set; } = false;
+        public bool SimProcSource { get; set; } = false;
         public bool Proc { get; set; } = false;
         public Unit SourceUnit { get; set; }
         public Unit TargetUnit { get; set; }
@@ -121,16 +122,44 @@ namespace Beaversims.Core
 
 
 
-        public double? SourceHp_p()//(bool preEvent=false) 
+        public double? SourceHp_p(bool preEvent = false)
         {
             if (SourceHp == null) return 1.0;  // Default to assuming percent is 100 if it cant be found.
-            return (double?) SourceHp / SourceMaxHp;    
+            double sourceHp = SourceHp ?? 0;
+            if (preEvent && this is TpEvent tpEvent)
+            {
+                if (this is DamageEvent)
+                {
+                    sourceHp += tpEvent.Amount.Naeff;
+                }
+                else if (this is HealEvent)
+                {
+                    sourceHp -= tpEvent.Amount.Naeff;
+                }
+            }
+
+            return sourceHp / SourceMaxHp;    
         }
-        public double? TargetHp_p()//(bool preEvent = false)
+        public double? TargetHp_p(bool preEvent = false)
         {
             if (TargetHp == null) return 1.0;  // Default to assuming percent is 100 if it cant be found.
-            return (double)TargetHp / TargetMaxHp;
+            double targetHp = TargetHp ?? 0;
+            if (preEvent && this is TpEvent tpEvent)
+            {
+                if (this is DamageEvent)
+                {
+                    targetHp += tpEvent.Amount.Naeff;
+                }
+                else if (this is HealEvent)
+                {
+                    targetHp -= tpEvent.Amount.Naeff;
+                }
+            }
+
+            return targetHp / TargetMaxHp;
+
         }
+
 
         public bool IsDamageTakenEvent() => TargetUnit is User && this is DamageEvent;
         public bool IsHealDoneEvent() => this is HealEvent && UserSuperSource;

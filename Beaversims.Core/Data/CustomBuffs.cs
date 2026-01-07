@@ -128,6 +128,22 @@ namespace Beaversims.Core.Data.CustomBuffs
             );
         }
     }
+    internal class SolarGrace : StatBuff
+    {
+        public const string name = "Solar Grace";
+        public SolarGrace(UnitId sourceId)
+            : base(-1, sourceId, name, 1)
+        {
+            SourceType = BuffSourceType.Talent;
+            SourceObjId = 117691;
+            StatMods.Add(
+                new StatMod(
+                    StatName.Haste,
+                    StatAmountType.Base,
+                    5 * Haste.percentRate)
+            );
+        }
+    }
 
     /* ----- *
      * Druid *

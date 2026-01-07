@@ -33,10 +33,12 @@ namespace Beaversims.Core
         public double ManaInc { get; set; } = 0;
 
         public StatBuff Buff { get; protected set; }
+        public Ability Ability { get; protected set; }
         public double Amount { get; protected set; }
         public StatName StatName { get; protected set; }
         public double Duration { get; protected set; }
         public ScalingData ScalingData { get; protected set; }
+        public double DefaultUhr { get; protected set; }
 
 
         //public bool DoNotRun { get; set; } = false;
@@ -111,7 +113,50 @@ namespace Beaversims.Core
         }
     }
 
+    internal abstract class SimpleProcHealEffect : ProcEffect
+    {
 
+        public override void Init(List<Event> events, User user, Fight fight, int i)
+        {
+
+            Amount = ScUtils.ScaledEffectValue(Ilvl, ItemSlot, ScalingData, StatName);
+
+        }
+        public override void Call(List<TpEvent> procEvents, List<Event> events, Event evt, User user, StatTracker curAltStats, int i, int iterationCount)
+        {
+
+            if (Proc.IsProcAttempt(evt, ProcFlags, lastProc, icd, evt.Timestamp))
+            {
+                var isProc = Proc.ProcessProcAttempt(ref blp, ScUtils.TrueRppm(curAltStats, Rppm, HasteScaling, i), ref lastAttempt, ref lastProc, evt.Timestamp);
+                if (isProc)
+                {
+                    lastProc = evt.Timestamp;
+                    
+                    var newEvent = new SimHealEvent
+                    {
+                        Timestamp = evt.Timestamp + 0.1,
+                        SimProcSource = true,
+                        Ability = Ability,
+                        AbilityName = Name,
+                        SourceUnit = user,
+                    };
+                    var amountRaw = Amount;
+                    var amountEff = amountRaw * DefaultUhr;
+     
+                    newEvent.Amount.Raw = amountRaw;
+                    newEvent.Amount.Naraw = amountRaw;
+                    newEvent.Amount.Eff = amountEff;
+                    newEvent.Amount.Naeff = amountEff;
+
+                    int insertIndex = events.FindIndex(e => e.Timestamp > newEvent.Timestamp);
+                    if (insertIndex != -1)
+                    {
+                        events.Insert(insertIndex, newEvent);
+                    }
+                }
+            }
+        }
+    }
 
     internal abstract class SimpleProcStatEffect : ProcEffect
     {
@@ -222,6 +267,7 @@ namespace Beaversims.Core
         {
             foreach (var type in _effectTypes)
             {
+      
                 var sourcesField = type.GetField("Sources", BindingFlags.Public | BindingFlags.Static);
                 if (sourcesField?.GetValue(null) is HashSet<string> sources && sources.Contains(gearName))
                 {

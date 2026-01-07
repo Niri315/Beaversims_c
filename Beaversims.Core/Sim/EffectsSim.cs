@@ -47,10 +47,10 @@ namespace Beaversims.Core.Sim
             {
                 statMods *= SimUtils.CritMod(evt.UserStats);
             }
-            evt.Amount.Raw *= statMods * Constants.defaultHealIncMod;
-            evt.Amount.Eff *= statMods * Constants.defaultHealIncMod;
-            evt.Amount.Naraw *= statMods * Constants.defaultHealIncMod;
-            evt.Amount.Naeff *= statMods * Constants.defaultHealIncMod;
+            evt.Amount.Raw *= statMods;
+            evt.Amount.Eff *= statMods;
+            evt.Amount.Naraw *= statMods;
+            evt.Amount.Naeff *= statMods;
         }
 
         public static List<TpEvent>? SimEffects(List<Event> events, User user, Fight fight, int i, int iterationCount)
@@ -62,7 +62,7 @@ namespace Beaversims.Core.Sim
             }
             //Utils.AddHeartbeatEvents(events);
             var gearSet = user.AltGearSets[i];
-            List<TpEvent> procEvents = [];
+            List<TpEvent> procSourceEvents = [];
             var usePosEvents = new List<Event>(events);  // To find use timings
             var useEffects = gearSet.OnUseEffects.OrderBy(e => e.Priority).ToList();
             foreach (var specialEffect in useEffects)
@@ -86,27 +86,27 @@ namespace Beaversims.Core.Sim
                 for (int e = 0; e < tempEvents.Count; e++)
                 {
                     var evt = tempEvents[e];
-                    if (!evt.Proc)
+                    if (!evt.SimProcSource)
                     {
                         curAltStats = evt.AltEvents[gearSet.Id].UserStats;
                     }
                     AddStatInc(evt, gearSet, curAltStats, iterationCount);
                     foreach (var specialEffect in gearSet.ProcEffects)
                     {
-                        specialEffect.Call(procEvents, tempEvents, evt, user, curAltStats, i, iterationCount);
+                        specialEffect.Call(procSourceEvents, tempEvents, evt, user, curAltStats, i, iterationCount);
                     }
-                    if (evt.Proc && evt is TpEvent tEvt)
+                    if (evt.SimProcSource && evt is TpEvent tEvt)
                     {
                         //Console.WriteLine(evt.Timestamp.ToString());
                         tEvt.UserStats = curAltStats;
-                        procEvents.Add(tEvt);
+                        procSourceEvents.Add(tEvt);
                         // Remove the proc event here
                     }
                 }
             }
             var simEvents = new List<Event>();
             simEvents.AddRange(events.Where(e => e.SimEvent));
-            simEvents.AddRange(procEvents.Where(e => e.SimEvent));
+            simEvents.AddRange(procSourceEvents.Where(e => e.SimEvent));
 
             for (int e = 0; e < simEvents.Count; e++)
             {
@@ -114,7 +114,7 @@ namespace Beaversims.Core.Sim
                 CorrectAmounts((TpEvent)evt);
             }
 
-            return procEvents;
+            return procSourceEvents;
         }
     }
 }

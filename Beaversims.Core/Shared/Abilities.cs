@@ -193,6 +193,20 @@ namespace Beaversims.Core.Shared.Abilities
             SimImpurity = true;
         }
     }
+    /* -------- *
+     * Midnight *
+     * -------- */
+
+    internal class ConsecratedChalice : SharedAbility
+    {
+        public const string name = "Consecrated Chalice";
+        public ConsecratedChalice()
+        {
+            Name = name;
+            Scalers.UnionWith([SN.Haste, SN.Vers]);
+            HasteScalers.UnionWith([HST.Auto]);
+        }
+    }
 
     /* --- *
      * WW3 *

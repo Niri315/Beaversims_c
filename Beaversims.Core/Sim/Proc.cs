@@ -57,6 +57,7 @@ namespace Beaversims.Core.Sim
         public static bool FilterProcFlags(TpEvent evt, HashSet<ProcFlag> procFlags)
         {
             if (evt.AbsorbAbility) { return false; } // todo doublecheck this.
+            if (!evt.IsHealDoneEvent() && !evt.IsDmgDoneEvent()) {  return false; }
             if (procFlags.Contains(ProcFlag.HealOnly) && !evt.IsHealDoneEvent()) { return false; }
             if (procFlags.Contains(ProcFlag.DamageOnly) && !evt.IsDmgDoneEvent()) { return false; }
             if (procFlags.Contains(ProcFlag.SpellOnly) && !evt.Ability.Spell) { return false; }

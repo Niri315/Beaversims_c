@@ -67,13 +67,11 @@ namespace Beaversims.Core
         public int BuffId { get; set; }
         public int Id { get; set; }
 
-        // Bools for dupli effects
         public DupliEffectType DupliEffectType { get; set; }
-        //public bool DamageEffect { get; set; } = false;
-        //public bool HealEffect { get; set; } = false;
 
-
-
+        public bool Absorb { get; set; } = false;  // Currently just needed for sim effects.
+        public ScalingData ScalingData { get; set; }  // Only used for sim effects currenyly
+        public double DefaultUhr { get; set; } = 0.0;
         public bool ReverseEffect { get; set; } = false;  // for easily running certain reverse effects like AC as autoscalers. 
 
         public double SpcHeal{ get; set; }

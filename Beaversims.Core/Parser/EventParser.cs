@@ -438,7 +438,7 @@ namespace Beaversims.Core.Parser
 
         }
 
-        public static void TrackHp(JsonElement logEvent, Event evt)
+        public static void TrackHp(JsonElement logEvent, Event evt, List<Unit> allPlayers)
         {
             if (evt is TpEvent)
             {
@@ -463,6 +463,20 @@ namespace Beaversims.Core.Parser
 
                 }
             }
+
+            //Console.WriteLine("-----------");
+            var count = 0;
+            var hp_p_tot = 0.0;
+            foreach (var player in allPlayers)
+            {
+                count++;
+                var hp_p = (player.Hp ?? 1) / (double)(player.MaxHp ?? 1);
+                evt.RaidHp_pTracker[player] = hp_p;
+                hp_p_tot += hp_p;
+                //Console.WriteLine($"{player.Name}: {evt.RaidHp_pTracker[player]}");
+            }
+            evt.AvgRaidHp_p = hp_p_tot / count;
+            //Console.WriteLine(evt.AvgRaidHp_p);
                
         }
 
@@ -555,6 +569,7 @@ namespace Beaversims.Core.Parser
             var startLogTime = userEvents[0].GetProperty("timestamp").GetInt32();
             var user = allUnits.GetUser();
             var miaAbilityLogger = new Logger("Uncategorized Abilities", fight, user.Id.TypeId);
+            var allPlayers = allUnits.Where(u => u is Player).ToList();
 
             foreach (var logEvent in userEvents.EnumerateArray())
             {
@@ -573,7 +588,7 @@ namespace Beaversims.Core.Parser
                     AdjustEvent(evt);
                     ParseCoords(logEvent, evt);
                     SetAbilityData(evt, user);
-                    TrackHp(logEvent, evt);
+                    TrackHp(logEvent, evt, allPlayers);
 
                     events.Add(evt);
                 }

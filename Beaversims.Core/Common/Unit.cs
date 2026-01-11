@@ -110,6 +110,7 @@ namespace Beaversims.Core
         public GainDict OriginalTotals { get; set; } = Utils.InitGainDict();
         public StatTracker Stats { get; set; } = new();
         public Dictionary<StatName, double> TotalGearRatings { get; set; } = Utils.InitStatDict();
+        public StatName HighestPullStat {  get; set; }  // To see which stat the user prefers most from gearing
 
         //public HashSet<NonHasteProcEffect> NonHasteProcEffects { get; } = new();
         //public HashSet<OnUseEffect> OnUseEffects { get; } = new();
@@ -151,6 +152,8 @@ namespace Beaversims.Core
         public double LastStasisRelease { get; set; } = -99;
         public int MasteryTest1 { get; set; } = 0;
         public int MasteryTest2 { get; set; } = 0;
+
+
 
         public void StoreDupliHypos(TpEvent evt, User user)
         {

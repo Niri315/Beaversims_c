@@ -99,7 +99,7 @@ namespace Beaversims.Core.Specs.Paladin.Holy
         public static void SpecMain(List<Event> events, UnitRepo allUnits, Fight fight, int iterationCount)
         {
 
-
+            Console.WriteLine("Starting Hpal Main");
             //StatGainMathTest();
             //return;
             var user = allUnits.GetUser();
@@ -117,10 +117,11 @@ namespace Beaversims.Core.Specs.Paladin.Holy
             var refStatLogger = new Logger("Ref Stat Tracker", fight, user.Id.TypeId);
 
 
-
+            Console.WriteLine("Starting Buff/stat iter");
             foreach (Event evt in events)
             {
                 // Loop for tracking buffs and collecting data.
+
                 BuffTracker.TrackBuffs(evt, allUnits, statLogger, refStatLogger);
                 evt.CreateAltEvents(user, evt);
                 CastProcessor.ProcessCast(evt, user);
@@ -142,15 +143,9 @@ namespace Beaversims.Core.Specs.Paladin.Holy
                     HCGM.TrackACSource(tEvt, user);
                     user.StoreSharedDupliHypos(tEvt, user);
                     user.StoreDupliHypos(tEvt, user);
-                    //Shared.DupliEffects.SummerHypo(tEvt, user);
-                    //Shared.DupliEffects.SharedHypo(tEvt, user);
-                    if (tEvt.IsHealDoneEvent() && evt is HealEvent hEvt)
-                    {
-                        //DupliEffects.SelflessHypo(hEvt, user);
-                        //DupliEffects.BeaconHypo(hEvt, user);
-                    }
                 }
             }
+            Console.WriteLine("Buff/stat iter done");
 
             Utils.CleanUp(allUnits, events); // To avoid accidental usage.
             MasteryTracker.CleanUpCoords(allUnits);

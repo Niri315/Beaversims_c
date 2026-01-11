@@ -491,6 +491,7 @@ namespace Beaversims.Core.Data.StatBuffs
             : base(id, sourceId, name, stacks)
         {
             SimImpurity = true;
+            AllowMultiple = false;
             Duration = 20;
             SourceType = BuffSourceType.Item;
             SourceObjId = 150522;
@@ -513,6 +514,7 @@ namespace Beaversims.Core.Data.StatBuffs
             : base(id, sourceId, name, stacks)
         {
             SimImpurity = true;
+            AllowMultiple = false;
             Duration = 10;
             SourceType = BuffSourceType.Item;
             SourceObjId = 156288;
@@ -536,6 +538,7 @@ namespace Beaversims.Core.Data.StatBuffs
             : base(id, sourceId, name, stacks)
         {
             SimImpurity = true;
+            AllowMultiple = false;
             Duration = 20;
             SourceType = BuffSourceType.Item;
             SourceObjId = 156021;
@@ -557,6 +560,7 @@ namespace Beaversims.Core.Data.StatBuffs
             : base(id, sourceId, name, stacks)
         {
             SimImpurity = true;
+            AllowMultiple = false;
             Duration = 10;
             MaxStacks = 5;
             SourceType = BuffSourceType.Item;
@@ -581,6 +585,7 @@ namespace Beaversims.Core.Data.StatBuffs
             : base(id, sourceId, name, stacks)
         {
             SimImpurity = true;
+            AllowMultiple = false;
             Duration = 10;
             SourceType = BuffSourceType.Item;
             SourceObjId = 156230;
@@ -602,6 +607,7 @@ namespace Beaversims.Core.Data.StatBuffs
             : base(id, sourceId, name, stacks)
         {
             SimImpurity = true;
+            AllowMultiple = false;
             Duration = 20;
             SourceType = BuffSourceType.Item;
             SourceObjId = 155947;
@@ -624,6 +630,7 @@ namespace Beaversims.Core.Data.StatBuffs
             : base(id, sourceId, name, stacks)
         {
             SimImpurity = true;
+            AllowMultiple = false;
             Duration = 10;
             SourceType = BuffSourceType.Item;
             SourceObjId = 156207;
@@ -645,6 +652,7 @@ namespace Beaversims.Core.Data.StatBuffs
             : base(id, sourceId, name, stacks)
         {
             SimImpurity = true;
+            AllowMultiple = false;
             Duration = 20;
             SourceType = BuffSourceType.Item;
             SourceObjId = 156187;
@@ -668,6 +676,7 @@ namespace Beaversims.Core.Data.StatBuffs
             : base(id, sourceId, name, stacks)
         {
             SimImpurity = true;
+            AllowMultiple = false;
             Duration = 15;
             SourceType = BuffSourceType.Item;
             SourceObjId = 156308;
@@ -691,6 +700,7 @@ namespace Beaversims.Core.Data.StatBuffs
             : base(id, sourceId, name, stacks)
         {
             SimImpurity = true;
+            AllowMultiple = false;
             Duration = 10;
             MaxStacks = 10;
             SourceType = BuffSourceType.Item;
@@ -708,7 +718,6 @@ namespace Beaversims.Core.Data.StatBuffs
      * Midnight *
      * -------- */
 
-    // Todo correct all coefs
     
     internal class GiftOfLight : StatBuff
     {
@@ -723,6 +732,7 @@ namespace Beaversims.Core.Data.StatBuffs
             Duration = 10;
             SourceType = BuffSourceType.Item;
             SourceObjId = 251788;
+            AllowMultiple = false;
             StatMods.Add(
                 new StatMod(
                     StatName.Mastery,
@@ -731,6 +741,293 @@ namespace Beaversims.Core.Data.StatBuffs
             );
         }
     }
+    internal class LocusWalkersRibbon : StatBuff
+    {
+        public const int id = 1259317;
+        public const string name = "Locus-Walker's Ribbon";
+
+
+        public LocusWalkersRibbon(UnitId sourceId, int stacks)
+            : base(id, sourceId, name, stacks)
+        {
+            SimImpurity = true;
+            Duration = 10;
+            AllowMultiple = false;
+            SourceType = BuffSourceType.Item;
+            SourceObjId = 249809;
+            StatMods.Add(
+                new StatMod(
+                    StatName.Intellect,
+                    StatAmountType.Rating,
+                    scData: new ScalingData(-1, 1.140325))
+            );
+        }
+    }
+
+    internal class TheWindAwoken : StatBuff
+    {
+        public const int id = 1263318;
+        public const string name = "The Wind Awoken";
+
+
+        public TheWindAwoken(UnitId sourceId, int stacks)
+            : base(id, sourceId, name, stacks)
+        {
+            SimImpurity = true;
+            Duration = 10;
+            AllowMultiple = false;
+            SourceType = BuffSourceType.Item;
+            SourceObjId = 250256;
+            StatMods.Add(
+                new StatMod(
+                    StatName.Haste,
+                    StatAmountType.Rating,
+                    scData: new ScalingData(-7, 1.124223))
+            );
+        }
+    }
+    internal class VoidSuffusion : StatBuff
+    {
+        public const int id = 1258534;
+        public const string name = "Void Suffusion";
+
+
+        public VoidSuffusion(UnitId sourceId, int stacks)
+            : base(id, sourceId, name, stacks)
+        {
+            SimImpurity = true;
+            Duration = 12;
+            AllowMultiple = true;
+            SourceType = BuffSourceType.Item;
+            SourceObjId = 249341;
+            StatMods.Add(
+                new StatMod(
+                    StatName.Intellect,
+                    StatAmountType.Rating,
+                    scData: new ScalingData(-1, 0.858352))
+            );
+        }
+    }
+    internal class ARestlessSoul : StatBuff
+    {
+        public const int id = 1265566;
+        public const string name = "A Restless Soul";
+
+
+        public ARestlessSoul(UnitId sourceId, int stacks)
+            : base(id, sourceId, name, stacks)
+        {
+            SimImpurity = true;
+            Duration = 60;
+            AllowMultiple = true;
+            SourceType = BuffSourceType.Item;
+            SourceObjId = 250258;
+            StatMods.Add(
+                new StatMod(
+                    StatName.Intellect,
+                    StatAmountType.Rating,
+                    scData: new ScalingData(-7, 0.173593))  // -7 on int? todo check
+            );
+        }
+    }
+
+    internal class AlnscornedEssence : StatBuff
+    {
+        public const int id = 1266687;
+        public const string name = "Alnscorned Essence";
+
+
+        public AlnscornedEssence(UnitId sourceId, int stacks)
+            : base(id, sourceId, name, stacks)
+        {
+            SimImpurity = true;
+            Duration = 12;
+            AllowMultiple = true;
+            SourceType = BuffSourceType.Item;
+            SourceObjId = 249343;
+            StatMods.Add(
+                new StatMod(
+                    StatName.Intellect,
+                    StatAmountType.Rating,
+                    scData: new ScalingData(-1, 0.280769)) 
+            );
+        }
+    }
+    internal class SealedChaosUrn : StatBuff
+    {
+        public const int id = 1253115;
+        public const string name = "Sealed Chaos Urn";
+
+
+        public SealedChaosUrn(UnitId sourceId, int stacks)
+            : base(id, sourceId, name, stacks)
+        {
+            SimImpurity = true;
+            Duration = 20;
+            AllowMultiple = false;
+            SourceType = BuffSourceType.Item;
+            SourceObjId = 251787;
+            StatMods.Add(
+                new StatMod(
+                    StatName.Crit,
+                    StatAmountType.Rating,
+                    scData: new ScalingData(-7, 0.864197)) 
+            );
+            StatMods.Add(
+                new StatMod(
+                    StatName.Haste,
+                    StatAmountType.Rating,
+                    scData: new ScalingData(-7, 0.864197))
+            );
+                        StatMods.Add(
+                new StatMod(
+                    StatName.Mastery,
+                    StatAmountType.Rating,
+                    scData: new ScalingData(-7, 0.864197))
+            );
+                        StatMods.Add(
+                new StatMod(
+                    StatName.Vers,
+                    StatAmountType.Rating,
+                    scData: new ScalingData(-7, 0.864197))
+            );
+        }
+    }
+
+    internal class AkilzonsClarity : StatBuff
+    {
+        public const int id = 1247577;
+        public const string name = "Akil'zon's Clarity";
+
+
+        public AkilzonsClarity(UnitId sourceId, int stacks)
+            : base(id, sourceId, name, stacks)
+        {
+            SimImpurity = true;
+            Duration = 12;
+            AllowMultiple = false;
+            SourceType = BuffSourceType.Item;
+            SourceObjId = 248583;
+            StatMods.Add(
+                new StatMod(
+                    StatName.Crit,
+                    StatAmountType.Rating,
+                    scData: new ScalingData(-7, 1.707))
+            );
+        }
+    }
+    internal class HalazzisSwiftness : StatBuff
+    {
+        public const int id = 1247578;
+        public const string name = "Halazzi's Swiftness";
+
+
+        public HalazzisSwiftness(UnitId sourceId, int stacks)
+            : base(id, sourceId, name, stacks)
+        {
+            SimImpurity = true;
+            Duration = 12;
+            AllowMultiple = false;
+            SourceType = BuffSourceType.Item;
+            SourceObjId = 248583;
+            StatMods.Add(
+                new StatMod(
+                    StatName.Haste,
+                    StatAmountType.Rating,
+                    scData: new ScalingData(-7, 1.707))
+            );
+        }
+    }
+    internal class JanalaisWarmth : StatBuff
+    {
+        public const int id = 1247579;
+        public const string name = "Jan'alai's Warmth";
+
+
+        public JanalaisWarmth(UnitId sourceId, int stacks)
+            : base(id, sourceId, name, stacks)
+        {
+            SimImpurity = true;
+            Duration = 12;
+            AllowMultiple = false;
+            SourceType = BuffSourceType.Item;
+            SourceObjId = 248583;
+            StatMods.Add(
+                new StatMod(
+                    StatName.Mastery,
+                    StatAmountType.Rating,
+                    scData: new ScalingData(-7, 1.707))
+            );
+        }
+    }
+    internal class NalorakksResolve : StatBuff
+    {
+        public const int id = 1247580;
+        public const string name = "Nalorakk's Resolve";
+
+
+        public NalorakksResolve(UnitId sourceId, int stacks)
+            : base(id, sourceId, name, stacks)
+        {
+            SimImpurity = true;
+            Duration = 12;
+            AllowMultiple = false;
+            SourceType = BuffSourceType.Item;
+            SourceObjId = 248583;
+            StatMods.Add(
+                new StatMod(
+                    StatName.Vers,
+                    StatAmountType.Rating,
+                    scData: new ScalingData(-7, 1.707))
+            );
+        }
+    }
+    internal class GladiatorsBadge : StatBuff
+    {
+        public const int id = 345228;
+        public const string name = "Gladiator's Badge";
+
+
+        public GladiatorsBadge(UnitId sourceId, int stacks)
+            : base(id, sourceId, name, stacks)
+        {
+            SimImpurity = true;
+            Duration = 15;
+            AllowMultiple = false;
+            SourceType = BuffSourceType.Item;
+            SourceObjId = 255613;
+            StatMods.Add(
+                new StatMod(
+                    StatName.Intellect,
+                    StatAmountType.Rating,
+                    scData: new ScalingData(-1, 1.322581))
+            );
+        }
+    }
+
+    internal class GladiatorsInsignia : StatBuff
+    {
+        public const int id = 345230;
+        public const string name = "Gladiator's Insignia";
+
+
+        public GladiatorsInsignia(UnitId sourceId, int stacks)
+            : base(id, sourceId, name, stacks)
+        {
+            SimImpurity = true;
+            Duration = 20;
+            AllowMultiple = false;
+            SourceType = BuffSourceType.Item;
+            SourceObjId = 255614;
+            StatMods.Add(
+                new StatMod(
+                    StatName.Intellect,
+                    StatAmountType.Rating,
+                    scData: new ScalingData(-1, 1.116129))
+            );
+        }
+    }
+
 
     /* --- *
      * WW3 *
@@ -746,6 +1043,7 @@ namespace Beaversims.Core.Data.StatBuffs
             : base(id, sourceId, name, stacks)
         {
             SimImpurity = true;
+            AllowMultiple = true;
             Duration = 10;
             SourceType = BuffSourceType.Item;
             SourceObjId = 242395; 

@@ -42,7 +42,8 @@ namespace Beaversims.CLI
             //var logLink = "https://www.warcraftlogs.com/reports/rfyXTLpA1zRqxNhV?fight=15&type=healing&source=124"; //  ancestral awakening
             //var logLink = "https://www.warcraftlogs.com/reports/tLWgY37r4PGAX9m1?fight=11&type=summary&source=222"; // beacon of faith + pol
             //var logLink = "https://www.warcraftlogs.com/reports/AZN3YFaBt4prDyz1?fight=11&type=healing&source=3"; // enkindle
-            var logLink = "https://www.warcraftlogs.com/reports/QMkHwKWZ8b9xjDyv?fight=262&type=damage-done&source=1374"; // veneration
+            //var logLink = "https://www.warcraftlogs.com/reports/QMkHwKWZ8b9xjDyv?fight=262&type=damage-done&source=1374"; // veneration
+            var logLink = "https://www.warcraftlogs.com/reports/vmG6DydbYRkZxnCW?fight=5&source=136"; // Midnight beta Hpal
 
             SimMode simMode = SimMode.Trinkets;
             var totalTime = Stopwatch.StartNew();
@@ -68,17 +69,26 @@ namespace Beaversims.CLI
             else if (simMode == SimMode.Trinkets)
             {
                 iterationCount = Constants.defaultIterCount;
-                iterationCount = 2000;
+                //iterationCount = 2000;
+                iterationCount = 1;
+                //iterationCount = 200;
             }
 
             finalResults = RunMain.Run(logs, userId, reportCode, simMode, iterationCount, gearSets);
             if (simMode == SimMode.StatAlloc)
             {
-                //finalResults = RunMain.Run(logs, userId, reportCode, simMode, 0);
                 TestUtils.PrintTopStatAllocs(finalResults);
             }
-            //TestUtils.PrintStatWeights(finalResults.swGains);
-            TestUtils.PrintAltGearResults(finalResults);
+            if (simMode == SimMode.Trinkets)
+            {
+                TestUtils.PrintAltGearResults(finalResults);
+                TestUtils.PrintTrinketCompResults(finalResults);
+            }
+            else
+            {
+                TestUtils.PrintAltGearResults(finalResults);
+            }
+
 
             totalTime.Stop();
             Console.WriteLine($"Total Time: {totalTime}");

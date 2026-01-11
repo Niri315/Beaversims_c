@@ -203,11 +203,78 @@ namespace Beaversims.Core.Shared.Abilities
         public ConsecratedChalice()
         {
             Name = name;
+            DefaultUhr = 0.9; //PFA
+            Absorb = true;
             Scalers.UnionWith([SN.Haste, SN.Vers]);
             HasteScalers.UnionWith([HST.Auto]);
         }
     }
+    internal class CosmicBell : SharedAbility
+    {
+        public const string name = "Cosmic Bell";
+        public CosmicBell()
+        {
+            Name = name;
+            DefaultUhr = 0.8; //PFA
+            Scalers.UnionWith([SN.Crit, SN.Vers]);
+            ScalingData = new ScalingData(-9, 459.49);
+        }
+    }
+    internal class UltradonCuirass : SharedAbility
+    {
+        public const string name = "Ultradon Cuirass";
+        public UltradonCuirass()
+        {
+            Name = name;
+            DefaultUhr = 0.95; //PFA
+            Scalers.UnionWith([SN.Vers]);
+            ScalingData = new ScalingData(-8, 1328.876);
+        }
+    }
+    internal class MycolicMedicine : SharedAbility
+    {
+        public const string name = "Mycolic Medicine";
+        public MycolicMedicine()
+        {
+            Name = name;
+            DefaultUhr = 0.7; //PFA
+            Scalers.UnionWith([SN.Crit, SN.Vers]);
+            ScalingData = new ScalingData(-9, 45.5447);
+        }
+    }
+    internal class GlowcapMushroomsRejuvenation : SharedAbility
+    {
+        public const string name = "Glowcap Mushroom's Rejuvenation";
+        public GlowcapMushroomsRejuvenation()
+        {
+            Name = name;
+            DefaultUhr = 0.7; //PFA
+            Scalers.UnionWith([SN.Crit, SN.Vers]);
+            ScalingData = new ScalingData(-9, 26.02555);
+        }
+    }
+    internal class UnstableFelheartCrystal : SharedAbility
+    {
+        public const string name = "Unstable Felheart Crystal";
+        public UnstableFelheartCrystal()
+        {
+            Name = name;
+            DefaultUhr = 0.95; //PFA
+            Scalers.UnionWith([SN.Vers]);
+            ScalingData = new ScalingData(-9, 2.50563);
+        }
+    }
 
+    internal class EyeOfTheDrowningVoid : SharedAbility
+    {
+        public const string name = "Eye of the Drowning Void";
+        public EyeOfTheDrowningVoid()
+        {
+            Name = name;
+            Scalers.UnionWith([SN.Crit, SN.Vers]);
+            ScalingData = new ScalingData(-9, 31.06731);
+        }
+    }
     /* --- *
      * WW3 *
      * --- */

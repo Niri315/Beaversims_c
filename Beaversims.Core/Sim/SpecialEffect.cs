@@ -54,6 +54,7 @@ namespace Beaversims.Core
         public const double sharedCd = 20;
         public List<double> UseTimings { get; protected set; }
         public int Priority { get; protected set; }  // Only for choosing the use timing events, not priority for pressing.
+        public double MaxRaidHp_p { get; protected set; }
         public abstract List<Event> FindUseTimings(List<Event> events, User user, Fight fight, int i);
         public abstract void Run(List<Event> events, User user, Fight fight, int i);
     }
@@ -62,25 +63,45 @@ namespace Beaversims.Core
     {
         public override List<Event> FindUseTimings(List<Event> events, User user, Fight fight, int i)
         {
-            UseTimings = SimUtils.UseTimingsCalc(events, Buff.Duration, Cd, i);
+            UseTimings = SimUtils.UseTimingsCalc_stat(events, Buff.Duration, Cd, i);
             return SimUtils.AvailableUseEvents(events, UseTimings, sharedCd);
         }
 
         public override void Run(List<Event> events, User user, Fight fight, int i)
         {
-            double amount;
-            var statMod = Buff.StatMods[0];
-            var statName = statMod.StatName;
 
-            amount = ScUtils.ScaledEffectValue(Ilvl, ItemSlot, statMod.ScalingData, statName);
-         
+            foreach (var statMod in Buff.StatMods)
+            {
+                statMod.Amount = ScUtils.ScaledEffectValue(Ilvl, ItemSlot, statMod.ScalingData, statMod.StatName);
+            }
             var activeEvents = SimUtils.FetchTimingEvents(UseTimings, events, Buff.Duration, Cd, i);
             foreach (var evt in activeEvents)
             {
-                //Console.WriteLine($"{evt.Timestamp}: {evt.AltEvents[id].UserStats.Get(statName).Eff}");
-                evt.AltEvents[i].UserStats.Get(statName).ChangeAmount(amount, StatAmountType.Rating, false);
-                //evt.AltEvents[i].UserStats.Get(statName).ChangeAmount(amount, StatAmountType.Rating, false);
-                //Console.WriteLine($"Post: {evt.AltEvents[id].UserStats.Get(statName).Eff}");
+                foreach (var statMod in Buff.StatMods)
+                {
+                    evt.AltEvents[i].UserStats.Get(statMod.StatName).ChangeAmount(statMod.Amount, StatAmountType.Rating, false);
+                }
+            }
+        }
+    }
+
+    internal abstract class SimpleOnUseHealEffect : OnUseEffect
+    {
+        public override List<Event> FindUseTimings(List<Event> events, User user, Fight fight, int i)
+        {
+            UseTimings = SimUtils.UseTimings_Heal(events, Cd, i, MaxRaidHp_p);
+            return SimUtils.AvailableUseEvents(events, UseTimings, sharedCd);
+        }
+
+        public override void Run(List<Event> events, User user, Fight fight, int i)
+        {
+
+            Amount = ScUtils.ScaledEffectValue(Ilvl, ItemSlot, Ability.ScalingData);
+
+            foreach (var useTiming in UseTimings)
+            {
+                SimUtils.AddSimHealEvent(events, user, Ability, useTiming, Amount, false);
+                Console.WriteLine($"{Name}: use Timing: {useTiming}, adding amount: {Amount}");
             }
         }
     }
@@ -130,29 +151,30 @@ namespace Beaversims.Core
                 var isProc = Proc.ProcessProcAttempt(ref blp, ScUtils.TrueRppm(curAltStats, Rppm, HasteScaling, i), ref lastAttempt, ref lastProc, evt.Timestamp);
                 if (isProc)
                 {
-                    lastProc = evt.Timestamp;
-                    
-                    var newEvent = new SimHealEvent
-                    {
-                        Timestamp = evt.Timestamp + 0.1,
-                        SimProcSource = true,
-                        Ability = Ability,
-                        AbilityName = Name,
-                        SourceUnit = user,
-                    };
-                    var amountRaw = Amount;
-                    var amountEff = amountRaw * DefaultUhr;
-     
-                    newEvent.Amount.Raw = amountRaw;
-                    newEvent.Amount.Naraw = amountRaw;
-                    newEvent.Amount.Eff = amountEff;
-                    newEvent.Amount.Naeff = amountEff;
+                    SimUtils.AddSimHealEvent(events, user, Ability, evt.Timestamp, Amount, true);
+                 
+                }
+            }
+        }
+    }
+    internal abstract class SimpleProcDmgEffect : ProcEffect
+    {
 
-                    int insertIndex = events.FindIndex(e => e.Timestamp > newEvent.Timestamp);
-                    if (insertIndex != -1)
-                    {
-                        events.Insert(insertIndex, newEvent);
-                    }
+        public override void Init(List<Event> events, User user, Fight fight, int i)
+        {
+
+            Amount = ScUtils.ScaledEffectValue(Ilvl, ItemSlot, ScalingData, StatName);
+
+        }
+        public override void Call(List<TpEvent> procEvents, List<Event> events, Event evt, User user, StatTracker curAltStats, int i, int iterationCount)
+        {
+
+            if (Proc.IsProcAttempt(evt, ProcFlags, lastProc, icd, evt.Timestamp))
+            {
+                var isProc = Proc.ProcessProcAttempt(ref blp, ScUtils.TrueRppm(curAltStats, Rppm, HasteScaling, i), ref lastAttempt, ref lastProc, evt.Timestamp);
+                if (isProc)
+                {
+                    SimUtils.AddSimDmgEvent(events, user, Ability, evt.Timestamp, Amount, true);
                 }
             }
         }
@@ -160,7 +182,6 @@ namespace Beaversims.Core
 
     internal abstract class SimpleProcStatEffect : ProcEffect
     {
-        //public abstract void Call(Event evt, User user, int i);
         public override void Init(List<Event> events, User user, Fight fight, int i)
         {
             var statMod = Buff.StatMods[0];
@@ -172,11 +193,6 @@ namespace Beaversims.Core
         }
         public override void Call(List<TpEvent> procEvents, List<Event> events, Event evt, User user, StatTracker curAltStats, int i, int iterationCount)
         {
-            if (buffEnd < evt.Timestamp && active)
-            {
-                user.AltGearSets[i].SimIncRatings[StatName] -= Amount;
-                active = false;
-            }
 
             if (Proc.IsProcAttempt(evt, ProcFlags, lastProc, icd, evt.Timestamp))
             {
@@ -184,9 +200,8 @@ namespace Beaversims.Core
                 if (isProc)
                 {
                     buffEnd = evt.Timestamp + Duration;
-                    if (active) { return; }
-                    active = true;
-                    user.AltGearSets[i].SimIncRatings[StatName] += Amount;
+                    Buff.StatMods[0].Amount = Amount;
+                    user.AltGearSets[i].AddSimStatBuff(Buff, evt.Timestamp);
                 }
             }
         }

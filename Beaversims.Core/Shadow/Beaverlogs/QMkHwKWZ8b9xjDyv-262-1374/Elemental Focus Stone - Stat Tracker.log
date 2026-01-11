@@ -10,12 +10,12 @@ Stamina
 	 Multiplicative Factor: 11,3%
 	 Eff: 861476
 Crit
-	 Rating: 18437
+	 Rating: 8866
 	 Multiplicative Factor: 0%
-	 Eff: 24737,314779605964
+	 Eff: 15166
 	 DR Bracket: 0
 	 Base: 9%
-	 Effective Percent: 35,34%
+	 Effective Percent: 21,67%
 	 Crit Inc Heal: 2
 	 Crit Inc Damage: 2
 Haste
@@ -65,21 +65,21 @@ Stamina
 	 Multiplicative Factor: 11,3%
 	 Eff: 861476
 Crit
-	 Rating: 18437
+	 Rating: 8866
 	 Multiplicative Factor: 0%
-	 Eff: 35237,314779605964
+	 Eff: 25666
 	 DR Bracket: 0
 	 Base: 24%
-	 Effective Percent: 50,34%
+	 Effective Percent: 36,67%
 	 Crit Inc Heal: 2
 	 Crit Inc Damage: 2
 Haste
 	 Rating: 19522
 	 Multiplicative Factor: 0%
-	 Eff: 50309,92
+	 Eff: 55366,10453881867
 	 DR Bracket: 0
 	 Base: 36%
-	 Effective Percent: 76,23%
+	 Effective Percent: 83,89%
 Vers
 	 Rating: 27104
 	 Multiplicative Factor: 0%
@@ -120,21 +120,21 @@ Stamina
 	 Multiplicative Factor: 11,3%
 	 Eff: 861476
 Crit
-	 Rating: 18437
+	 Rating: 8866
 	 Multiplicative Factor: 0%
-	 Eff: 35237,314779605964
+	 Eff: 25666
 	 DR Bracket: 0
 	 Base: 24%
-	 Effective Percent: 50,34%
+	 Effective Percent: 36,67%
 	 Crit Inc Heal: 2
 	 Crit Inc Damage: 2
 Haste
 	 Rating: 19522
 	 Multiplicative Factor: 0%
-	 Eff: 52020,36
+	 Eff: 58923,43869284515
 	 DR Bracket: 0
 	 Base: 38%
-	 Effective Percent: 78,82%
+	 Effective Percent: 89,28%
 Vers
 	 Rating: 27104
 	 Multiplicative Factor: 0%
@@ -175,21 +175,21 @@ Stamina
 	 Multiplicative Factor: 11,3%
 	 Eff: 861476
 Crit
-	 Rating: 18437
+	 Rating: 8866
 	 Multiplicative Factor: 0%
-	 Eff: 35237,314779605964
+	 Eff: 25666
 	 DR Bracket: 0
 	 Base: 24%
-	 Effective Percent: 50,34%
+	 Effective Percent: 36,67%
 	 Crit Inc Heal: 2
 	 Crit Inc Damage: 2
 Haste
 	 Rating: 19522
 	 Multiplicative Factor: 0%
-	 Eff: 53730,799999999996
+	 Eff: 56672,49136394357
 	 DR Bracket: 0
 	 Base: 40%
-	 Effective Percent: 81,41%
+	 Effective Percent: 85,87%
 Vers
 	 Rating: 27104
 	 Multiplicative Factor: 0%
@@ -241,10 +241,10 @@ Crit
 Haste
 	 Rating: 19522
 	 Multiplicative Factor: 0%
-	 Eff: 53730,799999999996
+	 Eff: 55476,8361644052
 	 DR Bracket: 0
 	 Base: 40%
-	 Effective Percent: 81,41%
+	 Effective Percent: 84,06%
 Vers
 	 Rating: 27104
 	 Multiplicative Factor: 0%
@@ -296,10 +296,10 @@ Crit
 Haste
 	 Rating: 19522
 	 Multiplicative Factor: 0%
-	 Eff: 53730,799999999996
+	 Eff: 54603,818082202604
 	 DR Bracket: 0
 	 Base: 40%
-	 Effective Percent: 81,41%
+	 Effective Percent: 82,73%
 Vers
 	 Rating: 27104
 	 Multiplicative Factor: 0%
@@ -351,10 +351,10 @@ Crit
 Haste
 	 Rating: 19522
 	 Multiplicative Factor: 0%
-	 Eff: 53730,799999999996
+	 Eff: 54205,26634902315
 	 DR Bracket: 0
 	 Base: 40%
-	 Effective Percent: 81,41%
+	 Effective Percent: 82,13%
 Vers
 	 Rating: 27104
 	 Multiplicative Factor: 0%
@@ -406,10 +406,10 @@ Crit
 Haste
 	 Rating: 19522
 	 Multiplicative Factor: 0%
-	 Eff: 53730,799999999996
+	 Eff: 54058,18178082597
 	 DR Bracket: 0
 	 Base: 40%
-	 Effective Percent: 81,41%
+	 Effective Percent: 81,91%
 Vers
 	 Rating: 27104
 	 Multiplicative Factor: 0%
@@ -461,10 +461,10 @@ Crit
 Haste
 	 Rating: 19522
 	 Multiplicative Factor: 0%
-	 Eff: 28074,199999999997
+	 Eff: 28227,045945292455
 	 DR Bracket: 0
 	 Base: 10%
-	 Effective Percent: 42,54%
+	 Effective Percent: 42,77%
 Vers
 	 Rating: 27104
 	 Multiplicative Factor: 0%
@@ -516,10 +516,10 @@ Crit
 Haste
 	 Rating: 19522
 	 Multiplicative Factor: 0%
-	 Eff: 28074,199999999997
+	 Eff: 28156,214897474
 	 DR Bracket: 0
 	 Base: 10%
-	 Effective Percent: 42,54%
+	 Effective Percent: 42,66%
 Vers
 	 Rating: 27104
 	 Multiplicative Factor: 0%
@@ -571,10 +571,10 @@ Crit
 Haste
 	 Rating: 19522
 	 Multiplicative Factor: 0%
-	 Eff: 28074,199999999997
+	 Eff: 28107,751548966633
 	 DR Bracket: 0
 	 Base: 10%
-	 Effective Percent: 42,54%
+	 Effective Percent: 42,59%
 Vers
 	 Rating: 27104
 	 Multiplicative Factor: 0%
@@ -626,10 +626,10 @@ Crit
 Haste
 	 Rating: 19522
 	 Multiplicative Factor: 0%
-	 Eff: 28074,199999999997
+	 Eff: 28089,111799540726
 	 DR Bracket: 0
 	 Base: 10%
-	 Effective Percent: 42,54%
+	 Effective Percent: 42,56%
 Vers
 	 Rating: 27104
 	 Multiplicative Factor: 0%
@@ -681,7 +681,7 @@ Crit
 Haste
 	 Rating: 19522
 	 Multiplicative Factor: 0%
-	 Eff: 28074,199999999997
+	 Eff: 28077,92794988518
 	 DR Bracket: 0
 	 Base: 10%
 	 Effective Percent: 42,54%
@@ -1330,12 +1330,12 @@ Stamina
 	 Multiplicative Factor: 11,3%
 	 Eff: 861476
 Crit
-	 Rating: 18437
+	 Rating: 8866
 	 Multiplicative Factor: 0%
-	 Eff: 35237,314779605964
+	 Eff: 25666
 	 DR Bracket: 0
 	 Base: 24%
-	 Effective Percent: 50,34%
+	 Effective Percent: 36,67%
 	 Crit Inc Heal: 2
 	 Crit Inc Damage: 2
 Haste
@@ -1385,12 +1385,12 @@ Stamina
 	 Multiplicative Factor: 11,3%
 	 Eff: 861476
 Crit
-	 Rating: 18437
+	 Rating: 8866
 	 Multiplicative Factor: 0%
-	 Eff: 35237,314779605964
+	 Eff: 25666
 	 DR Bracket: 0
 	 Base: 24%
-	 Effective Percent: 50,34%
+	 Effective Percent: 36,67%
 	 Crit Inc Heal: 2
 	 Crit Inc Damage: 2
 Haste
@@ -1440,12 +1440,12 @@ Stamina
 	 Multiplicative Factor: 11,3%
 	 Eff: 861476
 Crit
-	 Rating: 18437
+	 Rating: 8866
 	 Multiplicative Factor: 0%
-	 Eff: 35237,314779605964
+	 Eff: 25666
 	 DR Bracket: 0
 	 Base: 24%
-	 Effective Percent: 50,34%
+	 Effective Percent: 36,67%
 	 Crit Inc Heal: 2
 	 Crit Inc Damage: 2
 Haste
@@ -1495,12 +1495,12 @@ Stamina
 	 Multiplicative Factor: 11,3%
 	 Eff: 861476
 Crit
-	 Rating: 18437
+	 Rating: 8866
 	 Multiplicative Factor: 0%
-	 Eff: 35237,314779605964
+	 Eff: 25666
 	 DR Bracket: 0
 	 Base: 24%
-	 Effective Percent: 50,34%
+	 Effective Percent: 36,67%
 	 Crit Inc Heal: 2
 	 Crit Inc Damage: 2
 Haste
@@ -2650,12 +2650,12 @@ Stamina
 	 Multiplicative Factor: 11,3%
 	 Eff: 861476
 Crit
-	 Rating: 18437
+	 Rating: 8866
 	 Multiplicative Factor: 0%
-	 Eff: 35237,314779605964
+	 Eff: 25666
 	 DR Bracket: 0
 	 Base: 24%
-	 Effective Percent: 50,34%
+	 Effective Percent: 36,67%
 	 Crit Inc Heal: 2
 	 Crit Inc Damage: 2
 Haste
@@ -2705,12 +2705,12 @@ Stamina
 	 Multiplicative Factor: 11,3%
 	 Eff: 861476
 Crit
-	 Rating: 18437
+	 Rating: 8866
 	 Multiplicative Factor: 0%
-	 Eff: 35237,314779605964
+	 Eff: 25666
 	 DR Bracket: 0
 	 Base: 24%
-	 Effective Percent: 50,34%
+	 Effective Percent: 36,67%
 	 Crit Inc Heal: 2
 	 Crit Inc Damage: 2
 Haste
@@ -2760,12 +2760,12 @@ Stamina
 	 Multiplicative Factor: 11,3%
 	 Eff: 861476
 Crit
-	 Rating: 18437
+	 Rating: 8866
 	 Multiplicative Factor: 0%
-	 Eff: 35237,314779605964
+	 Eff: 25666
 	 DR Bracket: 0
 	 Base: 24%
-	 Effective Percent: 50,34%
+	 Effective Percent: 36,67%
 	 Crit Inc Heal: 2
 	 Crit Inc Damage: 2
 Haste
@@ -2815,12 +2815,12 @@ Stamina
 	 Multiplicative Factor: 11,3%
 	 Eff: 861476
 Crit
-	 Rating: 18437
+	 Rating: 8866
 	 Multiplicative Factor: 0%
-	 Eff: 35237,314779605964
+	 Eff: 25666
 	 DR Bracket: 0
 	 Base: 24%
-	 Effective Percent: 50,34%
+	 Effective Percent: 36,67%
 	 Crit Inc Heal: 2
 	 Crit Inc Damage: 2
 Haste

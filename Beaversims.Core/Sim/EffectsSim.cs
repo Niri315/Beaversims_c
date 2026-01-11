@@ -41,7 +41,7 @@ namespace Beaversims.Core.Sim
             var ability = evt.Ability;
             var statMods = 1.0;
             if (ability.ScalesWith(StatName.Vers)) {
-                statMods *= SimUtils.VersMod(evt.UserStats);
+                statMods *= SimUtils.VersMod(evt.UserStats);  // userStats for sim events is gearset based.
             }
             if (ability.ScalesWith(StatName.Crit))
             {
@@ -51,6 +51,7 @@ namespace Beaversims.Core.Sim
             evt.Amount.Eff *= statMods;
             evt.Amount.Naraw *= statMods;
             evt.Amount.Naeff *= statMods;
+       
         }
 
         public static List<TpEvent>? SimEffects(List<Event> events, User user, Fight fight, int i, int iterationCount)
@@ -86,7 +87,8 @@ namespace Beaversims.Core.Sim
                 for (int e = 0; e < tempEvents.Count; e++)
                 {
                     var evt = tempEvents[e];
-                    if (!evt.SimProcSource)
+                    gearSet.CheckSimStatBuffs(evt.Timestamp);
+                    if (!evt.SimEvent)
                     {
                         curAltStats = evt.AltEvents[gearSet.Id].UserStats;
                     }
@@ -95,23 +97,33 @@ namespace Beaversims.Core.Sim
                     {
                         specialEffect.Call(procSourceEvents, tempEvents, evt, user, curAltStats, i, iterationCount);
                     }
-                    if (evt.SimProcSource && evt is TpEvent tEvt)
+                    if (evt.SimEvent && evt is TpEvent tEvt)
                     {
                         //Console.WriteLine(evt.Timestamp.ToString());
                         tEvt.UserStats = curAltStats;
-                        procSourceEvents.Add(tEvt);
+                        if (evt.SimProcSource)
+                        {
+                            procSourceEvents.Add(tEvt);
+                        }
+                      
                         // Remove the proc event here
                     }
                 }
             }
             var simEvents = new List<Event>();
-            simEvents.AddRange(events.Where(e => e.SimEvent));
-            simEvents.AddRange(procSourceEvents.Where(e => e.SimEvent));
-
+            simEvents.AddRange(events.Where(e => e.SimEvent));  // sim events not iteration based
+            simEvents.AddRange(procSourceEvents.Where(e => e.SimEvent));  // iteration based sim events
+            Console.WriteLine($"Gearset id {gearSet.Id}, simevents count: {simEvents.Count}");
             for (int e = 0; e < simEvents.Count; e++)
             {
-                var evt = simEvents[e];
+                var evt = (TpEvent)simEvents[e];
+                Console.WriteLine(evt.Timestamp);
+                Console.WriteLine(evt.AbilityName);
+                Console.WriteLine(evt.Amount.Naeff);
+
                 CorrectAmounts((TpEvent)evt);
+
+                Console.WriteLine(evt.Amount.Naeff);
             }
 
             return procSourceEvents;

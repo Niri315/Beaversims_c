@@ -78,6 +78,8 @@ namespace Beaversims.Core
         public Coord? TargetCoords { get; set; }
         public Coord? SourceCoords { get; set; }
         public Coord? UserCoords { get; set; }
+        public Dictionary<Unit, double> RaidHp_pTracker { get; set; } = new Dictionary<Unit, double>();
+        public double AvgRaidHp_p { get; set; } = 1.0; // Temp change. Just need it to not default to 0 for heartbeat events.
 
         // Hp is set AFTER damage/heal amount takes place.
         public long? TargetHp { get; set; }
@@ -226,6 +228,7 @@ namespace Beaversims.Core
 
                 foreach (var altGear in altGearSet)
                 {
+                    if (altGear.Value == null) continue;
                     foreach (var stat in altGear.Value.Stats)
                     {
                         statDiffs[stat.Key] += stat.Value;
@@ -233,6 +236,7 @@ namespace Beaversims.Core
                 }
                 foreach (var gear in user.Gear)
                 {
+                    if (gear.Value == null) continue;
                     foreach (var stat in gear.Value.Stats)
                     {
                         statDiffs[stat.Key] -= stat.Value;
@@ -254,6 +258,7 @@ namespace Beaversims.Core
                     }
                     altStats.Get(stat.Key).ChangeAmount(diff, StatAmountType.Rating, removal);
                 }
+
                 altStats.UpdateAllStats();
                 var altEvent = new AltEvent();
                 if (evt is TpEvent _tEvt)

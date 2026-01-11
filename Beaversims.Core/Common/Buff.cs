@@ -37,7 +37,7 @@ namespace Beaversims.Core
 
         // There are bug in logs where buff refreshes are seen are buff applications
         // Can assume true, but add false on important stat buffs.
-        public bool AllowMultiple { get; set; } = true;
+        public bool AllowMultiple { get; set; } = false;
 
         public Buff(int id, UnitId sourceId, string name, int stacks)
         {
@@ -62,4 +62,15 @@ namespace Beaversims.Core
         {
         }
     }
+
+    //internal class SimStatBuff
+    //{
+    //    public int Id { get; }
+    //    public StatName StatName { get; set; }
+    //    public double Amount { get; set; }
+    //    public StatAmountType AmountType { get; }
+    //    public double BuffEnd { get; set; }
+    //    public bool AllowOverlap { get; } = false;
+    //    public double Duration
+    //}
 }

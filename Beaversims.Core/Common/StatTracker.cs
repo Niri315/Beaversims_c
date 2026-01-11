@@ -12,6 +12,25 @@ namespace Beaversims.Core
     {
         private readonly Dictionary<StatName, Stat> _stats = new();
         public Stat Get(StatName statName) => _stats[statName];
+
+        public StatName FindHighestStat()
+        {
+            StatName highestStat = StatName.Haste;
+            double highestRating = 0;
+            foreach (var stat in _stats.Values)
+            {
+                if (Utils.IsSecondaryStat(stat.Name))
+                {
+                    if (stat.Rating > highestRating)
+                    {
+                        highestStat = stat.Name;
+                        highestRating = stat.Rating;
+                    }
+                }
+
+            }
+            return highestStat;
+        }
         public void UpdateAllStats()
         {
             foreach (var stat in _stats.Values) 

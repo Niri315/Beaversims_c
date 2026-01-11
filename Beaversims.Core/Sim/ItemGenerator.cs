@@ -33,9 +33,18 @@ namespace Beaversims.Core
             }
         }
         public GainItem(int id, int ilvl, ItemSlot itemSlot)
-            : base(id, ItemDatabase.Items[id].Name, ilvl, itemSlot)
+            : base(id, GetItemNameOrFallback(id), ilvl, itemSlot)
         {
-        //    Gains = Utils.InitGainDict();
+        }
+
+        // OBS !! REMOVE AFTER GETTING ITEM JSON FROM RAIDBOTS
+        private static string GetItemNameOrFallback(int id)
+        {
+            if (ItemDatabase.Items.TryGetValue(id, out var item))
+                return item.Name;
+
+            // Fallback name
+            return $"Unknown Item ({id})";
         }
     }
 }
@@ -98,9 +107,19 @@ namespace Beaversims.Core.Sim
 
         public static GainItem CreateItem(int itemId, int ilvl, ItemSlot itemSlot, List<int> bonusIds)
         {
+            var gainItem = new GainItem(itemId, ilvl, itemSlot);
+
+            // OBS !!! OBS !! TEMP FIX - REMOVE AFTER GETTING ITEM JSON FROM RAIDBOTS.
+            // REMOVE FROM GAINITEM CLASS ASWELL IMPORTANT
+            if (!ItemDatabase.Items.ContainsKey(itemId))
+            {
+                return gainItem;
+            }
+            // REMOVE ABOVE ASAP
+
+
             var itemData = ItemDatabase.Items[itemId];
             var itemName = itemData.Name;
-            var gainItem = new GainItem(itemId, ilvl, itemSlot);
 
             var itemRpp = ScUtils.GetItemRPP(ilvl, itemSlot, itemData);
             //Console.WriteLine($"{itemData.Name} - Ilvl: {ilvl}, Itemclass: {itemData.ItemClass}");
@@ -113,7 +132,7 @@ namespace Beaversims.Core.Sim
                     if (stat.Id == 24 || stat.Id == 25)  // Need to change this incase there are crafts that are not 50/50 secondary stat split.
                     {
                         craftedSecAlloc = (double)stat.Alloc / 10000;
-                    } 
+                    }
                     if (Utils.IdToStatName(stat.Id) is not StatName statName)
                         continue;
                     if (!gainItem.Stats.ContainsKey(statName)) { gainItem.Stats[statName] = 0; }
@@ -131,6 +150,8 @@ namespace Beaversims.Core.Sim
             //}
 
             return gainItem;
+
+
         }
     }
 }

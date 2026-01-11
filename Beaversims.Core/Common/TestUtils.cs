@@ -169,7 +169,82 @@ namespace Beaversims.Core.Common
             Console.WriteLine($"eff + def:        {NameOf(topEffDef.gs)} ({topEffDef.val:F3})");
             Console.WriteLine($"eff + dmg + def:  {NameOf(topEffDmgDef.gs)} ({topEffDmgDef.val:F3})");
         }
+        public static void PrintTrinketCompResults(Results results)
+        {
+            var gearSets = results.altGearSets;
+            var originals = results.OriginalTotals;
+            var nullTrink1 = results.altGearSets[0];
+            if (gearSets == null || gearSets.Count == 0)
+            {
+                Console.WriteLine("No gear sets to display.");
+                return;
+            }
 
+            // Define the exact GainType order you want
+            var orderedGainTypes = new[]
+            {
+                GainType.Eff,
+                GainType.Dmg,
+                GainType.Def,
+                GainType.SupEff,
+                GainType.SupDmg,
+                GainType.MsEff,
+                GainType.MsDmg,
+                GainType.BalEff,
+                GainType.BalDmg
+            };
+
+            // Determine padding based on the longest gear set name
+            int longestNameLength = gearSets
+                .Select(gs => (gs.Name ?? $"Set {gs.Id}").Length)
+                .DefaultIfEmpty(0)
+                .Max();
+
+            int nameColumnWidth = Math.Max(longestNameLength + 2, 20); // Add a small buffer for readability
+
+            // Header
+            Console.Write("".PadRight(nameColumnWidth));
+            Console.Write($"{"Total",10}");
+            foreach (var gt in orderedGainTypes)
+                Console.Write($"{gt,10}");
+            Console.WriteLine();
+
+            Console.Write($"{"Originals".PadRight(nameColumnWidth)}");
+            double val_o = originals[GainType.Eff] + originals[GainType.Dmg] + originals[GainType.Def];
+            Console.Write($"{val_o,11:0.00}");
+
+            foreach (var gt in orderedGainTypes)
+            {
+                double val = 0;
+                if (originals != null && originals.TryGetValue(gt, out double gain))
+                    val = gain;
+
+                Console.Write($"{val,11:0.00}");
+            }
+
+            Console.WriteLine();
+            // Rows
+            var nullTrink1Tot = nullTrink1.Gains[GainType.Eff] + nullTrink1.Gains[GainType.Dmg] + nullTrink1.Gains[GainType.Def];
+            foreach (var gs in gearSets)
+            {
+                string name = gs.Name ?? $"Set {gs.Id}";
+                Console.Write($"{name.PadRight(nameColumnWidth)}");
+
+                double val2 = gs.Gains[GainType.Eff] + gs.Gains[GainType.Dmg] + gs.Gains[GainType.Def] - nullTrink1Tot;
+                Console.Write($"{val2,11:0.00}");
+
+                foreach (var gt in orderedGainTypes)
+                {
+                    double val = 0;
+                    if (gs.Gains != null && gs.Gains.TryGetValue(gt, out double gain))
+                        val = gain - nullTrink1.Gains[gt];
+
+                    Console.Write($"{val,11:0.00}");
+                }
+
+                Console.WriteLine();
+            }
+        }
 
     }
 }

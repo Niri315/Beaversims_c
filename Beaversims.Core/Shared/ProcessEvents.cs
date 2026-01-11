@@ -57,6 +57,7 @@ namespace Beaversims.Core.Shared
             for (int e = 0; e < procEvents.Count; e++)
             {
                 var evt = procEvents[e];
+                if (!evt.SimProcSource) { throw new DivideByZeroException(); }
                 evt.Amount.Raw /= iterationCount;
                 evt.Amount.Eff /= iterationCount;
                 evt.Amount.Naraw /= iterationCount;
@@ -78,11 +79,12 @@ namespace Beaversims.Core.Shared
 
             foreach (TpEvent evt in tpEvents)
             {
-                if (logging && evt.Timestamp >= lastLogTime + 5.0)
-                {
-                    evt.AltEvents[i].UserStats.LogStats(statLogger, evt.Timestamp);
-                    lastLogTime = evt.Timestamp;
-                }
+                // TODO Bug cba rn
+                //if (logging && evt.Timestamp >= lastLogTime + 5.0)
+                //{
+                //    evt.AltEvents[i].UserStats.LogStats(statLogger, evt.Timestamp);
+                //    lastLogTime = evt.Timestamp;
+                //}
                 
                 AmountContainer amounts;
 

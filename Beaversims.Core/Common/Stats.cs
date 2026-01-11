@@ -248,7 +248,7 @@ namespace Beaversims.Core
     {
         public override StatName Name { get; }
         public override int Level { get; }
-        public const double percentRate = 700;
+        public const double percentRate = 46;
         public override double PercentRate { get; set; }
         public override double DrRate { get; }
         public double IncHeal { get; set; } = 2;
@@ -314,7 +314,7 @@ namespace Beaversims.Core
     {
         public override StatName Name { get; }
         public override int Level { get; }
-        public const double percentRate = 660;
+        public const double percentRate = 44;
 
         public override double PercentRate { get; set; }
         public override double DrRate { get; }
@@ -366,7 +366,7 @@ namespace Beaversims.Core
 
         public override double PercentRate { get; set; }
         public override double DrRate { get; }
-        public const double tooltipPercentRate = 700;
+        public const double tooltipPercentRate = 46;
         public double TooltipPercentRate { get; }
 
         public Mastery(double percentRate)
@@ -391,7 +391,7 @@ namespace Beaversims.Core
     {
         public override StatName Name { get; }
         public override int Level { get; }
-        public const double percentRate = 780;
+        public const double percentRate = 54;
         public override double PercentRate { get; set; }
         public override double DrRate { get; }
         public double DefPercentRate { get; }
@@ -417,7 +417,7 @@ namespace Beaversims.Core
     {
         public override StatName Name { get; }
         public override int Level { get; }
-        public const double percentRate = 1019.995125;
+        public const double percentRate = 69.00098495;
 
         public override double PercentRate { get; set; }
         public override double DrRate { get; }
@@ -442,7 +442,7 @@ namespace Beaversims.Core
     {
         public override StatName Name { get; }
         public override int Level { get; }
-        public const double percentRate = 543.9974;
+        public const double percentRate = 36.80052531;
 
         public override double PercentRate { get; set; }
         public override double DrRate { get; }

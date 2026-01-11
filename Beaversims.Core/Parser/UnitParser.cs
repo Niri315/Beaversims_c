@@ -126,6 +126,7 @@ namespace Beaversims.Core.Parser
             stats.Get(StatName.Leech).Rating = leechRating;
             stats.Get(StatName.Avoidance).Rating = userInfo.GetProperty("avoidance").GetInt32();
             stats.UpdateAllStats();
+            user.HighestPullStat = stats.FindHighestStat();
         }
 
         

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Beaversims.Core.Sim
 {
@@ -76,9 +77,98 @@ namespace Beaversims.Core.Sim
             return activeEvents;
         }
 
+        public static void AddSimHealEvent(List<Event> events, User user, Ability ability, double timestamp, double amount, bool procSouce)
+        {
+            var newEvent = new SimHealEvent
+            {
+                Timestamp = timestamp,
+                SimEvent = true,
+                Ability = ability,
+                AbilityName = ability.Name,
+                SourceUnit = user,
+            };
+
+            if (ability.Absorb)
+            {
+                newEvent.AbsorbAbility = true;
+                newEvent.FullyAbsorbed = true;
+            }
+
+            if (procSouce)
+            {
+                newEvent.SimProcSource = true;
+            }
+
+            var amountRaw = amount;
+            var amountEff = amountRaw * ability.DefaultUhr;  // TODO should only use default uhr as backup.
+
+            newEvent.Amount.Raw = amountRaw;
+            newEvent.Amount.Naraw = amountRaw;
+            newEvent.Amount.Eff = amountEff;
+            newEvent.Amount.Naeff = amountEff;
+
+            int insertIndex = events.FindIndex(e => e.Timestamp > newEvent.Timestamp);
+            if (insertIndex != -1)
+            {
+                events.Insert(insertIndex, newEvent);
+            }
+            //Console.WriteLine($"Adding Sim Heal Event - Timestamp: {timestamp}, Ability: {ability.Name} amountRaw {amountRaw} amountEff {amountEff}");
+        }
+        public static void AddSimDmgEvent(List<Event> events, User user, Ability ability, double timestamp, double amount, bool procSouce, bool dmgTaken = false)
+        {
+            var newEvent = new SimDamageEvent
+            {
+                Timestamp = timestamp,
+                SimEvent = true,
+                Ability = ability,
+                AbilityName = ability.Name,
+                SourceUnit = user,
+               
+            };
+
+            if (procSouce)
+            {
+                newEvent.SimProcSource = true;
+            }
+
+            if (dmgTaken)
+            {
+                newEvent.TargetUnit = user;
+            }
 
 
-        public static List<double> UseTimingsCalc(List<Event> events, double duration, double cd, int i)
+            newEvent.Amount.Raw = amount;
+            newEvent.Amount.Naraw = amount;
+            newEvent.Amount.Eff = amount;
+            newEvent.Amount.Naeff = amount;
+
+            int insertIndex = events.FindIndex(e => e.Timestamp > newEvent.Timestamp);
+            if (insertIndex != -1)
+            {
+                events.Insert(insertIndex, newEvent);
+            }
+            //Console.WriteLine($"Adding Sim Heal Event - Timestamp: {timestamp}, Ability: {ability.Name} amountRaw {amountRaw} amountEff {amountEff}");
+        }
+        public static List<double> UseTimings_Heal(List<Event> events, double cd, int i, double maxRaidHp_p)
+        {
+            if (events == null || events.Count == 0)
+                return new List<double>();
+
+            var optimalTimestamps = new List<double>();
+            var lastUse = -999.0;
+            foreach (var evt in events)
+            {
+                if (maxRaidHp_p > evt.AvgRaidHp_p && evt.Timestamp - lastUse > cd)
+                {
+                    Console.WriteLine($"maxRaidHp_p {maxRaidHp_p} evt.AvgRaidHp_p {evt.AvgRaidHp_p} evt.Timestamp {evt.Timestamp} lastUse {lastUse} {cd}");
+                    lastUse = evt.Timestamp;
+                    optimalTimestamps.Add(evt.Timestamp);
+                }
+            }
+            return optimalTimestamps;
+        }
+
+        public static List<double> UseTimingsCalc_stat(List<Event> events, double duration, double cd, int i)
         {
             if (events == null || events.Count == 0)
                 return new List<double>();
@@ -177,6 +267,11 @@ namespace Beaversims.Core.Sim
             }
 
             optimalTimestamps.Reverse();
+            foreach (var item in optimalTimestamps)
+            {
+                Console.WriteLine(item.ToString());
+
+            }
             return optimalTimestamps;
         }
     }
